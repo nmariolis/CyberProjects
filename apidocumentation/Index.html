@@ -1004,7 +1004,7 @@
             var innerLines = [];
 
             if (subFields && subFields.length > 0) {
-                if (isAttrBased && childElemName) {
+                if (isAttrBased) {
                     var attrStr = '';
                     $.each(subFields, function(j, attr) {
                         var aid = 'f-' + href + '-' + safeId(field.Name) + '-' + safeId(attr.Name);
@@ -1013,8 +1013,17 @@
                             attrStr += ' ' + attr.Name + '="' + escapeAttr(aval) + '"';
                         }
                     });
-                    if (field.Required || attrStr !== '') {
-                        innerLines.push('  <' + childElemName + attrStr + ' />');
+                    if (childElemName) {
+                        // Attrs on a wrapper child element: <Rooms><Room Adults="2" .../></Rooms>
+                        if (field.Required || attrStr !== '') {
+                            innerLines.push('  <' + childElemName + attrStr + ' />');
+                        }
+                    } else {
+                        // Attrs directly on this element: <ArrivalDate From="..." To="..."/>
+                        if (field.Required || attrStr !== '') {
+                            lines.push('<' + field.Name + attrStr + ' />');
+                        }
+                        return lines;
                     }
                 } else {
                     $.each(subFields, function(j, sf) {
