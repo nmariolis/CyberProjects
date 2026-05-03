@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="SearchHotelsRequest">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="Username" type="xs:string" minOccurs="1" maxOccurs="1" xmlns:doc="Customer's username"/>
+        <xs:element name="Password" type="xs:string" minOccurs="1" maxOccurs="1" xmlns:doc="Customer's password" />
+        <xs:element name="DateFrom" type="xs:date" xmlns:doc="Start date of the party's stay"/>
+        <xs:element name="DateTo" type="xs:date" xmlns:doc="End date of the party's stay"/>
+        <xs:element name="Rooms">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Room" type="RoomType" minOccurs="1" maxOccurs="4" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Language" default="en">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="en|de|fr|el|ru|it|es|nl" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="Board" minOccurs="0" maxOccurs="1">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="RR|BB|HB|FB|AI|UI" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="HotelID" type="xs:int" minOccurs="0" maxOccurs="1" />
+        <xs:element name="HotelName" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="RoomName" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="Hoteltype" minOccurs="0" maxOccurs="1">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="H" />
+              <xs:enumeration value="A" />
+              <xs:enumeration value="V" />
+              <xs:enumeration value="U" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="Location" type="xs:int" minOccurs="0" maxOccurs="1" />
+        <xs:element name="Rating" minOccurs="0" maxOccurs="1">
+          <xs:simpleType>
+            <xs:restriction base="xs:int">
+              <xs:minInclusive value="1" />
+              <xs:maxInclusive value="5" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="Country" minOccurs="0" maxOccurs="1">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="EN|GR|CY|ES|IT|RU|FR|DE|BG" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="Province" type="xs:int" minOccurs="0" maxOccurs="1" />
+        <xs:element name="Prefecture" type="xs:int" minOccurs="0" maxOccurs="1" />
+        <xs:element name="City" type="xs:int" minOccurs="0" maxOccurs="1" />
+        <xs:element name="UseTariff" type="xs:boolean" minOccurs="0" />
+        <xs:element name="IsOptimized" type="xs:boolean" minOccurs="0" />
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="RoomType">
+    <xs:attribute name="Adults" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:int">
+          <xs:minInclusive value="1" />
+          <xs:maxInclusive value="20" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="Children" default="0">
+      <xs:simpleType>
+        <xs:restriction base="xs:int">
+          <xs:minInclusive value="0" />
+          <xs:maxInclusive value="10" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="ChildrenAges">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="([0-9 ]{1,2}(,[0-9 ]{1,2})*)*" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+</xs:schema>

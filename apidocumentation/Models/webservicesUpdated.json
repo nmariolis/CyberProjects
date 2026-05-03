@@ -1,0 +1,46 @@
+{
+  "serviceCategory": [
+    {
+      "name": "Hotel Services",
+      "services": [
+        {
+          "service": "Hotels Search",
+          "href": "hotel-services",
+          "description": "Send an xml to receive a list of hotels with their rooms, availability and prices.",
+          "link": "http://www.link-url.com/services/webservice.asmx/HotelsSearch",
+          "xsdRequest": "SearchHotels.xsd",
+          "xsdSchema": "HotelsSearch_Response.xsd"
+        },
+        {
+          "service": "Hotel List",
+          "href": "hotel-list",
+          "description": "Send an xml to receive a list of hotels with some basic information.",
+          "link": "http://www.link-url.com/services/webservice.asmx/HotelList ",
+          "xsdRequest": "SearchHotels.xsd",
+          "xsdSchema": "HotelsSearch_Response.xsd"
+        }
+      ]
+    },
+    {
+      "name": "Transfer Services",
+      "services": [
+        {
+          "service": "Transfer Search",
+          "href": "transfer-services",
+          "description": "Send an xml to receive a list of the available route points. A single route has two route points, one of which has to be of the type ‘Port’ and the other of the type ‘Area’. The route points of the type ‘Hotel’ represent pickup points that are contained within an ‘Area’.",
+          "link": "http://xml.avra.vacations/services/webservice.asmx/TransferRoutePoints",
+          "xsdRequest": "SearchHotels.xsd",
+          "xsdSchema": "HotelsSearch_Response.xsd"
+        },
+        {
+          "service": "Transfer Route Points",
+          "href": "transfer-route-points",
+          "description": "Send an xml to receive a list of hotels with some basic information.",
+          "link": "ttp://xml.avra.vacations/services/webservice.asmx/TransferRoutePoints",
+          "xsdRequest": "SearchHotels.xsd",
+          "xsdSchema": "HotelsSearch_Response.xsd"
+        }
+      ]
+    }
+  ]
+}

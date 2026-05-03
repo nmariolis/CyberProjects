@@ -1,0 +1,670 @@
+﻿<!DOCTYPE html>
+<style>
+    body {
+        background: #303030 !important;
+        padding-bottom: 0px !important;
+    }
+
+    .sidebar-boxed ~ main .main-content {
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+    }
+
+    .varName::before {
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        width: 10px;
+        height: 1px;
+        background: rgb(164, 164, 198);
+    }
+
+    .varName::after {
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        width: 1px;
+        height: 7px;
+        background: rgb(164, 164, 198);
+    }
+
+    .requiredField {
+        vertical-align: middle;
+        color: rgb(229, 57, 53);
+        font-size: 0.9em;
+        font-weight: normal;
+        margin-left: 20px;
+        line-height: 1;
+    }
+
+    .varAsBlock {
+        vertical-align: middle;
+        font-size: 13px;
+        line-height: 20px;
+        background-color: rgba(51, 51, 51, 0.05);
+        font-family: "Courier New", monospace;
+        color: rgb(229, 57, 53);
+        border-radius: 2px;
+        margin: 5px;
+        padding: 0px 5px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: rgba(51, 51, 51, 0.1);
+        border-image: initial;
+    }
+
+    .varAsBlock + .sc-1noysbl-9 {
+        margin-left: 0px;
+    }
+
+    .defaultVar {
+        vertical-align: middle;
+        font-size: 13px;
+        line-height: 20px;
+    }
+
+    div {
+        display: block;
+    }
+
+
+    r:first-of-type > .tdStyle {
+        background-image: linear-gradient(transparent 0%, transparent 22px, rgb(164, 164, 198) 22px, rgb(164, 164, 198) 100%);
+    }
+
+    tr:first-of-type > .tdStyle, tr.last > .tdStyle {
+        border-left-width: 0px;
+        background-size: 1px 100%;
+        background-position: left top;
+        background-repeat: no-repeat;
+    }
+
+
+    .tdStyle {
+        box-sizing: border-box;
+        position: relative;
+        vertical-align: top;
+        line-height: 21px;
+        white-space: nowrap;
+        font-size: 0.929em;
+        /*font-family: Roboto;*/
+        border-left: 1px solid rgb(164, 164, 198);
+        padding: 10px 10px 10px 0px;
+    }
+
+    td, th {
+        display: table-cell;
+        vertical-align: inherit;
+    }
+
+    .tableGeneral {
+        border-collapse: separate;
+        font-size: 14px;
+        width: 100%;
+        border-radius: 3px;
+        border-spacing: 0px;
+    }
+
+    table {
+        display: table;
+        border-collapse: separate;
+        border-spacing: 2px;
+        border-color: grey;
+    }
+
+    .fieldType {
+        width: 75%;
+        box-sizing: border-box;
+        border-bottom: 1px solid rgb(159, 180, 190);
+        padding: 10px 0px;
+    }
+
+    .varType {
+        vertical-align: middle;
+        font-size: 13px;
+        line-height: 20px;
+        color: rgb(128, 128, 128);
+    }
+
+    .varDescription-light {
+        vertical-align: middle;
+        font-size: 13px;
+        line-height: 20px;
+        color: rgba(128, 128, 128, 0.8);
+    }
+
+    tr:first-of-type > .tdStyle, tr.last > .tdStyle {
+        border-left-width: 0px;
+        background-size: 1px 100%;
+        background-position: left top;
+        background-repeat: no-repeat;
+    }
+
+    tr.last > .tdStyle {
+        background-image: linear-gradient(rgb(164, 164, 198) 0%, rgb(164, 164, 198) 22px, transparent 22px, transparent 100%);
+    }
+
+    tr:first-of-type > .tdStyle {
+        background-image: linear-gradient(transparent 0%, transparent 22px, rgb(164, 164, 198) 22px, rgb(164, 164, 198) 100%);
+    }
+
+    .restriction-code {
+        vertical-align: middle;
+        font-size: 13px;
+        line-height: 20px;
+        background-color: rgba(142, 142, 220, 0.05);
+        color: rgba(50, 50, 159, 0.9);
+        border-radius: 2px;
+        margin: 0px 5px;
+        padding: 0px 5px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: rgba(50, 50, 159, 0.1);
+        border-image: initial;
+    }
+
+    .varName {
+        color: rgb(164, 164, 198);
+        font-family: "Courier New", monospace;
+        margin-right: 10px;
+    }
+
+    .fieldDescription code {
+        color: rgb(229, 57, 53);
+        background-color: rgba(38, 50, 56, 0.05);
+        font-family: "Courier New", monospace;
+        font-size: 13px;
+        font-weight: 400;
+        word-break: break-word;
+        border-radius: 2px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: rgba(38, 50, 56, 0.1);
+        border-image: initial;
+        padding: 0px 5px;
+    }
+
+    code {
+        border: 1px solid #eaeaea;
+        margin: 0px 2px;
+        padding: 0px 5px;
+        font-size: 12px;
+    }
+
+    tt, code, kbd, samp {
+        font-family: monospace;
+    }
+
+    *, :after, :before {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .main-content {
+        padding: 0px 0px 0px 0 !important;
+        font-size: 16px;
+        line-height: 27px;
+    }
+
+    .leftSection {
+        background: white;
+        padding: 85px 135px 135px 135px !important;
+        z-index: -1;
+    }
+
+    .main-content > section {
+        padding-bottom: 0px !important;
+    }
+
+    .codeBlock {
+        margin-top: 250px;
+        background-color: #2a3542
+    }
+
+    .xml{
+        background-color:#2a3542;
+        text-shadow:none;
+        color:#c6c3c6;
+    }
+</style>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <title>Documentation</title>
+
+    <!-- Styles -->
+    <link href="assets/css/theDocs.all.min.css" rel="stylesheet" />
+    <link href="assets/css/custom.css" rel="stylesheet" />
+    <link href="assets/css/skin.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+    </script>
+
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Raleway:100,300,400,500%7CLato:300,400' rel='stylesheet' type='text/css' />
+
+    <!-- Favicons -->
+    <link rel="icon" href="assets/img/avatar.jpg" />
+</head>
+
+<body data-spy="scroll" data-target=".sidebar" data-offset="200">
+    <!-- Sidebar -->
+    <aside class="sidebar sidebar-boxed sidebar-dark" style="margin-top:-40px">
+
+        <a class="sidebar-brand" href="index.html"><img src="customAssets/img/AvraLogo.png" alt="logo" /></a>
+
+        <ul class="nav sidenav dropable" id="sidebar-menu">
+            <li>
+                <a href="#introduction">Getting Started</a>
+                <ul>
+                    <li><a href="#introduction">Introduction</a></li>
+                    <li><a href="#using-webservice">Using the Web Service </a></li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
+    <!-- END Sidebar -->
+    <header class="site-header navbar-fullwidth">
+        <!-- Top navbar & branding -->
+        <nav class="navbar navbar-default" style="background-color:#20398f">
+            <div class="container" >
+                <!-- Toggle buttons and brand -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="true" aria-controls="navbar">
+                        <span class="glyphicon glyphicon-option-vertical"></span>
+                    </button>
+                    <button type="button" class="navbar-toggle for-sidebar" data-toggle="offcanvas">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <!-- END Toggle buttons and brand -->
+                <!-- Top navbar -->
+                <div id="navbar" class="navbar-collapse collapse" aria-expanded="true" role="banner">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="active"><a href="index.html">Documentation</a></li>
+                        <li class="hero"><a href="#" target="_blank">Support</a></li>
+                    </ul>
+                </div>
+                <!-- END Top navbar -->
+            </div>
+        </nav>
+        <!-- END Top navbar & branding -->
+    </header>
+    <main class="container-fluid">
+        <!-- Main content -->
+        <article class="main-content" role="main" id="main-content">
+            <!--<header>
+                <p id="welcome"><img src="assets/img/00_preview.jpg" alt="preview" /></p>
+                <p>Thank you very much for purchasing my template. We've put a lot of hard work into it, and we hope you love it as much as we do. As far as the documentation is concerned, we have tried to cover as much as possible to help you get your new template up and running and to help you customise it.</p>
+            </header>-->
+            <section>
+                <div class="row">
+                    <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12 leftSection">
+                        <h2 id="introduction">Introduction</h2>
+                        <p>The purpose of this document is to give agents, and specifically their IT Technical departments, an insight into how Cyberlogic e-Tourism Platform set of XML web services works and what steps need to be completed in order to develop the interface with the platform.  </p>
+                        <p>This document includes a simple guide to implementing each XML web service, with code examples in C#, as well as some snap shots of its use in an XML posting application. </p>
+                        <p>After that we will look into each service in detail, describing the function of the service, a link to the service and a listing of all the variables used in the request functions along with descriptions. </p>
+                        <p>Finally, there are references to example XMLs, and XSD requests and responses, which are included along with this document. Please bear in mind that these are only guidelines designed to support your implementation and, due to the dynamic nature of the system’s development, may differ and change over time.  </p>
+                    </div>
+                                                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                                <pre class="codeBlock">
+                                <code data-language="xml" class="xml">
+        <SearchTransfers>
+            <Username>demouser</Username>
+            <Password>resuomed</Password>
+            <PickupDate>2019-06-01</PickupDate>
+            <ReturnPickupDate>2019-08-08</ReturnPickupDate>
+            <RoutePointFrom>1725</RoutePointFrom>
+            <RoutePointTo>1357</RoutePointTo>
+            <StationID>1</StationID>
+            <Adults>2</Adults>
+            <RoundTrip>true</RoundTrip>
+         </SearchTransfers>
+    ]]>
+                                </code>
+                                </pre>
+                            </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+					<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12 leftSection">
+						<h2 id="using-webservice">Using the Web Service</h2>
+						<p>A certain procedure is required to take place in order to be able to use any of the web services. </p>
+						<p>
+							Firstly, a user account is required to access any of the functions contained within the web service. These details are normally acquired through the web service distributer - system administrator.
+						</p>
+						<p>A list of all of the functions on the web service can be typically found at the following web address: http://www.link-url.com/services/webservice.asmx </p>
+						<p>In the analysis below, links are included to the XSDs for each function, which should be used to produce appropriately formatted XML. The service will also return informed error messages that should accurately identify any problems occurred with the format of the XML or with system failures & errors. </p>
+						<p>There are many ways to the connect to the web service, and most methods are supported including simple HTTP GET, HTTP POST, REST, and SOAP versions 1.1 and 1.2 (some helpful instructions can be found on the links that have been included with each function analysis below). </p>
+						<p>For reference purposes, the following code illustrates how to connect to the web service using a simple http request (POST) in C#:</p>
+						<pre>
+						<code data-language="c#">
+                                string strWebServiceUrl = "http://www.link_url.com/services/webservice.asmx/HotelInfo";
+                                string strXmlRequest = "xml=<?xml version='1.0' encoding='utf8' ?><HotelInfoRequest><Username>username</Username><Password>password</Password><HotelID>123</HotelID></HotelInfoRequest>";
+                                string strXmlResponse = GetXmlData(strWebServiceUrl,strXmlRequest); 
+                                public string GetXmlData(string strWebServiceUrl, string strXmlRequest)
+                                {
+                                    HttpWebRequest httpReq = (HttpWebRequest)WebRequest.Create(strWebServiceUrl);
+                                    httpReq.Method = "POST";
+                                    httpReq.ContentType = "application/x-www-form-urlencoded";
+                                    byte[] xmlbytes = Encoding.UTF8.GetBytes(strXmlRequest);
+                                    httpReq.ContentLength = xmlbytes.Length;
+                                    StreamWriter myWriter = null;
+                                    myWriter = new StreamWriter(httpReq.GetRequestStream());
+                                    myWriter.Write(strXmlRequest);
+                                    myWriter.Close();
+                                    HttpWebResponse httpResp = (HttpWebResponse)httpReq.GetResponse();
+                                    Stream retStream = httpResp.GetResponseStream();
+                                    StreamReader reader = new StreamReader(retStream);
+                                    responseFromServer = reader.ReadToEnd();
+                                    reader.Close();
+                                    retStream.Close();
+                                    httpResp.Close();
+                                    return responseFromServer;
+                                }
+                            </code>
+                        </pre>
+						<p>Regarding the booking process, it is important to study the Reservation function and to understand all of the requirements that are necessary for each service. All of the Accommodation IDs, Place IDs and available dates can be found using the appropriate functions. Also, studying the responses from the XML examples included will provide a complete picture of the booking process. </p>
+						<p>It is also recommended to make the use of caching where it is appropriate. There are many queries that will not change very regularly and so it would makes sense to save their responses and use the data locally to improve the performance of an application, and use less resources to perform simple tasks</p>
+					</div>
+                </div>
+            </section>
+        </article>
+        <!-- END Main content -->
+    </main>
+
+
+    <!-- Scripts -->
+    <script lang="javascript">
+        $.ajax({
+            url:'models/webServicesUpdated.json',
+            datatype:'json',
+            type:'get',
+            cache: false,
+            success:function(data) {
+                console.log(data);
+                var sidebarMenu = '';
+                var mainContent = '';
+                $(data.serviceCategory).each(function(index, value){
+                    sidebarMenu += menuItemTemplate(value);
+                    mainContent += mainContentTemplate(value.services);
+                });
+                $('#sidebar-menu').append(sidebarMenu);
+                $('#main-content').append(mainContent);
+            }
+        });
+
+        function menuItemTemplate(value) {
+            var menuItem = `
+            <li>
+                <a href="#`+value.services[0].href+`" class="has-child">`+value.name+`</a>`
+                + subMenuItemTemplate(value.services) +`
+            </li>`;
+            return menuItem;
+        }
+
+        function subMenuItemTemplate(value) {
+            var subMenuItem = `<ul>`
+                $(value).each(function(servicesIndex, servicesValue){
+                    subMenuItem += `<li><a href="#`+servicesValue.href+`">`+servicesValue.service+`</a></li>`;  
+                });
+            subMenuItem += `</ul>`;
+            return subMenuItem;
+        }
+
+        function mainContentTemplate(value)
+        {
+            console.log("coming");
+            var mainContent = ``;
+            $(value).each(function(servicesIndex, servicesValue){
+                mainContent += `
+                    <section>
+                        <div class="row">
+                            <div class="col-lg-7 col-md-12 col-sm-12  col-xs-12 leftSection">
+                                <h2 id="` +servicesValue.href+`">`+servicesValue.service+`</h2>
+                                <b><font color="#808080">Description</font></b>
+                                <p>`+servicesValue.description+`</p>
+                                <b><font color="#808080">Link</font></b>
+                                <p><a href="`+servicesValue.link+`">`+servicesValue.link+`</a></p>
+                                <div class="promo small-icon left">
+                                    <i class="fa fa-code"></i>
+                                    <h3>XML Request</h3>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                                <pre class="codeBlock xml">
+                                <code class="xml">
+<span style="color:#A0FBAA">
+&lt;SearchTransfers&gt;</span>
+    <span style="color:#A0FBAA">&lt;Username&gt;</span>demouser<span style="color:#A0FBAA">&lt;/Username&gt;</span>
+    <span style="color:#A0FBAA">&lt;Password&gt;</span>resuomed<span style="color:#A0FBAA">&lt;/Password&gt;</span>
+    <span style="color:#A0FBAA">&lt;PickupDate&gt;</span>2019-06-01<span style="color:#A0FBAA">&lt;/PickupDate&gt;</span>
+    <span style="color:#A0FBAA">&lt;ReturnPickupDate&gt;</span>2019-08-08<span style="color:#A0FBAA">&lt;/ReturnPickupDate&gt;</span>
+    <span style="color:#A0FBAA">&lt;RoutePointFrom&gt;</span>1725<span style="color:#A0FBAA">&lt;/RoutePointFrom&gt;</span>
+    <span style="color:#A0FBAA">&lt;RoutePointTo&gt;</span>1357<span style="color:#A0FBAA">&lt;/RoutePointTo&gt;</span>
+    <span style="color:#A0FBAA">&lt;StationID&gt;</span>1<span style="color:#A0FBAA">&lt;/StationID&gt;</span>
+    <span style="color:#A0FBAA">&lt;Adults&gt;</span>2<span style="color:#A0FBAA">&lt;/Adults&gt;</span>
+    <span style="color:#A0FBAA">&lt;RoundTrip&gt;</span>true<span style="color:#A0FBAA">&lt;/RoundTrip&gt;</span>
+<span style="color:#A0FBAA">&lt;/SearchTransfers&gt;</span>
+</code>
+</pre>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!--Table-->
+                            <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12 leftSection">
+								<div class="pp-info">
+									<div class="promo small-icon left">
+										<i class="fa fa-code"></i>
+										<h3>Request Body schema: text/xml</h3>
+									</div>
+									<table class="tableGeneral">
+										<tbody>
+											<tr>
+												<td class="tdStyle" kind="field" title="username"><span class="dz44d2-5 varName"></span>Username<div class="requiredField"> required </div></td>
+												<td class="fieldType">
+													<div>
+														<div>
+															<span class="varType">string</span><span> <span class="restriction-code"> &lt;= 50 characters </span></span>
+														</div>
+														<div>
+															<div class="fieldDescription">
+																<p>The Customer's username.</p>
+															</div>
+														</div>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="tdStyle" kind="field" title="Password"><span class="varName"></span>Password<div class="requiredField"> required </div></td>
+												<td class="fieldType">
+													<div>
+														<div><span class="varType">string</span></div> <div>
+															<div class="fieldDescription"><p>The customer's password.</p></div>
+														</div>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="tdStyle" kind="field" title="Type"><span class="varName"></span>Type<div class="requiredField"> required </div></td>
+												<td class="fieldType">
+													<div>
+														<div><span class="varType">integer</span></div>
+														<div><span class="defaultVar"> Default: </span><span class="varAsBlock"> 0 </span></div>
+														<div>
+															<span class="defaultVar"> Enum:</span>
+															<span class="varAsBlock"> 0 </span>
+															<span class="varAsBlock"> 1 </span>
+															<span class="varAsBlock"> 2 </span>
+															<span class="varAsBlock"> 3 </span>
+															<span class="varAsBlock"> 4 </span>
+														</div>
+														<div>
+															<div class="fieldDescription">
+																<p>The type of the place you want to search. </p>
+																<p>0 = All (default), 1 = Ports Only, 2 = Areas and Hotels, 3 = Hotels, 4 = Areas </p>
+															</div>
+														</div>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="tdStyle" kind="field" title="StationID"><span class="varName"></span>StationID</td>
+												<td class="fieldType">
+													<div>
+														<div><span class="varType">integer</span></div> <div>
+															<div class="fieldDescription">
+																<p>Filter by the Station ID in which the place you are searching for is included.</p>
+																<p class="varDescription-light">Acquire this id from Place Search***(link to Place search)</p>
+															</div>
+														</div>
+													</div>
+												</td>
+											</tr>
+											<tr class="last undefined">
+												<td class="tdStyle" kind="field" title="customFields"><span class="dz44d2-5 varName"></span>AccommodationID</td>
+												<td class="fieldType">
+													<div>
+														<div><span class="varType">integer</span></div>
+														<div>
+															<div class="fieldDescription">
+																<p>Filter by the AccommodationID you are searching for.</p>
+																<p class="varDescription-light">Acquire this id from hotel list***(link to hotel list)</p>
+															</div>
+														</div>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+                               
+                            </div>
+                            <!--End of Table-->
+                        </div>
+                         <!--Table-->
+                <div class="row">
+                    <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12 leftSection">
+                        <div class="promo small-icon left">
+                            <i class="fa fa-code"></i>
+                            <h3>Response Body schema: text/xml</h3>
+                        </div>
+                        <table class="tableGeneral">
+                            <tbody>
+                                <tr>
+                                    <td class="tdStyle" kind="field" title="username"><span class="dz44d2-5 varName"></span>Username<div class="requiredField"> required </div></td>
+                                    <td class="fieldType">
+                                        <div>
+                                            <div>
+                                                <span class="varType">string</span><span> <span class="restriction-code"> &lt;= 50 characters </span></span>
+                                            </div>
+                                            <div>
+                                                <div class="fieldDescription">
+                                                    <p>The Customer's username.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tdStyle" kind="field" title="Password"><span class="varName"></span>Password<div class="requiredField"> required </div></td>
+                                    <td class="fieldType">
+                                        <div>
+                                            <div><span class="varType">string</span></div> <div>
+                                                <div class="fieldDescription"><p>The customer's password.</p></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tdStyle" kind="field" title="Type"><span class="varName"></span>Type<div class="requiredField"> required </div></td>
+                                    <td class="fieldType">
+                                        <div>
+                                            <div><span class="varType">integer</span></div>
+                                            <div><span class="defaultVar"> Default: </span><span class="varAsBlock"> 0 </span></div>
+                                            <div>
+                                                <span class="defaultVar"> Enum:</span>
+                                                <span class="varAsBlock"> 0 </span>
+                                                <span class="varAsBlock"> 1 </span>
+                                                <span class="varAsBlock"> 2 </span>
+                                                <span class="varAsBlock"> 3 </span>
+                                                <span class="varAsBlock"> 4 </span>
+                                            </div>
+                                            <div>
+                                                <div class="fieldDescription">
+                                                    <p>The type of the place you want to search. </p>
+                                                    <p>0 = All (default), 1 = Ports Only, 2 = Areas and Hotels, 3 = Hotels, 4 = Areas </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tdStyle" kind="field" title="StationID"><span class="varName"></span>StationID</td>
+                                    <td class="fieldType">
+                                        <div>
+                                            <div><span class="varType">integer</span></div> <div>
+                                                <div class="fieldDescription">
+                                                    <p>Filter by the Station ID in which the place you are searching for is included.</p>
+                                                    <p class="varDescription-light">Acquire this id from Place Search***(link to Place search)</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="last undefined">
+                                    <td class="tdStyle" kind="field" title="customFields"><span class="dz44d2-5 varName"></span>AccommodationID</td>
+                                    <td class="fieldType">
+                                        <div>
+                                            <div><span class="varType">integer</span></div>
+                                            <div>
+                                                <div class="fieldDescription">
+                                                    <p>Filter by the AccommodationID you are searching for.</p>
+                                                    <p class="varDescription-light">Acquire this id from hotel list***(link to hotel list)</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!--End of Table-->
+                    </div>
+                </div>
+                    </section>
+                    `;
+                });
+            return mainContent;
+        }
+
+    </script>
+
+    <script src="assets/js/theDocs.all.min.js">
+    </script>
+    <!-- Syntax Highlighting -->
+    <link href="assets/vendors/rainbow/css/github.css" rel="stylesheet" type="text/css" media="screen" />
+    <script src="assets/vendors/rainbow/js/rainbow.js">
+    </script>
+    <script src="assets/vendors/rainbow/js/language/generic.js">
+    </script>
+    <script src="assets/vendors/rainbow/js/language/html.js">
+    </script>
+    <script src="assets/vendors/rainbow/js/language/css.js">
+    </script>
+    <script src="assets/vendors/rainbow/js/language/php.js">
+    </script>
+    <script src="assets/vendors/rainbow/js/language/javascript.js">
+    </script>
+
+</body>
+
+</html>
