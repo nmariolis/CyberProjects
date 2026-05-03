@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="CarRentals">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Response">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CarRentals" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="CarRental" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="GroupName"/>
+                          <xs:element type="xs:string" name="GroupDescription"/>
+                          <xs:element name="Cars"  maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Car">
+                                  <xs:complexType>
+                                    <xs:simpleContent>
+                                      <xs:extension base="xs:string">
+                                        <xs:attribute type="xs:int" name="ID" />
+                                        <xs:attribute type="xs:string" name="Name"/>
+                                        <xs:attribute type="xs:int" name="Doors"/>
+                                        <xs:attribute type="xs:int" name="Pax"/>
+                                        <xs:attribute type="xs:int" name="SuitecaseLarge"/>
+                                        <xs:attribute type="xs:string" name="Transmission"/>
+                                      </xs:extension>
+                                    </xs:simpleContent>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:decimal" name="Price"/>
+                          <xs:element type="xs:decimal" name="ExtraDaysPrice"/>
+                          <xs:element type="xs:decimal" name="OverHoursExtraDayPrice"/>
+                          <xs:element type="xs:decimal" name="TotalPrice"/>
+                          <xs:element type="xs:string" name="GroupPhoto"/>
+                        </xs:sequence>
+                        <xs:attribute type="xs:int" name="PriceID"/>
+                        <xs:attribute type="xs:int" name="CarGroupID"/>
+                        <xs:attribute type="xs:string" name="CarGroup"/>
+                        <xs:attribute type="xs:int" name="StopSales"/>
+                        <xs:attribute type="xs:int" name="RateDays"/>
+                        <xs:attribute type="xs:decimal" name="PricePerDay"/>
+                        <xs:attribute type="xs:decimal" name="ExtraPricePerDay"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:int" name="ContractID"/>
+                  <xs:attribute type="xs:string" name="ContractName"/>
+                  <xs:attribute type="xs:int" name="RentalDays"/>
+                  <xs:attribute type="xs:int" name="OverHoursExtraDay"/>
+                  <xs:attribute type="xs:int" name="StationID"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ErrorList" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="Errors" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Error" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Warnings" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Warning" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

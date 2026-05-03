@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="PlaceDescription">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Username" type="xs:string" minOccurs="1" maxOccurs="1" default="username" xmlns:doc="Customer's username"/>
+        <xs:element name="Password" type="xs:string" minOccurs="1" maxOccurs="1" default="password" xmlns:doc="Customer's password"/>
+        <xs:element name="Place" minOccurs="1" maxOccurs="1" type="PlaceType" xmlns:doc="Specify place type and id in order to get the desirable results."/>
+        <xs:element name="CityID" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="This element is depricated. Use Placetype instead."/>
+        <xs:element name="Language" default="en" xmlns:doc="2 character string that specifies your chosen language. Contact your xml provider for available languages.">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="en|de|fr|el|ru|it|es|nl|sq|sr|tr|ro" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="PlaceType">
+    <xs:attribute name="Type" fixed="Prefecture"  use="required" xmlns:doc="Choose a place type between ‘Prefecture’, ‘Province’ and ‘City’.">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Prefecture" />
+          <xs:enumeration value="Province" />
+          <xs:enumeration value="City" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="Id" type="xs:int" use="required" fixed="1" xmlns:doc="The id of the specified place type"/>
+  </xs:complexType>
+</xs:schema>
+

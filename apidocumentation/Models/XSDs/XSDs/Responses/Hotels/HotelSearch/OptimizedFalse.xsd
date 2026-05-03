@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="SearchHotels">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="Username"/>
+        <xs:element type="xs:string" name="Password"/>
+        <xs:element type="xs:date" name="DateFrom"/>
+        <xs:element type="xs:date" name="DateTo"/>
+        <xs:element name="Rooms">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Room" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:int" name="Adults"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:string" name="Language"/>
+        <xs:element type="xs:int" name="City"/>
+        <xs:element type="xs:boolean" name="UseTariff"/>
+        <xs:element type="xs:boolean" name="IsOptimized"/>
+        <xs:element name="Response">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Hotels">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="RatesFilter"/>
+                    <xs:element name="StopWatch">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="Split" maxOccurs="unbounded" minOccurs="0"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Hotel" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="Name"/>
+                          <xs:element type="xs:string" name="ImageThumbURL"/>
+                          <xs:element type="xs:string" name="Country"/>
+                          <xs:element type="xs:int" name="State"/>
+                          <xs:element type="xs:string" name="StateProvinceName"/>
+                          <xs:element type="xs:int" name="City"/>
+                          <xs:element type="xs:string" name="CityName"/>
+                          <xs:element type="xs:string" name="Address1"/>
+                          <xs:element type="xs:string" name="Address2"/>
+                          <xs:element type="xs:string" name="Address3"/>
+                          <xs:element type="xs:decimal" name="Rating"/>
+                          <xs:element type="xs:decimal" name="Longitude"/>
+                          <xs:element type="xs:decimal" name="Latitude"/>
+                          <xs:element type="xs:int" name="Type"/>
+                          <xs:element type="xs:string" name="TypeDescription"/>
+                          <xs:element type="xs:int" name="Location"/>
+                          <xs:element type="xs:string" name="LocationDescription"/>
+                          <xs:element type="xs:string" name="OfficialRating"/>
+                          <xs:element type="xs:string" name="Description"/>
+                          <xs:element type="xs:decimal" name="LowRate"/>
+                          <xs:element type="xs:boolean" name="SpecialOffer"/>
+                          <xs:element type="xs:int" name="TravelAdvisor"/>
+                          <xs:element type="xs:int" name="Availability"/>
+                          <xs:element type="xs:decimal" name="LowestPrice"/>
+                          <xs:element type="xs:int" name="OfficialRating_ID"/>
+                          <xs:element type="xs:int" name="Property_Class_ID"/>
+                          <xs:element type="xs:boolean" name="HasAllInclusive"/>
+                          <xs:element type="xs:boolean" name="HasContinentalBreakfast"/>
+                          <xs:element type="xs:boolean" name="HasIndoorPool"/>
+                          <xs:element type="xs:boolean" name="HasOutdoorPool"/>
+                          <xs:element type="xs:boolean" name="HasDataPorts"/>
+                          <xs:element type="xs:boolean" name="HasFitnessFacility"/>
+                          <xs:element type="xs:boolean" name="HasSPAWellnessCentre"/>
+                          <xs:element type="xs:boolean" name="HasPetsAllowed"/>
+                          <xs:element type="xs:boolean" name="HasParkingGarage"/>
+                          <xs:element name="Rooms">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Rooms">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Room" maxOccurs="unbounded" minOccurs="0">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element type="xs:string" name="Name"/>
+                                            <xs:element name="Occupancy" maxOccurs="unbounded" minOccurs="0">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="RR">
+                                                    <xs:complexType>
+                                                      <xs:sequence>
+                                                        <xs:element type="xs:string" name="Discount"/>
+                                                        <xs:element type="xs:string" name="value"/>
+                                                      </xs:sequence>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                  <xs:element name="BB">
+                                                    <xs:complexType>
+                                                      <xs:sequence>
+                                                        <xs:element type="xs:string" name="Discount"/>
+                                                        <xs:element type="xs:string" name="value"/>
+                                                      </xs:sequence>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                  <xs:element name="HB">
+                                                    <xs:complexType>
+                                                      <xs:sequence>
+                                                        <xs:element type="xs:string" name="Discount"/>
+                                                        <xs:element type="xs:string" name="value"/>
+                                                      </xs:sequence>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                  <xs:element name="FB">
+                                                    <xs:complexType>
+                                                      <xs:sequence>
+                                                        <xs:element type="xs:string" name="Discount"/>
+                                                        <xs:element type="xs:string" name="value"/>
+                                                      </xs:sequence>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                  <xs:element name="AI">
+                                                    <xs:complexType>
+                                                      <xs:sequence>
+                                                        <xs:element type="xs:string" name="Discount"/>
+                                                        <xs:element type="xs:string" name="value"/>
+                                                      </xs:sequence>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                  <xs:element name="UI">
+                                                    <xs:complexType>
+                                                      <xs:sequence>
+                                                        <xs:element type="xs:string" name="Discount"/>
+                                                        <xs:element type="xs:string" name="value"/>
+                                                      </xs:sequence>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                                <xs:attribute type="xs:string" name="Code"/>
+                                                <xs:attribute type="xs:boolean" name="MinLOSError"/>
+                                                <xs:attribute type="xs:boolean" name="ReleaseError"/>
+                                                <xs:attribute type="xs:int" name="Availability"/>
+                                                <xs:attribute type="xs:boolean" name="StopSales"/>
+                                                <xs:attribute type="xs:int" name="ContractID"/>
+                                                <xs:attribute type="xs:int" name="SalesID"/>
+                                                <xs:attribute type="xs:boolean" name="IsOpaque"/>
+                                                <xs:attribute type="xs:boolean" name="NonRefundable"/>
+                                                <xs:attribute type="xs:boolean" name="SelfCatering"/>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                          <xs:attribute type="xs:int" name="ID"/>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute type="xs:int" name="ID"/>
+                        <xs:attribute type="xs:int" name="giata_id"/>
+                        <xs:attribute type="xs:string" name="Currency"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:int" name="Records"/>
+                  <xs:attribute type="xs:int" name="NumberOfRooms"/>
+                  <xs:attribute type="xs:int" name="Overnights"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Results">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:int" name="RecordCount"/>
+                    <xs:element name="CityResults">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="CityResult">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:int" name="City"/>
+                                <xs:element type="xs:string" name="CityName"/>
+                                <xs:element type="xs:int" name="Hotels"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="PropertyTypes">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:int" name="Hotels"/>
+                          <xs:element type="xs:int" name="Apartments"/>
+                          <xs:element type="xs:int" name="Villas"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="StarRatings">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:int" name="FiveStars"/>
+                          <xs:element type="xs:int" name="FourStars"/>
+                          <xs:element type="xs:int" name="ThreeStars"/>
+                          <xs:element type="xs:int" name="TwoStars"/>
+                          <xs:element type="xs:int" name="TwoKeys"/>
+                          <xs:element type="xs:int" name="ThreeKeys"/>
+                          <xs:element type="xs:int" name="FourKeys"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ErrorList" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="Errors" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Error" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Warnings" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Warning" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+

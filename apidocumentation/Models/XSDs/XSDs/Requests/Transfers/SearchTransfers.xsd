@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="SearchTransfers">
+        <xs:complexType>
+          <xs:sequence>
+                <xs:element name="Username" type="xs:string" minOccurs="1" maxOccurs="1" default="username" xmlns:doc="Customer's username"/>
+                <xs:element name="Password" type="xs:string" minOccurs="1" maxOccurs="1" default="password" xmlns:doc="Customer's password"/>
+                <xs:element name="PickupDate" type="xs:date" minOccurs="1" maxOccurs="1" fixed="2020-06-01" xmlns:doc="The date that the party will be picked up"/>
+                <xs:element name="ReturnPickupDate" type="xs:date" minOccurs="0" maxOccurs="1" xmlns:doc="The date when the party will return, if RoundTrip is true"/>
+                <xs:element name="RoutePointFrom" type="xs:int" minOccurs="1" maxOccurs="1" default="1" xmlns:doc="Point where the party will be leaving from"/>
+                <xs:element name="RoutePointTo" type="xs:int" minOccurs="1" maxOccurs="1"  default="2" xmlns:doc="Point where the party will be going to"/>
+                <xs:element name="StationID" type="xs:int" minOccurs="1" maxOccurs="1" default="1" xmlns:doc="The Station ID of the route points"/>
+                <xs:element name="Adults" minOccurs="1" maxOccurs="1" default="2" xmlns:doc="Number of adults in the party">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:int">
+                            <xs:minInclusive value="1" />
+                            <xs:maxInclusive value="20" />
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="Children" minOccurs="0" maxOccurs="1" xmlns:doc="Number of children in the party">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:int">
+                            <xs:minInclusive value="0" />
+                            <xs:maxInclusive value="20" />
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="Infants" minOccurs="0" maxOccurs="1" xmlns:doc="Number of infants in the party">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:int">
+                            <xs:minInclusive value="0" />
+                            <xs:maxInclusive value="20" />
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="RoundTrip" type="xs:boolean" minOccurs="1" maxOccurs="1" default="false" xmlns:doc="Set to true if there will be a return transfer as well"/>
+                <xs:element name="VehicleID" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="The id of the vehicle you want to search for"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

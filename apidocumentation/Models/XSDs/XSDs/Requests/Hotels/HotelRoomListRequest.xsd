@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="HotelRoomListRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Username" type="xs:string" minOccurs="1" maxOccurs="1" default="username" xmlns:doc="Customer's username"/>
+        <xs:element name="Password" type="xs:string" minOccurs="1" maxOccurs="1" default="password" xmlns:doc="Customer's password" />
+        <xs:element name="HotelID" type="xs:int" minOccurs="1" maxOccurs="1" default="495" xmlns:doc="The Hotel ID"/>
+        <xs:element name="UseTariff" type="xs:boolean" minOccurs="0" maxOccurs="1" default="true" xmlns:doc="When true, returns available rooms based on your assigned tariff. When false, will return your own contracts."/>
+        <xs:element name="IgnoreTariff" type="xs:boolean" minOccurs="0" maxOccurs="1" xmlns:doc="When true, ignores your assigned tariff and returns rooms from all available contracts." />
+        <xs:element name="ContractID" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Filter results to rooms belonging to a specific contract ID." />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

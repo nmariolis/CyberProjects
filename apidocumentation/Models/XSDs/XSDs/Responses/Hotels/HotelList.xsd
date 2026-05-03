@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="HotelList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Response">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Hotels" minOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Hotel" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="Name"/>
+                          <xs:element type="xs:string" name="Country"/>
+                          <xs:element type="xs:int" name="Prefecture"/>
+                          <xs:element type="xs:string" name="PrefectureName"/>
+                          <xs:element type="xs:int" name="State"/>
+                          <xs:element type="xs:string" name="StateProvinceName"/>
+                          <xs:element type="xs:int" name="City"/>
+                          <xs:element type="xs:string" name="CityName"/>
+                          <xs:element type="xs:string" name="Address1"/>
+                          <xs:element type="xs:string" name="Address2"/>
+                          <xs:element type="xs:string" name="Address3"/>
+                          <xs:element type="xs:decimal" name="Rating"/>
+                          <xs:element type="xs:int" name="Type"/>
+                          <xs:element type="xs:string" name="TypeDescription"/>
+                          <xs:element type="xs:string" name="OfficialRating"/>
+                          <xs:element type="xs:int" name="OfficialRating_ID"/>
+                          <xs:element type="xs:int" name="Property_Class_ID"/>
+                          <xs:element type="xs:string" name="ImageThumbURL"/>
+                          <xs:element type="xs:string" name="Longitude"/>
+                          <xs:element type="xs:string" name="Latitude"/>
+                          <xs:element type="xs:string" name="Description"/>
+                          <xs:element type="xs:int" name="TravelAdvisor"/>
+                        </xs:sequence>
+                        <xs:attribute type="xs:int" name="ID"/>
+                        <xs:attribute type="xs:int" name="GIATA_ID"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:int" name="Records"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ErrorList" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="Errors" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Error" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Warnings" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Warning" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

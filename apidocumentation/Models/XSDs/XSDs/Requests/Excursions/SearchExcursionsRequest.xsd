@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="SearchExcursionsRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Username" type="xs:string" minOccurs="1" maxOccurs="1"  default="username" xmlns:doc="Customer's username"/>
+        <xs:element name="Password" type="xs:string" minOccurs="1" maxOccurs="1" default="password" xmlns:doc="Customer's password" />
+        <xs:element name="DateFrom" type="xs:date" minOccurs="1" maxOccurs="1" fixed="2020-06-01" xmlns:doc="Start date of the party’s stay. "/>
+        <xs:element name="DateTo" type="xs:date" minOccurs="1" maxOccurs="1" fixed="2020-06-15" xmlns:doc="End date of the party’s stay. "/>
+        <xs:element name="PriceZone" minOccurs="0" maxOccurs="1" type="xs:int" xmlns:doc="Filter by PriceZoneID ">
+          <xs:annotation>
+            <xs:documentation>
+              Either PriceZone or AccommodationID MUST be specified in order to correctly calculate the price of the excursion.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="AccommodationID" minOccurs="0" maxOccurs="1" default="495" type="xs:int" xmlns:doc="Filter by AccommodationID ">
+          <xs:annotation>
+            <xs:documentation>
+              Either PriceZone or AccommodationID MUST be specified in order to correctly calculate the price of the excursion.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Adults" minOccurs="1" maxOccurs="1" default="2" type="xs:int" xmlns:doc="Number of adults in this party "/>
+        <xs:element name="Children" minOccurs="1" maxOccurs="1" default="0" type="xs:int" xmlns:doc="Number of children in this party "/>
+        <xs:element name="Infants" minOccurs="1" maxOccurs="1" default ="0" type="xs:int" xmlns:doc="Number of infants in this party "/>
+        <xs:element name="Language" type="xs:string" minOccurs="0" maxOccurs="1" xmlns:doc="2 character string that specifies your chosen language. Contact your xml provider for available languages. Default is ‘en’. "/>
+        <xs:element name="ExcursionID" minOccurs="0" maxOccurs="1" type="xs:int" xmlns:doc="Filter by ExcursionID. This will also cause the XML to return a detailed description of the excursion. "/>
+        <xs:element name="NoHTML" minOccurs="0" maxOccurs="1" type="xs:boolean" default="0" xmlns:doc="When false, the excursion description will be returned with HTML formatting included. When true, it will be returned as plain text. "/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

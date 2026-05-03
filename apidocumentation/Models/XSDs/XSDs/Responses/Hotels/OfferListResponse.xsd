@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="OfferListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Response">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Offers" minOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Offer" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="HotelName"/>
+                          <xs:element name="Rooms" minOccurs="1">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Room" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:simpleContent>
+                                      <xs:extension base="xs:string">
+                                        <xs:attribute type="xs:int" name="RoomID" />
+                                        <xs:attribute type="xs:string" name="RoomName" />
+                                      </xs:extension>
+                                    </xs:simpleContent>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:string" name="OfferType"/>
+                          <xs:element type="xs:string" name="OfferTypeName"/>
+                          <xs:element type="xs:string" name="SalesDescription"/>
+                          <xs:element type="xs:date" name="EntryFromDate"/>
+                          <xs:element type="xs:date" name="EntryToDate"/>
+                          <xs:element type="xs:date" name="RsvFromDate"/>
+                          <xs:element type="xs:date" name="RsvToDate"/>
+                          <xs:element name="Discount" minOccurs="1">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:boolean" name="ApplyToSupplements"/>
+                                <xs:element name="RRDiscount" minOccurs="1" type="xs:decimal" />
+                                <xs:element name="BBDiscount" minOccurs="1" type="xs:decimal" />
+                                <xs:element name="HBDiscount" minOccurs="1" type="xs:decimal" />
+                                <xs:element name="FBDiscount" minOccurs="1" type="xs:decimal" />
+                                <xs:element name="AIDiscount" minOccurs="1" type="xs:decimal" />
+                                <xs:element name="UIDiscount" minOccurs="1" type="xs:decimal" />
+                                <xs:element name="IsPercent" minOccurs="1" type="xs:boolean" />
+                                <xs:element name="Message" minOccurs="1" type="xs:string" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="StayPay" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="StayPay">
+                                  <xs:complexType>
+                                    <xs:simpleContent>
+                                      <xs:extension base="xs:string">
+                                        <xs:attribute type="xs:int" name="Stay"/>
+                                        <xs:attribute type="xs:int" name="Pay"/>
+                                      </xs:extension>
+                                    </xs:simpleContent>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="StayDays" minOccurs="1">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="StayDays">
+                                  <xs:complexType>
+                                    <xs:simpleContent>
+                                      <xs:extension base="xs:string">
+                                        <xs:attribute type="xs:int" name="Minimum"/>
+                                      </xs:extension>
+                                    </xs:simpleContent>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:string" name="Criterion"/>
+                        </xs:sequence>
+                        <xs:attribute type="xs:int" name="OfferID"/>
+                        <xs:attribute type="xs:int" name="ContractID"/>
+                        <xs:attribute type="xs:int" name="HotelID"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ErrorList" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="Errors" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Error" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Warnings" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Warning" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

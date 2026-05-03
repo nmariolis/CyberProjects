@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="HotelOffersRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Username" type="xs:string" minOccurs="1" maxOccurs="1"  default="username" xmlns:doc="Customer's username"/>
+        <xs:element name="Password" type="xs:string" minOccurs="1" maxOccurs="1" default="password" xmlns:doc="Customer's password" />
+        <xs:element name="HotelID" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Show offers for a specific hotel "/>
+        <xs:element name="UseTariff" type="xs:boolean" minOccurs="0" maxOccurs="1" xmlns:doc="When true, returns offers based on your assigned tariff. When false, will return based on your own contracts."/>
+        <xs:element name="ShowFeatured" type="xs:boolean" minOccurs="0" maxOccurs="1" xmlns:doc="When true, returns the featured offers for your tariff. Default value is ‘false’. If other parameters are specified, these will also be taken into account. "/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

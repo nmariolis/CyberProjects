@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="HotelRoomAvailabilityRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Username" type="xs:string" minOccurs="1" maxOccurs="1" default="username" xmlns:doc="Customer's username"/>
+        <xs:element name="Password" type="xs:string" minOccurs="1" maxOccurs="1" default="password" xmlns:doc="Customer's password"/>
+        <xs:element name="HotelID" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Show availability for a specific hotel.">
+          <xs:annotation>
+            <xs:documentation>
+              You MUST select either a HotelID, RoomID or ContractID. You cannot leave all of these values null
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="RoomID" type="xs:int" minOccurs="0" maxOccurs="1" default="76960784" xmlns:doc="Show availability for a specific room.">
+          <xs:annotation>
+            <xs:documentation>
+              You MUST select either a HotelID, RoomID or ContractID. You cannot leave all of these values null
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="ContractID" type="xs:int" minOccurs="0" maxOccurs="1" default="117994" xmlns:doc="Show availability for a specific contract.">
+          <xs:annotation>
+            <xs:documentation>
+              You MUST select either a HotelID, RoomID or ContractID. You cannot leave all of these values null
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="DateFrom" type="xs:date" minOccurs="1" maxOccurs="1" fixed="2020-09-01" xmlns:doc="Start date of the availability window. The limit for the time period is 62 days (2 months)."/>
+        <xs:element name="DateTo" type="xs:date" minOccurs="1" maxOccurs="1" fixed="2020-09-15" xmlns:doc="End date of the availability window. The limit for the time period is 62 days (2 months)."/>
+        <xs:element name="UseTariff" type="xs:boolean" minOccurs="0" maxOccurs="1" xmlns:doc="When true, returns availability based on your assigned tariff. When false, will return your own contracts."/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

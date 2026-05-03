@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="ConfirmPendingReservationRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Username" type="xs:string" minOccurs="1" maxOccurs="1" default="username" xmlns:doc="Customer's username"/>
+        <xs:element name="Password" type="xs:string" minOccurs="1" maxOccurs="1" default="password" xmlns:doc="Customer's password"/>
+        <xs:element name="ReservationID" type="xs:int" minOccurs="1" maxOccurs="1" default="1" xmlns:doc="The ID of the reservation."/>
+        <xs:element name="PaymentReference" type="xs:string" minOccurs="1"  maxOccurs="1" default="PaymentReference" xmlns:doc="The reference of the payment."/>
+        <xs:element name="Remarks" type="xs:string" minOccurs="0" maxOccurs="1" xmlns:doc="Any remarks related to the cancellation of this reservation."/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

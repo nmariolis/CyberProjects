@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="SearchTransfers">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Response">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="Transfers" minOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Transfer" minOccurs="1" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Origin">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:int" name="ID"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Destination">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:int" name="ID"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:string" name="Notes"/>
+                          <xs:element name="Prices">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Price" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element minOccurs="1" maxOccurs="1" name="Basis" type="xs:string" />
+                                      <xs:element minOccurs="1" maxOccurs="1" name="Vehicle" type="xs:string" />
+                                      <xs:element minOccurs="0" maxOccurs="1" name="Routes">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="Route" minOccurs="1" maxOccurs="unbounded">
+                                              <xs:complexType>
+                                                <xs:simpleContent>
+                                                  <xs:extension base="xs:string">
+                                                    <xs:attribute type="xs:int" name="PriceID"/>
+                                                    <xs:attribute type="xs:int" name="RouteID"/>
+                                                    <xs:attribute type="xs:int" name="RouteTypeID"/>
+                                                    <xs:attribute type="xs:decimal" name="Price"/>
+                                                  </xs:extension>
+                                                </xs:simpleContent>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element type="xs:decimal" name="TotalPrice"/>
+                                    </xs:sequence>
+                                    <xs:attribute type="xs:int" name="MinPax"/>
+                                    <xs:attribute type="xs:int" name="MaxPax"/>
+                                    <xs:attribute type="xs:int" name="BasisID"/>
+                                    <xs:attribute type="xs:int" name="VehicleID"/>
+                                    <xs:attribute type="xs:int" name="Vehicles"/>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute type="xs:int" name="ID"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:int" name="Adults"/>
+                  <xs:attribute type="xs:int" name="Children"/>
+                  <xs:attribute type="xs:int" name="Infants"/>
+                  <xs:attribute type="xs:dateTime" name="ArrivalDate"/>
+                  <xs:attribute type="xs:boolean" name="RoundTrip"/>
+                  <xs:attribute type="xs:dateTime" name="DepartureDate" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ErrorList" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="Errors" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Error" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Warnings" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Warning" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

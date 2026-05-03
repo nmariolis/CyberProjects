@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cyberlogic API — Admin Panel</title>
+    <link href="assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css' />
+    <link rel="icon" href="customAssets/img/CyberlogicIcon.svg" />
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { margin: 0; padding: 0; min-height: 100%; }
+        body { background: #eef1f7; font-family: Lato, 'Helvetica Neue', sans-serif; }
+
+        /* ── Nav ── */
+        .navbar {
+            background: #1C4084; border-bottom: 3px solid #EB8008;
+            padding: 0 24px; display: flex; align-items: center;
+            justify-content: space-between; height: 58px;
+        }
+        .navbar-left { display: flex; align-items: center; gap: 14px; }
+        .navbar-left img { max-width: 130px; filter: brightness(0) invert(1); }
+        .admin-badge {
+            background: rgba(235,128,8,.18); color: #EB8008;
+            font-size: 11px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; padding: 3px 10px; border-radius: 20px;
+            border: 1px solid rgba(235,128,8,.35);
+        }
+        .btn-logout {
+            background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.25);
+            color: #fff; padding: 6px 14px; border-radius: 4px;
+            font-size: 12px; font-weight: 700; cursor: pointer; letter-spacing: .4px;
+            text-transform: uppercase; transition: background .15s;
+        }
+        .btn-logout:hover { background: rgba(255,255,255,.18); }
+
+        /* ── Layout ── */
+        .container { max-width: 1000px; margin: 36px auto; padding: 0 20px 60px; }
+
+        /* ── Cards ── */
+        .card {
+            background: #fff; border-radius: 8px;
+            box-shadow: 0 2px 16px rgba(28,64,132,.09); margin-bottom: 28px;
+        }
+        .card-head {
+            padding: 20px 28px 16px; border-bottom: 2px solid #eef1f7;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .card-head h2 {
+            margin: 0; font-size: 16px; font-weight: 700;
+            color: #1C4084; display: flex; align-items: center; gap: 8px;
+        }
+        .card-head h2 i { color: #EB8008; }
+        .card-body { padding: 24px 28px; }
+
+        /* ── Table ── */
+        .ep-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .ep-table th {
+            text-align: left; padding: 9px 12px;
+            font-size: 10px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: .7px; color: #6c8cbf; border-bottom: 2px solid #eef1f7;
+        }
+        .ep-table td { padding: 11px 12px; border-bottom: 1px solid #f0f3f8; vertical-align: middle; }
+        .ep-table tr:last-child td { border-bottom: none; }
+        .ep-table tr:hover td { background: #f7f9fc; }
+
+        .ep-name  { font-weight: 700; color: #1C4084; }
+        .ep-url   { color: #555; font-size: 12px; }
+        .ep-key   {
+            font-family: 'Courier New', monospace; font-size: 11px;
+            background: #f0f4fb; color: #2a4a8a; padding: 4px 8px;
+            border-radius: 4px; word-break: break-all; max-width: 260px; display: inline-block;
+        }
+
+        .btn-copy {
+            background: none; border: 1px solid #ccd6e8; color: #6c8cbf;
+            padding: 4px 9px; border-radius: 4px; cursor: pointer; font-size: 12px;
+            transition: all .15s; margin-left: 6px; vertical-align: middle;
+        }
+        .btn-copy:hover { border-color: #1C4084; color: #1C4084; }
+        .btn-copy.copied { border-color: #28a745; color: #28a745; }
+
+        .btn-del {
+            background: none; border: 1px solid #e8c5c5; color: #c0392b;
+            padding: 5px 11px; border-radius: 4px; cursor: pointer; font-size: 12px;
+            transition: all .15s; font-weight: 600;
+        }
+        .btn-del:hover { background: #dc3545; border-color: #dc3545; color: #fff; }
+
+        .empty-row td { text-align: center; color: #9db5d5; padding: 28px; font-style: italic; }
+
+        /* ── Create form ── */
+        .form-row { display: flex; gap: 14px; flex-wrap: wrap; }
+        .form-group { flex: 1; min-width: 200px; }
+        .form-group label {
+            display: block; font-size: 11px; font-weight: 700;
+            color: #1C4084; text-transform: uppercase; letter-spacing: .7px; margin-bottom: 7px;
+        }
+        .form-group input {
+            width: 100%; padding: 10px 12px; border: 1px solid #ccd6e8; border-radius: 4px;
+            font-size: 14px; color: #333; background: #f7f9fc; outline: none; font-family: inherit;
+            transition: border-color .2s, box-shadow .2s;
+        }
+        .form-group input:focus { border-color: #1C4084; box-shadow: 0 0 0 3px rgba(28,64,132,.12); background: #fff; }
+        .form-group input::placeholder { color: #b0bfce; }
+
+        .btn-create {
+            padding: 10px 24px; background: #EB8008; border: none; border-radius: 4px;
+            color: #fff; font-size: 13px; font-weight: 700; letter-spacing: .4px;
+            text-transform: uppercase; cursor: pointer; transition: background .15s;
+            font-family: inherit; white-space: nowrap; align-self: flex-end;
+        }
+        .btn-create:hover:not(:disabled) { background: #c96d00; }
+        .btn-create:disabled { opacity: .65; cursor: not-allowed; }
+
+        /* ── Result banner ── */
+        .result-box {
+            display: none; margin-top: 20px; padding: 16px 20px;
+            background: #f0fbf4; border: 1px solid #a8ddb8; border-left: 4px solid #28a745;
+            border-radius: 4px;
+        }
+        .result-box .result-label { font-size: 11px; font-weight: 700; color: #28a745; text-transform: uppercase; margin-bottom: 8px; }
+        .result-box .result-name  { font-size: 13px; font-weight: 700; color: #1C4084; margin-bottom: 4px; }
+        .result-box .result-url   { font-size: 12px; color: #555; margin-bottom: 10px; }
+        .result-box .result-key   {
+            font-family: 'Courier New', monospace; font-size: 12px;
+            background: #e8f5ec; color: #1a5c2e; padding: 8px 12px;
+            border-radius: 4px; word-break: break-all; margin-bottom: 8px;
+        }
+        .result-box .result-note  { font-size: 11px; color: #6c8cbf; }
+
+        .err-box {
+            display: none; margin-top: 14px; padding: 10px 14px;
+            background: rgba(220,53,69,.07); border: 1px solid rgba(220,53,69,.22);
+            border-left: 3px solid #dc3545; border-radius: 4px;
+            color: #b02a37; font-size: 13px;
+        }
+
+        /* ── Loader ── */
+        .loading { text-align: center; padding: 28px; color: #9db5d5; font-size: 13px; }
+
+        .page-foot {
+            background: #1C4084; color: rgba(255,255,255,.4);
+            text-align: center; font-size: 11px; padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="navbar-left">
+        <img src="customAssets/img/CyberlogicLogo.png" alt="Cyberlogic" />
+        <span class="admin-badge"><i class="fa fa-shield"></i>&nbsp; Admin Panel</span>
+    </div>
+    <button class="btn-logout" onclick="doLogout()">
+        <i class="fa fa-sign-out"></i>&nbsp; Logout
+    </button>
+</nav>
+
+<div class="container">
+
+    <!-- Endpoints table -->
+    <div class="card">
+        <div class="card-head">
+            <h2><i class="fa fa-server"></i> Active Endpoints</h2>
+            <span id="ep-count" style="font-size:12px;color:#9db5d5;"></span>
+        </div>
+        <div class="card-body" style="padding:0;">
+            <div class="loading" id="tbl-loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>
+            <table class="ep-table" id="ep-table" style="display:none;">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Base URL</th>
+                        <th>Encoded API Key</th>
+                        <th style="width:60px;"></th>
+                    </tr>
+                </thead>
+                <tbody id="ep-tbody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Create endpoint -->
+    <div class="card">
+        <div class="card-head">
+            <h2><i class="fa fa-plus-circle"></i> Create New Endpoint</h2>
+        </div>
+        <div class="card-body">
+            <div class="form-row" id="create-form">
+                <div class="form-group">
+                    <label>Endpoint Name</label>
+                    <input type="text" id="f-name" placeholder="e.g. Beach Hotel Hub" />
+                </div>
+                <div class="form-group">
+                    <label>Base URL</label>
+                    <input type="text" id="f-url" placeholder="https://newclient-hub.cyberlogic.cloud" />
+                </div>
+                <button class="btn-create" id="btn-create" onclick="createEndpoint()">
+                    <i class="fa fa-key"></i>&nbsp; Generate Key
+                </button>
+            </div>
+            <div class="err-box" id="create-err"></div>
+            <div class="result-box" id="create-result">
+                <div class="result-label"><i class="fa fa-check-circle"></i>&nbsp; API Key Generated</div>
+                <div class="result-name" id="res-name"></div>
+                <div class="result-url"  id="res-url"></div>
+                <div class="result-key"  id="res-key"></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;">
+                    <button class="btn-copy" id="res-copy" onclick="copyResult()">
+                        <i class="fa fa-copy"></i>&nbsp; Copy Key
+                    </button>
+                </div>
+                <div class="result-note">
+                    <i class="fa fa-info-circle"></i>&nbsp;
+                    This key is shown once. Copy it now and distribute it to the client.
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="page-foot">&copy; Cyberlogic e-Tourism Platform &mdash; Admin</div>
+
+<script>
+    var ADMIN_TOKEN = (function () {
+        var t = sessionStorage.getItem('cl_admin');
+        if (!t) { window.location.replace('AdminLogin.html'); return ''; }
+        return t;
+    })();
+
+    function authHeaders() {
+        return { 'Content-Type': 'application/json', 'X-Admin-Token': ADMIN_TOKEN };
+    }
+
+    // ── Load endpoints ──────────────────────────────────────────────────────────
+    function loadEndpoints() {
+        fetch('api/admin/endpoints', { headers: authHeaders() })
+        .then(function (r) {
+            if (r.status === 401) { sessionStorage.removeItem('cl_admin'); window.location.replace('AdminLogin.html'); }
+            return r.json();
+        })
+        .then(function (data) {
+            document.getElementById('tbl-loading').style.display = 'none';
+            document.getElementById('ep-table').style.display = 'table';
+            renderTable(data);
+        })
+        .catch(function () { document.getElementById('tbl-loading').textContent = 'Failed to load endpoints.'; });
+    }
+
+    function renderTable(list) {
+        var tbody = document.getElementById('ep-tbody');
+        var count = document.getElementById('ep-count');
+        count.textContent = list.length + ' endpoint' + (list.length !== 1 ? 's' : '');
+        if (list.length === 0) {
+            tbody.innerHTML = '<tr class="empty-row"><td colspan="4">No endpoints configured.</td></tr>';
+            return;
+        }
+        tbody.innerHTML = list.map(function (e) {
+            var id  = e.Id  || e.id;
+            var nm  = e.Name     || e.name     || '';
+            var url = e.BaseUrl  || e.baseUrl  || '';
+            var key = e.EncodedKey || e.encodedKey || '';
+            return '<tr data-id="' + esc(id) + '">' +
+                '<td><span class="ep-name">' + esc(nm) + '</span></td>' +
+                '<td><span class="ep-url">' + esc(url) + '</span></td>' +
+                '<td>' +
+                    '<span class="ep-key" id="key-' + esc(id) + '">' + esc(key) + '</span>' +
+                    '<button class="btn-copy" onclick="copyKey(this,\'' + esc(id) + '\')" title="Copy key">' +
+                        '<i class="fa fa-copy"></i>' +
+                    '</button>' +
+                '</td>' +
+                '<td>' +
+                    '<button class="btn-del" onclick="deleteEndpoint(\'' + esc(id) + '\',this)" title="Delete">' +
+                        '<i class="fa fa-trash"></i>' +
+                    '</button>' +
+                '</td>' +
+            '</tr>';
+        }).join('');
+    }
+
+    // ── Copy ─────────────────────────────────────────────────────────────────
+    function copyKey(btn, id) {
+        var key = document.getElementById('key-' + id).textContent;
+        navigator.clipboard.writeText(key).then(function () {
+            btn.classList.add('copied');
+            btn.innerHTML = '<i class="fa fa-check"></i>';
+            setTimeout(function () { btn.classList.remove('copied'); btn.innerHTML = '<i class="fa fa-copy"></i>'; }, 2000);
+        });
+    }
+
+    function copyResult() {
+        var key = document.getElementById('res-key').textContent;
+        var btn = document.getElementById('res-copy');
+        navigator.clipboard.writeText(key).then(function () {
+            btn.classList.add('copied');
+            btn.innerHTML = '<i class="fa fa-check"></i>&nbsp; Copied!';
+            setTimeout(function () { btn.classList.remove('copied'); btn.innerHTML = '<i class="fa fa-copy"></i>&nbsp; Copy Key'; }, 2500);
+        });
+    }
+
+    // ── Delete ───────────────────────────────────────────────────────────────
+    function deleteEndpoint(id, btn) {
+        if (!confirm('Delete this endpoint? The existing API key will stop working immediately.')) return;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+        fetch('api/admin/endpoints/' + encodeURIComponent(id), {
+            method: 'DELETE', headers: authHeaders()
+        })
+        .then(function (r) {
+            if (!r.ok) throw new Error();
+            var row = document.querySelector('tr[data-id="' + id + '"]');
+            if (row) row.remove();
+            var tbody = document.getElementById('ep-tbody');
+            var count = document.getElementById('ep-count');
+            var rows  = tbody.querySelectorAll('tr[data-id]');
+            count.textContent = rows.length + ' endpoint' + (rows.length !== 1 ? 's' : '');
+            if (rows.length === 0)
+                tbody.innerHTML = '<tr class="empty-row"><td colspan="4">No endpoints configured.</td></tr>';
+        })
+        .catch(function () { btn.disabled = false; btn.innerHTML = '<i class="fa fa-trash"></i>'; alert('Delete failed.'); });
+    }
+
+    // ── Create ───────────────────────────────────────────────────────────────
+    function createEndpoint() {
+        var name = document.getElementById('f-name').value.trim();
+        var url  = document.getElementById('f-url').value.trim();
+        var btn  = document.getElementById('btn-create');
+        var errEl = document.getElementById('create-err');
+
+        errEl.style.display = 'none';
+        document.getElementById('create-result').style.display = 'none';
+
+        if (!name) { showCreateErr('Endpoint name is required.'); return; }
+        if (!url)  { showCreateErr('Base URL is required.'); return; }
+        if (!/^https?:\/\//i.test(url)) { showCreateErr('Base URL must start with http:// or https://.'); return; }
+
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>&nbsp; Generating&hellip;';
+
+        fetch('api/admin/endpoints', {
+            method: 'POST',
+            headers: authHeaders(),
+            body: JSON.stringify({ name: name, baseUrl: url })
+        })
+        .then(function (r) {
+            if (!r.ok) return r.text().then(function (t) { throw new Error(t || 'Server error'); });
+            return r.json();
+        })
+        .then(function (data) {
+            document.getElementById('res-name').textContent = data.Name  || data.name;
+            document.getElementById('res-url').textContent  = data.BaseUrl  || data.baseUrl;
+            document.getElementById('res-key').textContent  = data.EncodedKey || data.encodedKey;
+            document.getElementById('create-result').style.display = 'block';
+            document.getElementById('f-name').value = '';
+            document.getElementById('f-url').value  = '';
+            loadEndpoints();
+        })
+        .catch(function (err) { showCreateErr(err.message || 'Failed to create endpoint.'); })
+        .finally(function () {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa fa-key"></i>&nbsp; Generate Key';
+        });
+    }
+
+    function showCreateErr(msg) {
+        var el = document.getElementById('create-err');
+        el.textContent = msg; el.style.display = 'block';
+    }
+
+    // ── Logout ───────────────────────────────────────────────────────────────
+    function doLogout() {
+        fetch('api/admin/logout', { method: 'POST', headers: authHeaders() }).finally(function () {
+            sessionStorage.removeItem('cl_admin');
+            window.location.replace('AdminLogin.html');
+        });
+    }
+
+    function esc(s) {
+        return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    loadEndpoints();
+</script>
+</body>
+</html>

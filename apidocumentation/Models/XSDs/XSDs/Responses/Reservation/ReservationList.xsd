@@ -1,0 +1,408 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="ReservationList">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="Response" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="Reservations" minOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Reservation" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:all>
+                          <xs:element name="Client" minOccurs="1" type="xs:string" />
+                          <xs:element name="TransferArrivalType" minOccurs="0" type="xs:string" />
+                          <xs:element name="TransferDepartureType" minOccurs="0" type="xs:string" />
+                          <xs:element name="ArrivalDate" minOccurs="1" type="xs:dateTime" />
+                          <xs:element name="DepartureDate" minOccurs="1" type="xs:dateTime" />
+                          <xs:element name="Adults" minOccurs="1">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Adult" minOccurs="1" maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:attribute name="Title" use="required" type="xs:string" />
+                                    <xs:attribute name="Name" use="required" type="xs:string" />
+                                    <xs:attribute name="Surname" use="required" type="xs:string" />
+                                    <xs:attribute name="Birthday" use="optional" type="xs:dateTime" />
+                                    <xs:attribute name="Passport" use="optional" type="xs:string" />
+                                    <xs:attribute name="Email" use="optional" type="xs:string"/>                                   
+                                    <xs:attribute name="Telephone" type="xs:string" use="optional" />
+                                    <xs:attribute name="Mobile" type="xs:string" use="optional" />
+                                    <xs:attribute name="Address" type="xs:string" use="optional" />
+                                    <xs:attribute name="Reference" use="required" type="xs:int" />
+                                    <xs:attribute type="xs:int" name="Age" use="optional"/>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Children" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Child" minOccurs="1" maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:attribute name="Title" use="required" type="xs:string" />
+                                    <xs:attribute name="Name" use="required" type="xs:string" />
+                                    <xs:attribute name="Surname" use="required" type="xs:string" />
+                                    <xs:attribute name="Birthday" use="optional" type="xs:dateTime" />
+                                    <xs:attribute name="Passport" use="optional" type="xs:string" />                                    
+                                    <xs:attribute name="Telephone" type="xs:string" use="optional" />
+                                    <xs:attribute name="Mobile" type="xs:string" use="optional" />
+                                    <xs:attribute name="Address" type="xs:string" use="optional" />
+                                    <xs:attribute name="Reference" use="required" type="xs:int" />
+                                    <xs:attribute type="xs:int" name="Age" use="optional"/>
+                                  </xs:complexType> 
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Infants" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Infant" minOccurs="1" maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:attribute name="Title" use="required" type="xs:string" />
+                                    <xs:attribute name="Name" use="required" type="xs:string" />
+                                    <xs:attribute name="Surname" use="required" type="xs:string" />
+                                    <xs:attribute name="Birthday" use="optional" type="xs:dateTime" />
+                                    <xs:attribute name="Passport" use="optional" type="xs:string" />                                  
+                                    <xs:attribute name="Telephone" type="xs:string" use="optional" />
+                                    <xs:attribute name="Mobile" type="xs:string" use="optional" />
+                                    <xs:attribute name="Address" type="xs:string" use="optional" />
+                                    <xs:attribute name="Reference" use="required" type="xs:int" />
+                                    <xs:attribute type="xs:int" name="Age" use="optional"/>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="OpenDate" minOccurs="1" type="xs:dateTime" />
+                          <xs:element name="UpdateDate" minOccurs="0" type="xs:dateTime" />
+                          <xs:element name="Remarks" minOccurs="0" type="xs:string" />
+                          <xs:element name="Services" minOccurs="1">
+                            <xs:complexType>
+                              <xs:all>
+                                <xs:element name="Hotels" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Hotel" minOccurs="1" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:all>
+                                            <xs:element name="ArrivalDate" minOccurs="1" type="xs:dateTime" />
+                                            <xs:element name="DepartureDate" minOccurs="1" type="xs:dateTime" />
+                                            <xs:element name="ClientList" minOccurs="0">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="Client" minOccurs="0" maxOccurs="unbounded">
+                                                    <xs:complexType>
+                                                      <xs:attribute name="Reference" use="required" type="xs:int" />
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                            <xs:element name="Remarks" minOccurs="1" type="xs:string" />
+                                            <xs:element name="Price" minOccurs="1" type="xs:decimal" />
+                                            <xs:element name="PriceRemarks" minOccurs="0" type="xs:string"/>
+                                          </xs:all>
+                                          <xs:attribute name="DetailID" use="required" type="xs:int" />
+                                          <xs:attribute name="HotelID" use="required" type="xs:int" />
+                                          <xs:attribute name="Name" use="required" type="xs:string" />
+                                          <xs:attribute name="RoomID" use="required" type="xs:int" />
+                                          <xs:attribute name="Room" use="optional" type="xs:string" />
+                                          <xs:attribute name="BoardBasis" use="optional" type="xs:string" />
+                                          <xs:attribute name="RoomQuantity" use="optional" type="xs:int" />
+                                          <xs:attribute type="xs:int" name="Adults" use="optional"/>
+                                          <xs:attribute type="xs:int" name="Children" use="optional"/>
+                                          <xs:attribute type="xs:int" name="Infants" use="optional"/>
+                                          <xs:attribute type="xs:string" name="ChildrenAges" use="optional"/>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="Transfers" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Transfer" minOccurs="1" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:all>
+                                            <xs:element name="Type" minOccurs="1" type="xs:string" />
+                                            <xs:element name="TransferDate" minOccurs="1" type="xs:dateTime" />
+                                            <xs:element name="TransferPickupDate" minOccurs="1" type="xs:dateTime" />
+                                            <xs:element name="AccommodationID" minOccurs="0" type="xs:int" />
+                                            <xs:element name="Accommodation" minOccurs="0" type="xs:string" />
+                                            <xs:element name="RouteID" minOccurs="1" type="xs:int" />
+                                            <xs:element name="Route" minOccurs="1" type="xs:string" />
+                                            <xs:element name="ServiceCode" minOccurs="1" type="xs:string" />
+                                            <xs:element name="ServiceName" minOccurs="1" type="xs:string" />
+                                            <xs:element name="OrderID" minOccurs="1" type="xs:int" />
+                                            <xs:element name="Price" minOccurs="1" type="xs:decimal" />
+                                            <xs:element name="ClientList" minOccurs="0">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="Client" minOccurs="0" maxOccurs="unbounded">
+                                                    <xs:complexType>
+                                                      <xs:attribute name="Reference" use="required" type="xs:int" />
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:all>
+                                          <xs:attribute name="DetailID" use="required" type="xs:int" />
+                                          <xs:attribute name="VehicleID" use="required" type="xs:int" />
+                                          <xs:attribute name="VehicleName" use="optional" type="xs:string" />
+                                          <xs:attribute name="Vehicles" use="optional" type="xs:int" />
+                                          <xs:attribute name="PickupPoint" use="optional" type="xs:int" />
+                                          <xs:attribute name="FlightID" use="optional" type="xs:int" />
+                                          <xs:attribute name="FlightOriginCode" use="optional" type="xs:string" />
+                                          <xs:attribute name="FlightDestinationCode" use="optional" type="xs:string" />
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="Excursions" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Excursion" minOccurs="1" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:all>                                           
+                                            <xs:element name="DateFrom" minOccurs="1" type="xs:dateTime" />
+                                            <xs:element name="DateTo" minOccurs="1" type="xs:dateTime" />
+                                            <xs:element name="ExcursionDate" minOccurs="1" type="xs:dateTime" />
+                                            <xs:element name="Pickup" minOccurs="0">
+                                              <xs:complexType>
+                                                <xs:attribute name="Hour" use="optional" type="xs:int" />
+                                                <xs:attribute name="Minute" use="optional" type="xs:int" />
+                                                <xs:attribute name="PointID" use="optional" type="xs:int" />
+                                              </xs:complexType>
+                                            </xs:element>
+                                            <xs:element name="ClientList" minOccurs="0">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="Client" minOccurs="0" maxOccurs="unbounded">
+                                                    <xs:complexType>
+                                                      <xs:attribute name="Reference" use="required" type="xs:int" />
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                            <xs:element name="Quantity" minOccurs="0" type="xs:int" />
+                                            <xs:element name="Remarks" minOccurs="0" type="xs:string" />
+                                            <xs:element name="Price" minOccurs="1" type="xs:decimal" />
+                                          </xs:all>
+                                          <xs:attribute name="DetailID" use="required" type="xs:int" />
+                                          <xs:attribute name="ID" use="required" type="xs:int" />
+                                          <xs:attribute name="LanguageID" use="optional" type="xs:int" />
+                                          <xs:attribute name="AccommodationID" use="optional" type="xs:int" />
+                                          <xs:attribute name="SellerID" use="optional" type="xs:int" />
+                                          <xs:attribute name="Name" use="optional" type="xs:string"/>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="Rentals" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Rental" minOccurs="1" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:all>
+                                            <xs:element name="DateFrom" minOccurs="1" type="xs:dateTime" />
+                                            <xs:element name="DateTo" minOccurs="1" type="xs:dateTime" />
+                                            <xs:element name="Delivery" minOccurs="0">
+                                              <xs:complexType>
+                                                <xs:attribute name="Hour" use="optional" type="xs:int" />
+                                                <xs:attribute name="Minutes" use="optional" type="xs:int" />
+                                                <xs:attribute name="Place" use="optional" type="xs:string" />
+                                              </xs:complexType>
+                                            </xs:element>
+                                            <xs:element name="Collection" minOccurs="0">
+                                              <xs:complexType>
+                                                <xs:attribute name="Hour" use="optional" type="xs:int" />
+                                                <xs:attribute name="Minutes" use="optional" type="xs:int" />
+                                                <xs:attribute name="Place" use="optional" type="xs:string" />
+                                              </xs:complexType>
+                                            </xs:element>
+                                            <xs:element name="ClientList" minOccurs="0">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="Client" minOccurs="0" maxOccurs="unbounded">
+                                                    <xs:complexType>
+                                                      <xs:attribute name="Reference" use="required" type="xs:int" />
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                            <xs:element name="Remarks" minOccurs="0" type="xs:string" />
+                                            <xs:element name="Price" minOccurs="1" type="xs:decimal" />
+                                          </xs:all>
+                                          <xs:attribute name="DetailID" use="required" type="xs:int" />
+                                          <xs:attribute name="GroupID" use="required" type="xs:int" />
+                                          <xs:attribute name="Quantity" use="optional" type="xs:int" />
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="Ferries" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Ferry" minOccurs="1" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="Pax">
+                                              <xs:complexType>
+                                                <xs:simpleContent>
+                                                  <xs:extension base="xs:string">
+                                                    <xs:attribute type="xs:int" name="Adults"/>
+                                                    <xs:attribute type="xs:int" name="Children"/>
+                                                    <xs:attribute type="xs:int" name="Infants"/>
+                                                    <xs:attribute type="xs:string" name="ChildrenAges"/>
+                                                  </xs:extension>
+                                                </xs:simpleContent>
+                                              </xs:complexType>
+                                            </xs:element>
+                                            <xs:element type="xs:dateTime" name="DepartureTime"/>
+                                            <xs:element type="xs:string" name="Vessel"/>
+                                            <xs:element type="xs:string" name="Cabin"/>
+                                            <xs:element type="xs:string" name="Company"/>
+                                            <xs:element type="xs:decimal" name="Price"/>
+                                          </xs:sequence>
+                                          <xs:attribute type="xs:int" name="DetailID"/>
+                                          <xs:attribute type="xs:int" name="Quantity"/>
+                                          <xs:attribute type="xs:string" name="Route"/>
+                                          <xs:attribute type="xs:string" name="Service"/>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="Packages"  minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Package" minOccurs="1" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="Room">
+                                              <xs:complexType>
+                                                <xs:simpleContent>
+                                                  <xs:extension base="xs:string">
+                                                    <xs:attribute type="xs:int" name="Id"/>
+                                                    <xs:attribute type="xs:string" name="Code"/>
+                                                    <xs:attribute type="xs:string" name="Description"/>
+                                                  </xs:extension>
+                                                </xs:simpleContent>
+                                              </xs:complexType>
+                                            </xs:element>
+                                            <xs:element name="Board">
+                                              <xs:complexType>
+                                                <xs:simpleContent>
+                                                  <xs:extension base="xs:string">
+                                                    <xs:attribute type="xs:int" name="Id"/>
+                                                    <xs:attribute type="xs:string" name="Code"/>
+                                                    <xs:attribute type="xs:string" name="Description"/>
+                                                  </xs:extension>
+                                                </xs:simpleContent>
+                                              </xs:complexType>
+                                            </xs:element>
+                                            <xs:element type="xs:dateTime" name="DateFrom"/>
+                                            <xs:element type="xs:dateTime" name="DateTo"/>
+                                            <xs:element type="xs:dateTime" name="PackageDate"/>
+                                            <xs:element name="Pickup">
+                                              <xs:complexType>
+                                                <xs:simpleContent>
+                                                  <xs:extension base="xs:string">
+                                                    <xs:attribute type="xs:int" name="PointID"/>
+                                                    <xs:attribute type="xs:int" name="Hour"/>
+                                                    <xs:attribute type="xs:int" name="Minute"/>
+                                                  </xs:extension>
+                                                </xs:simpleContent>
+                                              </xs:complexType>
+                                            </xs:element>
+                                            <xs:element type="xs:decimal" name="Price"/>
+                                            <xs:element type="xs:int" name="Quantity"/>
+                                            <xs:element type="xs:string" name="Remarks"/>
+                                          </xs:sequence>
+                                          <xs:attribute type="xs:int" name="DetailID"/>
+                                          <xs:attribute type="xs:int" name="ID"/>
+                                          <xs:attribute type="xs:string" name="Name"/>
+                                          <xs:attribute type="xs:int" name="LanguageID"/>
+                                          <xs:attribute type="xs:int" name="SellerID"/>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:all>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="FlightArrival" minOccurs="0">
+                            <xs:complexType>
+                              <xs:attribute name="ID" use="required" type="xs:int" />
+                              <xs:attribute name="Hour" use="optional" type="xs:int" />
+                              <xs:attribute name="Minutes" use="optional" type="xs:int" />
+                              <xs:attribute name="Name" use="required" type="xs:string" />
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="FlightDeparture" minOccurs="0">
+                            <xs:complexType>
+                              <xs:attribute name="ID" use="required" type="xs:int" />
+                              <xs:attribute name="Hour" use="optional" type="xs:int" />
+                              <xs:attribute name="Minutes" use="optional" type="xs:int" />
+                              <xs:attribute name="Name" use="required" type="xs:string" />
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:int" name="Vouchers"/>
+                          <xs:element type="xs:int" name="ProFormas"/>
+                        </xs:all>
+                        <xs:attribute name="FileNumber" use="required" type="xs:int" />
+                        <xs:attribute name="Reference" use="required" type="xs:string" />
+                        <xs:attribute name="BookingType" use="required" type="xs:string" />
+                        <xs:attribute name="BookingStatus" use="required" type="xs:string" />
+                        <xs:attribute type="xs:dateTime" name="BookingDate" use="optional"/>
+                        <xs:attribute name="Adults" use="required" type="xs:int" />
+                        <xs:attribute name="Children" use="required" type="xs:int" />
+                        <xs:attribute name="ChildrenAges" use="optional" type="xs:string" />
+                        <xs:attribute type="xs:int" name="Infants" use="optional"/>
+                        <xs:attribute type="xs:decimal" name="TotalPrice" use="optional"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Message" minOccurs="0" type="xs:string" />
+                  </xs:sequence>
+                  <xs:attribute name="Records" type="xs:int"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ErrorList" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+           <xs:all>
+            <xs:element name="Errors" minOccurs="0">
+              <xs:complexType>
+               <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" name="Error" type="xs:string" />
+               </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="Warnings" minOccurs="0">
+             <xs:complexType>
+              <xs:sequence>
+               <xs:element minOccurs="1" maxOccurs="unbounded" name="Warning" type="xs:string" />
+              </xs:sequence>
+             </xs:complexType>
+           </xs:element>
+          </xs:all>
+        </xs:complexType>
+       </xs:element>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

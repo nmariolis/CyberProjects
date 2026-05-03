@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="SearchContracts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Username" type="xs:string" minOccurs="1" maxOccurs="1" default="username" xmlns:doc="Customer's username" />
+        <xs:element name="Password" type="xs:string" minOccurs="1" maxOccurs="1" default="password" xmlns:doc="Customer's password" />
+        <xs:element name="UseTariff" type="xs:boolean" minOccurs="0" maxOccurs="1" default="true" xmlns:doc="When true, returns contracts based on your assigned tariff. When false, will return based on your own contracts." />
+        <xs:element name="ContractID" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="When specified, the details of the contract will be displayed."/>
+        <xs:element name="ShowRates" minOccurs="0" maxOccurs="1" default="PerPerson" xmlns:doc="Defines how the rates should be shown within the contract. PerPerson = Rates per person, PerOccupancy = Rates per occupancy. Default is PerPerson.">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="PerPerson" />
+              <xs:enumeration value="PerOccupancy" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="ContractFormat" minOccurs="0" maxOccurs="1" default="Relational" xmlns:doc="Defines how the contract should be presented. Relational = All data is presented in separate sections and referenced by the rates in a relational style, FlatFile = All data is shown in every line to show every possible combination of parameters. Default is Relational.">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="Relational" />
+              <xs:enumeration value="FlatFile" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="RoomInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="Username"/>
+        <xs:element type="xs:string" name="Password"/>
+        <xs:element type="xs:date" name="DateFrom"/>
+        <xs:element type="xs:date" name="DateTo"/>
+        <xs:element name="Rooms"  maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Room">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:int" name="Adults"/>
+                      <xs:attribute type="xs:int" name="Children"/>
+                      <xs:attribute type="xs:string" name="ChildrenAges"/>
+                      <xs:attribute type="xs:int" name="RoomID"/>
+                      <xs:attribute type="xs:int" name="ContractID"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:string" name="Language"/>
+        <xs:element type="xs:boolean" name="UseTariff"/>
+        <xs:element name="Response">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Room" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="Name"/>
+                    <xs:element type="xs:boolean" name="MinLOSError"/>
+                    <xs:element type="xs:boolean" name="ReleaseError"/>
+                    <xs:element type="xs:int" name="Availability"/>
+                    <xs:element type="xs:string" name="Discount"/>
+                    <xs:element name="Prices">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="BB">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:decimal">
+                                  <xs:attribute type="xs:decimal" name="Discount"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="RR">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:decimal">
+                                  <xs:attribute type="xs:decimal" name="Discount"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="AI">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:decimal">
+                                  <xs:attribute type="xs:decimal" name="Discount"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="UI">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:decimal">
+                                  <xs:attribute type="xs:decimal" name="Discount"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="HB">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:decimal">
+                                  <xs:attribute type="xs:decimal" name="Discount"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="FB">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:decimal">
+                                  <xs:attribute type="xs:decimal" name="Discount"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="xs:boolean" name="NonRefundable"/>
+                    <xs:element type="xs:boolean" name="SelfCatering"/>
+                  </xs:sequence>
+                  <xs:attribute type="xs:int" name="ID"/>
+                  <xs:attribute type="xs:int" name="ContractID"/>
+                  <xs:attribute type="xs:string" name="Currency"/>
+                  <xs:attribute type="xs:int" name="Adults"/>
+                  <xs:attribute type="xs:int" name="Children"/>
+                  <xs:attribute type="xs:string" name="ChildrenAges"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ErrorList" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="Errors" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Error" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Warnings" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Warning" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

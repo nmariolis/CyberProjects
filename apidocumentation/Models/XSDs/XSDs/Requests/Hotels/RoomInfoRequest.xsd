@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="RoomInfoRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Username" type="xs:string" minOccurs="1" maxOccurs="1" default="username" xmlns:doc="Customer's username"/>
+        <xs:element name="Password" type="xs:string" minOccurs="1" maxOccurs="1" default="password" xmlns:doc="Customer’s password"/>
+        <xs:element name="ShowVarious" type="xs:boolean" minOccurs="0" maxOccurs="1" xmlns:doc="When true, returns all available room and board options, not just the cheapest." />
+        <xs:element name="NoCache" type="xs:boolean" minOccurs="0" maxOccurs="1" xmlns:doc="When true, bypasses cached data and fetches live availability directly from the system." />
+        <xs:element name="Check" type="xs:boolean" minOccurs="0" maxOccurs="1" xmlns:doc="When true, performs a live availability check before returning room info." />
+        <xs:element name="ShowCancellationFees" type="xs:boolean" minOccurs="0" maxOccurs="1" xmlns:doc="When true, includes cancellation policy fee details in the response." />
+        <xs:element name="Residency" minOccurs="0" maxOccurs="1" xmlns:doc="2-character ISO 3166-1 alpha-2 country code of the traveller’s country of residence (e.g. GB, DE, GR). Used to apply residency-specific rates where applicable.">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="[A-Z]{2}" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="DateFrom" type="xs:date" minOccurs="1" maxOccurs="1" fixed="2020-06-01" xmlns:doc="Start date of the party’s stay. "/>
+        <xs:element name="DateTo" type="xs:date" minOccurs="1" maxOccurs="1" fixed="2020-06-15" xmlns:doc="End date of the party’s stay. "/>
+        <xs:element name="Rooms" xmlns:doc="The number of rooms, their occupants, Room IDs and Contract IDs (see below).">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Room" type="HotelRoomType" minOccurs="1" maxOccurs="4"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Language" default="en" xmlns:doc="2 character string that specifies your chosen language. Contact your xml provider for available languages. ">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="en|de|fr|el|ru|it|es" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="UseTariff" type="xs:boolean" minOccurs="0" default="true" xmlns:doc="When true, returns prices and availability based on your assigned tariff. When false, will return your own contracts."/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="HotelRoomType">
+    <xs:attribute name="Adults" use="required" fixed="2" xmlns:doc="Number of adults allocated to this room. ">
+      <xs:simpleType>
+        <xs:restriction base="xs:int">
+          <xs:minInclusive value="1" />
+          <xs:maxInclusive value="20" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="Children" fixed="0" xmlns:doc="Number of children allocated to this room. Default is 0. ">
+      <xs:simpleType>
+        <xs:restriction base="xs:int">
+          <xs:minInclusive value="0" />
+          <xs:maxInclusive value="10" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="ChildrenAges" fixed="" xmlns:doc="If the number of children is greater than 0, specify their ages with a comma separated list, i.e. ’12,9,5’  ">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="([0-9 ]{1,2}(,[0-9 ]{1,2})*)*" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="RoomID" type="xs:int" use="required" fixed="76960784" xmlns:doc="The ID of the room you want to see prices for.">
+      <xs:annotation>
+        <xs:documentation>These IDs are provided in the HotelsSearch function.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="ContractID" type="xs:int" use="required" fixed="117994" xmlns:doc="The ID of the contract you want to extract the prices from.">
+      <xs:annotation>
+        <xs:documentation>These IDs are provided in the HotelsSearch function.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+</xs:schema>

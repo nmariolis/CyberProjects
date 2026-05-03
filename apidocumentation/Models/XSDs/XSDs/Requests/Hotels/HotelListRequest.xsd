@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="HotelListRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Username" type="xs:string" minOccurs="1" maxOccurs="1"  default="username" xmlns:doc="Customer's username"/>
+        <xs:element name="Password" type="xs:string" minOccurs="1" maxOccurs="1" default="password" xmlns:doc="Customer's password"/>
+        <xs:element name="Language" default="en" minOccurs="1" maxOccurs="1" xmlns:doc="2 character string that specifies your chosen language.">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="en|de|fr|zh|nl" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="HotelName" type="xs:string" minOccurs="0" maxOccurs="1" xmlns:doc="Search for a hotel or any hotel names that contain a specific string. "/>
+        <xs:element name="Hoteltype" minOccurs="0" maxOccurs="1" xmlns:doc="H = Hotels only, A = Apartments only, V = Villas only, U = All Selfcatering accommodation. Returns all types when left null. ">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="H" />
+              <xs:enumeration value="A" />
+              <xs:enumeration value="V" />
+              <xs:enumeration value="U" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="Rating" minOccurs="0" maxOccurs="1" xmlns:doc="5 = Lux or 5 stars, 4 = A Category or 4 stars, 3 = B Category or 3 stars, 2 = C Category or 2 stars, 1 = D Category or 1 star. Returns all ratings when left null.">
+          <xs:simpleType>
+            <xs:restriction base="xs:int">
+              <xs:minInclusive value="1" />
+              <xs:maxInclusive value="5" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="Province" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Returns hotels in the specified Province ID">
+        <xs:annotation>
+          <xs:documentation>See PlaceSearch for information on how to obtain these IDs</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+        <xs:element name="Prefecture" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Returns hotels in the specified Prefecture ID">
+          <xs:annotation>
+            <xs:documentation>See PlaceSearch for information on how to obtain these IDs</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="City" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Returns hotels in the specified City ID">
+          <xs:annotation>
+            <xs:documentation>See PlaceSearch for information on how to obtain these IDs</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Board" minOccurs="0" maxOccurs="1" xmlns:doc="Filter by board type. RR = Room Rates, BB = Bed and Breakfast, HB = Half Board, FB = Full Board, AI = All Inclusive, UI = Ultra All Inclusive.">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="RR" />
+              <xs:enumeration value="BB" />
+              <xs:enumeration value="HB" />
+              <xs:enumeration value="FB" />
+              <xs:enumeration value="AI" />
+              <xs:enumeration value="UI" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="HotelID" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Returns the hotel with the specified ID only." />
+        <xs:element name="RoomName" type="xs:string" minOccurs="0" maxOccurs="1" xmlns:doc="Filter to hotels that have a room matching a specific name." />
+        <xs:element name="Show" minOccurs="0" maxOccurs="1" xmlns:doc="Contract = hotels from your own contracts only, Tariff = hotels from your assigned tariff only, All = both combined.">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="Contract"/>
+              <xs:enumeration value="Tariff" />
+              <xs:enumeration value="All" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="UseTariff" type="xs:boolean" minOccurs="0" maxOccurs="1" xmlns:doc="When true, returns hotels in your assigned tariff. When false, returns hotels from your own contracts." />
+        <xs:element name="ShowFeatured" type="xs:boolean" minOccurs="0" maxOccurs="1" xmlns:doc="When true, returns only the featured hotels for your tariff. Other filter parameters are still applied if specified." />    
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+

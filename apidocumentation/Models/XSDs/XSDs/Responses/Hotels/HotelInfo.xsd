@@ -1,0 +1,1125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="HotelInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Response">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Hotels" minOccurs="0">
+                <xs:complexType>
+                  <xs:all>
+                    <xs:element name="Hotel" minOccurs="1">
+                      <xs:complexType>
+                        <xs:all>
+                          <xs:element type="xs:string" name="Name"/>
+                          <xs:element type="xs:string" name="Address1"/>
+                          <xs:element type="xs:string" name="Address2"/>
+                          <xs:element type="xs:string" name="Address3"/>
+                          <xs:element type="xs:string" name="PostalCode"/>
+                          <xs:element type="xs:string" name="AddressNotes"/>
+                          <xs:element name="ContactNumbers">
+                            <xs:complexType>
+                              <xs:all>
+                                <xs:element name="Numbers">
+                                  <xs:complexType>
+                                    <xs:simpleContent>
+                                      <xs:extension base="xs:string">
+                                        <xs:attribute type="xs:string" name="Telephone"/>
+                                        <xs:attribute type="xs:string" name="Fax"/>
+                                      </xs:extension>
+                                    </xs:simpleContent>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:all>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:decimal" name="Longitude"/>
+                          <xs:element type="xs:decimal" name="Latitude"/>
+                          <xs:element type="xs:string" name="Country"/>
+                          <xs:element name="StateProvinceName">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="languages">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                        <xs:complexType>
+                                          <xs:simpleContent>
+                                            <xs:extension base="xs:string">
+                                              <xs:attribute type="xs:string" name="name" />
+                                              <xs:attribute type="xs:string" name="description" />
+                                            </xs:extension>
+                                          </xs:simpleContent>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:int" name="StateProvince_ID"/>
+                          <xs:element name="PrefectureName">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="languages">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                        <xs:complexType>
+                                          <xs:simpleContent>
+                                            <xs:extension base="xs:string">
+                                              <xs:attribute type="xs:string" name="name" />
+                                              <xs:attribute type="xs:string" name="description" />
+                                            </xs:extension>
+                                          </xs:simpleContent>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:int" name="PrefectureID"/>
+                          <xs:element name="CityName">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="languages">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                        <xs:complexType>
+                                          <xs:simpleContent>
+                                            <xs:extension base="xs:string">
+                                              <xs:attribute type="xs:string" name="name" />
+                                              <xs:attribute type="xs:string" name="description" />
+                                            </xs:extension>
+                                          </xs:simpleContent>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:short" name="City_ID"/>
+                          <xs:element name="TypeDescription">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="languages">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                        <xs:complexType>
+                                          <xs:simpleContent>
+                                            <xs:extension base="xs:string">
+                                              <xs:attribute type="xs:string" name="name" />
+                                              <xs:attribute type="xs:string" name="culture" />
+                                              <xs:attribute type="xs:string" name="description" />
+                                            </xs:extension>
+                                          </xs:simpleContent>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="ReferencePoints" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Point" minOccurs="1" maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="ReferencePoint">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="languages">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:simpleContent>
+                                                        <xs:extension base="xs:string">
+                                                          <xs:attribute type="xs:string" name="name" />
+                                                          <xs:attribute type="xs:string" name="description" />
+                                                        </xs:extension>
+                                                      </xs:simpleContent>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="ReferenceDescription">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="languages">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:simpleContent>
+                                                        <xs:extension base="xs:string">
+                                                          <xs:attribute type="xs:string" name="name" />
+                                                          <xs:attribute type="xs:string" name="description" />
+                                                        </xs:extension>
+                                                      </xs:simpleContent>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute type="xs:int" name="ID" />
+                                    <xs:attribute type="xs:string" name="Distance" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:decimal" name="OurRating"/>
+                          <xs:element name="Location">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="languages">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                        <xs:complexType>
+                                          <xs:simpleContent>
+                                            <xs:extension base="xs:string">
+                                              <xs:attribute type="xs:string" name="name" />
+                                              <xs:attribute type="xs:string" name="description" />
+                                            </xs:extension>
+                                          </xs:simpleContent>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Style">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="languages">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                        <xs:complexType>
+                                          <xs:simpleContent>
+                                            <xs:extension base="xs:string">
+                                              <xs:attribute type="xs:string" name="name" />
+                                              <xs:attribute type="xs:string" name="description" />
+                                            </xs:extension>
+                                          </xs:simpleContent>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:string" name="OfficialRating"/>
+                          <xs:element type="xs:string" name="CheckInTime"/>
+                          <xs:element type="xs:string" name="CheckOUtTime"/>
+                          <xs:element type="xs:decimal" name="LowRate"/>
+                          <xs:element type="xs:int" name="NumberOfRooms"/>
+                          <xs:element type="xs:int" name="NumberOfBuildings"/>
+                          <xs:element type="xs:int" name="NumberOfFloors"/>
+                          <xs:element type="xs:boolean" name="OpenAllYear"/>
+                          <xs:element type="xs:string" name="ImageThumbURL"/>
+                          <xs:element name="ShortDescription">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="languages">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                        <xs:complexType>
+                                          <xs:simpleContent>
+                                            <xs:extension base="xs:string">
+                                              <xs:attribute type="xs:string" name="name" />
+                                              <xs:attribute type="xs:string" name="description" />
+                                            </xs:extension>
+                                          </xs:simpleContent>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="FullDescription">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="PropertyDescription">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="languages">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                              <xs:complexType>
+                                                <xs:simpleContent>
+                                                  <xs:extension base="xs:string">
+                                                    <xs:attribute type="xs:string" name="name" />
+                                                    <xs:attribute type="xs:string" name="description" />
+                                                  </xs:extension>
+                                                </xs:simpleContent>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="AdditionalInfo">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Comments">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="languages">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                              <xs:complexType>
+                                                <xs:simpleContent>
+                                                  <xs:extension base="xs:string">
+                                                    <xs:attribute type="xs:string" name="name" />
+                                                    <xs:attribute type="xs:string" name="description" />
+                                                  </xs:extension>
+                                                </xs:simpleContent>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="photos">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="main">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element type="xs:string" name="photo"/>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="searchresults">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element type="xs:string" name="photo"/>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="photogallery" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="photo">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="title">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="Caption">
+                                                    <xs:complexType>
+                                                      <xs:sequence>
+                                                        <xs:element name="languages">
+                                                          <xs:complexType>
+                                                            <xs:sequence>
+                                                              <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                                <xs:complexType>
+                                                                  <xs:simpleContent>
+                                                                    <xs:extension base="xs:string">
+                                                                      <xs:attribute type="xs:string" name="name" />
+                                                                      <xs:attribute type="xs:string" name="description" />
+                                                                    </xs:extension>
+                                                                  </xs:simpleContent>
+                                                                </xs:complexType>
+                                                              </xs:element>
+                                                            </xs:sequence>
+                                                          </xs:complexType>
+                                                        </xs:element>
+                                                      </xs:sequence>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                            <xs:element type="xs:string" name="thumb"/>
+                                            <xs:element type="xs:string" name="image"/>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:boolean" name="HasContinentalBreakfast"/>
+                          <xs:element type="xs:boolean" name="HasSauna"/>
+                          <xs:element type="xs:boolean" name="HasWhirlpool"/>
+                          <xs:element type="xs:boolean" name="HasParkingGarage"/>
+                          <xs:element type="xs:boolean" name="HasSafe"/>
+                          <xs:element type="xs:boolean" name="HasFitnessFacility"/>
+                          <xs:element type="xs:boolean" name="HasTennisCourt"/>
+                          <xs:element type="xs:boolean" name="HasGolfCourse"/>
+                          <xs:element type="xs:boolean" name="HasInHouseDining"/>
+                          <xs:element type="xs:boolean" name="HasInHouseBar"/>
+                          <xs:element type="xs:boolean" name="HasHandicapAccessible"/>
+                          <xs:element type="xs:boolean" name="HasPetsAllowed"/>
+                          <xs:element type="xs:boolean" name="HasTVInRoom"/>
+                          <xs:element type="xs:boolean" name="HasDataPorts"/>
+                          <xs:element type="xs:boolean" name="HasBusinessCenter"/>
+                          <xs:element type="xs:boolean" name="HasOutdoorPool"/>
+                          <xs:element type="xs:boolean" name="HasIndoorPool"/>
+                          <xs:element type="xs:boolean" name="HasAirConditioning"/>
+                          <xs:element type="xs:boolean" name="HasRoomService"/>
+                          <xs:element type="xs:boolean" name="HasHairDryer"/>
+                          <xs:element type="xs:boolean" name="HasFamilyRooms"/>
+                          <xs:element type="xs:boolean" name="HasKitchen"/>
+                          <xs:element type="xs:string" name="CancellationPolicy"/>
+                          <xs:element name="HotelAmenities">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Amenities" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="HotelAmenity">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="languages">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:simpleContent>
+                                                        <xs:extension base="xs:string">
+                                                          <xs:attribute type="xs:string" name="name" />
+                                                          <xs:attribute type="xs:string" name="description" />
+                                                        </xs:extension>
+                                                      </xs:simpleContent>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="AmenityDescription">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="languages">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:simpleContent>
+                                                        <xs:extension base="xs:string">
+                                                          <xs:attribute type="xs:string" name="name" />
+                                                          <xs:attribute type="xs:string" name="description" />
+                                                        </xs:extension>
+                                                      </xs:simpleContent>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute type="xs:int" name="ID" />
+                                    <xs:attribute type="xs:boolean" name="Charged" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Meals">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="AvailableMealCategory" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="MealTitle">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="languages">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:simpleContent>
+                                                        <xs:extension base="xs:string">
+                                                          <xs:attribute type="xs:string" name="name" />
+                                                          <xs:attribute type="xs:string" name="description" />
+                                                        </xs:extension>
+                                                      </xs:simpleContent>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="MealDescription">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="languages">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:simpleContent>
+                                                        <xs:extension base="xs:string">
+                                                          <xs:attribute type="xs:string" name="name" />
+                                                          <xs:attribute type="xs:string" name="description" />
+                                                        </xs:extension>
+                                                      </xs:simpleContent>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="MealPlan">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="languages">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:simpleContent>
+                                                        <xs:extension base="xs:string">
+                                                          <xs:attribute type="xs:string" name="name" />
+                                                          <xs:attribute type="xs:string" name="description" />
+                                                        </xs:extension>
+                                                      </xs:simpleContent>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute type="xs:int" name="ID" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="HotelDining">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="DiningFacility" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="RestaurantCategory">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="languages">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:simpleContent>
+                                                        <xs:extension base="xs:string">
+                                                          <xs:attribute type="xs:string" name="name" />
+                                                          <xs:attribute type="xs:string" name="description" />
+                                                        </xs:extension>
+                                                      </xs:simpleContent>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="RestaurantDescription">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="languages">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:simpleContent>
+                                                        <xs:extension base="xs:string">
+                                                          <xs:attribute type="xs:string" name="name" />
+                                                          <xs:attribute type="xs:string" name="description" />
+                                                        </xs:extension>
+                                                      </xs:simpleContent>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element type="xs:string" name="RestaurantServices"/>
+                                    </xs:sequence>
+                                    <xs:attribute type="xs:int" name="ID" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="HotelRecreation">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Recreation" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="RecreationService">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="languages">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:simpleContent>
+                                                        <xs:extension base="xs:string">
+                                                          <xs:attribute type="xs:string" name="name" />
+                                                          <xs:attribute type="xs:string" name="description" />
+                                                        </xs:extension>
+                                                      </xs:simpleContent>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="RecreationDescription">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="languages">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:simpleContent>
+                                                        <xs:extension base="xs:string">
+                                                          <xs:attribute type="xs:string" name="name" />
+                                                          <xs:attribute type="xs:string" name="description" />
+                                                        </xs:extension>
+                                                      </xs:simpleContent>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="Details" >
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="Detail" maxOccurs="unbounded" minOccurs="1">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="Name" maxOccurs="unbounded" minOccurs="1" >
+                                                    <xs:complexType>
+                                                      <xs:sequence>
+                                                        <xs:element name="languages">
+                                                          <xs:complexType>
+                                                            <xs:sequence>
+                                                              <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                                <xs:complexType>
+                                                                  <xs:simpleContent>
+                                                                    <xs:extension base="xs:string">
+                                                                      <xs:attribute type="xs:string" name="name" />
+                                                                      <xs:attribute type="xs:string" name="description" />
+                                                                    </xs:extension>
+                                                                  </xs:simpleContent>
+                                                                </xs:complexType>
+                                                              </xs:element>
+                                                            </xs:sequence>
+                                                          </xs:complexType>
+                                                        </xs:element>
+                                                      </xs:sequence>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                                <xs:attribute type="xs:int" name="ID" />
+                                                <xs:attribute type="xs:boolean" name="Charged" />
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute type="xs:int" name="ID" />
+                                    <xs:attribute type="xs:boolean" name="Charged" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="HotelAttractions">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Attraction" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="AttractionCategory">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="languages">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:simpleContent>
+                                                        <xs:extension base="xs:string">
+                                                          <xs:attribute type="xs:string" name="name" />
+                                                          <xs:attribute type="xs:string" name="description" />
+                                                        </xs:extension>
+                                                      </xs:simpleContent>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="AttractionDescription">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="languages">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:simpleContent>
+                                                        <xs:extension base="xs:string">
+                                                          <xs:attribute type="xs:string" name="name" />
+                                                          <xs:attribute type="xs:string" name="description" />
+                                                        </xs:extension>
+                                                      </xs:simpleContent>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute type="xs:int" name="ID" />
+                                    <xs:attribute type="xs:string" name="Distance" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:string" name="TripAdvisor"/>
+                          <xs:element name="Rooms">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Room" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element type="xs:int" name="MaxPax"/>
+                                      <xs:element type="xs:int" name="MinPax"/>
+                                      <xs:element name="RoomType">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="languages">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:simpleContent>
+                                                        <xs:extension base="xs:string">
+                                                          <xs:attribute type="xs:string" name="name" />
+                                                          <xs:attribute type="xs:string" name="culture" />
+                                                          <xs:attribute type="xs:string" name="description" />
+                                                        </xs:extension>
+                                                      </xs:simpleContent>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="Type">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="languages">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:simpleContent>
+                                                        <xs:extension base="xs:string">
+                                                          <xs:attribute type="xs:string" name="name" />
+                                                          <xs:attribute type="xs:string" name="culture" />
+                                                          <xs:attribute type="xs:string" name="description" />
+                                                        </xs:extension>
+                                                      </xs:simpleContent>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element type="xs:boolean" name="SmokingAllowed"/>
+                                      <xs:element name="Amenities">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="Amenity" maxOccurs="unbounded" minOccurs="0">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="Name">
+                                                    <xs:complexType>
+                                                      <xs:sequence>
+                                                        <xs:element name="languages">
+                                                          <xs:complexType>
+                                                            <xs:sequence>
+                                                              <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                                <xs:complexType>
+                                                                  <xs:simpleContent>
+                                                                    <xs:extension base="xs:string">
+                                                                      <xs:attribute type="xs:string" name="name" />
+                                                                      <xs:attribute type="xs:string" name="culture" />
+                                                                      <xs:attribute type="xs:string" name="description" />
+                                                                    </xs:extension>
+                                                                  </xs:simpleContent>
+                                                                </xs:complexType>
+                                                              </xs:element>
+                                                            </xs:sequence>
+                                                          </xs:complexType>
+                                                        </xs:element>
+                                                      </xs:sequence>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                  <xs:element name="Description" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:sequence>
+                                                        <xs:element name="languages">
+                                                          <xs:complexType>
+                                                            <xs:sequence>
+                                                              <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                                <xs:complexType>
+                                                                  <xs:simpleContent>
+                                                                    <xs:extension base="xs:string">
+                                                                      <xs:attribute type="xs:string" name="name" />
+                                                                      <xs:attribute type="xs:string" name="description" />
+                                                                    </xs:extension>
+                                                                  </xs:simpleContent>
+                                                                </xs:complexType>
+                                                              </xs:element>
+                                                            </xs:sequence>
+                                                          </xs:complexType>
+                                                        </xs:element>
+                                                      </xs:sequence>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                                <xs:attribute type="xs:boolean" name="Charged" />
+                                                <xs:attribute type="xs:int" name="ID" />
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="Description">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="languages">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:simpleContent>
+                                                        <xs:extension base="xs:string">
+                                                          <xs:attribute type="xs:string" name="name" />
+                                                          <xs:attribute type="xs:string" name="description" />
+                                                        </xs:extension>
+                                                      </xs:simpleContent>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element type="xs:int" name="Quantity"/>
+                                      <xs:element name="View">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="languages">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:simpleContent>
+                                                        <xs:extension base="xs:string">
+                                                          <xs:attribute type="xs:string" name="name" />
+                                                          <xs:attribute type="xs:string" name="description" />
+                                                        </xs:extension>
+                                                      </xs:simpleContent>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="BedType">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="languages">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:simpleContent>
+                                                        <xs:extension base="xs:string">
+                                                          <xs:attribute type="xs:string" name="name" />
+                                                          <xs:attribute type="xs:string" name="description" />
+                                                        </xs:extension>
+                                                      </xs:simpleContent>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="Photos">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="Photo" maxOccurs="unbounded" minOccurs="0">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="Caption">
+                                                    <xs:complexType>
+                                                      <xs:sequence>
+                                                        <xs:element name="languages">
+                                                          <xs:complexType>
+                                                            <xs:sequence>
+                                                              <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                                <xs:complexType>
+                                                                  <xs:simpleContent>
+                                                                    <xs:extension base="xs:string">
+                                                                      <xs:attribute type="xs:string" name="name" />
+                                                                      <xs:attribute type="xs:string" name="description" />
+                                                                    </xs:extension>
+                                                                  </xs:simpleContent>
+                                                                </xs:complexType>
+                                                              </xs:element>
+                                                            </xs:sequence>
+                                                          </xs:complexType>
+                                                        </xs:element>
+                                                      </xs:sequence>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                                <xs:attribute type="xs:string" name="Url" />
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute type="xs:int" name="ID" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:string" name="Airport"/>
+                          <xs:element type="xs:int" name="YearPropertyRenovated"/>
+                          <xs:element type="xs:int" name="YearPropertyOpened"/>
+                          <xs:element type="xs:int" name="YearRoomsRenovated"/>
+                          <xs:element name="SearchTags">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="SearchTags">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element type="xs:string" name="SearchTag" maxOccurs="unbounded" minOccurs="0"/>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:anyURI" name="URL"/>
+                          <xs:element name="NearbyPointsOfInterest">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="NearbyPointOfInterest" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element type="xs:string" name="Name"/>
+                                      <xs:element  name="Description">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="languages">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:simpleContent>
+                                                        <xs:extension base="xs:string">
+                                                          <xs:attribute type="xs:string" name="name" />
+                                                          <xs:attribute type="xs:string" name="description" />
+                                                        </xs:extension>
+                                                      </xs:simpleContent>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute type="xs:string" name="Id" />
+                                    <xs:attribute type="xs:string" name="Distance" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="MeetingRooms">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="MeetingRoom" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="RoomName">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="languages">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:simpleContent>
+                                                        <xs:extension base="xs:string">
+                                                          <xs:attribute type="xs:string" name="name" />
+                                                          <xs:attribute type="xs:string" name="description" />
+                                                        </xs:extension>
+                                                      </xs:simpleContent>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element  name="RoomFormat">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="languages">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="lang" maxOccurs="unbounded" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:simpleContent>
+                                                        <xs:extension base="xs:string">
+                                                          <xs:attribute type="xs:string" name="name" />
+                                                          <xs:attribute type="xs:string" name="description" />
+                                                        </xs:extension>
+                                                      </xs:simpleContent>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute type="xs:int" name="ID" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:all>
+                        <xs:attribute type="xs:int" name="id"/>
+                        <xs:attribute type="xs:int" name="GIATA_ID"/>
+                        <xs:attribute type="xs:string" name="AirportCode"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:all>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ErrorList" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="Errors" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Error" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Warnings" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Warning" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

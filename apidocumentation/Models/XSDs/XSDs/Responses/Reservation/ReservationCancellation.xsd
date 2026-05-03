@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="ReservationCancellation">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="Response" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="ReservationID" minOccurs="0" type="xs:int" />
+              <xs:element name="Reference" minOccurs="0" type="xs:string" />
+              <xs:element name="Message" minOccurs="0" type="xs:string" />
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ErrorList" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+           <xs:all>
+           <xs:element name="Errors" minOccurs="0">
+           <xs:complexType>
+            <xs:sequence>
+             <xs:element minOccurs="1" maxOccurs="unbounded" name="Error" type="xs:string" />
+            </xs:sequence>
+           </xs:complexType>
+          </xs:element>
+          <xs:element name="Warnings" minOccurs="0">
+           <xs:complexType>
+            <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="unbounded" name="Warning" type="xs:string" />
+           </xs:sequence>
+          </xs:complexType>
+         </xs:element>
+        </xs:all>
+       </xs:complexType>
+      </xs:element>
+     </xs:all>
+    </xs:complexType>
+   </xs:element> 
+</xs:schema>

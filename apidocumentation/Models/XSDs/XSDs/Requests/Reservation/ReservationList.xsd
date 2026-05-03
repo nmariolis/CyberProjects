@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="ReservationList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Username" type="xs:string" minOccurs="1" maxOccurs="1" default="username" xmlns:doc="Customer's username"/>
+        <xs:element name="Password" type="xs:string" minOccurs="1" maxOccurs="1" default="password" xmlns:doc="Customer's password"/>
+        <xs:element name="FileNumber" type="xs:int" minOccurs="0"  maxOccurs="1" xmlns:doc="The ID of the reservation."/>
+        <xs:element name="Reference" type="xs:string" minOccurs="0" maxOccurs="1" xmlns:doc="The reference number assigned to the reservation by the agent."/>
+        <xs:element name="ArrivalDate" type="DateRange" minOccurs="0"  maxOccurs="1" xmlns:doc="2 attributes: ‘From’ and ‘To’. If ArrivalDate is specified, both attributes are required."/>
+        <xs:element name="DepartureDate" type="DateRange" minOccurs="0"  maxOccurs="1" xmlns:doc="2 attributes: ‘From’ and ‘To’. If DepartureDate is specified, both attributes are required. "/>
+        <xs:element name="BookingDate" type="DateRange" minOccurs="0"  maxOccurs="1" xmlns:doc="2 attributes: ‘From’ and ‘To’. If BookingDate is specified, both attributes are required. "/>
+        <xs:element name="Status" minOccurs="0" maxOccurs="1" xmlns:doc="The reservation status. 1 = Active/Confirmed, 2 = Pending/On Request, 3 = Cancelled ">
+          <xs:simpleType>
+            <xs:restriction base="xs:int">
+              <xs:enumeration value="1" id="Active" />
+              <xs:enumeration value="2" id="Option" />
+              <xs:enumeration value="3" id="Canceled" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="Client" type="xs:string" minOccurs="0"  maxOccurs="1" xmlns:doc="Search the reservations’ client rosters. "/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="DateRange">
+    <xs:attribute name="From" type="xs:date" use="required" xmlns:doc="Starting date"/>
+    <xs:attribute name="To" type="xs:date" use="required" xmlns:doc="Ending Date"/>
+  </xs:complexType>
+</xs:schema>

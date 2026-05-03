@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="SearchHotels">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="Username" default="username" xmlns:doc="Customer's username"/>
+        <xs:element type="xs:string" name="Password" default="password" xmlns:doc="Customer's password" />
+        <xs:element type="xs:date" name="DateFrom" fixed="2020-06-01" xmlns:doc="Start date of the party's stay."/>
+        <xs:element type="xs:date" name="DateTo" fixed="2020-06-15" xmlns:doc="End date of the party's stay."/>
+        <xs:element type="Rooms" name="Rooms" xmlns:doc="The number of rooms and their occupants."/>
+        <xs:element type="xs:string" name="Language" default="en" xmlns:doc="2-character string specifying the chosen language."/>
+        <xs:element type="xs:boolean" name="UseTariff" default="true" xmlns:doc="When true, returns prices based on your assigned tariff. When false, returns your own contracts."/>
+        <xs:element type="xs:boolean" name="IsOptimized" default="true" xmlns:doc="When true, returns an optimized compact response with hotel data as XML attributes for faster parsing."/>
+        <xs:element type="ResponseType" name="Response" xmlns:doc="The response envelope containing the list of matched hotels."/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="Rooms">
+    <xs:sequence>
+      <xs:element type="Room" name="Room" maxOccurs="unbounded" minOccurs="0" xmlns:doc="One room entry per requested room."/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Room" mixed="true">
+    <xs:attribute type="xs:int" name="Adults" default="2" xmlns:doc="Number of adults allocated to this room."/>
+    <xs:attribute type="xs:int" name="Children" use="optional" xmlns:doc="Number of children allocated to this room."/>
+    <xs:attribute type="xs:string" name="ChildrenAges" use="optional" xmlns:doc="Comma-separated list of child ages, e.g. '12,9,5'. Required when Children > 0."/>
+  </xs:complexType>
+
+  <xs:complexType name="RoomsType">
+    <xs:sequence>
+      <xs:element type="RoomType" name="Room" maxOccurs="unbounded" minOccurs="0" xmlns:doc="A room available for this hotel."/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="RoomType" mixed="true">
+    <xs:sequence>
+      <xs:element type="NameType" name="Name" minOccurs="0" xmlns:doc="Room name and its available rate plans."/>
+    </xs:sequence>
+    <xs:attribute type="xs:int" name="ID" use="optional" xmlns:doc="Internal room identifier."/>
+  </xs:complexType>
+
+  <xs:complexType name="ResponseType">
+    <xs:sequence>
+      <xs:element type="HotelsType" name="Hotels" xmlns:doc="Collection of matched hotel results."/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="HotelsType">
+    <xs:sequence>
+      <xs:element type="HotelType" name="Hotel" maxOccurs="unbounded" minOccurs="0" xmlns:doc="A single hotel result with rooms and rates."/>
+    </xs:sequence>
+    <xs:attribute type="xs:int" name="Records" xmlns:doc="Total number of hotels returned."/>
+    <xs:attribute type="xs:int" name="Overnights" xmlns:doc="Number of nights calculated from DateFrom to DateTo."/>
+    <xs:attribute type="xs:int" name="NumberOfRooms" xmlns:doc="Number of rooms requested."/>
+  </xs:complexType>
+
+  <xs:complexType name="HotelType">
+    <xs:sequence>
+      <xs:element type="RoomsType" name="Rooms" xmlns:doc="List of available rooms for this hotel."/>
+    </xs:sequence>
+    <xs:attribute type="xs:int" name="ID" xmlns:doc="Internal hotel identifier."/>
+    <xs:attribute type="xs:int" name="GIATA" xmlns:doc="GIATA global hotel identifier."/>
+    <xs:attribute type="xs:string" name="Name" xmlns:doc="Hotel name."/>
+    <xs:attribute type="xs:string" name="Country" xmlns:doc="2-character country code of the hotel."/>
+    <xs:attribute type="xs:int" name="StateProvinceID" xmlns:doc="Internal province/state identifier."/>
+    <xs:attribute type="xs:string" name="StateProvinceName" xmlns:doc="Name of the province or state."/>
+    <xs:attribute type="xs:int" name="CityID" xmlns:doc="Internal city identifier."/>
+    <xs:attribute type="xs:string" name="CityName" xmlns:doc="Name of the city where the hotel is located."/>
+    <xs:attribute type="xs:string" name="Address1" xmlns:doc="First line of the hotel's address."/>
+    <xs:attribute type="xs:string" name="Address2" xmlns:doc="Second line of the hotel's address."/>
+    <xs:attribute type="xs:string" name="Address3" xmlns:doc="Third line of the hotel's address."/>
+    <xs:attribute type="xs:decimal" name="Rating" xmlns:doc="Star rating of the hotel (e.g. 4.5)."/>
+    <xs:attribute type="xs:string" name="TypeDescription" xmlns:doc="Property type label, e.g. Hotel, Apartment, Villa."/>
+    <xs:attribute type="xs:string" name="OfficialRating" xmlns:doc="Official rating classification as assigned by the national authority."/>
+  </xs:complexType>
+
+  <xs:complexType name="RatePlanType">
+    <xs:attribute type="xs:int" name="Availability" xmlns:doc="Number of available units for this rate plan."/>
+    <xs:attribute type="xs:string" name="Code" xmlns:doc="Occupancy code, e.g. A2 for 2 adults."/>
+    <xs:attribute type="xs:int" name="ContractID" xmlns:doc="Identifier of the contract this rate plan belongs to."/>
+    <xs:attribute type="xs:int" name="SalesID" xmlns:doc="Sales identifier for this rate plan."/>
+    <xs:attribute type="xs:boolean" name="NonRefundable" xmlns:doc="When true, this rate plan is non-refundable."/>
+    <xs:attribute type="xs:boolean" name="SelfCatering" xmlns:doc="When true, the room is a self-catering unit."/>
+    <xs:attribute type="xs:boolean" name="IsOpaque" xmlns:doc="When true, specific hotel details are hidden until booking is confirmed."/>
+    <xs:attribute type="xs:string" name="RRDiscount" xmlns:doc="Room Rate price after any applicable discount."/>
+    <xs:attribute type="xs:string" name="RR" xmlns:doc="Standard Room Rate price."/>
+    <xs:attribute type="xs:string" name="BBDiscount" xmlns:doc="Bed &amp; Breakfast price after discount."/>
+    <xs:attribute type="xs:string" name="BB" xmlns:doc="Standard Bed &amp; Breakfast price."/>
+    <xs:attribute type="xs:string" name="HBDiscount" xmlns:doc="Half Board price after discount."/>
+    <xs:attribute type="xs:string" name="HB" xmlns:doc="Standard Half Board price."/>
+    <xs:attribute type="xs:string" name="FBDiscount" xmlns:doc="Full Board price after discount."/>
+    <xs:attribute type="xs:string" name="FB" xmlns:doc="Standard Full Board price."/>
+    <xs:attribute type="xs:string" name="AIDiscount" xmlns:doc="All Inclusive price after discount."/>
+    <xs:attribute type="xs:string" name="AI" xmlns:doc="Standard All Inclusive price."/>
+    <xs:attribute type="xs:string" name="UIDiscount" xmlns:doc="Ultra All Inclusive price after discount."/>
+    <xs:attribute type="xs:string" name="UI" xmlns:doc="Standard Ultra All Inclusive price."/>
+  </xs:complexType>
+
+  <xs:complexType name="NameType">
+    <xs:sequence>
+      <xs:element type="RatePlanType" name="RatePlan" maxOccurs="unbounded" minOccurs="0" xmlns:doc="One entry per occupancy combination and board type."/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="RoomName" use="optional" xmlns:doc="Descriptive name of the room."/>
+  </xs:complexType>
+</xs:schema>

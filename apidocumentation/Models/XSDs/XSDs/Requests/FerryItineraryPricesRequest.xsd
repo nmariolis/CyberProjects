@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="FerryItineraryPricesRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Username" type="xs:string" minOccurs="1" maxOccurs="1" xmlns:doc="Customer's username" default="username"/>
+        <xs:element name="Password" type="xs:string" minOccurs="1" maxOccurs="1" xmlns:doc="Customer's password" default="resuomed"/>
+        <xs:element name="Language" minOccurs="1" default="en" xmlns:doc="2 character string that specifies your chosen language. Contact your xml provider for available languages. ">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="en|de|fr|el|ru|it|es|nl" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="Rating" minOccurs="0" maxOccurs="1" xmlns:doc="The rating of a hotel" default="5">
+          <xs:simpleType>
+            <xs:restriction base="xs:int">
+              <xs:minInclusive value="1" />
+              <xs:maxInclusive value="5" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="Hoteltype" minOccurs="0" maxOccurs="1" default="H" xmlns:doc ="H = Hotels only, A = Apartments only, V = Villas only, U = All Selfcatering accommodation. Returns all types when left null.">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="H" />
+              <xs:enumeration value="A" />
+              <xs:enumeration value="V" />
+              <xs:enumeration value="U" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="PricingRequests" minOccurs="1" maxOccurs="1"  xmlns:doc="A list of pricing requests">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Request" type="PricingRequest"  minOccurs="1" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="Code" type="xs:string" fixed="1725" use ="required" xmlns:doc="The code of FerryItineraryPricesRequest"/>
+      <xs:attribute name="Type" type="xs:string" default ="sad" xmlns:doc="the type of FerryItineraryPricesRequest"/>
+      <xs:attribute name="Children" default="0" xmlns:doc="Children are bad">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:minInclusive value="0" />
+            <xs:maxInclusive value="10" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="PricingRequest">
+    <xs:sequence>
+      <xs:element name="DepartureDate" type="xs:date" minOccurs="1" maxOccurs="1" fixed="2020-06-01" xmlns:doc="DepartureDate"/>
+      <xs:element name="DepartureTime" type="xs:string" minOccurs="1" maxOccurs="1" default="15:00" xmlns:doc="DepartureTime"/>
+      <xs:element name="DeparturePortCode" type="xs:string" minOccurs="1" maxOccurs="1" default="1312" xmlns:doc="DeparturePortCode"/>
+      <xs:element name="ArrivalPortCode" type="xs:string" minOccurs="1" maxOccurs="1" default="1512" xmlns:doc="ArrivalPortCode"/>
+      <xs:element name="CompanyCode" type="xs:string" minOccurs="1" maxOccurs="1" default ="1310" xmlns:doc="CompanyCode"/>
+      <xs:element name="VesselID" type="xs:string" minOccurs="1" maxOccurs="1"  default="35" xmlns:doc="VesselID"/>
+      <xs:element name="ClassAnalysis" minOccurs="1" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="unbounded" name="Class" type="Class"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Vehicles" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="4" name="Vehicle" type="Vehicle"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Class">
+    <xs:sequence>
+      <xs:element name="Passengers" minOccurs="1" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="9" name="Passenger" type="Passenger"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="Code" type="xs:string" use="required" />
+    <xs:attribute name="ReservationType" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="F" />
+          <xs:enumeration value="M" />
+          <xs:enumeration value="W" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="Passenger">
+    <xs:attribute name="Type" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="AD" />
+          <xs:enumeration value="CH" />
+          <xs:enumeration value="IN" />
+          <xs:enumeration value="ST" />
+          <xs:enumeration value="SE" />
+          <xs:enumeration value="JU" />
+          <!-- AD = Adult, CH = Child, IN = Infant, ST = Student, SE = Senior, JU = Youth) -->
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="Vehicle">
+    <xs:attribute name="Code" type="xs:string" use="required" />
+    <xs:attribute name="Length" type="xs:float" use="required" />
+    <xs:attribute name="Height" type="xs:float" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="RoomType">
+    <xs:attribute name="Adults" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:int">
+          <xs:minInclusive value="1" />
+          <xs:maxInclusive value="20" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="Children" default="0">
+      <xs:simpleType>
+        <xs:restriction base="xs:int">
+          <xs:minInclusive value="0" />
+          <xs:maxInclusive value="10" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="ChildrenAges">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="([0-9 ]{1,2}(,[0-9 ]{1,2})*)*" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+
+</xs:schema>

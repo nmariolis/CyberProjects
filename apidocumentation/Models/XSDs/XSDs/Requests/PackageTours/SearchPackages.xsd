@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="SearchPackagesRequest">
+        <xs:complexType>
+          <xs:sequence>
+                <xs:element name="Username" type="xs:string" minOccurs="1" maxOccurs="1" default="username" xmlns:doc="Customer's username"/>
+                <xs:element name="Password" type="xs:string" minOccurs="1" maxOccurs="1" default="password" xmlns:doc="Customer's password"/>
+                <xs:element name="Month" type="xs:int" minOccurs="1" maxOccurs="1" default="9" xmlns:doc="Month that the party will be travelling"/>
+                <xs:element name="Year" type="xs:int" minOccurs="1" maxOccurs="1" default="2020" xmlns:doc="Year that the party will be travelling"/>
+                <xs:element name="DurationFrom" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Amount of days you want the package to last (lower bound) "/>
+                <xs:element name="DurationTo" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Amount of days you want the package to last (upper bound)"/>
+                <xs:element name="Destination" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Filter by destination ID"/>
+                <xs:element name="PackageID" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Filter by PackageID. This will also cause the XML to return a detailed description of the package."/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

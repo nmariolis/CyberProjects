@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="PlaceSearchRequest">
+        <xs:complexType>
+          <xs:sequence>
+                <xs:element name="Username" type="xs:string" minOccurs="1" maxOccurs="1" default="username" xmlns:doc="Customer's username"/>
+                <xs:element name="Password" type="xs:string" minOccurs="1" maxOccurs="1" default="password" xmlns:doc="Customer's password"/>
+                <xs:element name="PlaceType" minOccurs="1" maxOccurs="1" default="Countries" xmlns:doc="Choose from ‘Countries’, ‘Stations’, ‘Prefectures’, ‘Provinces’ and ‘Cities’ ">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="Countries" />
+                            <xs:enumeration value="Stations" />
+                            <xs:enumeration value="Prefectures" />
+                            <xs:enumeration value="Provinces" />
+                            <xs:enumeration value="Cities" />
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="Language" default="en" minOccurs="1" maxOccurs="1"  xmlns:doc="2 character string that specifies your chosen language. Contact your xml provider for available languages. Default is ‘en’. ">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:pattern value="en|de|fr|el|ru|it|es|nl|sq|sr|tr|ro" />
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+   
+</xs:schema>

@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="PlaceSearch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Response">
+          <xs:complexType>
+            <xs:choice>
+              <xs:sequence>
+                <xs:element name="Countries">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="Country">
+                        <xs:complexType>
+                          <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                              <xs:attribute type="xs:int" name="ID"/>
+                              <xs:attribute type="xs:string" name="Name"/>
+                            </xs:extension>
+                          </xs:simpleContent>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+              <xs:sequence>
+                <xs:element name="Stations">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="Station" maxOccurs="unbounded" minOccurs="0">
+                        <xs:complexType>
+                          <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                              <xs:attribute type="xs:int" name="ID"/>
+                              <xs:attribute type="xs:string" name="Name"/>
+                            </xs:extension>
+                          </xs:simpleContent>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+              <xs:sequence>
+                <xs:element name="Prefectures">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="Prefecture" maxOccurs="unbounded" minOccurs="0">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element type="xs:string" name="PrefectureName"/>
+                          </xs:sequence>
+                          <xs:attribute type="xs:int" name="id" use="optional"/>
+                          <xs:attribute type="xs:int" name="ProvinceID" use="optional"/>
+                          <xs:attribute type="xs:string" name="country_id" use="optional"/>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+              <xs:sequence>
+                <xs:element name="Provinces">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="Province" maxOccurs="unbounded" minOccurs="0">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element type="xs:string" name="ProvinceName"/>
+                          </xs:sequence>
+                          <xs:attribute type="xs:int" name="id" use="optional"/>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+              <xs:sequence>
+                <xs:element name="Cities">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="City" maxOccurs="unbounded" minOccurs="0">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element type="xs:string" name="CityName"/>
+                            <xs:element type="xs:decimal" name="Longitude" minOccurs="0"/>
+                            <xs:element type="xs:decimal" name="Latitude" minOccurs="0"/>
+                          </xs:sequence>
+                          <xs:attribute type="xs:int" name="city_id" use="optional"/>
+                          <xs:attribute type="xs:int" name="province_id" use="optional"/>
+                          <xs:attribute type="xs:int" name="prefecture_id" use="optional"/>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ErrorList" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="Errors" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Error" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Warnings" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Warning" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="SearchRentals">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Username" type="xs:string" minOccurs="1" maxOccurs="1" default="username" xmlns:doc="Customer's username"/>
+                <xs:element name="Password" type="xs:string" minOccurs="1" maxOccurs="1" default="password" xmlns:doc="Customer's password"/>
+                <xs:element name="DateFrom" type="xs:dateTime" minOccurs="1" maxOccurs="1" fixed="2020-06-01T15:00:01" xmlns:doc="Start date of the party’s stay. "/>
+                <xs:element name="DateTo" type="xs:dateTime" minOccurs="1" maxOccurs="1" fixed="2020-06-15T15:00:01" xmlns:doc="End date of the party’s stay. "/>
+                <xs:element name="GroupID" minOccurs="0" maxOccurs="1" type="xs:int" xmlns:doc="Filter by GroupID"/>
+                <xs:element name="SupplierID" minOccurs="1" maxOccurs="1" default="11533" type="xs:int" xmlns:doc="Rental supplier's ID"/>
+                <xs:element name="AccommodationID" minOccurs="0" maxOccurs="1" type="xs:int" xmlns:doc="Filter by AccommodationID ">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Either StationID or AccommodationID MUST be specified in order to correctly calculate the price of the rental.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="StationID" minOccurs="0" maxOccurs="1" default="1" type="xs:int" xmlns:doc="Filter by StationID ">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Either StationID or AccommodationID MUST be specified in order to correctly calculate the price of the rental.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,22 +1,13 @@
 ﻿<!DOCTYPE html>
 <style>
-    body {
-        background: #303030 !important;
-        padding-bottom: 0px !important;
-    }
-
-    .sidebar-boxed ~ main .main-content {
-        padding-right: 0px !important;
-        padding-left: 0px !important;
-    }
-
+    /* Tree connector lines for schema table */
     .varName::before {
         content: "";
         display: inline-block;
         vertical-align: middle;
         width: 10px;
         height: 1px;
-        background: rgb(164, 164, 198);
+        background: #ccd6e8;
     }
 
     .varName::after {
@@ -25,36 +16,7 @@
         vertical-align: middle;
         width: 1px;
         height: 7px;
-        background: rgb(164, 164, 198);
-    }
-
-    .requiredField {
-        vertical-align: middle;
-        color: rgb(229, 57, 53);
-        font-size: 0.9em;
-        font-weight: normal;
-        margin-left: 20px;
-        line-height: 1;
-    }
-
-    .varAsBlock {
-        vertical-align: middle;
-        font-size: 13px;
-        line-height: 20px;
-        background-color: rgba(51, 51, 51, 0.05);
-        font-family: "Courier New", monospace;
-        color: rgb(229, 57, 53);
-        border-radius: 2px;
-        margin: 5px;
-        padding: 0px 5px;
-        border-width: 1px;
-        border-style: solid;
-        border-color: rgba(51, 51, 51, 0.1);
-        border-image: initial;
-    }
-
-    .varAsBlock + .sc-1noysbl-9 {
-        margin-left: 0px;
+        background: #ccd6e8;
     }
 
     .defaultVar {
@@ -63,67 +25,30 @@
         line-height: 20px;
     }
 
-    div {
-        display: block;
-    }
-
-
     r:first-of-type > .tdStyle {
-        background-image: linear-gradient(transparent 0%, transparent 22px, rgb(164, 164, 198) 22px, rgb(164, 164, 198) 100%);
+        background-image: linear-gradient(transparent 0%, transparent 22px, #ccd6e8 22px, #ccd6e8 100%);
     }
 
     tr:first-of-type > .tdStyle, tr.last > .tdStyle {
-        border-left-width: 0px;
+        border-left-width: 0;
         background-size: 1px 100%;
         background-position: left top;
         background-repeat: no-repeat;
     }
 
-
-    .tdStyle {
-        box-sizing: border-box;
-        position: relative;
-        vertical-align: top;
-        line-height: 21px;
-        white-space: nowrap;
-        font-size: 0.929em;
-        /*font-family: Roboto;*/
-        border-left: 1px solid rgb(164, 164, 198);
-        padding: 10px 10px 10px 0px;
+    tr.last > .tdStyle {
+        background-image: linear-gradient(#ccd6e8 0%, #ccd6e8 22px, transparent 22px, transparent 100%);
     }
 
-    td, th {
-        display: table-cell;
-        vertical-align: inherit;
-    }
-
-    .tableGeneral {
-        border-collapse: separate;
-        font-size: 14px;
-        width: 100%;
-        border-radius: 3px;
-        border-spacing: 0px;
-    }
-
-    table {
-        display: table;
-        border-collapse: separate;
-        border-spacing: 2px;
-        border-color: grey;
+    tr:first-of-type > .tdStyle {
+        background-image: linear-gradient(transparent 0%, transparent 22px, #ccd6e8 22px, #ccd6e8 100%);
     }
 
     .fieldType {
         width: 75%;
         box-sizing: border-box;
-        border-bottom: 1px solid rgb(159, 180, 190);
-        padding: 10px 0px;
-    }
-
-    .varType {
-        vertical-align: middle;
-        font-size: 13px;
-        line-height: 20px;
-        color: rgb(128, 128, 128);
+        border-bottom: 1px solid #ccd6e8;
+        padding: 10px 0;
     }
 
     .varDescription-light {
@@ -133,98 +58,27 @@
         color: rgba(128, 128, 128, 0.8);
     }
 
-    tr:first-of-type > .tdStyle, tr.last > .tdStyle {
-        border-left-width: 0px;
-        background-size: 1px 100%;
-        background-position: left top;
-        background-repeat: no-repeat;
-    }
-
-    tr.last > .tdStyle {
-        background-image: linear-gradient(rgb(164, 164, 198) 0%, rgb(164, 164, 198) 22px, transparent 22px, transparent 100%);
-    }
-
-    tr:first-of-type > .tdStyle {
-        background-image: linear-gradient(transparent 0%, transparent 22px, rgb(164, 164, 198) 22px, rgb(164, 164, 198) 100%);
-    }
-
-    .restriction-code {
-        vertical-align: middle;
-        font-size: 13px;
-        line-height: 20px;
-        background-color: rgba(142, 142, 220, 0.05);
-        color: rgba(50, 50, 159, 0.9);
-        border-radius: 2px;
-        margin: 0px 5px;
-        padding: 0px 5px;
-        border-width: 1px;
-        border-style: solid;
-        border-color: rgba(50, 50, 159, 0.1);
-        border-image: initial;
-    }
-
-    .varName {
-        color: rgb(164, 164, 198);
-        font-family: "Courier New", monospace;
-        margin-right: 10px;
-    }
-
     .fieldDescription code {
-        color: rgb(229, 57, 53);
-        background-color: rgba(38, 50, 56, 0.05);
+        color: #1C4084;
+        background-color: rgba(28, 64, 132, 0.05);
         font-family: "Courier New", monospace;
         font-size: 13px;
         font-weight: 400;
         word-break: break-word;
         border-radius: 2px;
-        border-width: 1px;
-        border-style: solid;
-        border-color: rgba(38, 50, 56, 0.1);
-        border-image: initial;
-        padding: 0px 5px;
+        border: 1px solid rgba(28, 64, 132, 0.1);
+        padding: 0 5px;
     }
 
     code {
-        border: 1px solid #eaeaea;
-        margin: 0px 2px;
-        padding: 0px 5px;
+        border: 1px solid #dde3ec;
+        margin: 0 2px;
+        padding: 0 5px;
         font-size: 12px;
     }
 
     tt, code, kbd, samp {
         font-family: monospace;
-    }
-
-    *, :after, :before {
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-    }
-
-    .main-content {
-        padding: 0px 0px 0px 0 !important;
-        font-size: 16px;
-        line-height: 27px;
-    }
-
-    .leftSection {
-        background: white;
-        padding: 85px 135px 135px 135px !important;
-        z-index: -1;
-    }
-
-    .main-content > section {
-        padding-bottom: 0px !important;
-    }
-
-    .codeBlock {
-        margin-top: 250px;
-        background-color: #2a3542
-    }
-
-    .xml{
-        background-color:#2a3542;
-        text-shadow:none;
-        color:#c6c3c6;
     }
 </style>
 
@@ -257,7 +111,7 @@
     <!-- Sidebar -->
     <aside class="sidebar sidebar-boxed sidebar-dark" style="margin-top:-40px">
 
-        <a class="sidebar-brand" href="index.html"><img src="customAssets/img/CyberlogicLogo.png" alt="Cyberlogic" style="max-width:160px;padding:8px 0;" /></a>
+        <a class="sidebar-brand" href="index.html"><img src="customAssets/img/CyberlogicLogo.png" alt="Cyberlogic" style="max-width:160px;padding:8px 0;filter:brightness(0) invert(1);" /></a>
 
         <ul class="nav sidenav dropable" id="sidebar-menu">
             <li>
@@ -289,8 +143,14 @@
                 <!-- Top navbar -->
                 <div id="navbar" class="navbar-collapse collapse" aria-expanded="true" role="banner">
                     <ul class="nav navbar-nav navbar-right">
+                        <li id="nav-env-item" style="display:none">
+                            <a href="#" style="cursor:default;pointer-events:none">
+                                <i class="fa fa-server" style="margin-right:5px"></i>
+                                <span id="nav-env-name"></span>
+                            </a>
+                        </li>
                         <li class="active"><a href="index.html">Documentation</a></li>
-                        <li class="hero"><a href="#" target="_blank">Support</a></li>
+                        <li><a href="#" onclick="clLogout();return false;"><i class="fa fa-sign-out"></i> Logout</a></li>
                     </ul>
                 </div>
                 <!-- END Top navbar -->
@@ -314,8 +174,8 @@
                         <p>After that we will look into each service in detail, describing the function of the service, a link to the service and a listing of all the variables used in the request functions along with descriptions. </p>
                         <p>Finally, there are references to example XMLs, and XSD requests and responses, which are included along with this document. Please bear in mind that these are only guidelines designed to support your implementation and, due to the dynamic nature of the system’s development, may differ and change over time.  </p>
                     </div>
-                                                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
-                                <pre class="codeBlock">
+                                                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 right-panel">
+                                <pre class="codeBlock-intro">
                                 <code data-language="xml" class="xml">
         <SearchTransfers>
             <Username>demouser</Username>
@@ -385,265 +245,812 @@
 
     <!-- Scripts -->
     <script lang="javascript">
+        /* ── Session guard ────────────────────────────────────────────────── */
+        var CL_SESSION = (function() {
+            var raw = sessionStorage.getItem('cl_session');
+            if (!raw) { window.location.replace('Login.html'); return {}; }
+            try { return JSON.parse(raw); }
+            catch(e) { sessionStorage.removeItem('cl_session'); window.location.replace('Login.html'); return {}; }
+        })();
+
+        function clLogout() {
+            sessionStorage.removeItem('cl_session');
+            window.location.replace('Login.html');
+        }
+
+        /* Replace avra-hub base with the session endpoint for any service URL */
+        function swapEndpoint(url) {
+            if (!url || !CL_SESSION.endpoint) return url;
+            return url.replace(/^https?:\/\/[a-z0-9-]+\.cyberlogic\.cloud/, CL_SESSION.endpoint);
+        }
+
+        var schemaCache = {};
+
+        /* ── Field description dictionary ─────────────────────────────────
+           Covers all element/attribute names across all 75 XSD schemas.
+           Used as fallback when xs:annotation/xs:documentation is absent. */
+        var FIELD_DESC = {
+            /* ── Authentication ──────────────────────────────────────────── */
+            'Username':               'Your API account username provided by Cyberlogic.',
+            'Password':               'Your API account password provided by Cyberlogic.',
+
+            /* ── Common date / stay ──────────────────────────────────────── */
+            'DateFrom':               'Start date of the stay or service period (YYYY-MM-DD).',
+            'DateTo':                 'End date of the stay or service period (YYYY-MM-DD).',
+            'ArrivalDate':            'Guest check-in / arrival date (YYYY-MM-DD).',
+            'DepartureDate':          'Guest check-out / departure date (YYYY-MM-DD).',
+            'BookDate':               'Date on which the booking is to be made (YYYY-MM-DD).',
+
+            /* ── Occupancy ───────────────────────────────────────────────── */
+            'Rooms':                  'Room configuration block. Add one Room element per room required (max 4). Each Room specifies Adults, Children, and ChildrenAges attributes.',
+            'Adults':                 'Number of adult guests (aged 12+) occupying the room.',
+            'Children':               'Number of child guests. Provide each child\'s age in ChildrenAges.',
+            'ChildrenAges':           'Comma-separated ages of the children in years (e.g. "5,8"). Must match the Children count exactly.',
+            'Infants':                'Number of infants (typically under 2 years). Infants generally travel free and do not occupy a seat.',
+
+            /* ── Hotel search filters ────────────────────────────────────── */
+            'HotelID':                'Numeric identifier of a specific hotel. Omit to search across all available properties.',
+            'HotelName':              'Partial hotel name filter. Returns properties whose name contains this string (case-insensitive).',
+            'RoomName':               'Partial room name filter. Restricts results to rooms matching this string.',
+            'Hoteltype':              'Property category: H = Hotel, A = Apartment, V = Villa, U = Unknown.',
+            'Location':               'Location category identifier. Retrieve valid IDs from the LocationCategories service.',
+            'Rating':                 'Star-rating filter (1–5). Only hotels with this exact rating are returned.',
+            'Country':                'Country code filter (e.g. GR = Greece, CY = Cyprus, ES = Spain).',
+            'Province':               'Province / state identifier. Retrieve valid IDs from the Places service.',
+            'Prefecture':             'Prefecture identifier. Retrieve valid IDs from the Places service.',
+            'City':                   'City identifier. Retrieve valid IDs from the Places service.',
+            'Board':                  'Meal-plan filter — RR: Room Rate, BB: Bed & Breakfast, HB: Half Board, FB: Full Board, AI: All Inclusive, UI: Ultra Inclusive.',
+            'Language':               'BCP-47 language code for response content (en, de, fr, el, ru, it, es, nl). Defaults to en.',
+            'Residency':              'ISO 3166-1 alpha-2 country code of the client\'s country of residency. May affect rates and tax calculations.',
+
+            /* ── Hotel search options ────────────────────────────────────── */
+            'OnRequest':              'Include on-request (not instantly confirmable) hotels in results. Default false.',
+            'ShowVarious':            'Include miscellaneous / various accommodation types in results.',
+            'ShowCancellationFees':   'Include cancellation-fee schedule detail in the response.',
+            'NoCache':                'Bypass the availability cache and fetch live data directly from suppliers. Slower but always current.',
+            'Extranet':               'Apply extranet (B2B) pricing rules. For authorised partner accounts only.',
+            'IgnoreTariff':           'Ignore tariff-based pricing restrictions and return all available rates.',
+            'GroupRoomBoards':        'Group pricing results by room and board type in the response structure.',
+            'UseTariff':              'Apply tariff-based pricing to the search results.',
+            'IsOptimized':            'Return optimised / summarised results (one record per hotel) instead of full per-room detail.',
+            'ShowFeatured':           'Return only featured or promoted items.',
+
+            /* ── Transfers ───────────────────────────────────────────────── */
+            'PickupDate':             'Outbound transfer pickup date (YYYY-MM-DD).',
+            'ReturnPickupDate':       'Return transfer pickup date (YYYY-MM-DD). Required when RoundTrip is true.',
+            'RoundTrip':              'Set to true to include a return transfer leg in the same request.',
+            'StationID':              'Station / operating-branch identifier for the service provider.',
+            'RoutePointFrom':         'Departure route point ID. Retrieve valid IDs from the Transfer Route Points service.',
+            'RoutePointTo':           'Arrival route point ID. Retrieve valid IDs from the Transfer Route Points service.',
+            'RouteTypeID':            'Route type identifier (e.g. airport-to-hotel, port-to-hotel).',
+            'ArrivalRouteID':         'Inbound route identifier (arrival leg).',
+            'DepartureRouteID':       'Outbound route identifier (departure leg).',
+            'FlightArrival':          'Arrival flight number (e.g. A3 123). Used for transfer timing coordination.',
+            'FlightDeparture':        'Departure flight number (e.g. FR 456). Used for transfer timing coordination.',
+            'VehicleID':              'Specific vehicle type identifier. Omit to return all available vehicle options.',
+            'Vehicles':               'Number of vehicles required.',
+            'PickupDropOffPoint':     'Specific pickup or drop-off location name or identifier.',
+
+            /* ── Car rentals ─────────────────────────────────────────────── */
+            'GroupID':                'Vehicle group / category identifier (e.g. economy, compact, SUV).',
+            'SupplierID':             'Car rental supplier identifier.',
+            'AccommodationID':        'Accommodation identifier used as delivery or collection location.',
+            'ModelName':              'Specific car model name filter.',
+            'Delivery':               'Delivery location (address or station) for the vehicle.',
+            'Collection':             'Collection / return location for the vehicle.',
+            'RentalDays':             'Total number of rental days.',
+            'PricePerDay':            'Base price per rental day.',
+
+            /* ── Excursions ──────────────────────────────────────────────── */
+            'ExcursionID':            'Unique identifier of the excursion. Obtain from the Excursion List service.',
+            'PriceZoneID':            'Pricing zone identifier. Different zones may carry different rates for the same excursion.',
+            'NoHTML':                 'Set to true to strip HTML markup from description fields in the response.',
+            'ZoneID':                 'Geographic pricing zone identifier.',
+            'ScheduleLanguageID':     'Schedule language identifier for multilingual excursion descriptions.',
+            'LanguageID':             'Language identifier for content localisation.',
+
+            /* ── Packages ────────────────────────────────────────────────── */
+            'PackageID':              'Unique package product identifier.',
+            'Month':                  'Travel month (1–12).',
+            'Year':                   'Travel year (e.g. 2025).',
+            'DurationFrom':           'Minimum package duration in nights.',
+            'DurationTo':             'Maximum package duration in nights.',
+            'Destination':            'Package destination identifier.',
+            'BoardID':                'Board / meal-plan identifier for package pricing.',
+            'Quantity':               'Number of units (rooms, seats, vehicles) to request.',
+
+            /* ── Reservation ─────────────────────────────────────────────── */
+            'ReservationID':          'Unique identifier of an existing reservation. Required for confirmation, cancellation, and list queries.',
+            'DetailID':               'Identifier of a specific service line within a reservation.',
+            'BookingType':            'Category of the booking (e.g. hotel, transfer, excursion, package).',
+            'BookingStatus':          'Current status of the reservation (e.g. confirmed, on-request, cancelled).',
+            'UseHotelTariff':         'Apply hotel-contracted tariff rates to this reservation.',
+            'Reference':              'Your internal reference number for tracking this request or booking.',
+            'Remarks':                'Free-text special requests or notes to include with the booking.',
+            'PaymentReference':       'External payment gateway reference number.',
+            'ClientTransferArrivalType':   'Transfer type for client arrival (e.g. flight, ferry, own transport).',
+            'ClientTransferDepartureType': 'Transfer type for client departure.',
+
+            /* ── Guest / passenger details ───────────────────────────────── */
+            'Title':                  'Guest title (Mr, Mrs, Ms, Dr, etc.).',
+            'Name':                   'Guest first / given name.',
+            'Surname':                'Guest family / last name.',
+            'Birthday':               'Guest date of birth (YYYY-MM-DD). Required for some services and destinations.',
+            'Passport':               'Guest passport number. Required for certain markets and booking types.',
+            'Email':                  'Guest email address for booking confirmation and communications.',
+            'Telephone':              'Guest contact telephone number including country code.',
+            'Mobile':                 'Guest mobile / cell phone number including country code.',
+            'Address':                'Guest postal address.',
+
+            /* ── Payment ─────────────────────────────────────────────────── */
+            'CardType':               'Credit / debit card type (e.g. Visa, Mastercard, Amex).',
+            'CardHolder':             'Full name of the card holder exactly as printed on the card.',
+            'CardNumber':             'Card primary account number (PAN). Transmit only over secure (HTTPS) connections.',
+            'ExpirationMonth':        'Card expiry month (01–12).',
+            'ExpirationYear':         'Card expiry year (4-digit, e.g. 2027).',
+            'cvv2':                   'Card security code — CVV2 (Visa), CVC2 (Mastercard), or CID (Amex). 3 or 4 digits.',
+
+            /* ── Room / contract references ──────────────────────────────── */
+            'ContractID':             'Contract identifier returned in search results. Pass this back unchanged when making a booking.',
+            'RoomID':                 'Specific room type identifier.',
+            'RoomQuantity':           'Number of rooms of this type to book.',
+            'HotelAddress':           'Physical address of the hotel (returned in responses).',
+
+            /* ── Places ──────────────────────────────────────────────────── */
+            'PlaceType':              'Type of geographic entity to retrieve (City, Prefecture, Province, Country, Station).',
+            'ProvinceID':             'Province / state identifier.',
+            'CityID':                 'City identifier.',
+
+            /* ── Offers / contracts ──────────────────────────────────────── */
+            'OfferID':                'Unique promotion / offer identifier.',
+            'ShowRates':              'Include detailed rate information in the offer list response.',
+            'ContractFormat':         'Output format for contract data.',
+            'OfferType':              'Category of the promotion (e.g. early-bird, last-minute, stay-pay).',
+            'SalesDescription':       'Human-readable description of the promotion.',
+            'EntryFromDate':          'Start of the travel-date window eligible for this offer (YYYY-MM-DD).',
+            'EntryToDate':            'End of the travel-date window eligible for this offer (YYYY-MM-DD).',
+            'RsvFromDate':            'Earliest booking date for this offer (YYYY-MM-DD).',
+            'RsvToDate':              'Latest booking date for this offer (YYYY-MM-DD).',
+            'ApplyToSupplements':     'Apply the offer discount to supplement charges as well as the base rate.',
+            'IsPercent':              'If true, the discount value is a percentage; otherwise it is an absolute amount.',
+            'StayPay':                'Stay-pay promotion definition (e.g. stay 7 nights, pay 5).',
+
+            /* ── Ferry ───────────────────────────────────────────────────── */
+            'DepartureDate':          'Ferry departure date (YYYY-MM-DD).',
+            'DepartureTime':          'Scheduled departure time (HH:MM).',
+            'DeparturePortCode':      'Departure port code (IATA or local operator code).',
+            'ArrivalPortCode':        'Arrival port code (IATA or local operator code).',
+            'CompanyCode':            'Ferry operating company / carrier code.',
+            'VesselID':               'Specific vessel identifier.',
+
+            /* ── Response / common output fields ─────────────────────────── */
+            'Response':               'Root element of the service response. Contains the result data or error list.',
+            'ErrorList':              'Container for any errors or warnings returned by the service.',
+            'Errors':                 'List of error messages. A non-empty list means the request could not be fulfilled.',
+            'Warnings':               'List of warning messages. The response may still contain partial data.',
+            'Error':                  'Individual error message describing what went wrong.',
+            'Warning':                'Individual warning message indicating a non-fatal issue.',
+            'Message':                'Human-readable message text.',
+
+            /* ── Hotel response fields ───────────────────────────────────── */
+            'ImageThumbURL':          'URL of the hotel thumbnail image.',
+            'Longitude':              'Geographic longitude of the property (WGS-84 decimal degrees).',
+            'Latitude':               'Geographic latitude of the property (WGS-84 decimal degrees).',
+            'TypeDescription':        'Human-readable property type name (e.g. Hotel, Apartment, Villa).',
+            'LocationDescription':    'Human-readable location category name.',
+            'OfficialRating':         'Official star classification as assigned by the national tourism authority.',
+            'Description':            'Full descriptive text for the property or service.',
+            'LowRate':                'Lowest available rate across all room types for the search period.',
+            'LowestPrice':            'Lowest total price across all available options.',
+            'SpecialOffer':           'Indicates whether a promotional offer is available for this property.',
+            'TravelAdvisor':          'TripAdvisor review rating (0–5).',
+            'Availability':           'Number of available units (rooms, vehicles, seats) matching the search criteria.',
+            'NonRefundable':          'Indicates this rate is non-refundable; cancellation will incur a full charge.',
+            'StopSales':              'Indicates this option is currently closed for new bookings.',
+            'MinLOSError':            'Indicates the selected stay is shorter than the minimum length-of-stay required for this room.',
+            'ReleaseError':           'Indicates the booking date is within the release/stop-sales period for this room.',
+            'RecordCount':            'Total number of records matching the search criteria.',
+            'Overnights':             'Number of nights calculated from DateFrom to DateTo.',
+            'NumberOfRooms':          'Total number of rooms requested across all room configurations.',
+            'CheckInTime':            'Standard check-in time for the property (HH:MM).',
+            'CheckOutTime':           'Standard check-out time for the property (HH:MM).',
+            'OpenAllYear':            'Indicates whether the property operates year-round.',
+
+            /* ── Amenity / facility flags ─────────────────────────────────── */
+            'HasAllInclusive':        'Property offers all-inclusive board.',
+            'HasContinentalBreakfast':'Property offers continental breakfast.',
+            'HasIndoorPool':          'Property has an indoor swimming pool.',
+            'HasOutdoorPool':         'Property has an outdoor swimming pool.',
+            'HasSPAWellnessCentre':   'Property has a spa and wellness centre.',
+            'HasFitnessFacility':     'Property has a gym / fitness facility.',
+            'HasPetsAllowed':         'Property accepts pets.',
+            'HasParkingGarage':       'Property has on-site parking.',
+            'HasDataPorts':           'Property offers data ports / wired internet in rooms.',
+            'HasAirConditioning':     'Rooms are air-conditioned.',
+            'HasRoomService':         'Property offers room service.',
+            'HasHairDryer':           'Rooms include a hair dryer.',
+            'HasKitchen':             'Rooms include a kitchen or kitchenette.',
+            'HasFamilyRooms':         'Property has rooms suitable for families.',
+            'HasTennisCourt':         'Property has a tennis court.',
+            'HasGolfCourse':          'Property has or is adjacent to a golf course.',
+            'HasInHouseDining':       'Property has an on-site restaurant.',
+            'HasInHouseBar':          'Property has an on-site bar.',
+            'HasSauna':               'Property has a sauna.',
+            'HasWhirlpool':           'Property has a whirlpool / jacuzzi.',
+            'HasBusinessCenter':      'Property has a business centre.',
+            'HasHandicapAccessible':  'Property has facilities for guests with disabilities.',
+            'HasSafe':                'Rooms include an in-room safe.',
+            'HasTVInRoom':            'Rooms have a television.',
+
+            /* ── Pricing / board breakdown ───────────────────────────────── */
+            'RR':    'Room Rate — room only, no meals included.',
+            'BB':    'Bed & Breakfast — overnight stay with breakfast.',
+            'HB':    'Half Board — breakfast and dinner included.',
+            'FB':    'Full Board — breakfast, lunch, and dinner included.',
+            'AI':    'All Inclusive — all meals, snacks, and selected beverages included.',
+            'UI':    'Ultra Inclusive — all inclusive plus premium beverages and additional services.',
+            'Discount': 'Discount amount applied to this rate (absolute or percentage depending on context).',
+
+            /* ── Occupancy codes ─────────────────────────────────────────── */
+            'Code':   'Occupancy configuration code: R1 = single, R2 = double/twin, R3 = triple, R4 = quadruple.',
+
+            /* ── Hotel Search (Cache) — request flags ────────────────────── */
+            'BookDate':             'Date the booking is made. Used to apply early-booking discounts or advance-purchase rates (YYYY-MM-DD).',
+            'OnRequest':            'When true, includes on-request hotels and rooms that are available on request only.',
+            'ShowVarious':          'When true, returns all available room and board combinations per hotel, not just the cheapest option.',
+            'ShowCancellationFees': 'When true, includes cancellation policy fee details in the response.',
+            'NoCache':              'When true, bypasses the cache and fetches live availability directly from the system. Use sparingly — slower response.',
+            'Extranet':             'When true, switches to extranet pricing mode.',
+            'IgnoreTariff':         'When true, ignores your assigned tariff and returns rates from all available contracts.',
+            'GroupRoomBoards':      'When true, groups response results by room-and-board-type combinations instead of listing each separately.',
+            'IsOptimized':          'When true, returns a faster, less detailed response optimised for search listings. Set false for full room details.',
+            'Residency':            '2-character ISO 3166-1 alpha-2 country code of the traveller\'s country of residence (e.g. GB, DE, GR). Applies residency-specific rates where available.',
+
+            /* ── Hotel Cache response fields ─────────────────────────────── */
+            'RatesFilter':          'Identifier of the rates filter applied to this result set.',
+            'StopWatch':            'Internal performance timing data for the service call.',
+            'Split':                'Individual timing segment label from the stop-watch performance trace.',
+            'StateProvinceName':    'Name of the state or province where the property is located.',
+            'OfficialRating_ID':    'Numeric identifier of the hotel\'s official star-rating classification.',
+            'Property_Class_ID':    'Numeric identifier of the property class or accommodation type.',
+            'SalesID':              'Sales contract identifier associated with this occupancy rate.',
+            'IsOpaque':             'When true, the hotel identity is hidden until after the booking is confirmed (opaque rate).',
+            'SelfCatering':         'When true, this unit is a self-catering property (kitchen facilities provided).',
+            'giata_id':             'GIATA (Global Accommodation Information and Technology Association) unique property identifier.',
+            'Records':              'Total number of hotel records returned in this response.',
+            'NumberOfRooms':        'Total number of rooms across all requested room configurations.',
+            'Overnights':           'Number of nights derived from DateFrom to DateTo.'
+        };
+
         $.ajax({
-            url:'models/webServicesUpdated.json',
-            datatype:'json',
-            type:'get',
+            url: 'models/webServicesUpdated.json',
+            datatype: 'json',
+            type: 'get',
             cache: false,
-            success:function(data) {
-                console.log(data);
+            success: function(data) {
                 var sidebarMenu = '';
                 var mainContent = '';
-                $(data.serviceCategory).each(function(index, value){
-                    sidebarMenu += menuItemTemplate(value);
-                    mainContent += mainContentTemplate(value.services);
+                $(data.serviceCategory).each(function(i, cat) {
+                    sidebarMenu += menuItemTemplate(cat);
+                    mainContent += mainContentTemplate(cat.services);
                 });
                 $('#sidebar-menu').append(sidebarMenu);
                 $('#main-content').append(mainContent);
+                loadAllSchemas(data);
+                /* Show active environment in navbar */
+                $('#nav-env-name').text(CL_SESSION.endpointName || CL_SESSION.endpoint || '');
+                $('#nav-env-item').show();
             }
         });
 
-        function menuItemTemplate(value) {
-            var menuItem = `
-            <li>
-                <a href="#`+value.services[0].href+`" class="has-child">`+value.name+`</a>`
-                + subMenuItemTemplate(value.services) +`
-            </li>`;
-            return menuItem;
+        function menuItemTemplate(cat) {
+            return '<li>' +
+                '<a href="#' + cat.services[0].href + '" class="has-child">' + cat.name + '</a>' +
+                subMenuItemTemplate(cat.services) +
+                '</li>';
         }
 
-        function subMenuItemTemplate(value) {
-            var subMenuItem = `<ul>`
-                $(value).each(function(servicesIndex, servicesValue){
-                    subMenuItem += `<li><a href="#`+servicesValue.href+`">`+servicesValue.service+`</a></li>`;  
-                });
-            subMenuItem += `</ul>`;
-            return subMenuItem;
+        function subMenuItemTemplate(services) {
+            var html = '<ul>';
+            $(services).each(function(i, svc) {
+                html += '<li><a href="#' + svc.href + '">' + svc.service + '</a></li>';
+            });
+            return html + '</ul>';
         }
 
-        function mainContentTemplate(value)
-        {
-            console.log("coming");
-            var mainContent = ``;
-            $(value).each(function(servicesIndex, servicesValue){
-                mainContent += `
-                    <section>
-                        <div class="row">
-                            <div class="col-lg-7 col-md-12 col-sm-12  col-xs-12 leftSection">
-                                <h2 id="` +servicesValue.href+`">`+servicesValue.service+`</h2>
-                                <b><font color="#808080">Description</font></b>
-                                <p>`+servicesValue.description+`</p>
-                                <b><font color="#808080">Link</font></b>
-                                <p><a href="`+servicesValue.link+`">`+servicesValue.link+`</a></p>
-                                <div class="promo small-icon left">
-                                    <i class="fa fa-code"></i>
-                                    <h3>XML Request</h3>
-                                </div>
-                            </div>
-                            <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
-                                <pre class="codeBlock xml">
-                                <code class="xml">
-<span style="color:#A0FBAA">
-&lt;SearchTransfers&gt;</span>
-    <span style="color:#A0FBAA">&lt;Username&gt;</span>demouser<span style="color:#A0FBAA">&lt;/Username&gt;</span>
-    <span style="color:#A0FBAA">&lt;Password&gt;</span>resuomed<span style="color:#A0FBAA">&lt;/Password&gt;</span>
-    <span style="color:#A0FBAA">&lt;PickupDate&gt;</span>2019-06-01<span style="color:#A0FBAA">&lt;/PickupDate&gt;</span>
-    <span style="color:#A0FBAA">&lt;ReturnPickupDate&gt;</span>2019-08-08<span style="color:#A0FBAA">&lt;/ReturnPickupDate&gt;</span>
-    <span style="color:#A0FBAA">&lt;RoutePointFrom&gt;</span>1725<span style="color:#A0FBAA">&lt;/RoutePointFrom&gt;</span>
-    <span style="color:#A0FBAA">&lt;RoutePointTo&gt;</span>1357<span style="color:#A0FBAA">&lt;/RoutePointTo&gt;</span>
-    <span style="color:#A0FBAA">&lt;StationID&gt;</span>1<span style="color:#A0FBAA">&lt;/StationID&gt;</span>
-    <span style="color:#A0FBAA">&lt;Adults&gt;</span>2<span style="color:#A0FBAA">&lt;/Adults&gt;</span>
-    <span style="color:#A0FBAA">&lt;RoundTrip&gt;</span>true<span style="color:#A0FBAA">&lt;/RoundTrip&gt;</span>
-<span style="color:#A0FBAA">&lt;/SearchTransfers&gt;</span>
-</code>
-</pre>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <!--Table-->
-                            <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12 leftSection">
-								<div class="pp-info">
-									<div class="promo small-icon left">
-										<i class="fa fa-code"></i>
-										<h3>Request Body schema: text/xml</h3>
-									</div>
-									<table class="tableGeneral">
-										<tbody>
-											<tr>
-												<td class="tdStyle" kind="field" title="username"><span class="dz44d2-5 varName"></span>Username<div class="requiredField"> required </div></td>
-												<td class="fieldType">
-													<div>
-														<div>
-															<span class="varType">string</span><span> <span class="restriction-code"> &lt;= 50 characters </span></span>
-														</div>
-														<div>
-															<div class="fieldDescription">
-																<p>The Customer's username.</p>
-															</div>
-														</div>
-													</div>
-												</td>
-											</tr>
-											<tr>
-												<td class="tdStyle" kind="field" title="Password"><span class="varName"></span>Password<div class="requiredField"> required </div></td>
-												<td class="fieldType">
-													<div>
-														<div><span class="varType">string</span></div> <div>
-															<div class="fieldDescription"><p>The customer's password.</p></div>
-														</div>
-													</div>
-												</td>
-											</tr>
-											<tr>
-												<td class="tdStyle" kind="field" title="Type"><span class="varName"></span>Type<div class="requiredField"> required </div></td>
-												<td class="fieldType">
-													<div>
-														<div><span class="varType">integer</span></div>
-														<div><span class="defaultVar"> Default: </span><span class="varAsBlock"> 0 </span></div>
-														<div>
-															<span class="defaultVar"> Enum:</span>
-															<span class="varAsBlock"> 0 </span>
-															<span class="varAsBlock"> 1 </span>
-															<span class="varAsBlock"> 2 </span>
-															<span class="varAsBlock"> 3 </span>
-															<span class="varAsBlock"> 4 </span>
-														</div>
-														<div>
-															<div class="fieldDescription">
-																<p>The type of the place you want to search. </p>
-																<p>0 = All (default), 1 = Ports Only, 2 = Areas and Hotels, 3 = Hotels, 4 = Areas </p>
-															</div>
-														</div>
-													</div>
-												</td>
-											</tr>
-											<tr>
-												<td class="tdStyle" kind="field" title="StationID"><span class="varName"></span>StationID</td>
-												<td class="fieldType">
-													<div>
-														<div><span class="varType">integer</span></div> <div>
-															<div class="fieldDescription">
-																<p>Filter by the Station ID in which the place you are searching for is included.</p>
-																<p class="varDescription-light">Acquire this id from Place Search***(link to Place search)</p>
-															</div>
-														</div>
-													</div>
-												</td>
-											</tr>
-											<tr class="last undefined">
-												<td class="tdStyle" kind="field" title="customFields"><span class="dz44d2-5 varName"></span>AccommodationID</td>
-												<td class="fieldType">
-													<div>
-														<div><span class="varType">integer</span></div>
-														<div>
-															<div class="fieldDescription">
-																<p>Filter by the AccommodationID you are searching for.</p>
-																<p class="varDescription-light">Acquire this id from hotel list***(link to hotel list)</p>
-															</div>
-														</div>
-													</div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-                               
-                            </div>
-                            <!--End of Table-->
-                        </div>
-                         <!--Table-->
-                <div class="row">
-                    <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12 leftSection">
-                        <div class="promo small-icon left">
-                            <i class="fa fa-code"></i>
-                            <h3>Response Body schema: text/xml</h3>
-                        </div>
-                        <table class="tableGeneral">
-                            <tbody>
-                                <tr>
-                                    <td class="tdStyle" kind="field" title="username"><span class="dz44d2-5 varName"></span>Username<div class="requiredField"> required </div></td>
-                                    <td class="fieldType">
-                                        <div>
-                                            <div>
-                                                <span class="varType">string</span><span> <span class="restriction-code"> &lt;= 50 characters </span></span>
-                                            </div>
-                                            <div>
-                                                <div class="fieldDescription">
-                                                    <p>The Customer's username.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="tdStyle" kind="field" title="Password"><span class="varName"></span>Password<div class="requiredField"> required </div></td>
-                                    <td class="fieldType">
-                                        <div>
-                                            <div><span class="varType">string</span></div> <div>
-                                                <div class="fieldDescription"><p>The customer's password.</p></div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="tdStyle" kind="field" title="Type"><span class="varName"></span>Type<div class="requiredField"> required </div></td>
-                                    <td class="fieldType">
-                                        <div>
-                                            <div><span class="varType">integer</span></div>
-                                            <div><span class="defaultVar"> Default: </span><span class="varAsBlock"> 0 </span></div>
-                                            <div>
-                                                <span class="defaultVar"> Enum:</span>
-                                                <span class="varAsBlock"> 0 </span>
-                                                <span class="varAsBlock"> 1 </span>
-                                                <span class="varAsBlock"> 2 </span>
-                                                <span class="varAsBlock"> 3 </span>
-                                                <span class="varAsBlock"> 4 </span>
-                                            </div>
-                                            <div>
-                                                <div class="fieldDescription">
-                                                    <p>The type of the place you want to search. </p>
-                                                    <p>0 = All (default), 1 = Ports Only, 2 = Areas and Hotels, 3 = Hotels, 4 = Areas </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="tdStyle" kind="field" title="StationID"><span class="varName"></span>StationID</td>
-                                    <td class="fieldType">
-                                        <div>
-                                            <div><span class="varType">integer</span></div> <div>
-                                                <div class="fieldDescription">
-                                                    <p>Filter by the Station ID in which the place you are searching for is included.</p>
-                                                    <p class="varDescription-light">Acquire this id from Place Search***(link to Place search)</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="last undefined">
-                                    <td class="tdStyle" kind="field" title="customFields"><span class="dz44d2-5 varName"></span>AccommodationID</td>
-                                    <td class="fieldType">
-                                        <div>
-                                            <div><span class="varType">integer</span></div>
-                                            <div>
-                                                <div class="fieldDescription">
-                                                    <p>Filter by the AccommodationID you are searching for.</p>
-                                                    <p class="varDescription-light">Acquire this id from hotel list***(link to hotel list)</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <!--End of Table-->
-                    </div>
-                </div>
-                    </section>
-                    `;
+        function mainContentTemplate(services) {
+            var html = '';
+            $(services).each(function(i, svc) {
+                html +=
+                    '<section>' +
+
+                    '<div class="row">' +
+                    '<div class="col-xs-12 leftSection">' +
+                    '<h2 id="' + svc.href + '">' + svc.service + '</h2>' +
+                    '<p>' + svc.description + '</p>' +
+                    '<p class="svc-endpoint"><strong>Endpoint</strong>&nbsp; <a href="' + swapEndpoint(svc.link) + '" class="endpoint-url">' + swapEndpoint(svc.link) + '</a></p>' +
+                    '</div></div>' +
+
+                    '<div class="row">' +
+                    '<div class="col-xs-12 leftSection">' +
+                    '<div class="promo small-icon left"><i class="fa fa-list"></i><h3>Request Parameters</h3></div>' +
+                    '<div id="schema-req-' + svc.href + '"><em class="loading-msg">Loading schema…</em></div>' +
+                    '</div></div>' +
+
+                    '<div class="row">' +
+                    '<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12 leftSection">' +
+                    '<div class="promo small-icon left"><i class="fa fa-pencil-square-o"></i><h3>Try It</h3></div>' +
+                    '<div id="form-container-' + svc.href + '" class="form-panel"><em>Loading…</em></div>' +
+                    '</div>' +
+                    '<div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 right-panel">' +
+                    '<div class="promo small-icon left rp-promo"><i class="fa fa-code"></i><h3>Request XML</h3></div>' +
+                    '<pre class="codeBlock-inline xml rp-pre" id="xml-req-' + svc.href + '"><code id="xml-req-code-' + svc.href + '">Fill the form and click Generate.</code></pre>' +
+                    '</div></div>' +
+
+                    '<div class="row">' +
+                    '<div class="col-xs-12 resp-wrap">' +
+                    '<div class="promo small-icon left"><i class="fa fa-reply"></i><h3>Response</h3></div>' +
+                    '<pre class="codeBlock-inline xml" id="xml-res-' + svc.href + '" style="min-height:160px;overflow:auto;padding:15px"><code id="xml-res-code-' + svc.href + '"></code></pre>' +
+                    '</div></div>' +
+
+                    '<div class="row">' +
+                    '<div class="col-xs-12 leftSection">' +
+                    '<div class="promo small-icon left"><i class="fa fa-sitemap"></i><h3>Response Schema</h3></div>' +
+                    '<div id="schema-res-' + svc.href + '"><em class="loading-msg">Loading schema…</em></div>' +
+                    buildXsdLinks(svc) +
+                    '</div></div>' +
+
+                    '</section>';
+            });
+            return html;
+        }
+
+        function buildXsdLinks(svc) {
+            var html = '<div class="xsd-links">';
+            if (svc.xsdRequest) {
+                html += '<a class="xsd-link" href="api/webservices/download?file=' + encodeURIComponent(svc.xsdRequest) + '"><i class="fa fa-download"></i> Request XSD</a>';
+            }
+            if (svc.xsdSchema) {
+                html += '<a class="xsd-link" href="api/webservices/download?file=' + encodeURIComponent(svc.xsdSchema) + '"><i class="fa fa-download"></i> Response XSD</a>';
+            }
+            return html + '</div>';
+        }
+
+        function loadAllSchemas(data) {
+            $(data.serviceCategory).each(function(i, cat) {
+                $(cat.services).each(function(j, svc) {
+                    /* Carry the resolved endpoint URL into each cached service reference */
+                    var svcResolved = $.extend({}, svc, { link: swapEndpoint(svc.link) });
+                    if (svc.xsdRequest) loadXsdSchema(svc.xsdRequest, svc.href, 'req', svcResolved);
+                    if (svc.xsdSchema)  loadXsdSchema(svc.xsdSchema,  svc.href, 'res', svcResolved);
                 });
-            return mainContent;
+            });
+        }
+
+        function loadXsdSchema(filename, href, type, svc) {
+            $.ajax({
+                url: 'api/webservices/xsd?file=' + encodeURIComponent(filename),
+                type: 'GET',
+                success: function(data) {
+                    schemaCache[href] = schemaCache[href] || {};
+                    schemaCache[href].svc = svc;
+                    if (type === 'req') {
+                        schemaCache[href].request = data;
+                        renderForm(href, data, svc);
+                        renderSchemaTable('schema-req-' + href, data);
+                    } else {
+                        schemaCache[href].response = data;
+                        renderSchemaTable('schema-res-' + href, data);
+                    }
+                },
+                error: function() {
+                    if (type === 'req') {
+                        $('#form-container-' + href).html('<em>Schema not available.</em>');
+                        $('#schema-req-' + href).html('<em>Schema not available.</em>');
+                    } else {
+                        $('#schema-res-' + href).html('<em>Schema not available.</em>');
+                    }
+                }
+            });
+        }
+
+        function renderSchemaTable(containerId, data) {
+            if (!data || !data.Request) {
+                $('#' + containerId).html('<em>Schema not available.</em>');
+                return;
+            }
+            var request = data.Request;
+            var rootName = request.Name;
+            var allChildObjects = request.ChildObjects || {};
+            var fields = allChildObjects[rootName] || [];
+            if (fields.length === 0) {
+                $('#' + containerId).html('<em>No parameters defined.</em>');
+                return;
+            }
+
+            var totalRows = countSchemaRows(fields, allChildObjects);
+            var reqCount = 0;
+            $.each(fields, function(i, f) { if (f.Required) reqCount++; });
+            var summary = totalRows + ' field' + (totalRows !== 1 ? 's' : '') +
+                (reqCount > 0 ? ' &nbsp;&bull;&nbsp; ' + reqCount + ' required' : '');
+
+            var tableHtml = '<div class="schema-table-wrap"><table class="schema-table">' +
+                '<thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Constraints &amp; Notes</th></tr></thead>' +
+                '<tbody>';
+            $.each(fields, function(i, field) {
+                tableHtml += renderSchemaRow(field, allChildObjects, 0);
+            });
+            tableHtml += '</tbody></table></div>';
+
+            var html =
+                '<div class="schema-accordion">' +
+                '<button type="button" class="schema-toggle-btn" onclick="toggleSchemaAccordion(this)">' +
+                '<span class="schema-toggle-left">' +
+                '<i class="fa fa-table"></i>' +
+                '<span>' + rootName + '</span>' +
+                '<span class="schema-toggle-count">(' + summary + ')</span>' +
+                '</span>' +
+                '<i class="fa fa-chevron-down schema-chevron"></i>' +
+                '</button>' +
+                '<div class="schema-body">' + tableHtml + '</div>' +
+                '</div>';
+
+            $('#' + containerId).html(html);
+        }
+
+        function toggleSchemaAccordion(btn) {
+            var $btn = $(btn);
+            var $body = $btn.next('.schema-body');
+            if ($btn.hasClass('is-open')) {
+                $body.slideUp(180);
+                $btn.removeClass('is-open');
+            } else {
+                $body.slideDown(220);
+                $btn.addClass('is-open');
+            }
+        }
+
+        function countSchemaRows(fields, allChildObjects) {
+            var count = 0;
+            $.each(fields, function(i, field) {
+                count++;
+                if (field.IsComplex) {
+                    var lookupType = field.Type ? field.Type.replace(' [ ]', '').trim() : null;
+                    var sub = lookupType && allChildObjects[lookupType] ? allChildObjects[lookupType] : null;
+                    if (!sub && field.ChildObjects) sub = field.ChildObjects;
+                    if (sub) count += sub.length;
+                }
+            });
+            return count;
+        }
+
+        function renderSchemaRow(field, allChildObjects, depth) {
+            var indentPx = depth * 22 + 10;
+            var reqBadge = field.Required
+                ? '<span class="badge-req">required</span>'
+                : '<span class="badge-opt">optional</span>';
+            var typeBadge = buildTypeBadge(field);
+            var constraints = buildConstraints(field);
+            var prefix = depth > 0 ? '<span class="tree-arrow">&#8627;</span> ' : '';
+            var attrTag = field.IsAttribute ? ' <span class="badge-attr">attr</span>' : '';
+            var html = '<tr>' +
+                '<td style="padding-left:' + indentPx + 'px">' + prefix + '<span class="param-name">' + escapeXml(field.Name) + '</span>' + attrTag + '</td>' +
+                '<td>' + typeBadge + '</td>' +
+                '<td>' + reqBadge + '</td>' +
+                '<td class="constraints-cell">' + constraints + '</td>' +
+                '</tr>';
+            if (field.IsComplex) {
+                var lookupType = field.Type ? field.Type.replace(' [ ]', '').trim() : null;
+                var subFields = lookupType && allChildObjects[lookupType] ? allChildObjects[lookupType] : null;
+                if (!subFields && field.ChildObjects && field.ChildObjects.length > 0) {
+                    subFields = field.ChildObjects;
+                }
+                if (subFields) {
+                    $.each(subFields, function(j, sf) {
+                        html += renderSchemaRow(sf, allChildObjects, depth + 1);
+                    });
+                }
+            }
+            return html;
+        }
+
+        function buildTypeBadge(field) {
+            var rawType = field.Type || 'string';
+            if (field.SimpleElement && field.SimpleElement.EnumType) rawType = 'enum';
+            var isArray = rawType.indexOf(' [ ]') >= 0;
+            var type = rawType.replace(' [ ]', '').replace(/^xs:/, '').toLowerCase();
+            var cls = 'type-other';
+            if (type === 'string') cls = 'type-string';
+            else if (type === 'date' || type === 'datetime') cls = 'type-date';
+            else if (type === 'boolean') cls = 'type-boolean';
+            else if (type === 'integer' || type === 'int' || type === 'decimal' || type === 'float' ||
+                     type === 'double' || type === 'nonnegativeinteger' || type === 'positiveinteger') cls = 'type-number';
+            else if (type === 'enum') cls = 'type-enum';
+            return '<span class="type-badge ' + cls + '">' + escapeXml(type) + '</span>' +
+                   (isArray ? ' <span class="array-mark">[ ]</span>' : '');
+        }
+
+        function buildConstraints(field) {
+            var parts = [];
+            /* xs:annotation/xs:documentation → Comment; xmlns:doc attribute → Description; fallback to dictionary */
+            var desc = field.Comment || field.Description || FIELD_DESC[field.Name] || '';
+            if (desc) parts.push('<span class="constraint-comment">' + escapeXml(desc) + '</span>');
+            if (field.Value) parts.push('Default: <code class="val-code">' + escapeXml(field.Value) + '</code>');
+            if (field.SimpleElement) {
+                var se = field.SimpleElement;
+                if (se.EnumType && se.EnumType.Enums && se.EnumType.Enums.length > 0) {
+                    var enumHtml = $.map(se.EnumType.Enums, function(e) {
+                        return '<code class="enum-code">' + escapeXml(e) + '</code>';
+                    }).join(' ');
+                    parts.push('Values: ' + enumHtml);
+                }
+                if (se.MinMaxType) {
+                    parts.push('Range: <code class="val-code">' + escapeXml(se.MinMaxType.MinValue) + '</code> &ndash; <code class="val-code">' + escapeXml(se.MinMaxType.MaxValue) + '</code>');
+                }
+                if (se.PatternType) {
+                    parts.push('Pattern: <code class="val-code">' + escapeXml(se.PatternType.Pattern) + '</code>');
+                }
+            }
+            return parts.length ? parts.join('<br>') : '<span class="no-constraint">—</span>';
+        }
+
+        function renderForm(href, data, svc) {
+            if (!data || !data.Request) {
+                $('#form-container-' + href).html('<em>Schema not available.</em>');
+                return;
+            }
+            var request = data.Request;
+            var rootName = request.Name;
+            var allChildObjects = request.ChildObjects || {};
+            var fields = allChildObjects[rootName];
+            if (!fields || fields.length === 0) {
+                $('#form-container-' + href).html('<em>No fields found.</em>');
+                return;
+            }
+
+            var html = '';
+            var i = 0;
+            while (i < fields.length) {
+                var field = fields[i];
+                if (field.IsComplex) {
+                    html += '<div class="field-row">' + renderComplexField(field, href, allChildObjects) + '</div>';
+                    i++;
+                } else {
+                    var rowHtml = '<div class="field-row">' + renderSimpleField(field, href);
+                    i++;
+                    if (i < fields.length && !fields[i].IsComplex) {
+                        rowHtml += renderSimpleField(fields[i], href);
+                        i++;
+                    }
+                    html += rowHtml + '</div>';
+                }
+            }
+
+            html += '<div class="generate-row"><button type="button" class="btn btn-primary btn-generate" onclick="generateAndSend(\'' + href + '\')">Generate &amp; Send</button></div>';
+            $('#form-container-' + href).html(html);
+        }
+
+        function renderSimpleField(field, href) {
+            var fid = 'f-' + href + '-' + safeId(field.Name);
+            var label = field.Name + (field.Required ? ' *' : '') + ':';
+            return '<div class="field-cell">' +
+                '<label for="' + fid + '">' + label + '</label>' +
+                buildInput(field, fid) +
+                '</div>';
+        }
+
+        function renderComplexField(field, href, allChildObjects) {
+            var subFields = null;
+            var childElemName = null;
+            var isAttrBased = false;
+
+            var lookupType = field.Type ? field.Type.replace(' [ ]', '').trim() : null;
+            if (lookupType && allChildObjects[lookupType]) {
+                subFields = allChildObjects[lookupType];
+                isAttrBased = subFields.length > 0 && subFields[0].IsAttribute;
+            }
+
+            if (field.ChildObjects && field.ChildObjects.length > 0) {
+                childElemName = field.ChildObjects[0].Name;
+            }
+
+            var label = field.Name + (field.Required ? ' *' : '') + ':';
+            var innerHtml = '';
+
+            if (subFields && subFields.length > 0) {
+                var j = 0;
+                while (j < subFields.length) {
+                    var sf = subFields[j];
+                    var sfId = 'f-' + href + '-' + safeId(field.Name) + '-' + safeId(sf.Name);
+                    var sfLabel = sf.Name + (sf.Required ? ' *' : '') + ':';
+                    innerHtml += '<div class="field-row"><div class="field-cell"><label for="' + sfId + '">' + sfLabel + '</label>' + buildInput(sf, sfId) + '</div>';
+                    j++;
+                    if (j < subFields.length) {
+                        var sf2 = subFields[j];
+                        var sf2Id = 'f-' + href + '-' + safeId(field.Name) + '-' + safeId(sf2.Name);
+                        var sf2Label = sf2.Name + (sf2.Required ? ' *' : '') + ':';
+                        innerHtml += '<div class="field-cell"><label for="' + sf2Id + '">' + sf2Label + '</label>' + buildInput(sf2, sf2Id) + '</div>';
+                        j++;
+                    }
+                    innerHtml += '</div>';
+                }
+            }
+
+            return '<div style="width:100%;padding:0 8px">' +
+                '<fieldset class="complex-fieldset">' +
+                '<legend>' + label + '</legend>' +
+                innerHtml +
+                '</fieldset></div>';
+        }
+
+        function buildInput(field, fid) {
+            var rawType = field.Type || '';
+            var type = rawType.toLowerCase().replace(/^xs:/, '');
+            var val = field.Value || '';
+
+            /* Auto-fill credentials from session */
+            if (field.Name === 'Username' && CL_SESSION.username) val = CL_SESSION.username;
+            if (field.Name === 'Password') {
+                var passVal = CL_SESSION.password || val;
+                return '<input type="password" class="form-control" id="' + fid + '" value="' + escapeAttr(passVal) + '" autocomplete="current-password" />';
+            }
+
+            if (field.SimpleElement) {
+                var se = field.SimpleElement;
+                if (se.EnumType && se.EnumType.Enums && se.EnumType.Enums.length > 0) {
+                    var opts = '<option value="">Select One</option>';
+                    $.each(se.EnumType.Enums, function(k, e) {
+                        opts += '<option value="' + escapeAttr(e) + '"' + (e === val ? ' selected' : '') + '>' + e + '</option>';
+                    });
+                    return '<select class="form-control" id="' + fid + '">' + opts + '</select>';
+                }
+                if (se.MinMaxType) {
+                    return '<input type="number" class="form-control" id="' + fid + '" value="' + escapeAttr(val) + '"' +
+                        ' min="' + escapeAttr(se.MinMaxType.MinValue) + '" max="' + escapeAttr(se.MinMaxType.MaxValue) + '" />';
+                }
+                if (se.PatternType) {
+                    return '<input type="text" class="form-control" id="' + fid + '" value="' + escapeAttr(val) + '" placeholder="' + escapeAttr(se.PatternType.Pattern) + '" />';
+                }
+            }
+
+            if (type === 'date') {
+                return '<input type="date" class="form-control" id="' + fid + '" value="' + escapeAttr(val) + '" />';
+            }
+            if (type === 'integer' || type === 'int' || type === 'decimal' || type === 'float' ||
+                    type === 'double' || type === 'nonnegativeinteger' || type === 'positiveinteger') {
+                return '<input type="number" class="form-control" id="' + fid + '" value="' + escapeAttr(val) + '" />';
+            }
+            if (type === 'boolean') {
+                return '<select class="form-control" id="' + fid + '">' +
+                    '<option value="">Select One</option>' +
+                    '<option value="true"' + (val === 'true' ? ' selected' : '') + '>true</option>' +
+                    '<option value="false"' + (val === 'false' ? ' selected' : '') + '>false</option>' +
+                    '</select>';
+            }
+
+            return '<input type="text" class="form-control" id="' + fid + '" value="' + escapeAttr(val) + '" />';
+        }
+
+        function generateAndSend(href) {
+            var cache = schemaCache[href];
+            if (!cache || !cache.request) return;
+
+            var xml = generateXml(href, cache.request);
+            $('#xml-req-code-' + href).text(xml);
+
+            var link = cache.svc ? cache.svc.link : null;
+            if (!link) return;
+
+            $('#xml-res-code-' + href).text('Sending request...');
+            $.ajax({
+                url: 'api/webservices/proxy',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ Url: link, Xml: xml }),
+                success: function(response) {
+                    $('#xml-res-code-' + href).text(typeof response === 'string' ? response : JSON.stringify(response, null, 2));
+                },
+                error: function(xhr) {
+                    $('#xml-res-code-' + href).text('Error: ' + (xhr.responseText || xhr.statusText));
+                }
+            });
+        }
+
+        function generateXml(href, data) {
+            var request = data.Request;
+            var rootName = request.Name;
+            var allChildObjects = request.ChildObjects || {};
+            var fields = allChildObjects[rootName] || [];
+
+            var lines = [];
+            lines.push('<' + rootName + ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">');
+
+            $.each(fields, function(i, field) {
+                if (field.IsComplex) {
+                    var complexLines = buildComplexXmlLines(field, href, allChildObjects);
+                    if (complexLines.length > 0) {
+                        $.each(complexLines, function(j, l) { lines.push('  ' + l); });
+                    }
+                } else {
+                    var fid = 'f-' + href + '-' + safeId(field.Name);
+                    var val = $('#' + fid).val() || '';
+                    if (val !== '') {
+                        lines.push('  <' + field.Name + '>' + escapeXml(val) + '</' + field.Name + '>');
+                    }
+                }
+            });
+
+            lines.push('</' + rootName + '>');
+            return lines.join('\n');
+        }
+
+        function buildComplexXmlLines(field, href, allChildObjects) {
+            var lines = [];
+            var subFields = null;
+            var childElemName = null;
+            var isAttrBased = false;
+
+            var lookupType = field.Type ? field.Type.replace(' [ ]', '').trim() : null;
+            if (lookupType && allChildObjects[lookupType]) {
+                subFields = allChildObjects[lookupType];
+                isAttrBased = subFields.length > 0 && subFields[0].IsAttribute;
+            }
+
+            // Always resolve child element name from ChildObjects regardless of type lookup
+            if (field.ChildObjects && field.ChildObjects.length > 0) {
+                childElemName = field.ChildObjects[0].Name;
+            }
+
+            var innerLines = [];
+
+            if (subFields && subFields.length > 0) {
+                if (isAttrBased && childElemName) {
+                    var attrStr = '';
+                    $.each(subFields, function(j, attr) {
+                        var aid = 'f-' + href + '-' + safeId(field.Name) + '-' + safeId(attr.Name);
+                        var aval = $('#' + aid).val() || '';
+                        if (aval !== '') {
+                            attrStr += ' ' + attr.Name + '="' + escapeAttr(aval) + '"';
+                        }
+                    });
+                    if (field.Required || attrStr !== '') {
+                        innerLines.push('  <' + childElemName + attrStr + ' />');
+                    }
+                } else {
+                    $.each(subFields, function(j, sf) {
+                        var sfid = 'f-' + href + '-' + safeId(field.Name) + '-' + safeId(sf.Name);
+                        var sfval = $('#' + sfid).val() || '';
+                        if (sfval !== '') {
+                            innerLines.push('  <' + sf.Name + '>' + escapeXml(sfval) + '</' + sf.Name + '>');
+                        }
+                    });
+                }
+            }
+
+            // When required and still empty, emit a minimal child element (e.g. <Room />)
+            if (innerLines.length === 0 && field.Required && childElemName) {
+                innerLines.push('  <' + childElemName + ' />');
+            }
+
+            if (innerLines.length > 0 || field.Required) {
+                lines.push('<' + field.Name + '>');
+                $.each(innerLines, function(k, l) { lines.push(l); });
+                lines.push('</' + field.Name + '>');
+            }
+
+            return lines;
+        }
+
+        function safeId(name) {
+            return name.replace(/[^a-zA-Z0-9_-]/g, '_');
+        }
+
+        function escapeXml(str) {
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        function escapeAttr(str) {
+            return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         }
 
     </script>
@@ -651,7 +1058,7 @@
     <script src="assets/js/theDocs.all.min.js">
     </script>
     <!-- Syntax Highlighting -->
-    <link href="assets/vendors/rainbow/css/github.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="assets/vendors/rainbow/css/monokai.css" rel="stylesheet" type="text/css" media="screen" />
     <script src="assets/vendors/rainbow/js/rainbow.js">
     </script>
     <script src="assets/vendors/rainbow/js/language/generic.js">

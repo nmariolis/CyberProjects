@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="HotelCacheResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Hotel" minOccurs="0" maxOccurs="1" xmlns:doc="The hotel matching the requested HotelID, with its cached room rates for the given duration.">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Rooms" minOccurs="0" maxOccurs="1" xmlns:doc="List of available rooms with their cached board rates.">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Room" minOccurs="0" maxOccurs="unbounded" xmlns:doc="A single room with its available board types and cached rates.">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Occupancy" minOccurs="0" maxOccurs="unbounded" xmlns:doc="A rate entry for a specific occupancy combination.">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="RR" minOccurs="0" xmlns:doc="Room Rate — room only, no meals included.">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Discount" type="xs:string" xmlns:doc="Discounted total rate for the duration."/>
+                                      <xs:element name="value" type="xs:string" xmlns:doc="Standard total rate for the duration."/>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="BB" minOccurs="0" xmlns:doc="Bed and Breakfast — room with breakfast included.">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Discount" type="xs:string" xmlns:doc="Discounted total rate for the duration."/>
+                                      <xs:element name="value" type="xs:string" xmlns:doc="Standard total rate for the duration."/>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="HB" minOccurs="0" xmlns:doc="Half Board — room with breakfast and dinner included.">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Discount" type="xs:string" xmlns:doc="Discounted total rate for the duration."/>
+                                      <xs:element name="value" type="xs:string" xmlns:doc="Standard total rate for the duration."/>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="FB" minOccurs="0" xmlns:doc="Full Board — room with all main meals included.">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Discount" type="xs:string" xmlns:doc="Discounted total rate for the duration."/>
+                                      <xs:element name="value" type="xs:string" xmlns:doc="Standard total rate for the duration."/>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="AI" minOccurs="0" xmlns:doc="All Inclusive — room with all meals and selected beverages included.">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Discount" type="xs:string" xmlns:doc="Discounted total rate for the duration."/>
+                                      <xs:element name="value" type="xs:string" xmlns:doc="Standard total rate for the duration."/>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="UI" minOccurs="0" xmlns:doc="Ultra All Inclusive — premium all-inclusive package.">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Discount" type="xs:string" xmlns:doc="Discounted total rate for the duration."/>
+                                      <xs:element name="value" type="xs:string" xmlns:doc="Standard total rate for the duration."/>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                              <xs:attribute name="Code" type="xs:string" xmlns:doc="Occupancy code, e.g. A2 for 2 adults."/>
+                              <xs:attribute name="Availability" type="xs:int" xmlns:doc="Number of units available for this occupancy."/>
+                              <xs:attribute name="StopSales" type="xs:boolean" xmlns:doc="When true, this occupancy is closed for new bookings."/>
+                              <xs:attribute name="ContractID" type="xs:int" xmlns:doc="Identifier of the contract this rate belongs to."/>
+                              <xs:attribute name="SalesID" type="xs:int" xmlns:doc="Sales identifier for this rate entry."/>
+                              <xs:attribute name="IsOpaque" type="xs:boolean" xmlns:doc="When true, specific hotel details are hidden until booking is confirmed."/>
+                              <xs:attribute name="NonRefundable" type="xs:boolean" xmlns:doc="When true, this rate is non-refundable."/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="ID" type="xs:int" xmlns:doc="Internal room identifier."/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="ID" type="xs:int" xmlns:doc="Internal hotel identifier."/>
+            <xs:attribute name="Name" type="xs:string" xmlns:doc="Hotel name."/>
+            <xs:attribute name="Currency" type="xs:string" xmlns:doc="Currency code for all rates in this response, e.g. EUR."/>
+            <xs:attribute name="Duration" type="xs:int" xmlns:doc="Number of nights the rates are calculated for, as requested."/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ErrorList" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="Errors" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Error" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Warnings" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Warning" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

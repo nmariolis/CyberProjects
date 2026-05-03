@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cyberlogic API — Login</title>
+    <link href="assets/css/theDocs.all.min.css" rel="stylesheet" />
+    <link href="assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="assets/css/custom.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Raleway:300,400,500,700%7CLato:300,400' rel='stylesheet' type='text/css' />
+    <link rel="icon" href="customAssets/img/CyberlogicIcon.svg" />
+    <style>
+        *, *:before, *:after { box-sizing: border-box; }
+        html, body { margin: 0; padding: 0; height: 100%; }
+        body {
+            background: #eef1f7;
+            font-family: Lato, 'Helvetica Neue', sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ── Top bar ──────────────────────────────────────────── */
+        .login-topbar {
+            background: #1C4084;
+            border-bottom: 3px solid #EB8008;
+            padding: 14px 28px;
+            display: flex;
+            align-items: center;
+        }
+        .login-topbar img {
+            max-width: 150px;
+            filter: brightness(0) invert(1);
+        }
+
+        /* ── Centre wrapper ───────────────────────────────────── */
+        .login-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 16px;
+        }
+
+        /* ── Card ─────────────────────────────────────────────── */
+        .login-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 32px rgba(28, 64, 132, 0.11);
+            padding: 48px 52px 40px;
+            width: 100%;
+            max-width: 440px;
+        }
+        .login-card-header { margin-bottom: 28px; }
+        .login-card-header h1 {
+            font-size: 22px;
+            color: #1C4084;
+            font-weight: 700;
+            margin: 0 0 6px;
+        }
+        .login-card-header p {
+            font-size: 13px;
+            color: #6c8cbf;
+            margin: 0;
+            line-height: 1.5;
+        }
+        .login-divider {
+            height: 3px;
+            background: linear-gradient(to right, #EB8008, #1C4084);
+            border-radius: 2px;
+            margin-bottom: 28px;
+        }
+
+        /* ── Form ─────────────────────────────────────────────── */
+        .login-field { margin-bottom: 20px; }
+        .login-field label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            color: #1C4084;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            margin-bottom: 7px;
+        }
+        .login-input-wrap { position: relative; }
+        .login-input-wrap .field-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9db5d5;
+            font-size: 13px;
+            pointer-events: none;
+        }
+        .login-field input {
+            width: 100%;
+            padding: 10px 12px 10px 34px;
+            border: 1px solid #ccd6e8;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #333;
+            background: #f7f9fc;
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+            outline: none;
+            font-family: inherit;
+        }
+        .login-field input:focus {
+            border-color: #1C4084;
+            box-shadow: 0 0 0 3px rgba(28, 64, 132, 0.12);
+            background: #fff;
+        }
+        .login-field input::placeholder { color: #b0bfce; }
+
+        /* show/hide key button */
+        .btn-eye {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #9db5d5;
+            padding: 2px 4px;
+            font-size: 13px;
+            line-height: 1;
+        }
+        .btn-eye:hover { color: #1C4084; }
+
+        /* ── Error box ────────────────────────────────────────── */
+        .login-error {
+            display: none;
+            background: rgba(220, 53, 69, 0.07);
+            border: 1px solid rgba(220, 53, 69, 0.22);
+            border-left: 3px solid #dc3545;
+            border-radius: 4px;
+            color: #b02a37;
+            font-size: 13px;
+            padding: 10px 14px;
+            margin-bottom: 20px;
+        }
+
+        /* ── Submit ───────────────────────────────────────────── */
+        .btn-login {
+            width: 100%;
+            padding: 13px;
+            background: #EB8008;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 4px;
+            transition: background 0.15s;
+            font-family: inherit;
+        }
+        .btn-login:hover:not(:disabled) { background: #c96d00; }
+        .btn-login:disabled { opacity: 0.65; cursor: not-allowed; }
+
+        /* ── Footer ───────────────────────────────────────────── */
+        .login-footer {
+            text-align: center;
+            font-size: 11px;
+            color: #9db5d5;
+            margin-top: 24px;
+            line-height: 1.6;
+        }
+
+        /* ── Page footer bar ──────────────────────────────────── */
+        .page-footer {
+            background: #1C4084;
+            color: rgba(255,255,255,0.45);
+            text-align: center;
+            font-size: 11px;
+            padding: 10px;
+        }
+
+        @media (max-width: 480px) {
+            .login-card { padding: 32px 20px 28px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-topbar">
+        <img src="customAssets/img/CyberlogicLogo.png" alt="Cyberlogic" />
+    </div>
+
+    <div class="login-wrap">
+        <div class="login-card">
+            <div class="login-card-header">
+                <h1>API Documentation Portal</h1>
+                <p>Enter your API key and service credentials to access the interactive documentation.</p>
+            </div>
+            <div class="login-divider"></div>
+
+            <div class="login-error" id="login-error"></div>
+
+            <div class="login-field">
+                <label for="f-apikey"><i class="fa fa-key"></i>&nbsp; API Key</label>
+                <div class="login-input-wrap">
+                    <i class="fa fa-key field-icon"></i>
+                    <input type="password" id="f-apikey" placeholder="Enter your API key" autocomplete="off" />
+                    <button type="button" class="btn-eye" id="btn-eye" title="Show / hide key">
+                        <i class="fa fa-eye" id="eye-icon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="login-field">
+                <label for="f-username"><i class="fa fa-user"></i>&nbsp; Username</label>
+                <div class="login-input-wrap">
+                    <i class="fa fa-user field-icon"></i>
+                    <input type="text" id="f-username" placeholder="Service username" autocomplete="username" />
+                </div>
+            </div>
+
+            <div class="login-field">
+                <label for="f-password"><i class="fa fa-lock"></i>&nbsp; Password</label>
+                <div class="login-input-wrap">
+                    <i class="fa fa-lock field-icon"></i>
+                    <input type="password" id="f-password" placeholder="Service password" autocomplete="current-password" />
+                </div>
+            </div>
+
+            <button type="button" class="btn-login" id="btn-login">
+                <i class="fa fa-sign-in"></i>&nbsp; Access Documentation
+            </button>
+
+            <div class="login-footer">
+                Credentials are stored only for this browser tab and cleared on close.<br />
+                Contact your Cyberlogic account manager for access details.
+            </div>
+        </div>
+    </div>
+
+    <div class="page-footer">
+        &copy; Cyberlogic e-Tourism Platform &mdash; API Documentation
+    </div>
+
+    <script>
+        // Already logged in → go straight to docs
+        (function() {
+            if (sessionStorage.getItem('cl_session')) {
+                window.location.replace('Index.html');
+            }
+        })();
+
+        document.getElementById('btn-eye').addEventListener('click', function() {
+            var inp  = document.getElementById('f-apikey');
+            var icon = document.getElementById('eye-icon');
+            if (inp.type === 'password') {
+                inp.type = 'text';
+                icon.className = 'fa fa-eye-slash';
+            } else {
+                inp.type = 'password';
+                icon.className = 'fa fa-eye';
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') doLogin();
+        });
+
+        document.getElementById('btn-login').addEventListener('click', doLogin);
+
+        function showError(msg) {
+            var el = document.getElementById('login-error');
+            el.textContent = msg;
+            el.style.display = 'block';
+        }
+
+        function doLogin() {
+            var apiKey   = document.getElementById('f-apikey').value.trim();
+            var username = document.getElementById('f-username').value.trim();
+            var password = document.getElementById('f-password').value;
+            var btn      = document.getElementById('btn-login');
+            var errEl    = document.getElementById('login-error');
+
+            errEl.style.display = 'none';
+
+            if (!apiKey)   { showError('API key is required.'); document.getElementById('f-apikey').focus(); return; }
+            if (!username) { showError('Username is required.'); document.getElementById('f-username').focus(); return; }
+            if (!password) { showError('Password is required.'); document.getElementById('f-password').focus(); return; }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>&nbsp; Verifying&hellip;';
+
+            fetch('api/auth/resolve', {
+                method:  'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body:    JSON.stringify({ apiKey: apiKey })
+            })
+            .then(function(r) {
+                if (r.status === 401) throw new Error('key');
+                if (!r.ok)           throw new Error('server');
+                return r.json();
+            })
+            .then(function(data) {
+                sessionStorage.setItem('cl_session', JSON.stringify({
+                    endpoint:     data.baseUrl,
+                    endpointName: data.name,
+                    username:     username,
+                    password:     password
+                }));
+                window.location.replace('Index.html');
+            })
+            .catch(function(err) {
+                showError(err.message === 'key'
+                    ? 'Invalid API key. Please check and try again.'
+                    : 'Server error. Please try again shortly.');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa fa-sign-in"></i>&nbsp; Access Documentation';
+            });
+        }
+    </script>
+</body>
+</html>

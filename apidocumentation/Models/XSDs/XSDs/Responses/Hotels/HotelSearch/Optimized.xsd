@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="SearchHotels">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="Username"/>
+        <xs:element type="xs:string" name="Password"/>
+        <xs:element type="xs:date" name="DateFrom"/>
+        <xs:element type="xs:date" name="DateTo"/>
+        <xs:element name="Rooms">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Room" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:int" name="Adults"/>
+                      <xs:attribute type="xs:int" name="Children"/>
+                      <xs:attribute type="xs:string" name="ChildrenAges"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:string" name="Language"/>
+        <xs:element type="xs:int" name="City"/>
+        <xs:element type="xs:int" name="HotelID"/>
+        <xs:element type="xs:boolean" name="UseTariff">
+        
+          <xs:annotation>
+            <xs:documentation>&lt;Province>149&lt;/Province></xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element type="xs:string" name="IsOptimized"/>
+        <xs:element name="Response">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Hotels">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Hotel" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Rooms">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Room" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Name">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="RatePlan" maxOccurs="unbounded" minOccurs="0">
+                                              <xs:complexType>
+                                                <xs:simpleContent>
+                                                  <xs:extension base="xs:string">
+                                                    <xs:attribute type="xs:int" name="Availability"/>
+                                                    <xs:attribute type="xs:string" name="Code"/>
+                                                    <xs:attribute type="xs:int" name="ContractID"/>
+                                                    <xs:attribute type="xs:int" name="SalesID"/>
+                                                    <xs:attribute type="xs:boolean" name="NonRefundable"/>
+                                                    <xs:attribute type="xs:boolean" name="SelfCatering"/>
+                                                    <xs:attribute type="xs:boolean" name="IsOpaque"/>
+                                                    <xs:attribute type="xs:string" name="RRDiscount"/>
+                                                    <xs:attribute type="xs:string" name="RR"/>
+                                                    <xs:attribute type="xs:string" name="BBDiscount"/>
+                                                    <xs:attribute type="xs:string" name="BB"/>
+                                                    <xs:attribute type="xs:string" name="HBDiscount"/>
+                                                    <xs:attribute type="xs:string" name="HB"/>
+                                                    <xs:attribute type="xs:string" name="FBDiscount"/>
+                                                    <xs:attribute type="xs:string" name="FB"/>
+                                                    <xs:attribute type="xs:string" name="AIDiscount"/>
+                                                    <xs:attribute type="xs:string" name="AI"/>
+                                                    <xs:attribute type="xs:string" name="UIDiscount"/>
+                                                    <xs:attribute type="xs:string" name="UI"/>
+                                                  </xs:extension>
+                                                </xs:simpleContent>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                          <xs:attribute type="xs:string" name="RoomName"/>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute type="xs:int" name="ID"/>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute type="xs:int" name="ID"/>
+                        <xs:attribute type="xs:int" name="GIATA"/>
+                        <xs:attribute type="xs:string" name="Currency"/>
+                        <xs:attribute type="xs:string" name="Name"/>
+                        <xs:attribute type="xs:string" name="Country"/>
+                        <xs:attribute type="xs:int" name="State"/>
+                        <xs:attribute type="xs:int" name="StateProvinceID"/>
+                        <xs:attribute type="xs:string" name="StateProvinceName"/>
+                        <xs:attribute type="xs:int" name="CityID"/>
+                        <xs:attribute type="xs:int" name="City"/>
+                        <xs:attribute type="xs:string" name="CityName"/>
+                        <xs:attribute type="xs:string" name="Address1"/>
+                        <xs:attribute type="xs:string" name="Address2"/>
+                        <xs:attribute type="xs:string" name="Address3"/>
+                        <xs:attribute type="xs:decimal" name="Rating"/>
+                        <xs:attribute type="xs:string" name="TypeDescription"/>
+                        <xs:attribute type="xs:string" name="OfficialRating"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:int" name="Records"/>
+                  <xs:attribute type="xs:int" name="Overnights"/>
+                  <xs:attribute type="xs:int" name="NumberOfRooms"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ErrorList" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="Errors" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Error" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Warnings" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Warning" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+

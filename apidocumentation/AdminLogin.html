@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cyberlogic API — Admin</title>
+    <link href="assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css' />
+    <link rel="icon" href="customAssets/img/CyberlogicIcon.svg" />
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { margin: 0; padding: 0; height: 100%; }
+        body {
+            background: #eef1f7;
+            font-family: Lato, 'Helvetica Neue', sans-serif;
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+        .topbar {
+            background: #1C4084;
+            border-bottom: 3px solid #EB8008;
+            padding: 14px 28px;
+            display: flex; align-items: center; gap: 14px;
+        }
+        .topbar img { max-width: 140px; filter: brightness(0) invert(1); }
+        .topbar-badge {
+            background: rgba(235,128,8,.18);
+            color: #EB8008;
+            font-size: 11px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1px;
+            padding: 3px 10px; border-radius: 20px;
+            border: 1px solid rgba(235,128,8,.35);
+        }
+        .wrap { flex: 1; display: flex; align-items: center; justify-content: center; padding: 48px 16px; }
+        .card {
+            background: #fff; border-radius: 8px;
+            box-shadow: 0 4px 32px rgba(28,64,132,.11);
+            padding: 48px 52px 40px; width: 100%; max-width: 420px;
+        }
+        .card h1 { font-size: 21px; color: #1C4084; font-weight: 700; margin: 0 0 5px; }
+        .card p  { font-size: 13px; color: #6c8cbf; margin: 0; }
+        .divider {
+            height: 3px;
+            background: linear-gradient(to right, #EB8008, #1C4084);
+            border-radius: 2px; margin: 22px 0;
+        }
+        .field { margin-bottom: 18px; }
+        .field label {
+            display: block; font-size: 11px; font-weight: 700;
+            color: #1C4084; text-transform: uppercase; letter-spacing: .7px; margin-bottom: 7px;
+        }
+        .field-wrap { position: relative; }
+        .field-wrap .fi {
+            position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+            color: #9db5d5; font-size: 13px; pointer-events: none;
+        }
+        .field input {
+            width: 100%; padding: 10px 12px 10px 34px;
+            border: 1px solid #ccd6e8; border-radius: 4px;
+            font-size: 14px; color: #333; background: #f7f9fc;
+            transition: border-color .2s, box-shadow .2s; outline: none; font-family: inherit;
+        }
+        .field input:focus { border-color: #1C4084; box-shadow: 0 0 0 3px rgba(28,64,132,.12); background: #fff; }
+        .field input::placeholder { color: #b0bfce; }
+        .error {
+            display: none; background: rgba(220,53,69,.07);
+            border: 1px solid rgba(220,53,69,.22); border-left: 3px solid #dc3545;
+            border-radius: 4px; color: #b02a37; font-size: 13px;
+            padding: 10px 14px; margin-bottom: 18px;
+        }
+        .btn {
+            width: 100%; padding: 13px; background: #1C4084; border: none;
+            border-radius: 4px; color: #fff; font-size: 14px; font-weight: 700;
+            letter-spacing: .5px; text-transform: uppercase; cursor: pointer;
+            transition: background .15s; font-family: inherit;
+        }
+        .btn:hover:not(:disabled) { background: #163366; }
+        .btn:disabled { opacity: .65; cursor: not-allowed; }
+        .foot { text-align: center; font-size: 11px; color: #9db5d5; margin-top: 20px; }
+        .page-foot {
+            background: #1C4084; color: rgba(255,255,255,.4);
+            text-align: center; font-size: 11px; padding: 10px;
+        }
+        @media (max-width: 480px) { .card { padding: 32px 20px 28px; } }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <img src="customAssets/img/CyberlogicLogo.png" alt="Cyberlogic" />
+    <span class="topbar-badge"><i class="fa fa-shield"></i>&nbsp; Admin</span>
+</div>
+
+<div class="wrap">
+    <div class="card">
+        <h1>Admin Panel</h1>
+        <p>Sign in with your admin credentials to manage API endpoints.</p>
+        <div class="divider"></div>
+
+        <div class="error" id="err"></div>
+
+        <div class="field">
+            <label><i class="fa fa-user"></i>&nbsp; Username</label>
+            <div class="field-wrap">
+                <i class="fa fa-user fi"></i>
+                <input type="text" id="f-user" placeholder="Admin username" autocomplete="username" />
+            </div>
+        </div>
+
+        <div class="field">
+            <label><i class="fa fa-lock"></i>&nbsp; Password</label>
+            <div class="field-wrap">
+                <i class="fa fa-lock fi"></i>
+                <input type="password" id="f-pass" placeholder="Admin password" autocomplete="current-password" />
+            </div>
+        </div>
+
+        <button class="btn" id="btn-login">
+            <i class="fa fa-sign-in"></i>&nbsp; Sign In
+        </button>
+        <div class="foot">Restricted area — authorised personnel only.</div>
+    </div>
+</div>
+
+<div class="page-foot">&copy; Cyberlogic e-Tourism Platform &mdash; Admin</div>
+
+<script>
+    (function () {
+        if (sessionStorage.getItem('cl_admin')) window.location.replace('AdminPanel.html');
+    })();
+
+    document.addEventListener('keydown', function (e) { if (e.key === 'Enter') doLogin(); });
+    document.getElementById('btn-login').addEventListener('click', doLogin);
+
+    function showErr(msg) {
+        var el = document.getElementById('err');
+        el.textContent = msg; el.style.display = 'block';
+    }
+
+    function doLogin() {
+        var user = document.getElementById('f-user').value.trim();
+        var pass = document.getElementById('f-pass').value;
+        var btn  = document.getElementById('btn-login');
+
+        document.getElementById('err').style.display = 'none';
+        if (!user) { showErr('Username is required.'); return; }
+        if (!pass) { showErr('Password is required.'); return; }
+
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>&nbsp; Signing in&hellip;';
+
+        fetch('api/admin/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: user, password: pass })
+        })
+        .then(function (r) {
+            if (r.status === 401) throw new Error('invalid');
+            if (!r.ok) throw new Error('server');
+            return r.json();
+        })
+        .then(function (data) {
+            sessionStorage.setItem('cl_admin', data.token);
+            window.location.replace('AdminPanel.html');
+        })
+        .catch(function (err) {
+            showErr(err.message === 'invalid' ? 'Invalid credentials.' : 'Server error — please try again.');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa fa-sign-in"></i>&nbsp; Sign In';
+        });
+    }
+</script>
+</body>
+</html>

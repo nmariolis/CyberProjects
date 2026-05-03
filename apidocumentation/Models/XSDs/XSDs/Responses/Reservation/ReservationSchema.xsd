@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="ReservationSchema">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="Response" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:all>
+              <xs:element minOccurs="0" maxOccurs="1" name="ReservationID" type="xs:int" />
+              <xs:element minOccurs="0" maxOccurs="1" name="Reference" type="xs:string" />
+              <xs:element minOccurs="0" maxOccurs="1" name="Prices">
+                <xs:complexType>
+                  <xs:all>
+                    <xs:element minOccurs="0" maxOccurs="1" name="CarRental">
+                      <xs:complexType>
+                        <xs:attribute name="Price" type="xs:decimal" use="optional" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Hotel">
+                      <xs:complexType>
+                        <xs:attribute name="Price" type="xs:decimal" use="optional" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" maxOccurs="1" name="HotelVarious">
+                      <xs:complexType>
+                        <xs:attribute name="Price" type="xs:decimal" use="optional" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Transfer">
+                      <xs:complexType>
+                        <xs:attribute name="Price" type="xs:decimal" use="optional" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Various">
+                      <xs:complexType>
+                        <xs:attribute name="Price" type="xs:decimal" use="optional" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Excursions">
+                      <xs:complexType>
+                        <xs:attribute name="Price" type="xs:decimal" use="optional" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Packages">
+                      <xs:complexType>
+                        <xs:attribute name="Price" type="xs:decimal" use="optional" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:all>
+                  <xs:attribute name="TotalPrice" type="xs:decimal" use="optional" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" maxOccurs="1" name="Status" type="xs:string" />
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ErrorList" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="Errors" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Error" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Warnings" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Warning" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

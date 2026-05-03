@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="SearchPackageRoomPricesRequest">
+        <xs:complexType>
+          <xs:sequence>
+                <xs:element name="Username" type="xs:string" minOccurs="1" maxOccurs="1" default="username" xmlns:doc="Customer's username"/>
+                <xs:element name="Password" type="xs:string" minOccurs="1" maxOccurs="1" default="password" xmlns:doc="Customer's password"/>
+                <xs:element name="PackageID" type="xs:int" minOccurs="1" maxOccurs="1" default="1" xmlns:doc="The id of the package you want to see the prices for. "/>
+                <xs:element name="BoardID" type="xs:int" minOccurs="1" maxOccurs="1" default="1" xmlns:doc="The id that represents the board/meal plan. This id can be obtained through the 'Package Search' service "/>
+                <xs:element name="Date" type="xs:date" minOccurs="1" maxOccurs="1" fixed="2020-06-15" xmlns:doc="The date that you wish to book the package."/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

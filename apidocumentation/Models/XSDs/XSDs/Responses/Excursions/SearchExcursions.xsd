@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="SearchExcursions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Response">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Excursions">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Excursion" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="ExcursionSchedules">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Schedule" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element type="xs:dateTime" name="FromDate"/>
+                                      <xs:element type="xs:dateTime" name="ToDate"/>
+                                      <xs:element type="xs:boolean" name="Monday"/>
+                                      <xs:element type="xs:boolean" name="Tuesday"/>
+                                      <xs:element type="xs:boolean" name="Wednesday"/>
+                                      <xs:element type="xs:boolean" name="Thursday"/>
+                                      <xs:element type="xs:boolean" name="Friday"/>
+                                      <xs:element type="xs:boolean" name="Saturday"/>
+                                      <xs:element type="xs:boolean" name="Sunday"/>
+                                      <xs:element name="Language">
+                                        <xs:complexType>
+                                          <xs:simpleContent>
+                                            <xs:extension base="xs:string">
+                                              <xs:attribute type="xs:int" name="Id" />
+                                              <xs:attribute type="xs:string" name="Name" />
+                                            </xs:extension>
+                                          </xs:simpleContent>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="AvailableDates">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="Date" maxOccurs="unbounded" minOccurs="0">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element type="xs:string" name="value"/>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute type="xs:int" name="Id" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="ExcursionHotels">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Hotel" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Languages">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="Language" maxOccurs="unbounded" minOccurs="0">
+                                              <xs:complexType>
+                                                <xs:simpleContent>
+                                                  <xs:extension base="xs:string">
+                                                    <xs:attribute type="xs:int" name="ID" />
+                                                    <xs:attribute type="xs:string" name="Name" />
+                                                    <xs:attribute type="xs:string" name="Time" />
+                                                  </xs:extension>
+                                                </xs:simpleContent>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute type="xs:int" name="AccID" />
+                                    <xs:attribute type="xs:string" name="AccName" />
+                                    <xs:attribute type="xs:int" name="PickupID" />
+                                    <xs:attribute type="xs:string" name="PickupName" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="ExcursionPickupPoints">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="PickupPoint" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Languages">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="Language" maxOccurs="unbounded" minOccurs="0">
+                                              <xs:complexType>
+                                                <xs:simpleContent>
+                                                  <xs:extension base="xs:string">
+                                                    <xs:attribute type="xs:int" name="ID" />
+                                                    <xs:attribute type="xs:string" name="Name" />
+                                                    <xs:attribute type="xs:string" name="Time" />
+                                                  </xs:extension>
+                                                </xs:simpleContent>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute type="xs:int" name="PickupID" />
+                                    <xs:attribute type="xs:string" name="PickupName" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="ExcursionLanguages">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Language" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:simpleContent>
+                                      <xs:extension base="xs:string">
+                                        <xs:attribute type="xs:int" name="ID" />
+                                        <xs:attribute type="xs:string" name="Name" />
+                                      </xs:extension>
+                                    </xs:simpleContent>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="AllAvailableDates">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Date" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element type="xs:string" name="value"/>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:string" name="ExcursionName"/>
+                          <xs:element type="xs:string" name="Duration"/>
+                          <xs:element type="xs:string" name="ExcursionDescription"/>
+                          <xs:element type="xs:string" name="AdditionalInfo"/>
+                          <xs:element type="xs:string" name="Inclusions"/>
+                          <xs:element type="xs:string" name="Exclusions"/>
+                          <xs:element type="xs:string" name="Itenary"/>
+                          <xs:element type="xs:string" name="PricingInformation"/>
+                          <xs:element type="xs:string" name="DeparturePoint"/>
+                          <xs:element name="RouteStops">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="RouteStop" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element type="xs:string" name="Name"/>
+                                      <xs:element type="xs:string" name="Description"/>
+                                      <xs:element type="xs:decimal" name="Latitude"/>
+                                      <xs:element type="xs:decimal" name="Longitude"/>
+                                    </xs:sequence>
+                                    <xs:attribute type="xs:string" name="Id" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="ExcursionPhotos">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Photo" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element type="xs:string" name="ExcursionCaption" minOccurs="0"/>
+                                      <xs:element type="xs:string" name="Excursion_MainPhoto"/>
+                                      <xs:element type="xs:string" name="Excursion_Thumb"/>
+                                    </xs:sequence>
+                                    <xs:attribute type="xs:string" name="CategoryName" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute type="xs:int" name="ExcursionID"/>
+                        <xs:attribute type="xs:string" name="ExcursionName"/>
+                        <xs:attribute type="xs:int" name="SaleID"/>
+                        <xs:attribute type="xs:decimal" name="AdultPrice"/>
+                        <xs:attribute type="xs:decimal" name="ChildPrice"/>
+                        <xs:attribute type="xs:decimal" name="TotalAdultPrice"/>
+                        <xs:attribute type="xs:decimal" name="TotalChildPrice"/>
+                        <xs:attribute type="xs:decimal" name="TotalPrice"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:int" name="Adults"/>
+                  <xs:attribute type="xs:int" name="Children"/>
+                  <xs:attribute type="xs:int" name="Infants"/>
+                  <xs:attribute type="xs:dateTime" name="DateFrom"/>
+                  <xs:attribute type="xs:dateTime" name="DateTo"/>
+                  <xs:attribute type="xs:int" name="PriceZoneID"/>
+                  <xs:attribute type="xs:int" name="AccommodationID" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ErrorList" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="Errors" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Error" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Warnings" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Warning" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

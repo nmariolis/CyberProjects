@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" >
+  <xs:element name="ExcursionListRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Username" type="xs:string" minOccurs="1" maxOccurs="1" default="username" xmlns:doc="Customer's username"/>
+        <xs:element name="Password" type="xs:string" minOccurs="1" maxOccurs="1" default="password" xmlns:doc="Customer's password" />
+        <xs:element name="ShowFeatured" type="xs:boolean" minOccurs="0" maxOccurs="1" default="false" xmlns:doc="When true, returns the featured excursions for your tariff. Default value is ‘false’. If other parameters are specified, these will also be taken into account. "/>
+        <xs:element name="PriceZoneID" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Filter by Price Zone ID."/>
+        <xs:element name="Language" type="xs:string" minOccurs="0" maxOccurs="1" xmlns:doc="2 character string that specifies your chosen language. Contact your xml provider for available languages. Default is ‘en’. "/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

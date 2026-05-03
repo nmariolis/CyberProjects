@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="SearchTransferRoutePoints">
+        <xs:complexType>
+          <xs:sequence>
+                <xs:element name="Username" type="xs:string" minOccurs="1" maxOccurs="1" default="username" xmlns:doc="Customer's username"/>
+                <xs:element name="Password" type="xs:string" minOccurs="1" maxOccurs="1" default="password" xmlns:doc="Customer's password"/>
+                <xs:element name="Type" minOccurs="0" maxOccurs="1" default="0" xmlns:doc="0 = All (default), 1 = Ports Only, 2 = Areas and Hotels, 3 = Hotels, 4 = Areas ">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:int">
+                            <xs:enumeration value="0" id="All" />
+                            <xs:enumeration value="1" id="Ports" />
+                            <xs:enumeration value="2" id="HotelsAndAreas" />
+                            <xs:enumeration value="3" id="Hotels" />
+                            <xs:enumeration value="4" id="Areas" />
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="StationID" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Filter by Station ID"/>
+                <xs:element name="RoutePointID" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Filter by RoutePointID "/>
+                <xs:element name="AccommodationID" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Filter by AccommodationID"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

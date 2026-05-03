@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="StopSalesRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Username" type="xs:string" minOccurs="1" maxOccurs="1" default="username" xmlns:doc="Customer's username"/>
+        <xs:element name="Password" type="xs:string" minOccurs="1" maxOccurs="1" default="password" xmlns:doc="Customer's password"/>
+        <xs:element name="HotelID" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Show stop sales for a specific hotel "/>
+        <xs:element name="RoomID" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Show stop sales for a specific room "/>
+        <xs:element name="StationID" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Show stop sales for a specific station. "/>
+        <xs:element name="UseTariff" type="xs:boolean" minOccurs="0" maxOccurs="1" xmlns:doc="When true, returns stop sales based on your assigned tariff. When false, will return based on your own contracts. "/>
+        <xs:element name="ChangesByDates" type="DateRange" minOccurs="0" maxOccurs="1" xmlns:doc="Specifying these dates will give you updates and new stop sales that have been added during the specified time frame. If it is not specified, then all the stop sales that have been created will be shown."/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="DateRange">
+    <xs:attribute name="From" type="xs:dateTime" use="required" fixed="2020-06-15T00:00:01" xmlns:doc="When specified, only stop sales that have been created or updated after this time will be shown." />
+    <xs:attribute name="To" type="xs:dateTime" use="optional" fixed="2020-06-30T00:00:01" xmlns:doc="When specified, only stop sales that have been created or updated before this will be shown. The default is 'now'."/>
+  </xs:complexType>
+</xs:schema>

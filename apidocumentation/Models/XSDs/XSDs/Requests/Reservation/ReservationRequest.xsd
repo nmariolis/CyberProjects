@@ -1,0 +1,428 @@
+﻿<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="ReservationSchema">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Username" type="xs:string" minOccurs="1" maxOccurs="1" default="username" xmlns:doc="Customer's username"/>
+        <xs:element name="Password" type="xs:string" minOccurs="1" maxOccurs="1" default="password" xmlns:doc="Customer's password"/>
+        <xs:element name="Reference" type="xs:string" minOccurs="1" maxOccurs="1" default="QR134" xmlns:doc="Unique booking reference to be determined by the agent. If a duplicate reference is found, then random digits will be added to the end of this string to ensure its uniqueness. "/>
+        <xs:element name="BookingType" minOccurs="0" maxOccurs="1" default="1" xmlns:doc="1 = Individual, 2 = Charter, 3 = Group, 4 = Internet">
+          <xs:simpleType>
+            <xs:restriction base="xs:int">
+              <xs:enumeration value="1" id="Individual" />
+              <xs:enumeration value="2" id="Charter" />
+              <xs:enumeration value="3" id="Group" />
+              <xs:enumeration value="4" id="Internet" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="BookingStatus" minOccurs="1" maxOccurs="1" default="2" xmlns:doc="1 = Confirmed, 2 = Request, 3 = Cancelled ">
+          <xs:simpleType>
+            <xs:restriction base="xs:int">
+              <xs:enumeration value="1" id="Confirmed" />
+              <xs:enumeration value="2" id="Request" />
+              <xs:enumeration value="3" id="Cancelled" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="UseHotelTariff" type="xs:boolean" minOccurs="1" maxOccurs="1" default="true" xmlns:doc="When making a hotel reservation, if true, makes reservation based on your assigned tariff. When false, will make reservation based on your own contracts."/>
+        <xs:element name="ArrivalDate" type="xs:date" minOccurs="1" maxOccurs="1" fixed="2020-06-01" xmlns:doc="Date that the party will arrive. "/>
+        <xs:element name="DepartureDate" type="xs:date" minOccurs="1" maxOccurs="1" fixed="2020-06-10" xmlns:doc="Date that the party will depart."/>
+        <xs:element name="ClientTransferArrivalType" minOccurs="1" maxOccurs="1" default="1" xmlns:doc="1 = Individual Transfer, 2 = Group Transfer, 3 = No Transfer">
+          <xs:simpleType>
+            <xs:restriction base="xs:int">
+              <xs:enumeration value="1" id="ArrivalIndividualTransfer" />
+              <xs:enumeration value="2" id="ArrivalGroupTransfer" />
+              <xs:enumeration value="3" id="ArrivalNoTransfer" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="ClientTransferDepartureType" minOccurs="1" maxOccurs="3" default="1" xmlns:doc="1 = Individual Transfer, 2 = Group Transfer, 3 = No Transfer">
+          <xs:simpleType>
+            <xs:restriction base="xs:int">
+              <xs:enumeration value="1" id="DepartureIndividualTransfer" />
+              <xs:enumeration value="2" id="DepartureGroupTransfer" />
+              <xs:enumeration value="3" id="DepartureNoTransfer" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="Adults" minOccurs="1" maxOccurs="1" xmlns:doc="The number of adults in the party and their details.">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Adult" type="PersonSchema" minOccurs="1" maxOccurs="unbounded" xmlns:doc="A list of Adults"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Children" minOccurs="0" maxOccurs="1" xmlns:doc="The number of children in the party and their details.">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Child" type="PersonSchema" minOccurs="1" maxOccurs="unbounded" xmlns:doc="A list of Children"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Infants" minOccurs="0" maxOccurs="1" xmlns:doc="The number of infants in the party and their details.">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element  name="Infant" type="PersonSchema" minOccurs="1" maxOccurs="unbounded" xmlns:doc="A list of Infants"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="FlightArrival" type="Flight" minOccurs="0" maxOccurs="1" xmlns:doc="The arrival flight details."/>
+        <xs:element name="FlightDeparture" type="Flight" minOccurs="0" maxOccurs="1" xmlns:doc="The departure flight details."/>
+        <xs:element name="Remarks" type="xs:string" minOccurs="0" maxOccurs="1" xmlns:doc="Any general remarks related to the booking."/>
+        <xs:element name="Services" type="Services" minOccurs="1" maxOccurs="1" xmlns:doc="The services that will be included in the reservation."/>
+        <!--<xs:element name="CreditCard" type="CreditCardSchema" minOccurs="0" maxOccurs="1" xmlns:doc=""/>-->
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="PersonSchema">
+    <xs:attribute name="Title" use="required" fixed="1" xmlns:doc="1 = Mr, 2 = Mrs, 3 = Child, 4 = Infant, 5 = Miss, 6 = Master ">
+      <xs:simpleType>
+        <xs:restriction base="xs:int">
+          <xs:enumeration value="1" id="Mr" />
+          <xs:enumeration value="2" id="Mrs" />
+          <xs:enumeration value="3" id="Child" />
+          <xs:enumeration value="4" id="Infant" />
+          <xs:enumeration value="5" id="Miss" />
+          <xs:enumeration value="6" id="Master" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="Name" type="xs:string" use="required" fixed ="PassengersName" xmlns:doc="The traveller’s first name."/>
+    <xs:attribute name="Surname" type="xs:string" use="required" fixed ="PassengersSurname" xmlns:doc="The traveller’s surname."/>
+    <xs:attribute name="Birthday" type="xs:date" use="optional" xmlns:doc="The traveller’s date of birth. This field may be required for some services, usually to help identify if a traveller will be charged as an adult, child or infant."/>
+    <xs:attribute name="Reference" type="xs:string" use="required" fixed="A1" xmlns:doc="The traveller’s individual reference number that will be used to specify which services they will be using. "/>
+    <xs:attribute name="Passport" type="xs:string" use="optional" xmlns:doc="The traveller’s passport number"/>
+    <xs:attribute name="Email" use="optional" xmlns:doc="The traveller’s email">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="^[a-zA-Z][\w\.-_]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="Telephone" type="xs:string" use="optional" xmlns:doc="The traveller’s phone number"/>
+    <xs:attribute name="Mobile" type="xs:string" use="optional" xmlns:doc="The traveller’s mobile number"/>
+    <xs:attribute name="Address" type="xs:string" use="optional" xmlns:doc="The traveller’s address"/>
+  </xs:complexType>
+  <xs:complexType name="Flight">
+    <xs:attribute name="Hour" use="required" fixed="15" xmlns:doc="Hour of flight (0-23).">
+      <xs:simpleType>
+        <xs:restriction base="xs:int">
+          <xs:minInclusive value="0" />
+          <xs:maxInclusive value="23" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="Minutes" use="required" fixed="30" xmlns:doc="Minute of flight (0-59).">
+      <xs:simpleType>
+        <xs:restriction base="xs:int">
+          <xs:minInclusive value="0" />
+          <xs:maxInclusive value="59" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="Name" type="xs:string" use="required" fixed="DMY1234" xmlns:doc="Flight number/name"/>
+  </xs:complexType>
+  <xs:complexType name="Services">
+    <xs:sequence>
+      <xs:element name="Hotels"  minOccurs="1" maxOccurs="1" xmlns:doc="The hotel reservations and their details.">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Hotel" type="HotelSchema" minOccurs="1" maxOccurs="unbounded" xmlns:doc="A list of hotels"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!--<xs:element name="HotelVariousBookings" type="HotelVariousBookings" minOccurs="1" maxOccurs="1"/>-->
+      <xs:element name="Excursions" minOccurs="0" maxOccurs="1" xmlns:doc="The excursion reservations and their details.">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Excursion" type="ExcursionSchema" minOccurs="1" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Packages" minOccurs="0" maxOccurs="1" xmlns:doc="The package reservations and their details.">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Package" type="PackageSchema" minOccurs="1" maxOccurs="unbounded" xmlns:doc="A list of Packages"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Transfers" minOccurs="0" maxOccurs="1" xmlns:doc="The transfer reservations and their details.">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element type="TransferSchema" name="Transfer" minOccurs="1" maxOccurs="unbounded" xmlns:doc="A list of transfers"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CarRentals" minOccurs="0" maxOccurs="1" xmlns:doc="The car rental reservations and their details.">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element type="CarRentalSchema" name="CarRental" minOccurs="1" maxOccurs="unbounded" xmlns:doc="A list of cars"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="HotelSchema">
+    <xs:sequence>
+      <xs:element name="ArrivalDate" type="xs:date" minOccurs="1" maxOccurs="1" fixed="2020-06-01" xmlns:doc="The date that the party will be arriving at the hotel."/>
+      <xs:element name="DepartureDate" type="xs:date" minOccurs="1" maxOccurs="1" fixed="2020-06-10" xmlns:doc="The date that the party will be departing the hotel."/>
+      <xs:element name="ClientList" type="ClientReference" minOccurs="1" maxOccurs="1" xmlns:doc="A list of the Persons that will be using this service."/>
+      <xs:element name="Remarks" type="xs:string" minOccurs="0" maxOccurs="1" xmlns:doc="Any remarks related to the booking of this service in particular."/>
+      <xs:element name="Reference" type="xs:string" minOccurs="0" maxOccurs="1" xmlns:doc="A reference number that can be assigned to each service. Although not required, it can be used to help identify where errors have occurred in the reservation."/>
+      <!--<xs:element name="Rate" type="xs:decimal" minOccurs="0" maxOccurs="1"/>-->
+    </xs:sequence>
+    <xs:attribute name="HotelID" type="xs:int" use="required" fixed="1" xmlns:doc="The ID of the hotel."/>
+    <xs:attribute name="RoomID" type="xs:int" use="required" fixed="1" xmlns:doc="The ID of the room."/>
+    <xs:attribute name="ContractID" type="xs:int" use="required" fixed="1" xmlns:doc="The Contract ID, found on the search results."/>
+    <xs:attribute name="RoomQuantity" type="xs:int" use="required" fixed="1" xmlns:doc="The amount of rooms of this type that will be reserved. Please note: if this number is greater than the number of rooms currently available, the entire reservation will be made “on request”."/>
+    <xs:attribute name="BoardBasis" use="required" fixed="1" xmlns:doc="1 = Room Rate, 2 = Bed and Breakfast, 3 = Half Board, 4 = Full Board, 5 = All Inclusive, 6 = Ultra All Inclusive">
+      <xs:simpleType>
+        <xs:restriction base="xs:int">
+          <xs:minInclusive value="1" />
+          <xs:maxInclusive value="6" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="ExcursionSchema">
+    <xs:sequence>
+      <xs:element name="DateFrom" type="xs:date" minOccurs="1" maxOccurs="1" fixed="2020-06-01" xmlns:doc="Date that the party will be arriving."/>
+      <xs:element name="DateTo" type="xs:date" minOccurs="1" maxOccurs="1" fixed="2020-06-10" xmlns:doc="Date that the party will be departing."/>
+      <xs:element name="ExcursionDate" type="xs:date" minOccurs="1" maxOccurs="1" fixed="2020-06-07" xmlns:doc="Date of the excursion."/>
+      <xs:element name="ExcursionSalesType" type="xs:int" minOccurs="1" maxOccurs="1" default="1" xmlns:doc="1 = Organized Tour, 2 = Prebooked Tour, 3 = Group Tour. All reservations through the web service will be prebooked for the time being."/>
+      <xs:element name="ClientList" type="ClientReference" minOccurs="1" maxOccurs="1" xmlns:doc="A list of the Persons that will be using this service."/>
+      <xs:element name="Pickup" type="PickUpDetails" minOccurs="1" maxOccurs="1" xmlns:doc="Pickup details such as pickup point, hour and minute."/>
+      <xs:element name="Remarks" type="xs:string" minOccurs="0" maxOccurs="1" xmlns:doc="Any remarks related to the booking of this service in particular."/>
+      <!--<xs:element name="Rate" type="xs:decimal" minOccurs="0" maxOccurs="1"/>-->
+    </xs:sequence>
+    <xs:attribute name="ID" type="xs:int" use="required" fixed="1" xmlns:doc="The ID of the excursion."/>
+    <xs:attribute name="PriceZoneID" type="xs:int" use="required" fixed="1" xmlns:doc="The ID of the price zone."/>
+    <xs:attribute name="LanguageID" type="xs:int" use="required" fixed="1" xmlns:doc="The preferred language of the traveling party"/>
+    <xs:attribute name="ScheduleLanguageID" type="xs:int" use="required" fixed="1" xmlns:doc="The language chosen from those available for the desired schedule."/>
+    <xs:attribute name="AccommodationID" type="xs:int" use="required" fixed="1" xmlns:doc="The ID of the hotel where the party is staying."/>
+    <!--<xs:attribute name="CustomerID" type="xs:int" use="optional" xmlns:doc="Available for sellers only."/>
+    <xs:attribute name="SellerID" type="xs:int" use="optional" xmlns:doc="Available for sellers only."/>-->
+    <!--<xs:attribute name="Series" type="xs:string" default="IS" use="optional"/>-->
+  </xs:complexType>
+
+  <xs:complexType name="PickUpDetails">
+    <xs:attribute name="PointID" type="xs:int" use="required" fixed="1" xmlns:doc="The pick up id. Obtain this id from transfer route point Request"/>
+    <xs:attribute name="Hour" use="required" fixed="15" xmlns:doc="The Hour of pick-up from 0-23">
+      <xs:simpleType>
+        <xs:restriction base="xs:int">
+          <xs:minInclusive value="0" />
+          <xs:maxInclusive value="23" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="Minute" use="required" fixed="30" xmlns:doc="The minutes of pick-up from 0-59">
+      <xs:simpleType>
+        <xs:restriction base="xs:int">
+          <xs:minInclusive value="0" />
+          <xs:maxInclusive value="59" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="PackageSchema">
+    <xs:sequence>
+      <xs:element name="DateFrom" type="xs:date" minOccurs="1" maxOccurs="1" fixed="2020-06-01" xmlns:doc="Date that the party will be arriving."/>
+      <xs:element name="DateTo" type="xs:date" minOccurs="1" maxOccurs="1" fixed="2020-06-10" xmlns:doc="Date that the party will be departing."/>
+      <xs:element name="PackageDate" type="xs:date" minOccurs="1" maxOccurs="1" fixed="2020-06-04" xmlns:doc="Date that the package begins."/>
+      <xs:element name="ClientList" type="ClientReference" minOccurs="1" maxOccurs="1" xmlns:doc="A list of the Persons that will be using this service."/>
+      <xs:element name="Quantity" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Number of packages. Default is ‘1’. "/>
+      <xs:element name="Remarks" type="xs:string" minOccurs="0" maxOccurs="1" xmlns:doc="Any remarks related to the booking of this service in particular."/>
+      <!--<xs:element name="Rate" type="xs:decimal" minOccurs="0" maxOccurs="1"/>-->
+    </xs:sequence>
+    <xs:attribute name="ID" type="xs:int" use="required" fixed="1" xmlns:doc="The ID of the package. "/>
+    <xs:attribute name="LanguageID" type="xs:int" use="required" fixed="1" xmlns:doc="The preferred language of the package."/>
+    <xs:attribute name="BoardID" use="required" fixed="2" xmlns:doc="1 = Room Rate, 2 = Bed and Breakfast, 3 = Half Board, 4 = Full Board, 5 = All Inclusive, 6 = Ultra All Inclusive">
+      <xs:simpleType>
+        <xs:restriction base="xs:int">
+          <xs:enumeration value="1" />
+          <xs:enumeration value="2" />
+          <xs:enumeration value="3" />
+          <xs:enumeration value="5" />
+          <xs:enumeration value="6" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="RoomID" type="xs:int" use="required" fixed="1" xmlns:doc="The ID of the room."/>
+    <xs:attribute name="CustomerID" type="xs:int" use="optional" xmlns:doc="Available for sellers only."/>
+  </xs:complexType>
+
+  <xs:complexType name="TransferSchema">
+    <xs:sequence>
+      <xs:element name="Reference" type="xs:string" minOccurs="0" maxOccurs="1" xmlns:doc="A reference number that can be assigned to each service. Although not required, it can be used to help identify where errors have occurred in the reservation."/>
+      <xs:element name="RoundTrip" type="xs:boolean" minOccurs="1" maxOccurs="1" default="false" xmlns:doc="Set to true if the transfer includes a return journey."/>
+      <xs:element name="PickupDate" type="xs:date" minOccurs="1" maxOccurs="1" fixed="2020-06-01" xmlns:doc="Date that the party requires picking up."/>
+      <xs:element name="ReturnPickupDate" type="xs:date" minOccurs="0" maxOccurs="1" fixed="2020-06-10" xmlns:doc="If RoundTrip is true, then a return pickup date is required."/>
+      <xs:element name="AccommodationID" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="The ID of the hotel where the party will be staying."/>
+      <xs:element name="HotelAddress" type="xs:string" minOccurs="0" maxOccurs="1" xmlns:doc="Address of the hotel where the party will be staying. This is required if AccommodationID is not specified."/>
+      <xs:element name="ClientList" type="ClientReference" minOccurs="1" maxOccurs="1" xmlns:doc="A list of the Persons that will be using this service."/>
+      <xs:element name="Adults" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Number of adults in the party">
+        <xs:annotation>
+          <xs:documentation>
+            If you do not provide a full client reference, you must at least provide the number of adults, children (and their ages), and infants. NOTE: These values will override any calculations based on the client reference.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Children" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Number of children in the party. Default is ‘0’.">
+        <xs:annotation>
+          <xs:documentation>
+            If you do not provide a full client reference, you must at least provide the number of adults, children (and their ages), and infants. NOTE: These values will override any calculations based on the client reference.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ChildrenAges" minOccurs="0" maxOccurs="1" xmlns:doc="If the number of children is greater than 0, specify their ages with a comma separated list, i.e. ’12,9,5’">
+        <xs:annotation>
+          <xs:documentation>
+            If you do not provide a full client reference, you must at least provide the number of adults, children (and their ages), and infants. NOTE: These values will override any calculations based on the client reference.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:simpleType id="CommaSeparatedInteger">
+          <xs:restriction base="xs:token">
+            <xs:pattern value="[1-9][0-9]*(, ?[1-9][0-9]*)*"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="Infants" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Number of infants in the party.">
+        <xs:annotation>
+          <xs:documentation>
+            If you do not provide a full client reference, you must at least provide the number of adults, children (and their ages), and infants. NOTE: These values will override any calculations based on the client reference.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RouteTypeID" minOccurs="0" maxOccurs="1" default="1" xmlns:doc="Only specify this if the transfer is not a roundtrip. 1 = Arrival, 2 = Departure.">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:enumeration value="1" id="Arrival" />
+            <xs:enumeration value="2" id="Departure" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="ArrivalRouteID" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="The route ID for the arrival transfer.">
+        <xs:annotation>
+          <xs:documentation>
+            If the transfer is a round-trip, then all of these are required. If the transfer is not a roundtrip then only one set is required, depending on the RouteTypeID. For example, if the route type is ‘Arrival’ then the ArrivalRouteID and FlightArrival are required, and if route type is ‘Departure’ then the DepartureRouteID and FlightDeparture are required.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DepartureRouteID" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="The route ID for the departure transfer.">
+        <xs:annotation>
+          <xs:documentation>
+            If the transfer is a round-trip, then all of these are required. If the transfer is not a roundtrip then only one set is required, depending on the RouteTypeID. For example, if the route type is ‘Arrival’ then the ArrivalRouteID and FlightArrival are required, and if route type is ‘Departure’ then the DepartureRouteID and FlightDeparture are required.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FlightArrival" type="Flight" minOccurs="0" maxOccurs="1" xmlns:doc="The transfer arrival flight details.">
+        <xs:annotation>
+          <xs:documentation>
+            If the transfer is a round-trip, then all of these are required. If the transfer is not a roundtrip then only one set is required, depending on the RouteTypeID. For example, if the route type is ‘Arrival’ then the ArrivalRouteID and FlightArrival are required, and if route type is ‘Departure’ then the DepartureRouteID and FlightDeparture are required.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FlightDeparture" type="Flight" minOccurs="0" maxOccurs="1" xmlns:doc="The transfer departure flight details.">
+        <xs:annotation>
+          <xs:documentation>
+            If the transfer is a round-trip, then all of these are required. If the transfer is not a roundtrip then only one set is required, depending on the RouteTypeID. For example, if the route type is ‘Arrival’ then the ArrivalRouteID and FlightArrival are required, and if route type is ‘Departure’ then the DepartureRouteID and FlightDeparture are required.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Remarks" type="xs:string" minOccurs="0" maxOccurs="1" xmlns:doc="Any remarks related to the booking of this service in particular."/>
+      <!--<xs:element name="Rate" type="xs:decimal" minOccurs="0" maxOccurs="1"/>-->
+    </xs:sequence>
+    <xs:attribute name="VehicleID" type="xs:int" use="required" fixed="1" xmlns:doc="The vehicle that will be used for the transfer."/>
+    <xs:attribute name="Vehicles" type="xs:int" use="required" fixed="1" xmlns:doc="Number of vehicles required for the transfer."/>
+    <xs:attribute name="PickupDropOffPoint" type="xs:int" use="required" fixed="1" xmlns:doc="The point where the party will be picked up or dropped off (See TransferRoutePoints). Specifying '0' here lets the system know you will be entering the hotel address instead of the AccommodationID. "/>
+  </xs:complexType>
+
+  <xs:complexType name="CarRentalSchema">
+    <xs:sequence>
+      <xs:element name="Reference" type="xs:string" minOccurs="0" maxOccurs="1" xmlns:doc="A reference number that can be assigned to each service. Although not required, it can be used to help identify where errors have occurred in the reservation."/>
+      <xs:element name="DateFrom" type="xs:date" minOccurs="1" maxOccurs="1" fixed="2020-06-01" xmlns:doc="Date that the car will be picked up. "/>
+      <xs:element name="DateTo" type="xs:date" minOccurs="1" maxOccurs="1" fixed="2020-06-10" xmlns:doc="Date that the car will be dropped off."/>
+      <xs:element name="ClientList" type="ClientReference" minOccurs="1" maxOccurs="1" xmlns:doc="A list of the Persons that will be using this service."/>
+      <xs:element name="ModelName" type="xs:string" minOccurs="0" maxOccurs="1" xmlns:doc="The name of the preferred model."/>
+      <xs:element name="Delivery" minOccurs="1" maxOccurs="1" xmlns:doc="The pickup place, hour and minutes." type="PickUpDropOffPlace"/>
+      <xs:element name="Collection" minOccurs="1" maxOccurs="1" xmlns:doc="The drop-off place, hour and minutes." type="PickUpDropOffPlace"/>
+      <xs:element name="Remarks" type="xs:string" minOccurs="0" maxOccurs="1" xmlns:doc="Any remarks related to the booking of this service in particular."/>
+      <!--<xs:element name="Rate" type="xs:decimal" minOccurs="0" maxOccurs="1"/>-->
+    </xs:sequence>
+    <xs:attribute name="GroupID" type="xs:int" use="required" fixed="1" xmlns:doc="The car rental Group ID."/>
+    <xs:attribute name="StationID" type="xs:int" use="required" fixed="1" xmlns:doc="ID of the station."/>
+    <xs:attribute name="Quantity" type="xs:int" use="required" fixed="1" xmlns:doc="Number of cars required."/>
+    <xs:attribute name="SupplierID" type="xs:int" use="optional" xmlns:doc="Leave blank unless a supplier id has been provided."/>
+  </xs:complexType>
+
+  <xs:complexType name="PickUpDropOffPlace">
+    <xs:attribute name="Place" type="xs:string" use="required" fixed="Airport" xmlns:doc="The pick-up/drop off place"/>
+    <xs:attribute name="Hour" use="required" fixed="15" xmlns:doc="The Hour of pick-up from 0-23">
+      <xs:simpleType>
+        <xs:restriction base="xs:int">
+          <xs:minInclusive value="0" />
+          <xs:maxInclusive value="23" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="Minutes" use="required" fixed="30" xmlns:doc="The minutes of pick-up from 0-59">
+      <xs:simpleType>
+        <xs:restriction base="xs:int">
+          <xs:minInclusive value="0" />
+          <xs:maxInclusive value="59" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="ClientReference">
+    <xs:sequence>
+      <xs:element type="Client" name="Client" maxOccurs="unbounded" minOccurs="1" xmlns:doc="A list of clients"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Client">
+    <xs:attribute name="Reference" type="xs:string" use="required" fixed="A1"/>
+  </xs:complexType>
+
+  <!--<xs:complexType name="CreditCardSchema">
+    <xs:sequence>
+      <xs:element name="CardType" minOccurs="1" maxOccurs="1">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:enumeration value="1" id="Visa" />
+            <xs:enumeration value="2" id="MasterCard" />
+            <xs:enumeration value="5" id="Diners" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="CardHolder" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="CardNumber" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="ExpirationMonth" minOccurs="1" maxOccurs="1">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="01|02|03|04|05|06|07|08|09|10|11|12" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="ExpirationYear" minOccurs="1" maxOccurs="1">
+        <xs:simpleType>
+          <xs:restriction base="xs:integer">
+            <xs:minInclusive value="2012" />
+            <xs:maxInclusive value="2022" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="cvv2" minOccurs="1" maxOccurs="1">
+        <xs:simpleType>
+          <xs:restriction base="xs:integer">
+            <xs:minInclusive value="100" />
+            <xs:maxInclusive value="999" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>-->
+</xs:schema>
