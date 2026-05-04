@@ -9,7 +9,8 @@
           "description": "Send an XML request to receive a list of hotels with their rooms, availability and prices.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/HotelsSearch",
           "xsdRequest": "Requests/Hotels/SearchHotelsRequest.xsd",
-          "xsdSchema": "Responses/Hotels/HotelSearch/Optimized.xsd"
+          "xsdSchema": "Responses/Hotels/HotelSearch/Optimized.xsd",
+          "hidden": false
         },
         {
           "service": "Hotel Search (Cache)",
@@ -17,7 +18,8 @@
           "description": "Send an XML request to receive cached hotel search results. Uses the same request format as Hotel Search — returns availability and pricing from the MongoDB cache for faster response times.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/hotelssearch_mongodb",
           "xsdRequest": "Requests/Hotels/SearchHotelsCacheRequest.xsd",
-          "xsdSchema": "Responses/Hotels/HotelSearch/OptimizedFalse.xsd"
+          "xsdSchema": "Responses/Hotels/HotelSearch/OptimizedFalse.xsd",
+          "hidden": false
         },
         {
           "service": "Hotel Cache",
@@ -25,7 +27,8 @@
           "description": "Send an XML request with a Hotel ID and duration to retrieve cached room rates and board-type pricing for a specific hotel.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/HotelCache",
           "xsdRequest": "Requests/Hotels/HotelCacheRequest.xsd",
-          "xsdSchema": "Responses/Hotels/HotelCache.xsd"
+          "xsdSchema": "Responses/Hotels/HotelCache.xsd",
+          "hidden": false
         },
         {
           "service": "Hotel List",
@@ -33,7 +36,8 @@
           "description": "Send an XML request to receive a list of hotels with basic information.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/HotelList",
           "xsdRequest": "Requests/Hotels/HotelListRequest.xsd",
-          "xsdSchema": "Responses/Hotels/HotelList.xsd"
+          "xsdSchema": "Responses/Hotels/HotelList.xsd",
+          "hidden": false
         },
         {
           "service": "Hotel Info",
@@ -41,7 +45,8 @@
           "description": "Send an XML request to receive detailed information about a specific hotel.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/HotelInfo",
           "xsdRequest": "Requests/Hotels/HotelInfoRequest.xsd",
-          "xsdSchema": "Responses/Hotels/HotelInfo.xsd"
+          "xsdSchema": "Responses/Hotels/HotelInfo.xsd",
+          "hidden": false
         },
         {
           "service": "Hotel Room List",
@@ -49,7 +54,8 @@
           "description": "Send an XML request to receive a list of rooms available for a specific hotel.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/HotelRoomList",
           "xsdRequest": "Requests/Hotels/HotelRoomListRequest.xsd",
-          "xsdSchema": "Responses/Hotels/HotelRoomList.xsd"
+          "xsdSchema": "Responses/Hotels/HotelRoomList.xsd",
+          "hidden": false
         },
         {
           "service": "Hotel Room Availability",
@@ -57,7 +63,8 @@
           "description": "Send an XML request to check room availability for a specific hotel.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/HotelRoomAvailability",
           "xsdRequest": "Requests/Hotels/HotelRoomAvailability.xsd",
-          "xsdSchema": ""
+          "xsdSchema": "",
+          "hidden": false
         },
         {
           "service": "Full Room List",
@@ -65,7 +72,8 @@
           "description": "Send an XML request to receive the complete list of all rooms across all hotels.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/FullRoomList",
           "xsdRequest": "Requests/Hotels/FullRoomList.xsd",
-          "xsdSchema": ""
+          "xsdSchema": "",
+          "hidden": false
         },
         {
           "service": "Room Info",
@@ -73,7 +81,8 @@
           "description": "Send an XML request to receive detailed information about a specific room.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/HotelRoomInfo",
           "xsdRequest": "Requests/Hotels/RoomInfoRequest.xsd",
-          "xsdSchema": "Responses/Hotels/RoomInfo.xsd"
+          "xsdSchema": "Responses/Hotels/RoomInfo.xsd",
+          "hidden": false
         },
         {
           "service": "Hotel Cancellation List",
@@ -81,7 +90,8 @@
           "description": "Send an XML request to retrieve the cancellation policies for hotel bookings.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/HotelCancellationPolicies",
           "xsdRequest": "Requests/Hotels/HotelCancellationList.xsd",
-          "xsdSchema": ""
+          "xsdSchema": "",
+          "hidden": false
         },
         {
           "service": "Hotel Offers",
@@ -89,7 +99,8 @@
           "description": "Send an XML request to retrieve available special offers for hotels.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/HotelOffers",
           "xsdRequest": "Requests/Hotels/HotelOffersRequest.xsd",
-          "xsdSchema": "Responses/Hotels/HotelOffersResponse.xsd"
+          "xsdSchema": "Responses/Hotels/HotelOffersResponse.xsd",
+          "hidden": false
         },
         {
           "service": "Location Categories",
@@ -97,7 +108,8 @@
           "description": "Send an XML request to retrieve a list of location categories.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/LocationCategories",
           "xsdRequest": "Requests/Hotels/LocationCategoriesRequest.xsd",
-          "xsdSchema": "Responses/Location/LocationCategoriesResponse.xsd"
+          "xsdSchema": "Responses/Location/LocationCategoriesResponse.xsd",
+          "hidden": false
         },
         {
           "service": "Offer List",
@@ -105,7 +117,8 @@
           "description": "Send an XML request to retrieve a full list of offers.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/OfferList",
           "xsdRequest": "Requests/Hotels/OfferListRequest.xsd",
-          "xsdSchema": "Responses/Hotels/OfferListResponse.xsd"
+          "xsdSchema": "Responses/Hotels/OfferListResponse.xsd",
+          "hidden": false
         },
         {
           "service": "Stop Sales",
@@ -113,7 +126,8 @@
           "description": "Send an XML request to retrieve stop-sale information for hotels.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/StopSales",
           "xsdRequest": "Requests/Hotels/StopSales.xsd",
-          "xsdSchema": ""
+          "xsdSchema": "",
+          "hidden": false
         }
       ]
     },
@@ -126,7 +140,8 @@
           "description": "Send an XML request to search for available transfer options between locations.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/TransferSearch",
           "xsdRequest": "Requests/Transfers/SearchTransfers.xsd",
-          "xsdSchema": "Responses/Transfers/SearchTransfers.xsd"
+          "xsdSchema": "Responses/Transfers/SearchTransfers.xsd",
+          "hidden": false
         },
         {
           "service": "Transfer Route Points",
@@ -134,7 +149,8 @@
           "description": "Send an XML request to receive a list of the available route points. A single route has two route points, one of which must be of type 'Port' and the other of type 'Area'.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/TransferRoutePoints",
           "xsdRequest": "Requests/Transfers/SearchTransferRoutePoints.xsd",
-          "xsdSchema": "Responses/Transfers/SearchTransferRoutePoints.xsd"
+          "xsdSchema": "Responses/Transfers/SearchTransferRoutePoints.xsd",
+          "hidden": false
         },
         {
           "service": "Transfer List",
@@ -142,7 +158,8 @@
           "description": "Send an XML request to retrieve the list of available transfer services.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/TransferList",
           "xsdRequest": "Requests/Transfers/SearchTransferList.xsd",
-          "xsdSchema": ""
+          "xsdSchema": "",
+          "hidden": false
         },
         {
           "service": "Transfer Vehicles",
@@ -150,7 +167,8 @@
           "description": "Send an XML request to retrieve the list of available transfer vehicles.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/TransferVehicles",
           "xsdRequest": "Requests/Transfers/SearchTransferVehicles.xsd",
-          "xsdSchema": ""
+          "xsdSchema": "",
+          "hidden": false
         }
       ]
     },
@@ -163,7 +181,8 @@
           "description": "Send an XML request to search for available car rentals.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/RentalSearch",
           "xsdRequest": "Requests/CarRentals/SearchRentals.xsd",
-          "xsdSchema": "Responses/CarRentals/SearchRentals.xsd"
+          "xsdSchema": "Responses/CarRentals/SearchRentals.xsd",
+          "hidden": false
         },
         {
           "service": "Rental Models",
@@ -171,7 +190,8 @@
           "description": "Send an XML request to retrieve the list of available car rental models.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/RentalModels",
           "xsdRequest": "Requests/CarRentals/SearchRentalModels.xsd",
-          "xsdSchema": "Responses/CarRentals/SearchRentalModels.xsd"
+          "xsdSchema": "Responses/CarRentals/SearchRentalModels.xsd",
+          "hidden": false
         },
         {
           "service": "Rental Stations",
@@ -179,7 +199,8 @@
           "description": "Send an XML request to retrieve the list of available car rental stations.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/RentalStations",
           "xsdRequest": "Requests/CarRentals/SearchRentalStations.xsd",
-          "xsdSchema": "Responses/CarRentals/SearchRentalStations.xsd"
+          "xsdSchema": "Responses/CarRentals/SearchRentalStations.xsd",
+          "hidden": false
         },
         {
           "service": "Rental Suppliers",
@@ -187,7 +208,8 @@
           "description": "Send an XML request to retrieve the list of available car rental suppliers.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/RentalSuppliers",
           "xsdRequest": "Requests/CarRentals/SearchRentalSuppliers.xsd",
-          "xsdSchema": "Responses/CarRentals/SearchRentalSuppliers.xsd"
+          "xsdSchema": "Responses/CarRentals/SearchRentalSuppliers.xsd",
+          "hidden": false
         },
         {
           "service": "Rental Accommodation",
@@ -195,7 +217,8 @@
           "description": "Send an XML request to retrieve accommodation options associated with car rentals.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/RentalAccommodation",
           "xsdRequest": "Requests/CarRentals/SearchRentalAccommodation.xsd",
-          "xsdSchema": "Responses/CarRentals/SearchRentalAccommodation.xsd"
+          "xsdSchema": "Responses/CarRentals/SearchRentalAccommodation.xsd",
+          "hidden": false
         }
       ]
     },
@@ -208,7 +231,8 @@
           "description": "Send an XML request to search for available excursions.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/ExcursionSearch",
           "xsdRequest": "Requests/Excursions/SearchExcursionsRequest.xsd",
-          "xsdSchema": "Responses/Excursions/SearchExcursions.xsd"
+          "xsdSchema": "Responses/Excursions/SearchExcursions.xsd",
+          "hidden": false
         },
         {
           "service": "Excursion List",
@@ -216,7 +240,8 @@
           "description": "Send an XML request to retrieve the full list of excursions.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/ExcursionList",
           "xsdRequest": "Requests/Excursions/ExcursionListRequest.xsd",
-          "xsdSchema": "Responses/Excursions/ExcursionList.xsd"
+          "xsdSchema": "Responses/Excursions/ExcursionList.xsd",
+          "hidden": false
         },
         {
           "service": "Excursion Description",
@@ -224,7 +249,8 @@
           "description": "Send an XML request to retrieve detailed descriptions for excursions.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/ExcursionDescription",
           "xsdRequest": "Requests/Excursions/ExcursionDescription.xsd",
-          "xsdSchema": "Responses/Excursions/ExcursionDescription.xsd"
+          "xsdSchema": "Responses/Excursions/ExcursionDescription.xsd",
+          "hidden": false
         },
         {
           "service": "Excursion Accommodation",
@@ -232,7 +258,8 @@
           "description": "Send an XML request to retrieve accommodation options linked to excursions.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/ExcursionAccommodation",
           "xsdRequest": "Requests/Excursions/SearchExcursionAccommodation.xsd",
-          "xsdSchema": "Responses/Excursions/SearchExcursionAccommodation.xsd"
+          "xsdSchema": "Responses/Excursions/SearchExcursionAccommodation.xsd",
+          "hidden": false
         },
         {
           "service": "Price Zones",
@@ -240,7 +267,8 @@
           "description": "Send an XML request to retrieve excursion price zones.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/ExcursionPriceZones",
           "xsdRequest": "Requests/Excursions/SearchPriceZones.xsd",
-          "xsdSchema": "Responses/Excursions/SearchPriceZones.xsd"
+          "xsdSchema": "Responses/Excursions/SearchPriceZones.xsd",
+          "hidden": false
         }
       ]
     },
@@ -253,7 +281,8 @@
           "description": "Send an XML request to search for available package tours.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/PackageSearch",
           "xsdRequest": "Requests/PackageTours/SearchPackages.xsd",
-          "xsdSchema": ""
+          "xsdSchema": "",
+          "hidden": false
         },
         {
           "service": "Package List",
@@ -261,7 +290,8 @@
           "description": "Send an XML request to retrieve the full list of package tours.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/PackageList",
           "xsdRequest": "Requests/PackageTours/PackageList.xsd",
-          "xsdSchema": ""
+          "xsdSchema": "",
+          "hidden": false
         },
         {
           "service": "Package Categories",
@@ -269,7 +299,8 @@
           "description": "Send an XML request to retrieve the available package tour categories.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/PackageCategories",
           "xsdRequest": "Requests/PackageTours/PackageCategories.xsd",
-          "xsdSchema": ""
+          "xsdSchema": "",
+          "hidden": false
         },
         {
           "service": "Package Destinations",
@@ -277,7 +308,8 @@
           "description": "Send an XML request to search for available package tour destinations.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/PackageDestinations",
           "xsdRequest": "Requests/PackageTours/SearchPackageDestinations.xsd",
-          "xsdSchema": ""
+          "xsdSchema": "",
+          "hidden": false
         },
         {
           "service": "Package Room Prices",
@@ -285,7 +317,8 @@
           "description": "Send an XML request to retrieve room pricing for package tours.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/PackageRoomPrices",
           "xsdRequest": "Requests/PackageTours/SearchPackageRoomPrices.xsd",
-          "xsdSchema": ""
+          "xsdSchema": "",
+          "hidden": false
         }
       ]
     },
@@ -298,7 +331,8 @@
           "description": "Send an XML request to search for places including ports, areas, and hotels.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/PlaceSearch",
           "xsdRequest": "Requests/Places/PlaceSearch.xsd",
-          "xsdSchema": "Responses/Places/PlaceSearch.xsd"
+          "xsdSchema": "Responses/Places/PlaceSearch.xsd",
+          "hidden": false
         },
         {
           "service": "Place Description",
@@ -306,7 +340,8 @@
           "description": "Send an XML request to retrieve detailed descriptions for a specific place.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/PlaceDescription",
           "xsdRequest": "Requests/Places/PlaceDescription.xsd",
-          "xsdSchema": "Responses/Places/PlaceDescription.xsd"
+          "xsdSchema": "Responses/Places/PlaceDescription.xsd",
+          "hidden": false
         }
       ]
     },
@@ -319,7 +354,8 @@
           "description": "Send an XML request to create a new reservation.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/Reservation",
           "xsdRequest": "Requests/Reservation/ReservationRequest.xsd",
-          "xsdSchema": "Responses/Reservation/ReservationSchema.xsd"
+          "xsdSchema": "Responses/Reservation/ReservationSchema.xsd",
+          "hidden": false
         },
         {
           "service": "Reservation Confirmation",
@@ -327,7 +363,8 @@
           "description": "Send an XML request to confirm a pending reservation.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/ConfirmPendingReservation",
           "xsdRequest": "Requests/Reservation/ReservationConfirmation.xsd",
-          "xsdSchema": ""
+          "xsdSchema": "",
+          "hidden": false
         },
         {
           "service": "Reservation Cancellation",
@@ -335,7 +372,8 @@
           "description": "Send an XML request to cancel an existing reservation.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/ReservationCancellation",
           "xsdRequest": "Requests/Reservation/ReservationCancellation.xsd",
-          "xsdSchema": "Responses/Reservation/ReservationCancellation.xsd"
+          "xsdSchema": "Responses/Reservation/ReservationCancellation.xsd",
+          "hidden": false
         },
         {
           "service": "Reservation List",
@@ -343,7 +381,8 @@
           "description": "Send an XML request to retrieve the list of existing reservations.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/ReservationList",
           "xsdRequest": "Requests/Reservation/ReservationList.xsd",
-          "xsdSchema": "Responses/Reservation/ReservationList.xsd"
+          "xsdSchema": "Responses/Reservation/ReservationList.xsd",
+          "hidden": false
         }
       ]
     },
@@ -356,7 +395,8 @@
           "description": "Send an XML request to retrieve the contracts associated with your account.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/MyContracts",
           "xsdRequest": "Requests/Contracts/MyContracts.xsd",
-          "xsdSchema": ""
+          "xsdSchema": "",
+          "hidden": false
         },
         {
           "service": "Offer List",
@@ -364,7 +404,8 @@
           "description": "Send an XML request to retrieve the list of offers under your contracts.",
           "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/OfferList",
           "xsdRequest": "Requests/Contracts/OfferList.xsd",
-          "xsdSchema": ""
+          "xsdSchema": "",
+          "hidden": false
         }
       ]
     }

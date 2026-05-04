@@ -302,10 +302,11 @@
             })
             .then(function(data) {
                 sessionStorage.setItem('cl_session', JSON.stringify({
-                    endpoint:     data.baseUrl,
-                    endpointName: data.name,
-                    username:     username,
-                    password:     password
+                    endpoint:       data.baseUrl,
+                    endpointName:   data.name,
+                    username:       username,
+                    password:       password,
+                    hiddenServices: data.hiddenServices || []
                 }));
                 window.location.replace('Index.html');
             })

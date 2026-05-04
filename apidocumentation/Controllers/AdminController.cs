@@ -127,7 +127,13 @@ namespace Documentation.Controllers
             if (!IsAuthenticated()) return Unauthorized();
             var config = LoadConfig();
             var list = config?.Endpoints ?? new EndpointEntry[0];
-            return Ok(list.Select(e => new { e.Id, e.Name, e.BaseUrl, e.EncodedKey }));
+            return Ok(list.Select(e => new {
+                id             = e.Id,
+                name           = e.Name,
+                baseUrl        = e.BaseUrl,
+                encodedKey     = e.EncodedKey,
+                hiddenServices = e.HiddenServices ?? new List<string>()
+            }));
         }
 
         [HttpPost]
@@ -184,6 +190,21 @@ namespace Documentation.Controllers
             config.Endpoints = list.ToArray();
             SaveConfig(config);
             return Ok();
+        }
+
+        [HttpPut]
+        [Route("api/admin/endpoints/{id}/visibility")]
+        public IHttpActionResult UpdateEndpointVisibility(string id, [FromBody] EndpointVisibilityRequest req)
+        {
+            if (!IsAuthenticated()) return Unauthorized();
+            var config = LoadConfig();
+            if (config?.Endpoints == null) return NotFound();
+            var entry = config.Endpoints.FirstOrDefault(e =>
+                string.Equals(e.Id, id, StringComparison.OrdinalIgnoreCase));
+            if (entry == null) return NotFound();
+            entry.HiddenServices = req?.HiddenServices ?? new List<string>();
+            SaveConfig(config);
+            return Ok(new { id = entry.Id, hiddenServices = entry.HiddenServices });
         }
 
         // ── User Management (super-admin only) ────────────────────────────────────
@@ -690,6 +711,8 @@ namespace Documentation.Controllers
         [JsonProperty("xsdSchema")]   public string XsdSchema   { get; set; }
         [JsonProperty("hidden")]      public bool   Hidden      { get; set; }
     }
+
+    public class EndpointVisibilityRequest { public List<string> HiddenServices { get; set; } }
 
     public class CreateServiceRequest
     {

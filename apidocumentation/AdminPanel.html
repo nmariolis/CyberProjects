@@ -237,6 +237,23 @@
         .field-desc-text { color: #444; font-size: 12px; max-width: 480px; }
         .field-name-mono { font-family: 'Courier New', monospace; font-weight: 700; color: #2a4a8a; font-size: 12px; }
 
+        /* ── Endpoint service config ── */
+        .svc-config-group { margin-bottom: 18px; }
+        .svc-config-group-name {
+            font-size: 11px; font-weight: 700; text-transform: uppercase;
+            color: #EB8008; letter-spacing: .8px; margin-bottom: 6px;
+            padding-bottom: 4px; border-bottom: 1px solid #f0e8d8;
+        }
+        .svc-config-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 2px; }
+        .svc-check-item {
+            display: flex; align-items: center; gap: 8px;
+            padding: 6px 8px; border-radius: 4px; cursor: pointer;
+        }
+        .svc-check-item:hover { background: #f0f4fb; }
+        .svc-check-item input[type=checkbox] { width: 15px; height: 15px; accent-color: #1C4084; cursor: pointer; flex-shrink: 0; }
+        .svc-check-item label { font-size: 13px; color: #333; cursor: pointer; }
+        .svc-check-item.is-hidden label { color: #9db5d5; text-decoration: line-through; }
+
         /* ── Visibility toggle ── */
         .btn-eye {
             background: none; border: 1px solid #b8cce8; color: #6c8cbf;
@@ -342,6 +359,23 @@
     <!-- ── ENDPOINTS TAB ─────────────────────────────────────────────────── -->
     <div id="tab-endpoints" class="tab-pane">
 
+        <!-- Service visibility config card (hidden until endpoint row clicked) -->
+        <div class="card" id="svc-config-card" style="display:none">
+            <div class="card-head">
+                <h2><i class="fa fa-sliders" style="color:#EB8008"></i>&nbsp; Service Visibility &mdash; <span id="svc-config-ep-name" style="color:#EB8008"></span></h2>
+                <div>
+                    <button class="btn-save" onclick="saveServiceConfig()"><i class="fa fa-check"></i>&nbsp; Save</button>
+                    <button class="btn-cancel" onclick="closeServiceConfig()">Cancel</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="info-box"><i class="fa fa-info-circle"></i>&nbsp; <strong>Checked = visible</strong> for this endpoint's users. Uncheck to hide a service.</div>
+                <input type="hidden" id="svc-config-ep-id" />
+                <div id="svc-config-list"><div class="loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div></div>
+                <div class="err-box" id="svc-config-err"></div>
+            </div>
+        </div>
+
         <div class="card">
             <div class="card-head">
                 <h2><i class="fa fa-server"></i> Active Endpoints</h2>
@@ -350,7 +384,7 @@
             <div class="card-body no-pad">
                 <div class="loading" id="tbl-loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>
                 <table class="ep-table" id="ep-table" style="display:none">
-                    <thead><tr><th>Name</th><th>Base URL</th><th>Encoded API Key</th><th style="width:60px"></th></tr></thead>
+                    <thead><tr><th>Name</th><th>Base URL</th><th>Encoded API Key</th><th style="width:90px"></th></tr></thead>
                     <tbody id="ep-tbody"></tbody>
                 </table>
             </div>
@@ -651,12 +685,19 @@
         }
         tbody.innerHTML = list.map(function(e) {
             var id = e.Id || e.id, nm = e.Name || e.name || '', url = e.BaseUrl || e.baseUrl || '', key = e.EncodedKey || e.encodedKey || '';
+            var hidden = JSON.stringify(e.hiddenServices || e.HiddenServices || []);
             return '<tr data-id="' + esc(id) + '">' +
                 '<td><span class="ep-name">' + esc(nm) + '</span></td>' +
                 '<td><span class="ep-url">' + esc(url) + '</span></td>' +
                 '<td><span class="ep-key" id="key-' + esc(id) + '">' + esc(key) + '</span>' +
                     '<button class="btn-copy" onclick="copyKey(this,\'' + esc(id) + '\')" title="Copy"><i class="fa fa-copy"></i></button></td>' +
-                '<td><button class="btn-del" onclick="deleteEndpoint(\'' + esc(id) + '\',this)" title="Delete"><i class="fa fa-trash"></i></button></td>' +
+                '<td style="white-space:nowrap">' +
+                    '<button class="btn-edit btn-sm" ' +
+                        'data-ep-id="' + esc(id) + '" data-ep-name="' + esc(nm) + '" data-ep-hidden="' + esc(hidden) + '" ' +
+                        'onclick="openServiceConfig(this)" title="Configure visible services">' +
+                        '<i class="fa fa-sliders"></i></button> ' +
+                    '<button class="btn-del" onclick="deleteEndpoint(\'' + esc(id) + '\',this)" title="Delete"><i class="fa fa-trash"></i></button>' +
+                '</td>' +
             '</tr>';
         }).join('');
     }
@@ -1140,6 +1181,88 @@
         fetch('api/admin/services/' + encodeURIComponent(href), { method: 'DELETE', headers: authHeaders() })
         .then(function(r) { if (!r.ok) throw new Error(); loadServices(); })
         .catch(function() { alert('Delete failed.'); });
+    }
+
+    /* ══════════════════════════════════════════════════════════════════════════
+       ENDPOINT SERVICE VISIBILITY CONFIG
+    ══════════════════════════════════════════════════════════════════════════ */
+    var _svcConfigHidden = [];
+
+    function openServiceConfig(btn) {
+        var id     = btn.getAttribute('data-ep-id');
+        var name   = btn.getAttribute('data-ep-name');
+        var hidden = [];
+        try { hidden = JSON.parse(btn.getAttribute('data-ep-hidden') || '[]'); } catch(e) {}
+        _svcConfigHidden = hidden;
+
+        document.getElementById('svc-config-ep-id').value = id;
+        document.getElementById('svc-config-ep-name').textContent = name;
+        document.getElementById('svc-config-err').style.display = 'none';
+        document.getElementById('svc-config-list').innerHTML = '<div class="loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>';
+
+        var card = document.getElementById('svc-config-card');
+        card.style.display = '';
+        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        fetch('api/admin/services', { headers: authHeaders() })
+        .then(function(r) { if (handleUnauth(r)) return null; if (!r.ok) throw new Error(); return r.json(); })
+        .then(function(cats) {
+            if (!cats) return;
+            if (!cats.length) {
+                document.getElementById('svc-config-list').innerHTML = '<div style="color:#9db5d5;font-size:13px">No services defined yet.</div>';
+                return;
+            }
+            var html = cats.map(function(cat) {
+                var items = (cat.services || []).map(function(svc) {
+                    var isHidden = hidden.indexOf(svc.href) !== -1;
+                    var checked  = isHidden ? '' : ' checked';
+                    return '<label class="svc-check-item' + (isHidden ? ' is-hidden' : '') + '">' +
+                        '<input type="checkbox" value="' + esc(svc.href) + '"' + checked + ' onchange="onSvcCheckChange(this)">' +
+                        '<span>' + esc(svc.service) + '</span>' +
+                    '</label>';
+                }).join('');
+                return '<div class="svc-config-group">' +
+                    '<div class="svc-config-group-name"><i class="fa fa-folder-o"></i>&nbsp; ' + esc(cat.name) + '</div>' +
+                    '<div class="svc-config-grid">' + items + '</div>' +
+                '</div>';
+            }).join('');
+            document.getElementById('svc-config-list').innerHTML = html;
+        })
+        .catch(function() {
+            document.getElementById('svc-config-list').innerHTML = '<div style="color:#c0392b;font-size:13px">Failed to load services.</div>';
+        });
+    }
+
+    function onSvcCheckChange(checkbox) {
+        var label = checkbox.closest('.svc-check-item');
+        label.classList.toggle('is-hidden', !checkbox.checked);
+    }
+
+    function saveServiceConfig() {
+        var id     = document.getElementById('svc-config-ep-id').value;
+        var errEl  = document.getElementById('svc-config-err');
+        errEl.style.display = 'none';
+
+        var hiddenServices = [];
+        document.querySelectorAll('#svc-config-list input[type=checkbox]').forEach(function(cb) {
+            if (!cb.checked) hiddenServices.push(cb.value);
+        });
+
+        fetch('api/admin/endpoints/' + encodeURIComponent(id) + '/visibility', {
+            method: 'PUT', headers: authHeaders(),
+            body: JSON.stringify({ hiddenServices: hiddenServices })
+        })
+        .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
+        .then(function() {
+            var btn = document.querySelector('button[data-ep-id="' + id + '"]');
+            if (btn) btn.setAttribute('data-ep-hidden', JSON.stringify(hiddenServices));
+            closeServiceConfig();
+        })
+        .catch(function() { showErr(errEl, 'Save failed. Please try again.'); });
+    }
+
+    function closeServiceConfig() {
+        document.getElementById('svc-config-card').style.display = 'none';
     }
 
     function toggleServiceVisibility(href, btn) {

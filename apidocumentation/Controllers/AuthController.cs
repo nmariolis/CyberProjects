@@ -53,7 +53,11 @@ namespace Documentation.Controllers
             if (entry == null)
                 return Unauthorized();
 
-            return Ok(new { name = entry.Name, baseUrl = entry.BaseUrl });
+            return Ok(new {
+                name           = entry.Name,
+                baseUrl        = entry.BaseUrl,
+                hiddenServices = entry.HiddenServices ?? new System.Collections.Generic.List<string>()
+            });
         }
 
         // AES-256-CBC decrypt; token = Base64(IV[16] + ciphertext)

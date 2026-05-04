@@ -215,8 +215,11 @@
                 success: function(data) {
                     var sidebarMenu = '';
                     var mainContent = '';
+                    var epHidden = CL_SESSION.hiddenServices || [];
                     var filteredCats = (data.serviceCategory || []).map(function(cat) {
-                        return { name: cat.name, services: (cat.services || []).filter(function(s) { return !s.hidden; }) };
+                        return { name: cat.name, services: (cat.services || []).filter(function(s) {
+                            return !s.hidden && epHidden.indexOf(s.href) === -1;
+                        })};
                     }).filter(function(cat) { return cat.services.length > 0; });
                     $(filteredCats).each(function(i, cat) {
                         sidebarMenu += menuItemTemplate(cat);
