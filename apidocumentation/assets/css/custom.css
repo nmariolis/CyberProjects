@@ -144,7 +144,6 @@ a:hover { color: #EB8008; text-decoration: underline; }
     align-self: center !important;
     min-width: 120px;
     max-width: 160px;
-    text-align: right;
     justify-content: flex-end;
     padding-right: 10px;
     font-size: 13px;
@@ -152,9 +151,8 @@ a:hover { color: #EB8008; text-decoration: underline; }
     color: #1C4084;
     margin: 0 !important;
     white-space: nowrap;
-    height: 30px;
-    line-height: 30px;
     flex-shrink: 0;
+    line-height: 1.3;
 }
 
 .req-star {
@@ -459,13 +457,12 @@ html code {
     word-break: break-all;
 }
 
-/* ─── Right panel (dark code column) ──────────────────────── */
+/* ─── Right panel (dark code column) — generic uses outside try-it row ── */
 .right-panel {
     background: #272822;
     padding: 0 20px 24px 20px;
 }
 .right-panel .rp-promo { margin-top: 22px; }
-/* !important needed — .promo.small-icon.left h3 has higher specificity (3 classes) */
 .right-panel .rp-promo h3,
 .right-panel h3 { color: #a8b8cc !important; }
 .right-panel .rp-promo .fa { color: #EB8008 !important; }
@@ -478,29 +475,43 @@ html code {
 }
 
 /* ─── Try-it row: form + code panel aligned at top ────────── */
+/* Use dedicated classes (try-it-form-col / try-it-code-col) so we never
+   fight leftSection's padding:50px !important or right-panel's cascade. */
 .try-it-row {
     display: flex !important;
     align-items: flex-start !important;
     flex-wrap: wrap;
 }
-/* Suppress Bootstrap clearfix pseudo-elements from acting as flex items */
 .try-it-row::before,
 .try-it-row::after { display: none !important; }
-/* Cancel Bootstrap float on columns — float is ignored on flex items anyway */
 .try-it-row > [class*="col-"] { float: none !important; }
 
-/* Normalise top/bottom padding so both panels start at the same height */
-.try-it-row > .leftSection {
-    padding-top: 24px !important;
-    padding-bottom: 24px !important;
+.try-it-form-col {
+    background: #ffffff;
+    padding: 24px 80px;
+    border-right: 1px solid #e0e7f2;
+    box-sizing: border-box;
 }
-.try-it-row > .right-panel {
-    padding-top: 24px;
-}
-/* Remove extra top margin from both section headings inside the try-it row */
-.try-it-row .promo.small-icon.left,
-.try-it-row .right-panel .rp-promo {
+.try-it-form-col .promo.small-icon.left {
     margin-top: 0 !important;
+}
+
+.try-it-code-col {
+    background: #272822;
+    padding: 24px 20px;
+    box-sizing: border-box;
+}
+.try-it-code-col .promo.small-icon.left {
+    margin-top: 0 !important;
+}
+.try-it-code-col h3 { color: #a8b8cc !important; }
+.try-it-code-col .fa { color: #EB8008 !important; }
+.try-it-code-col pre.codeBlock-inline.rp-pre {
+    margin: 0;
+    border: none;
+    min-height: 220px;
+    overflow: auto;
+    padding: 15px;
 }
 
 /* ─── Collapsible schema accordion ───────────────────────── */
@@ -556,23 +567,28 @@ html code {
 
 /* ─── Responsive breakpoints ──────────────────────────────── */
 @media (max-width: 1199px) {
-    .leftSection { padding: 40px 50px 40px 50px !important; }
-    .resp-wrap   { padding: 20px 50px 24px 50px; }
+    .leftSection        { padding: 40px 50px 40px 50px !important; }
+    .try-it-form-col    { padding: 24px 50px; }
+    .resp-wrap          { padding: 20px 50px 24px 50px; }
 }
 
 @media (max-width: 991px) {
-    .leftSection { padding: 28px 24px 28px 24px !important; }
-    .resp-wrap   { padding: 20px 24px 20px 24px; }
-    .codeBlock-intro { margin-top: 20px; }
-    .right-panel { padding: 0 16px 20px 16px; }
-    .constraints-cell { max-width: none; }
+    .leftSection        { padding: 28px 24px 28px 24px !important; }
+    .try-it-form-col    { padding: 24px 24px; }
+    .resp-wrap          { padding: 20px 24px 20px 24px; }
+    .codeBlock-intro    { margin-top: 20px; }
+    .right-panel        { padding: 0 16px 20px 16px; }
+    .try-it-code-col    { padding: 24px 16px; }
+    .constraints-cell   { max-width: none; }
 }
 
 @media (max-width: 767px) {
-    .leftSection { padding: 18px 14px 18px 14px !important; }
-    .resp-wrap   { padding: 14px 14px 14px 14px; }
-    .field-cell  { flex: 0 0 100% !important; }
-    .right-panel { padding: 0 12px 16px 12px; }
+    .leftSection        { padding: 18px 14px 18px 14px !important; }
+    .try-it-form-col    { padding: 18px 14px; }
+    .resp-wrap          { padding: 14px 14px 14px 14px; }
+    .field-cell         { flex: 0 0 100% !important; }
+    .right-panel        { padding: 0 12px 16px 12px; }
+    .try-it-code-col    { padding: 18px 12px; }
     .schema-table thead th,
     .schema-table tbody td { padding: 6px 8px; }
 }
