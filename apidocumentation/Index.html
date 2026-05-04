@@ -1230,6 +1230,28 @@
             var headerH = $('.site-header').outerHeight() || 50;
             $('.sidebar-boxed').css({ top: headerH, height: 'calc(100vh - ' + headerH + 'px)' });
 
+            /* ── Sidebar category accordion (delegated — handles dynamic items) ── */
+            $(document).on('click', '.sidenav a.has-child', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var $a  = $(this);
+                var $ul = $a.next('ul');
+                if (!$ul.length) return;
+
+                if ($a.hasClass('open')) {
+                    $a.removeClass('open');
+                    $ul.slideUp(300);
+                    return;
+                }
+
+                // Close all other open menus in this nav
+                $a.closest('.sidenav').find('> li > a').removeClass('open');
+                $a.closest('.sidenav').find('ul').not(':hidden').slideUp(300);
+
+                $a.addClass('open');
+                $ul.slideDown(300);
+            });
+
             /* ── Sidebar leaf-link clicks: expand section if collapsed, then scroll ── */
             $(document).on('click', '.sidenav a[href^="#"]:not(.has-child)', function(e) {
                 var href = $(this).attr('href');
