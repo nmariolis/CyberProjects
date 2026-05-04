@@ -215,7 +215,10 @@
                 success: function(data) {
                     var sidebarMenu = '';
                     var mainContent = '';
-                    $(data.serviceCategory).each(function(i, cat) {
+                    var filteredCats = (data.serviceCategory || []).map(function(cat) {
+                        return { name: cat.name, services: (cat.services || []).filter(function(s) { return !s.hidden; }) };
+                    }).filter(function(cat) { return cat.services.length > 0; });
+                    $(filteredCats).each(function(i, cat) {
                         sidebarMenu += menuItemTemplate(cat);
                         mainContent += mainContentTemplate(cat.services);
                         $(cat.services).each(function(j, svc) { svcLinkByHref[svc.href] = svc.link; });

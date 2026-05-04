@@ -193,14 +193,21 @@
     <Content Include="Global.asax" />
     <Content Include="Index.html" />
     <Content Include="Login.html" />
+    <Content Include="AdminLogin.html" />
+    <Content Include="AdminPanel.html" />
     <Content Include="Models\endpoints.json" />
+    <Content Include="Models\users.json" />
+    <Content Include="Register.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WebservicesController.cs" />
     <Compile Include="Models\EndpointModels.cs" />
+    <Compile Include="Models\UserModels.cs" />
     <Compile Include="Models\XSDs\Service.cs" />
     <Compile Include="Services\IWebApiDocService.cs" />
     <Compile Include="Services\WebApiDocService.cs" />

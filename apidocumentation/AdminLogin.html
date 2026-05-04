@@ -16,19 +16,14 @@
             display: flex; flex-direction: column; min-height: 100vh;
         }
         .topbar {
-            background: #1C4084;
-            border-bottom: 3px solid #EB8008;
-            padding: 14px 28px;
-            display: flex; align-items: center; gap: 14px;
+            background: #1C4084; border-bottom: 3px solid #EB8008;
+            padding: 14px 28px; display: flex; align-items: center; gap: 14px;
         }
         .topbar img { max-width: 140px; filter: brightness(0) invert(1); }
         .topbar-badge {
-            background: rgba(235,128,8,.18);
-            color: #EB8008;
-            font-size: 11px; font-weight: 700;
-            text-transform: uppercase; letter-spacing: 1px;
-            padding: 3px 10px; border-radius: 20px;
-            border: 1px solid rgba(235,128,8,.35);
+            background: rgba(235,128,8,.18); color: #EB8008;
+            font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+            padding: 3px 10px; border-radius: 20px; border: 1px solid rgba(235,128,8,.35);
         }
         .wrap { flex: 1; display: flex; align-items: center; justify-content: center; padding: 48px 16px; }
         .card {
@@ -39,8 +34,7 @@
         .card h1 { font-size: 21px; color: #1C4084; font-weight: 700; margin: 0 0 5px; }
         .card p  { font-size: 13px; color: #6c8cbf; margin: 0; }
         .divider {
-            height: 3px;
-            background: linear-gradient(to right, #EB8008, #1C4084);
+            height: 3px; background: linear-gradient(to right, #EB8008, #1C4084);
             border-radius: 2px; margin: 22px 0;
         }
         .field { margin-bottom: 18px; }
@@ -61,6 +55,7 @@
         }
         .field input:focus { border-color: #1C4084; box-shadow: 0 0 0 3px rgba(28,64,132,.12); background: #fff; }
         .field input::placeholder { color: #b0bfce; }
+        .field .hint { font-size: 11px; color: #9db5d5; margin-top: 5px; }
         .error {
             display: none; background: rgba(220,53,69,.07);
             border: 1px solid rgba(220,53,69,.22); border-left: 3px solid #dc3545;
@@ -75,12 +70,37 @@
         }
         .btn:hover:not(:disabled) { background: #163366; }
         .btn:disabled { opacity: .65; cursor: not-allowed; }
-        .foot { text-align: center; font-size: 11px; color: #9db5d5; margin-top: 20px; }
+        .foot { text-align: center; font-size: 12px; color: #9db5d5; margin-top: 20px; }
+        .foot a { color: #1C4084; text-decoration: none; }
+        .foot a:hover { text-decoration: underline; }
         .page-foot {
             background: #1C4084; color: rgba(255,255,255,.4);
             text-align: center; font-size: 11px; padding: 10px;
         }
-        @media (max-width: 480px) { .card { padding: 32px 20px 28px; } }
+
+        /* ── Change-password modal overlay ── */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(28,64,132,.55); z-index: 9999;
+            align-items: center; justify-content: center;
+        }
+        .modal-overlay.is-open { display: flex; }
+        .modal-box {
+            background: #fff; border-radius: 8px; width: 100%; max-width: 420px;
+            box-shadow: 0 8px 48px rgba(0,0,0,.22); padding: 40px 48px 36px; margin: 16px;
+        }
+        .modal-box h2 { font-size: 18px; color: #1C4084; font-weight: 700; margin: 0 0 6px; }
+        .modal-box .sub { font-size: 13px; color: #6c8cbf; margin: 0 0 20px; }
+        .modal-box .info-bar {
+            background: rgba(235,128,8,.09); border-left: 3px solid #EB8008;
+            border-radius: 4px; padding: 9px 13px; font-size: 12px; color: #7a4800; margin-bottom: 20px;
+        }
+        .modal-error {
+            display: none; background: rgba(220,53,69,.07); border: 1px solid rgba(220,53,69,.22);
+            border-left: 3px solid #dc3545; border-radius: 4px; color: #b02a37;
+            font-size: 13px; padding: 9px 13px; margin-bottom: 14px;
+        }
+        @media (max-width: 480px) { .card { padding: 32px 20px 28px; } .modal-box { padding: 28px 20px 24px; } }
     </style>
 </head>
 <body>
@@ -99,10 +119,10 @@
         <div class="error" id="err"></div>
 
         <div class="field">
-            <label><i class="fa fa-user"></i>&nbsp; Username</label>
+            <label><i class="fa fa-user"></i>&nbsp; Username or Email</label>
             <div class="field-wrap">
                 <i class="fa fa-user fi"></i>
-                <input type="text" id="f-user" placeholder="Admin username" autocomplete="username" />
+                <input type="text" id="f-user" placeholder="Username or @cyberlogic.gr email" autocomplete="username" />
             </div>
         </div>
 
@@ -110,26 +130,66 @@
             <label><i class="fa fa-lock"></i>&nbsp; Password</label>
             <div class="field-wrap">
                 <i class="fa fa-lock fi"></i>
-                <input type="password" id="f-pass" placeholder="Admin password" autocomplete="current-password" />
+                <input type="password" id="f-pass" placeholder="Password" autocomplete="current-password" />
             </div>
         </div>
 
         <button class="btn" id="btn-login">
             <i class="fa fa-sign-in"></i>&nbsp; Sign In
         </button>
-        <div class="foot">Restricted area — authorised personnel only.</div>
+        <div class="foot">
+            Restricted area &mdash; authorised personnel only.<br style="margin-bottom:6px" />
+            <a href="Register.html"><i class="fa fa-user-plus"></i>&nbsp; Request access</a>
+        </div>
     </div>
 </div>
 
 <div class="page-foot">&copy; Cyberlogic e-Tourism Platform &mdash; Admin</div>
+
+<!-- ── Change password modal (first login) ── -->
+<div class="modal-overlay" id="chpw-overlay">
+    <div class="modal-box">
+        <h2><i class="fa fa-key" style="color:#EB8008"></i>&nbsp; Set New Password</h2>
+        <p class="sub">Your account was activated with a temporary password. Please set a new one to continue.</p>
+        <div class="info-bar"><i class="fa fa-info-circle"></i>&nbsp; Password must be at least 8 characters.</div>
+        <div class="modal-error" id="chpw-err"></div>
+        <div class="field">
+            <label><i class="fa fa-lock"></i>&nbsp; New Password</label>
+            <div class="field-wrap">
+                <i class="fa fa-lock fi"></i>
+                <input type="password" id="chpw-new" placeholder="New password (min 8 chars)" autocomplete="new-password" />
+            </div>
+        </div>
+        <div class="field">
+            <label><i class="fa fa-lock"></i>&nbsp; Confirm Password</label>
+            <div class="field-wrap">
+                <i class="fa fa-lock fi"></i>
+                <input type="password" id="chpw-confirm" placeholder="Repeat new password" autocomplete="new-password" />
+            </div>
+        </div>
+        <button class="btn" id="btn-chpw" style="margin-top:4px">
+            <i class="fa fa-check"></i>&nbsp; Save Password &amp; Continue
+        </button>
+    </div>
+</div>
 
 <script>
     (function () {
         if (sessionStorage.getItem('cl_admin')) window.location.replace('AdminPanel.html');
     })();
 
-    document.addEventListener('keydown', function (e) { if (e.key === 'Enter') doLogin(); });
+    var _pendingToken = null;
+    var _pendingEmail = null;
+    var _pendingSuper = false;
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            if (document.getElementById('chpw-overlay').classList.contains('is-open')) doChangePass();
+            else doLogin();
+        }
+    });
     document.getElementById('btn-login').addEventListener('click', doLogin);
+    document.getElementById('btn-chpw').addEventListener('click', doChangePass);
 
     function showErr(msg) {
         var el = document.getElementById('err');
@@ -142,7 +202,7 @@
         var btn  = document.getElementById('btn-login');
 
         document.getElementById('err').style.display = 'none';
-        if (!user) { showErr('Username is required.'); return; }
+        if (!user) { showErr('Username or email is required.'); return; }
         if (!pass) { showErr('Password is required.'); return; }
 
         btn.disabled = true;
@@ -153,19 +213,70 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username: user, password: pass })
         })
-        .then(function (r) {
+        .then(function(r) {
             if (r.status === 401) throw new Error('invalid');
             if (!r.ok) throw new Error('server');
             return r.json();
         })
-        .then(function (data) {
-            sessionStorage.setItem('cl_admin', data.token);
-            window.location.replace('AdminPanel.html');
+        .then(function(data) {
+            if (data.mustChangePassword) {
+                _pendingToken = data.token;
+                _pendingEmail = data.email || null;
+                _pendingSuper = !!data.isSuperAdmin;
+                document.getElementById('chpw-overlay').classList.add('is-open');
+                document.getElementById('chpw-new').focus();
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa fa-sign-in"></i>&nbsp; Sign In';
+            } else {
+                sessionStorage.setItem('cl_admin',       data.token);
+                sessionStorage.setItem('cl_admin_super', data.isSuperAdmin ? '1' : '');
+                sessionStorage.setItem('cl_admin_email', data.email || '');
+                window.location.replace('AdminPanel.html');
+            }
         })
-        .catch(function (err) {
+        .catch(function(err) {
             showErr(err.message === 'invalid' ? 'Invalid credentials.' : 'Server error — please try again.');
             btn.disabled = false;
             btn.innerHTML = '<i class="fa fa-sign-in"></i>&nbsp; Sign In';
+        });
+    }
+
+    function doChangePass() {
+        var np  = document.getElementById('chpw-new').value;
+        var cp  = document.getElementById('chpw-confirm').value;
+        var btn = document.getElementById('btn-chpw');
+        var err = document.getElementById('chpw-err');
+        err.style.display = 'none';
+
+        if (!np) { err.textContent = 'New password is required.'; err.style.display = 'block'; return; }
+        if (np.length < 8) { err.textContent = 'Password must be at least 8 characters.'; err.style.display = 'block'; return; }
+        if (np !== cp) { err.textContent = 'Passwords do not match.'; err.style.display = 'block'; return; }
+
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>&nbsp; Saving&hellip;';
+
+        fetch('api/admin/change-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-Admin-Token': _pendingToken },
+            body: JSON.stringify({ newPassword: np })
+        })
+        .then(function(r) {
+            if (!r.ok) return r.text().then(function(t) { throw new Error(t || 'Server error'); });
+            return r.json();
+        })
+        .then(function() {
+            sessionStorage.setItem('cl_admin',       _pendingToken);
+            sessionStorage.setItem('cl_admin_super', _pendingSuper ? '1' : '');
+            sessionStorage.setItem('cl_admin_email', _pendingEmail || '');
+            window.location.replace('AdminPanel.html');
+        })
+        .catch(function(err2) {
+            var msg = err2.message || 'Save failed.';
+            try { var j = JSON.parse(msg); if (j.message) msg = j.message; } catch(e) {}
+            document.getElementById('chpw-err').textContent = msg;
+            document.getElementById('chpw-err').style.display = 'block';
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa fa-check"></i>&nbsp; Save Password &amp; Continue';
         });
     }
 </script>

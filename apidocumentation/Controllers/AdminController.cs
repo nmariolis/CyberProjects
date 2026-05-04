@@ -17,11 +17,23 @@ namespace Documentation.Controllers
     public class AdminController : ApiController
     {
         private static readonly string EndpointsFile = "~/Models/endpoints.json";
-        private static readonly ConcurrentDictionary<string, DateTime> Sessions =
-            new ConcurrentDictionary<string, DateTime>(StringComparer.Ordinal);
+        private static readonly string UsersFile      = "~/Models/users.json";
+
+        private class AdminSession
+        {
+            public DateTime Expiry      { get; set; }
+            public bool     IsSuperAdmin { get; set; }
+            public string   Email       { get; set; }
+            public string   UserId      { get; set; }
+        }
+
+        private static readonly ConcurrentDictionary<string, AdminSession> Sessions =
+            new ConcurrentDictionary<string, AdminSession>(StringComparer.Ordinal);
 
         private const int Iterations = 10000;
         private const int HashBytes  = 32;
+
+        // ── Auth ─────────────────────────────────────────────────────────────────
 
         [HttpPost]
         [Route("api/admin/login")]
@@ -33,15 +45,39 @@ namespace Documentation.Controllers
             var expectedUser = ConfigurationManager.AppSettings["AdminUsername"] ?? string.Empty;
             var expectedHash = ConfigurationManager.AppSettings["AdminPasswordHash"] ?? string.Empty;
 
-            if (!string.Equals(req.Username.Trim(), expectedUser, StringComparison.Ordinal))
-                return Unauthorized();
+            // Check cyberhub super-admin credentials
+            if (string.Equals(req.Username.Trim(), expectedUser, StringComparison.Ordinal) &&
+                VerifyPbkdf2(req.Password, expectedHash))
+            {
+                var token = GenerateToken();
+                Sessions[token] = new AdminSession { Expiry = DateTime.UtcNow.AddHours(8), IsSuperAdmin = true };
+                return Ok(new { token, mustChangePassword = false, isSuperAdmin = true, email = (string)null });
+            }
 
-            if (!VerifyPbkdf2(req.Password, expectedHash))
-                return Unauthorized();
+            // Check registered @cyberlogic.gr users
+            var users = LoadUsers();
+            if (users != null)
+            {
+                var user = users.Users.FirstOrDefault(u =>
+                    string.Equals(u.Email, req.Username.Trim(), StringComparison.OrdinalIgnoreCase) &&
+                    u.Status == "active" &&
+                    !string.IsNullOrEmpty(u.PasswordHash));
 
-            var token = GenerateToken();
-            Sessions[token] = DateTime.UtcNow.AddHours(8);
-            return Ok(new { token });
+                if (user != null && VerifyPbkdf2(req.Password, user.PasswordHash))
+                {
+                    var token = GenerateToken();
+                    Sessions[token] = new AdminSession
+                    {
+                        Expiry       = DateTime.UtcNow.AddHours(8),
+                        IsSuperAdmin = false,
+                        Email        = user.Email,
+                        UserId       = user.Id
+                    };
+                    return Ok(new { token, mustChangePassword = user.MustChangePassword, isSuperAdmin = false, email = user.Email });
+                }
+            }
+
+            return Unauthorized();
         }
 
         [HttpPost]
@@ -52,11 +88,37 @@ namespace Documentation.Controllers
             if (Request.Headers.TryGetValues("X-Admin-Token", out vals))
             {
                 var tok = vals.FirstOrDefault();
-                DateTime ignored;
+                AdminSession ignored;
                 if (tok != null) Sessions.TryRemove(tok, out ignored);
             }
             return Ok();
         }
+
+        [HttpPost]
+        [Route("api/admin/change-password")]
+        public IHttpActionResult ChangePassword([FromBody] ChangePasswordRequest req)
+        {
+            AdminSession session;
+            if (!TryGetSession(out session)) return Unauthorized();
+            if (session.IsSuperAdmin) return BadRequest("Super-admin password is managed via server configuration.");
+            if (string.IsNullOrEmpty(session.UserId)) return Unauthorized();
+
+            if (req == null || string.IsNullOrWhiteSpace(req.NewPassword))
+                return BadRequest("New password is required.");
+            if (req.NewPassword.Length < 8)
+                return BadRequest("Password must be at least 8 characters.");
+
+            var data = LoadUsers();
+            var user = data?.Users.FirstOrDefault(u => string.Equals(u.Id, session.UserId, StringComparison.Ordinal));
+            if (user == null) return NotFound();
+
+            user.PasswordHash      = CreatePbkdf2Hash(req.NewPassword);
+            user.MustChangePassword = false;
+            SaveUsers(data);
+            return Ok(new { message = "Password changed successfully." });
+        }
+
+        // ── Endpoints ────────────────────────────────────────────────────────────
 
         [HttpGet]
         [Route("api/admin/endpoints")]
@@ -124,18 +186,79 @@ namespace Documentation.Controllers
             return Ok();
         }
 
+        // ── User Management (super-admin only) ────────────────────────────────────
+
+        [HttpGet]
+        [Route("api/admin/users")]
+        public IHttpActionResult GetAdminUsers()
+        {
+            if (!IsSuperAdmin()) return Unauthorized();
+            var data = LoadUsers() ?? new UsersData();
+            return Ok(data.Users.Select(u => new
+            {
+                u.Id, u.Email, u.Status, u.MustChangePassword,
+                u.CreatedAt, u.ApprovedAt
+            }));
+        }
+
+        [HttpPost]
+        [Route("api/admin/users/{id}/approve")]
+        public IHttpActionResult ApproveUser(string id)
+        {
+            if (!IsSuperAdmin()) return Unauthorized();
+            var data = LoadUsers();
+            if (data == null) return NotFound();
+            var user = data.Users.FirstOrDefault(u => string.Equals(u.Id, id, StringComparison.Ordinal));
+            if (user == null) return NotFound();
+
+            var tempPassword = GeneratePassword();
+            user.PasswordHash       = CreatePbkdf2Hash(tempPassword);
+            user.Status             = "active";
+            user.MustChangePassword = true;
+            user.ApprovedAt         = DateTime.UtcNow;
+            SaveUsers(data);
+            return Ok(new { user.Email, tempPassword });
+        }
+
+        [HttpDelete]
+        [Route("api/admin/users/{id}")]
+        public IHttpActionResult DeleteUser(string id)
+        {
+            if (!IsSuperAdmin()) return Unauthorized();
+            var data = LoadUsers();
+            if (data == null) return NotFound();
+            var removed = data.Users.RemoveAll(u => string.Equals(u.Id, id, StringComparison.Ordinal));
+            if (removed == 0) return NotFound();
+            SaveUsers(data);
+            return Ok();
+        }
+
         // ── helpers ──────────────────────────────────────────────────────────────
 
-        private bool IsAuthenticated()
+        private bool TryGetSession(out AdminSession session)
         {
+            session = null;
             IEnumerable<string> vals;
             if (!Request.Headers.TryGetValues("X-Admin-Token", out vals)) return false;
             var token = vals.FirstOrDefault();
             if (string.IsNullOrEmpty(token)) return false;
-            DateTime expiry;
-            if (!Sessions.TryGetValue(token, out expiry)) return false;
-            if (DateTime.UtcNow > expiry) { DateTime ignored; Sessions.TryRemove(token, out ignored); return false; }
+            AdminSession s;
+            if (!Sessions.TryGetValue(token, out s)) return false;
+            if (DateTime.UtcNow > s.Expiry) { Sessions.TryRemove(token, out s); return false; }
+            session = s;
             return true;
+        }
+
+        private bool IsAuthenticated()
+        {
+            AdminSession s;
+            return TryGetSession(out s);
+        }
+
+        private bool IsSuperAdmin()
+        {
+            AdminSession s;
+            return TryGetSession(out s) && s.IsSuperAdmin;
         }
 
         private static string GenerateToken()
@@ -153,7 +276,28 @@ namespace Documentation.Controllers
             return new string(b.Select(x => chars[x % chars.Length]).ToArray());
         }
 
-        private static string CreatePbkdf2Hash(string plain)
+        private static string GeneratePassword()
+        {
+            const string lower   = "abcdefghijkmnpqrstuvwxyz";
+            const string upper   = "ABCDEFGHJKLMNPQRSTUVWXYZ";
+            const string digits  = "23456789";
+            const string special = "@#$!";
+            var all = lower + upper + digits + special;
+            var b = new byte[12];
+            using (var rng = RandomNumberGenerator.Create()) rng.GetBytes(b);
+            var chars = new char[12];
+            chars[0] = upper[b[0]   % upper.Length];
+            chars[1] = lower[b[1]   % lower.Length];
+            chars[2] = digits[b[2]  % digits.Length];
+            chars[3] = special[b[3] % special.Length];
+            for (int i = 4; i < 12; i++) chars[i] = all[b[i] % all.Length];
+            var rb = new byte[12];
+            using (var rng = RandomNumberGenerator.Create()) rng.GetBytes(rb);
+            for (int i = 11; i > 0; i--) { var j = rb[i] % (i + 1); var tmp = chars[i]; chars[i] = chars[j]; chars[j] = tmp; }
+            return new string(chars);
+        }
+
+        internal static string CreatePbkdf2Hash(string plain)
         {
             var salt = new byte[16];
             using (var rng = RandomNumberGenerator.Create()) rng.GetBytes(salt);
@@ -207,6 +351,20 @@ namespace Documentation.Controllers
         {
             var path = HttpContext.Current.Server.MapPath(EndpointsFile);
             File.WriteAllText(path, JsonConvert.SerializeObject(config, Formatting.Indented));
+        }
+
+        private UsersData LoadUsers()
+        {
+            var path = HttpContext.Current.Server.MapPath(UsersFile);
+            if (!File.Exists(path)) return new UsersData();
+            try { return JsonConvert.DeserializeObject<UsersData>(File.ReadAllText(path)) ?? new UsersData(); }
+            catch { return new UsersData(); }
+        }
+
+        private void SaveUsers(UsersData data)
+        {
+            var path = HttpContext.Current.Server.MapPath(UsersFile);
+            File.WriteAllText(path, JsonConvert.SerializeObject(data, Formatting.Indented));
         }
 
         // ── Content Sections ─────────────────────────────────────────────────────
@@ -330,6 +488,27 @@ namespace Documentation.Controllers
         }
 
         [HttpPost]
+        [Route("api/admin/services/{href}/toggle-visibility")]
+        public IHttpActionResult ToggleServiceVisibility(string href)
+        {
+            if (!IsAuthenticated()) return Unauthorized();
+            var catalog = LoadServiceCatalog();
+            if (catalog == null) return NotFound();
+            foreach (var cat in catalog.ServiceCategory)
+            {
+                var svc = cat.Services.FirstOrDefault(s =>
+                    string.Equals(s.Href, href, StringComparison.OrdinalIgnoreCase));
+                if (svc != null)
+                {
+                    svc.Hidden = !svc.Hidden;
+                    SaveServiceCatalog(catalog);
+                    return Ok(new { href = svc.Href, hidden = svc.Hidden });
+                }
+            }
+            return NotFound();
+        }
+
+        [HttpPost]
         [Route("api/admin/services")]
         public IHttpActionResult CreateService([FromBody] CreateServiceRequest req)
         {
@@ -367,7 +546,8 @@ namespace Documentation.Controllers
                 Description = req.Description ?? string.Empty,
                 Link        = req.Link ?? string.Empty,
                 XsdRequest  = xsdRequestPath ?? string.Empty,
-                XsdSchema   = xsdSchemaPath  ?? string.Empty
+                XsdSchema   = xsdSchemaPath  ?? string.Empty,
+                Hidden      = false
             };
 
             var catalog = LoadServiceCatalog() ?? new ServiceCatalogModel { ServiceCategory = new List<ServiceCategoryModel>() };
@@ -454,8 +634,9 @@ namespace Documentation.Controllers
 
     // ── Request / response models ─────────────────────────────────────────────────
 
-    public class AdminLoginRequest     { public string Username { get; set; } public string Password { get; set; } }
-    public class CreateEndpointRequest { public string Name    { get; set; } public string BaseUrl  { get; set; } }
+    public class AdminLoginRequest      { public string Username    { get; set; } public string Password    { get; set; } }
+    public class CreateEndpointRequest  { public string Name        { get; set; } public string BaseUrl     { get; set; } }
+    public class ChangePasswordRequest  { public string NewPassword { get; set; } }
 
     public class ContentData
     {
@@ -503,15 +684,16 @@ namespace Documentation.Controllers
         [JsonProperty("link")]        public string Link        { get; set; }
         [JsonProperty("xsdRequest")]  public string XsdRequest  { get; set; }
         [JsonProperty("xsdSchema")]   public string XsdSchema   { get; set; }
+        [JsonProperty("hidden")]      public bool   Hidden      { get; set; }
     }
 
     public class CreateServiceRequest
     {
-        public string CategoryName     { get; set; }
-        public string ServiceName      { get; set; }
-        public string Href             { get; set; }
-        public string Description      { get; set; }
-        public string Link             { get; set; }
+        public string CategoryName      { get; set; }
+        public string ServiceName       { get; set; }
+        public string Href              { get; set; }
+        public string Description       { get; set; }
+        public string Link              { get; set; }
         public string XsdRequestContent { get; set; }
         public string XsdSchemaContent  { get; set; }
     }

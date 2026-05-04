@@ -237,6 +237,57 @@
         .field-desc-text { color: #444; font-size: 12px; max-width: 480px; }
         .field-name-mono { font-family: 'Courier New', monospace; font-weight: 700; color: #2a4a8a; font-size: 12px; }
 
+        /* ── Visibility toggle ── */
+        .btn-eye {
+            background: none; border: 1px solid #b8cce8; color: #6c8cbf;
+            padding: 5px 9px; border-radius: 4px; cursor: pointer; font-size: 12px;
+            transition: all .15s; font-weight: 600; margin-right: 4px;
+        }
+        .btn-eye:hover { background: #1C4084; border-color: #1C4084; color: #fff; }
+        .btn-eye.is-hidden { border-color: #e8c5c5; color: #c0392b; }
+        .btn-eye.is-hidden:hover { background: #dc3545; border-color: #dc3545; color: #fff; }
+        .svc-name.is-hidden { color: #9db5d5; text-decoration: line-through; }
+
+        /* ── Users tab ── */
+        .user-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 28px; border-bottom: 1px solid #f0f3f8;
+        }
+        .user-row:last-child { border-bottom: none; }
+        .user-row:hover { background: #f7f9fc; }
+        .user-email { font-weight: 600; color: #1C4084; font-size: 13px; }
+        .user-meta  { font-size: 11px; color: #9db5d5; margin-top: 2px; }
+        .badge-pending { background: #fff3e0; color: #c96d00; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 8px; border-radius: 3px; margin-left: 8px; }
+        .badge-active  { background: #e8f5ec; color: #1a5c2e; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 8px; border-radius: 3px; margin-left: 8px; }
+        .btn-approve {
+            background: none; border: 1px solid #a8ddb8; color: #1a5c2e;
+            padding: 5px 13px; border-radius: 4px; cursor: pointer; font-size: 12px;
+            transition: all .15s; font-weight: 600; margin-right: 4px; font-family: inherit;
+        }
+        .btn-approve:hover { background: #28a745; border-color: #28a745; color: #fff; }
+
+        /* ── Password reveal modal ── */
+        .pw-modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(28,64,132,.55); z-index: 9999; align-items: center; justify-content: center;
+        }
+        .pw-modal-overlay.is-open { display: flex; }
+        .pw-modal-box {
+            background: #fff; border-radius: 8px; width: 100%; max-width: 420px;
+            box-shadow: 0 8px 48px rgba(0,0,0,.22); padding: 36px 44px 32px; margin: 16px;
+        }
+        .pw-modal-box h3 { font-size: 17px; color: #1C4084; font-weight: 700; margin: 0 0 6px; }
+        .pw-modal-box .sub { font-size: 12px; color: #6c8cbf; margin: 0 0 18px; }
+        .pw-display {
+            font-family: 'Courier New', monospace; font-size: 20px; font-weight: 700;
+            background: #f0f4fb; color: #1C4084; padding: 12px 16px; border-radius: 6px;
+            text-align: center; letter-spacing: 2px; margin-bottom: 12px; user-select: all;
+        }
+        .pw-warn {
+            background: rgba(235,128,8,.09); border-left: 3px solid #EB8008; border-radius: 4px;
+            padding: 9px 13px; font-size: 12px; color: #7a4800; margin-bottom: 18px;
+        }
+
         /* ── Services ── */
         .cat-header {
             font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px;
@@ -269,6 +320,9 @@
     <div class="navbar-left">
         <img src="customAssets/img/CyberlogicLogo.png" alt="Cyberlogic" />
         <span class="admin-badge"><i class="fa fa-shield"></i>&nbsp; Admin Panel</span>
+        <span id="nav-user-display" style="font-size:11px;color:rgba(255,255,255,.6);display:none">
+            <i class="fa fa-user-circle-o"></i>&nbsp; <span id="nav-user-email"></span>
+        </span>
     </div>
     <button class="btn-logout" onclick="doLogout()">
         <i class="fa fa-sign-out"></i>&nbsp; Logout
@@ -280,6 +334,7 @@
     <button class="tab-btn" onclick="switchTab('content',this)"><i class="fa fa-file-text-o"></i>&nbsp; Content Sections</button>
     <button class="tab-btn" onclick="switchTab('fields',this)"><i class="fa fa-list-alt"></i>&nbsp; Field Descriptions</button>
     <button class="tab-btn" onclick="switchTab('services',this)"><i class="fa fa-cogs"></i>&nbsp; Services</button>
+    <button class="tab-btn" id="tab-btn-users" onclick="switchTab('users',this)" style="display:none"><i class="fa fa-users"></i>&nbsp; Users</button>
 </div>
 
 <div class="container">
@@ -483,7 +538,46 @@
 
     </div><!-- /tab-services -->
 
+    <!-- ── USERS TAB ───────────────────────────────────────────────────── -->
+    <div id="tab-users" class="tab-pane" style="display:none">
+
+        <div class="card">
+            <div class="card-head">
+                <h2><i class="fa fa-clock-o"></i> Pending Registrations</h2>
+                <span id="pending-count" style="font-size:12px;color:#9db5d5"></span>
+            </div>
+            <div id="pending-users-body" class="card-body no-pad">
+                <div class="loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-head">
+                <h2><i class="fa fa-users"></i> Active Users</h2>
+                <span id="active-count" style="font-size:12px;color:#9db5d5"></span>
+            </div>
+            <div id="active-users-body" class="card-body no-pad">
+                <div class="loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>
+            </div>
+        </div>
+
+    </div><!-- /tab-users -->
+
 </div><!-- /container -->
+
+<!-- ── Password reveal modal ── -->
+<div class="pw-modal-overlay" id="pw-modal">
+    <div class="pw-modal-box">
+        <h3><i class="fa fa-key" style="color:#EB8008"></i>&nbsp; Temporary Password</h3>
+        <p class="sub" id="pw-modal-sub">Generated for <strong id="pw-modal-email"></strong></p>
+        <div class="pw-warn"><i class="fa fa-exclamation-triangle"></i>&nbsp; This password is shown <strong>once only</strong>. Copy it and share it securely with the user.</div>
+        <div class="pw-display" id="pw-modal-value"></div>
+        <div style="display:flex;gap:10px;justify-content:center">
+            <button class="btn-create" onclick="copyPwModal()"><i class="fa fa-copy"></i>&nbsp; Copy Password</button>
+            <button class="btn-cancel" onclick="closePwModal()">Close</button>
+        </div>
+    </div>
+</div>
 
 <div class="page-foot">&copy; Cyberlogic e-Tourism Platform &mdash; Admin</div>
 
@@ -492,6 +586,19 @@
         var t = sessionStorage.getItem('cl_admin');
         if (!t) { window.location.replace('AdminLogin.html'); return ''; }
         return t;
+    })();
+
+    var IS_SUPER = sessionStorage.getItem('cl_admin_super') === '1';
+    var USER_EMAIL = sessionStorage.getItem('cl_admin_email') || '';
+
+    (function initNav() {
+        if (USER_EMAIL) {
+            document.getElementById('nav-user-email').textContent = USER_EMAIL;
+            document.getElementById('nav-user-display').style.display = '';
+        }
+        if (IS_SUPER) {
+            document.getElementById('tab-btn-users').style.display = '';
+        }
     })();
 
     function authHeaders() {
@@ -512,9 +619,10 @@
         btn.classList.add('active');
         if (!tabLoaded[name]) {
             tabLoaded[name] = true;
-            if (name === 'content') loadSections();
-            if (name === 'fields')  loadFields();
+            if (name === 'content')  loadSections();
+            if (name === 'fields')   loadFields();
             if (name === 'services') loadServices();
+            if (name === 'users')    loadAdminUsers();
         }
     }
 
@@ -961,9 +1069,16 @@
             total += count;
             var catId = 'svc-cat-' + idx;
             var rows = (cat.services || []).map(function(svc) {
+                var hiddenClass = svc.hidden ? ' is-hidden' : '';
+                var eyeClass    = svc.hidden ? ' is-hidden' : '';
+                var eyeIcon     = svc.hidden ? 'fa-eye-slash' : 'fa-eye';
+                var eyeTitle    = svc.hidden ? 'Service hidden — click to show' : 'Service visible — click to hide';
                 return '<div class="svc-row">' +
-                    '<span><span class="svc-name">' + esc(svc.service) + '</span><span class="svc-href">#' + esc(svc.href) + '</span></span>' +
-                    '<button class="btn-del btn-sm" onclick="deleteService(\'' + esc(svc.href) + '\')"><i class="fa fa-trash"></i></button>' +
+                    '<span><span class="svc-name' + hiddenClass + '">' + esc(svc.service) + '</span><span class="svc-href">#' + esc(svc.href) + '</span></span>' +
+                    '<span>' +
+                        '<button class="btn-eye btn-sm' + eyeClass + '" title="' + eyeTitle + '" onclick="toggleServiceVisibility(\'' + esc(svc.href) + '\',this)"><i class="fa ' + eyeIcon + '"></i></button>' +
+                        '<button class="btn-del btn-sm" onclick="deleteService(\'' + esc(svc.href) + '\')"><i class="fa fa-trash"></i></button>' +
+                    '</span>' +
                 '</div>';
             }).join('');
             return '<div class="cat-header" onclick="toggleSvcCat(this)" data-target="' + catId + '">' +
@@ -1025,6 +1140,128 @@
         fetch('api/admin/services/' + encodeURIComponent(href), { method: 'DELETE', headers: authHeaders() })
         .then(function(r) { if (!r.ok) throw new Error(); loadServices(); })
         .catch(function() { alert('Delete failed.'); });
+    }
+
+    function toggleServiceVisibility(href, btn) {
+        btn.disabled = true;
+        fetch('api/admin/services/' + encodeURIComponent(href) + '/toggle-visibility', { method: 'POST', headers: authHeaders() })
+        .then(function(r) { if (handleUnauth(r)) return null; if (!r.ok) throw new Error(); return r.json(); })
+        .then(function(data) {
+            if (!data) return;
+            var hidden = data.hidden;
+            btn.classList.toggle('is-hidden', hidden);
+            btn.title = hidden ? 'Service hidden — click to show' : 'Service visible — click to hide';
+            btn.innerHTML = '<i class="fa ' + (hidden ? 'fa-eye-slash' : 'fa-eye') + '"></i>';
+            var nameEl = btn.closest('.svc-row').querySelector('.svc-name');
+            if (nameEl) nameEl.classList.toggle('is-hidden', hidden);
+            btn.disabled = false;
+        })
+        .catch(function() { btn.disabled = false; alert('Failed to update visibility.'); });
+    }
+
+    /* ══════════════════════════════════════════════════════════════════════════
+       USERS TAB (super-admin only)
+    ══════════════════════════════════════════════════════════════════════════ */
+    function loadAdminUsers() {
+        var pendingEl = document.getElementById('pending-users-body');
+        var activeEl  = document.getElementById('active-users-body');
+        pendingEl.innerHTML = '<div class="loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>';
+        activeEl.innerHTML  = '<div class="loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>';
+
+        fetch('api/admin/users', { headers: authHeaders() })
+        .then(function(r) { if (handleUnauth(r)) return null; if (!r.ok) throw new Error(); return r.json(); })
+        .then(function(data) {
+            if (!data) return;
+            var pending = data.filter(function(u) { return u.status === 'pending'; });
+            var active  = data.filter(function(u) { return u.status === 'active'; });
+
+            document.getElementById('pending-count').textContent = pending.length + ' pending';
+            document.getElementById('active-count').textContent  = active.length  + ' active';
+
+            if (!pending.length) {
+                pendingEl.innerHTML = '<div class="loading" style="color:#9db5d5">No pending registrations.</div>';
+            } else {
+                pendingEl.innerHTML = pending.map(function(u) {
+                    var d = new Date(u.createdAt).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+                    return '<div class="user-row">' +
+                        '<span>' +
+                            '<span class="user-email">' + esc(u.email) + '</span>' +
+                            '<span class="badge-pending">Pending</span>' +
+                            '<div class="user-meta"><i class="fa fa-calendar-o"></i>&nbsp; Requested ' + d + '</div>' +
+                        '</span>' +
+                        '<span>' +
+                            '<button class="btn-approve btn-sm" onclick="approveUser(\'' + esc(u.id) + '\',this)"><i class="fa fa-check"></i>&nbsp; Approve</button>' +
+                            '<button class="btn-del btn-sm"     onclick="rejectUser(\''  + esc(u.id) + '\',this)"><i class="fa fa-times"></i>&nbsp; Reject</button>' +
+                        '</span>' +
+                    '</div>';
+                }).join('');
+            }
+
+            if (!active.length) {
+                activeEl.innerHTML = '<div class="loading" style="color:#9db5d5">No active users yet.</div>';
+            } else {
+                activeEl.innerHTML = active.map(function(u) {
+                    var d = u.approvedAt ? new Date(u.approvedAt).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }) : '—';
+                    var mcp = u.mustChangePassword ? '<span style="font-size:10px;color:#c96d00;margin-left:6px"><i class="fa fa-exclamation-circle"></i> awaiting password change</span>' : '';
+                    return '<div class="user-row">' +
+                        '<span>' +
+                            '<span class="user-email">' + esc(u.email) + '</span>' +
+                            '<span class="badge-active">Active</span>' + mcp +
+                            '<div class="user-meta"><i class="fa fa-calendar-check-o"></i>&nbsp; Approved ' + d + '</div>' +
+                        '</span>' +
+                        '<button class="btn-del btn-sm" onclick="deleteAdminUser(\'' + esc(u.id) + '\',this)"><i class="fa fa-trash"></i>&nbsp; Remove</button>' +
+                    '</div>';
+                }).join('');
+            }
+        })
+        .catch(function() {
+            pendingEl.innerHTML = '<div class="loading" style="color:#c0392b">Failed to load users.</div>';
+            activeEl.innerHTML  = '';
+        });
+    }
+
+    function approveUser(id, btn) {
+        btn.disabled = true; btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+        fetch('api/admin/users/' + encodeURIComponent(id) + '/approve', { method: 'POST', headers: authHeaders() })
+        .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
+        .then(function(data) {
+            document.getElementById('pw-modal-email').textContent = data.email;
+            document.getElementById('pw-modal-value').textContent = data.tempPassword;
+            document.getElementById('pw-modal').classList.add('is-open');
+            tabLoaded['users'] = false;
+            loadAdminUsers();
+        })
+        .catch(function() { btn.disabled = false; btn.innerHTML = '<i class="fa fa-check"></i>&nbsp; Approve'; alert('Approve failed.'); });
+    }
+
+    function rejectUser(id, btn) {
+        if (!confirm('Reject and delete this registration request?')) return;
+        btn.disabled = true; btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+        fetch('api/admin/users/' + encodeURIComponent(id), { method: 'DELETE', headers: authHeaders() })
+        .then(function(r) { if (!r.ok) throw new Error(); tabLoaded['users'] = false; loadAdminUsers(); })
+        .catch(function() { btn.disabled = false; btn.innerHTML = '<i class="fa fa-times"></i>&nbsp; Reject'; alert('Delete failed.'); });
+    }
+
+    function deleteAdminUser(id, btn) {
+        if (!confirm('Remove this user? They will lose access immediately.')) return;
+        btn.disabled = true; btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+        fetch('api/admin/users/' + encodeURIComponent(id), { method: 'DELETE', headers: authHeaders() })
+        .then(function(r) { if (!r.ok) throw new Error(); tabLoaded['users'] = false; loadAdminUsers(); })
+        .catch(function() { btn.disabled = false; btn.innerHTML = '<i class="fa fa-trash"></i>&nbsp; Remove'; alert('Delete failed.'); });
+    }
+
+    function copyPwModal() {
+        var val = document.getElementById('pw-modal-value').textContent;
+        navigator.clipboard.writeText(val).then(function() {
+            var btn = document.querySelector('#pw-modal .btn-create');
+            btn.innerHTML = '<i class="fa fa-check"></i>&nbsp; Copied!';
+            setTimeout(function() { btn.innerHTML = '<i class="fa fa-copy"></i>&nbsp; Copy Password'; }, 2500);
+        });
+    }
+
+    function closePwModal() {
+        document.getElementById('pw-modal').classList.remove('is-open');
+        document.getElementById('pw-modal-value').textContent = '';
     }
 
     /* ── Shared helpers ─────────────────────────────────────────────────────── */
