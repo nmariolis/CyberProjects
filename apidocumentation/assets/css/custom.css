@@ -515,24 +515,26 @@ html code {
     align-items: stretch;
     width: 100%;
     padding-top: 20px;
+    padding-right: 80px;
     box-sizing: border-box;
+    background: #ffffff;
 }
 
 .try-it-form-col {
-    flex: 0 0 58.333%;
+    flex: 7 1 0%;
     min-width: 0;
     background: #ffffff;
-    padding: 0 60px 28px;  /* no individual top padding */
+    padding: 0 60px 28px;
     border-right: 1px solid #e0e7f2;
     box-sizing: border-box;
 }
 .try-it-form-col .promo.small-icon.left { margin-top: 0 !important; }
 
 .try-it-code-col {
-    flex: 0 0 41.667%;
+    flex: 5 1 0%;
     min-width: 0;
     background: #272822;
-    padding: 0 20px 28px;  /* no individual top padding */
+    padding: 0 20px 28px;
     box-sizing: border-box;
 }
 .try-it-code-col .promo.small-icon.left { margin-top: 0 !important; }
@@ -603,6 +605,7 @@ html code {
 @media (max-width: 1199px) {
     .leftSection        { padding: 36px 44px !important; }
     .sec-heading-row    { padding: 12px 44px !important; }
+    .try-it-section     { padding-right: 44px; }
     .try-it-form-col    { padding: 0 44px 24px; }
     .resp-wrap          { padding: 20px 44px; }
 }
@@ -616,7 +619,7 @@ html code {
     .constraints-cell   { max-width: none; }
 
     /* Stack try-it section vertically on tablet */
-    .try-it-section     { flex-direction: column; padding-top: 16px; }
+    .try-it-section     { flex-direction: column; padding-top: 16px; padding-right: 24px; }
     .try-it-form-col    { flex: 0 0 100%; padding: 0 24px 24px; border-right: none; border-bottom: 1px solid #3d3d2f; }
     .try-it-code-col    { flex: 0 0 100%; padding: 0 16px 24px; }
 }
@@ -625,7 +628,7 @@ html code {
     .leftSection        { padding: 16px 14px !important; }
     .sec-heading-row    { padding: 8px 14px !important; }
     .resp-wrap          { padding: 14px 14px; }
-    .try-it-section     { padding-top: 12px; }
+    .try-it-section     { padding-top: 12px; padding-right: 14px; }
     .try-it-form-col    { padding: 0 14px 16px; }
     .try-it-code-col    { padding: 0 12px 16px; }
     /* Each field takes full row width on narrow screens */
