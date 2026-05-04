@@ -130,29 +130,28 @@ a:hover { color: #EB8008; text-decoration: underline; }
 
 .field-cell {
     flex: 0 0 50%;
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    padding: 4px 10px;
-    min-height: 38px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 4px 8px;
+    min-height: 40px;
     box-sizing: border-box;
 }
 
 .field-cell label {
-    display: flex !important;
-    align-items: center !important;
-    align-self: center !important;
-    min-width: 120px;
-    max-width: 160px;
-    justify-content: flex-end;
+    flex: 0 0 auto;
+    width: 140px;
+    text-align: right;
     padding-right: 10px;
+    margin: 0 !important;
     font-size: 13px;
     font-weight: 600;
     color: #1C4084;
-    margin: 0 !important;
     white-space: nowrap;
-    flex-shrink: 0;
-    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+    cursor: default;
 }
 
 .req-star {
@@ -164,7 +163,7 @@ a:hover { color: #EB8008; text-decoration: underline; }
 }
 
 .field-cell .form-control {
-    flex: 1 1 0;
+    flex: 1 1 auto;
     min-width: 0;
     height: 30px !important;
     padding: 4px 8px;
@@ -174,7 +173,6 @@ a:hover { color: #EB8008; text-decoration: underline; }
     background: #ffffff;
     color: #333;
     transition: border-color 0.2s, box-shadow 0.2s;
-    align-self: center !important;
     box-sizing: border-box;
     display: block;
 }
@@ -457,16 +455,16 @@ html code {
     word-break: break-all;
 }
 
-/* ─── Right panel (dark code column) — generic uses outside try-it row ── */
+/* ─── Right panel — generic (kept for any non-try-it uses) ─── */
 .right-panel {
     background: #272822;
     padding: 0 20px 24px 20px;
 }
-.right-panel .rp-promo { margin-top: 22px; }
-.right-panel .rp-promo h3,
 .right-panel h3 { color: #a8b8cc !important; }
-.right-panel .rp-promo .fa { color: #EB8008 !important; }
+.right-panel .fa { color: #EB8008 !important; }
 .right-panel pre.codeBlock-inline.rp-pre {
+    width: 100%;
+    box-sizing: border-box;
     margin: 0;
     border: none;
     min-height: 220px;
@@ -474,39 +472,36 @@ html code {
     padding: 15px;
 }
 
-/* ─── Try-it row: form + code panel aligned at top ────────── */
-/* Use dedicated classes (try-it-form-col / try-it-code-col) so we never
-   fight leftSection's padding:50px !important or right-panel's cascade. */
-.try-it-row {
-    display: flex !important;
-    align-items: flex-start !important;
-    flex-wrap: wrap;
+/* ─── Try-it section: pure flexbox, no Bootstrap cols ──────── */
+.try-it-section {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
 }
-.try-it-row::before,
-.try-it-row::after { display: none !important; }
-.try-it-row > [class*="col-"] { float: none !important; }
 
 .try-it-form-col {
+    flex: 0 0 58.333%;
+    min-width: 0;
     background: #ffffff;
-    padding: 24px 80px;
+    padding: 28px 60px;
     border-right: 1px solid #e0e7f2;
     box-sizing: border-box;
 }
-.try-it-form-col .promo.small-icon.left {
-    margin-top: 0 !important;
-}
+.try-it-form-col .promo.small-icon.left { margin-top: 0; }
 
 .try-it-code-col {
+    flex: 0 0 41.667%;
+    min-width: 0;
     background: #272822;
-    padding: 24px 20px;
+    padding: 28px 20px;
     box-sizing: border-box;
 }
-.try-it-code-col .promo.small-icon.left {
-    margin-top: 0 !important;
-}
+.try-it-code-col .promo.small-icon.left { margin-top: 0; }
 .try-it-code-col h3 { color: #a8b8cc !important; }
 .try-it-code-col .fa { color: #EB8008 !important; }
 .try-it-code-col pre.codeBlock-inline.rp-pre {
+    width: 100%;
+    box-sizing: border-box;
     margin: 0;
     border: none;
     min-height: 220px;
@@ -567,30 +562,36 @@ html code {
 
 /* ─── Responsive breakpoints ──────────────────────────────── */
 @media (max-width: 1199px) {
-    .leftSection        { padding: 40px 50px 40px 50px !important; }
-    .try-it-form-col    { padding: 24px 50px; }
-    .resp-wrap          { padding: 20px 50px 24px 50px; }
+    .leftSection        { padding: 36px 44px !important; }
+    .try-it-form-col    { padding: 24px 44px; }
+    .resp-wrap          { padding: 20px 44px; }
 }
 
 @media (max-width: 991px) {
-    .leftSection        { padding: 28px 24px 28px 24px !important; }
-    .try-it-form-col    { padding: 24px 24px; }
-    .resp-wrap          { padding: 20px 24px 20px 24px; }
+    .leftSection        { padding: 24px 24px !important; }
+    .resp-wrap          { padding: 20px 24px; }
     .codeBlock-intro    { margin-top: 20px; }
     .right-panel        { padding: 0 16px 20px 16px; }
-    .try-it-code-col    { padding: 24px 16px; }
     .constraints-cell   { max-width: none; }
+
+    /* Stack try-it section vertically */
+    .try-it-section     { flex-direction: column; }
+    .try-it-form-col    { flex: 0 0 100%; padding: 24px 24px; border-right: none; border-bottom: 1px solid #3d3d2f; }
+    .try-it-code-col    { flex: 0 0 100%; padding: 24px 16px; }
 }
 
 @media (max-width: 767px) {
-    .leftSection        { padding: 18px 14px 18px 14px !important; }
-    .try-it-form-col    { padding: 18px 14px; }
-    .resp-wrap          { padding: 14px 14px 14px 14px; }
-    .field-cell         { flex: 0 0 100% !important; }
+    .leftSection        { padding: 16px 14px !important; }
+    .resp-wrap          { padding: 14px 14px; }
+    .try-it-form-col    { padding: 16px 14px; }
+    .try-it-code-col    { padding: 16px 12px; }
+    /* Each field takes full row width on narrow screens */
+    .field-cell         { flex: 0 0 100%; }
     .right-panel        { padding: 0 12px 16px 12px; }
-    .try-it-code-col    { padding: 18px 12px; }
     .schema-table thead th,
     .schema-table tbody td { padding: 6px 8px; }
+    /* Prevent horizontal overflow */
+    pre, .codeBlock-inline { max-width: 100%; overflow-x: auto; }
 }
 
 /* ─── Professional refinements ──────────────────────────────── */
