@@ -31,6 +31,9 @@ body {
     padding-left: 0 !important;
 }
 
+/* Neutralise Bootstrap .row bleed so all section rows start at the same left edge as .try-it-section */
+.main-content .row { margin-left: 0 !important; margin-right: 0 !important; }
+
 .main-content {
     padding: 0 !important;
     font-size: 16px;
@@ -46,6 +49,13 @@ body {
 .leftSection {
     background: #ffffff;
     padding: 50px 80px 50px 80px !important;
+    border-right: 1px solid #e0e7f2;
+}
+
+/* Compact header bar for collapsible Getting Started sections */
+.sec-heading-row {
+    background: #ffffff;
+    padding: 14px 80px !important;
     border-right: 1px solid #e0e7f2;
 }
 
@@ -296,15 +306,15 @@ html code {
 }
 
 /* ─── Sidebar ─────────────────────────────────────────────── */
+/* Push sidebar below the sticky header */
+.sidebar-boxed { top: 50px !important; height: calc(100vh - 50px) !important; }
+/* Make header span full viewport width, covering the sidebar column */
+.sidebar-boxed ~ .site-header { padding-left: 0 !important; }
+
 .sidebar-dark {
     background: #0f2248 !important;
 }
 
-.sidebar-dark .sidebar-brand {
-    background: #1C4084;
-    border-bottom: 3px solid #EB8008;
-    padding: 12px 16px !important;
-}
 
 /* ─── Table styling ───────────────────────────────────────── */
 .tableGeneral {
@@ -504,7 +514,7 @@ html code {
     display: flex;
     align-items: stretch;
     width: 100%;
-    padding-top: 20px;  /* shared top space — both columns start at identical Y */
+    padding-top: 20px;
     box-sizing: border-box;
 }
 
@@ -592,12 +602,14 @@ html code {
 /* ─── Responsive breakpoints ──────────────────────────────── */
 @media (max-width: 1199px) {
     .leftSection        { padding: 36px 44px !important; }
+    .sec-heading-row    { padding: 12px 44px !important; }
     .try-it-form-col    { padding: 0 44px 24px; }
     .resp-wrap          { padding: 20px 44px; }
 }
 
 @media (max-width: 991px) {
     .leftSection        { padding: 24px 24px !important; }
+    .sec-heading-row    { padding: 10px 24px !important; }
     .resp-wrap          { padding: 20px 24px; }
     .codeBlock-intro    { margin-top: 20px; }
     .right-panel        { padding: 0 16px 20px 16px; }
@@ -611,6 +623,7 @@ html code {
 
 @media (max-width: 767px) {
     .leftSection        { padding: 16px 14px !important; }
+    .sec-heading-row    { padding: 8px 14px !important; }
     .resp-wrap          { padding: 14px 14px; }
     .try-it-section     { padding-top: 12px; }
     .try-it-form-col    { padding: 0 14px 16px; }
@@ -627,12 +640,26 @@ html code {
 
 /* ─── Professional refinements ──────────────────────────────── */
 .site-header { box-shadow: 0 2px 8px rgba(0,0,0,0.18); position: sticky; top: 0; z-index: 1000; }
-.navbar-default { margin-bottom: 0; border-radius: 0; border: none; }
+.navbar-default { margin-bottom: 0; border-radius: 0; border: none; border-bottom: 3px solid #EB8008 !important; }
 .navbar-default .navbar-nav > li > a { color: rgba(255,255,255,0.85); font-size: 13px; font-weight: 500; letter-spacing: 0.3px; padding: 14px 18px; transition: color 0.15s, background 0.15s; }
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li.active > a { color: #fff; background: rgba(255,255,255,0.1); }
-.sidebar-dark .sidebar-brand { display: flex; align-items: center; min-height: 56px; }
-.sidebar-brand img { height: 36px; width: auto; max-width: 150px; object-fit: contain; }
-h2 { font-size: 22px; letter-spacing: -0.2px; }
+.navbar-default .navbar-brand { padding: 8px 15px 8px 20px; }
+.navbar-default .navbar-brand img { max-height: 44px; height: auto; max-width: 180px; object-fit: contain; }
+.sidebar-dark .sidebar-brand { display: none; }
+.sidebar-brand img { max-height: 44px; height: auto; max-width: 150px; object-fit: contain; }
+
+/* ─── Sidebar scrollbar ──────────────────────────────────── */
+.sidebar { scrollbar-width: thin; scrollbar-color: #2a5298 #0f2248; }
+.sidebar::-webkit-scrollbar { width: 5px; }
+.sidebar::-webkit-scrollbar-track { background: #0f2248; }
+.sidebar::-webkit-scrollbar-thumb { background: #2a5298; border-radius: 3px; }
+h2 { font-size: 22px; letter-spacing: -0.2px; scroll-margin-top: 70px; }
+
+/* ─── Collapsible content sections ──────────────────────── */
+.sec-toggle { cursor: pointer; user-select: none; display: flex; align-items: center; gap: 10px; }
+.sec-toggle:hover { color: #1C4084; }
+.sec-toggle-icon { font-size: 13px; color: #EB8008; transition: transform 0.25s ease; flex-shrink: 0; }
+.sec-toggle[aria-expanded="true"] .sec-toggle-icon { transform: rotate(90deg); }
 .schema-table thead th { font-size: 10.5px; letter-spacing: 0.8px; }
 .form-panel { box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
 .btn-generate { letter-spacing: 0.8px; box-shadow: 0 2px 4px rgba(235,128,8,0.25); transition: all 0.15s; }
