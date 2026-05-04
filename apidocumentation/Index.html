@@ -207,6 +207,22 @@
 
 
         function loadServiceCatalog() {
+            var endpointId = CL_SESSION.endpointId;
+            if (endpointId) {
+                // Always fetch current hiddenServices from server — never rely on stale sessionStorage
+                fetch('api/endpoints/' + encodeURIComponent(endpointId) + '/visibility')
+                    .then(function(r) { return r.ok ? r.json() : null; })
+                    .then(function(vis) {
+                        if (vis && vis.hiddenServices) CL_SESSION.hiddenServices = vis.hiddenServices;
+                        fetchCatalog();
+                    })
+                    .catch(function() { fetchCatalog(); });
+            } else {
+                fetchCatalog();
+            }
+        }
+
+        function fetchCatalog() {
             $.ajax({
                 url: 'models/webServicesUpdated.json',
                 datatype: 'json',
@@ -232,6 +248,17 @@
                     /* Show active environment in navbar */
                     $('#nav-env-name').text(CL_SESSION.endpointName || CL_SESSION.endpoint || '');
                     $('#nav-env-item').show();
+                    /* Refresh ScrollSpy and handle bookmark/direct-hash navigation */
+                    setTimeout(function() {
+                        try { $('body').scrollspy('refresh'); } catch(e) {}
+                        if (window.location.hash && window.location.hash.length > 1) {
+                            var $target = $(window.location.hash);
+                            if ($target.length) {
+                                var offset = $('.site-header').outerHeight() || 50;
+                                $('html, body').animate({ scrollTop: $target.offset().top - offset - 8 }, 350);
+                            }
+                        }
+                    }, 250);
                 }
             });
         }

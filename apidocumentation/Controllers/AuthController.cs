@@ -54,6 +54,7 @@ namespace Documentation.Controllers
                 return Unauthorized();
 
             return Ok(new {
+                id             = entry.Id,
                 name           = entry.Name,
                 baseUrl        = entry.BaseUrl,
                 hiddenServices = entry.HiddenServices ?? new System.Collections.Generic.List<string>()
@@ -110,6 +111,26 @@ namespace Documentation.Controllers
             int diff = 0;
             for (int i = 0; i < a.Length; i++) diff |= a[i] ^ b[i];
             return diff == 0;
+        }
+    }
+
+        // Public endpoint — returns current hiddenServices for an endpoint ID (no auth required)
+        [HttpGet]
+        [Route("api/endpoints/{id}/visibility")]
+        public IHttpActionResult GetEndpointVisibility(string id)
+        {
+            var path = HttpContext.Current.Server.MapPath("~/Models/endpoints.json");
+            if (!File.Exists(path))
+                return Ok(new { hiddenServices = new System.Collections.Generic.List<string>() });
+
+            EndpointsConfig config;
+            try { config = JsonConvert.DeserializeObject<EndpointsConfig>(File.ReadAllText(path)); }
+            catch { return Ok(new { hiddenServices = new System.Collections.Generic.List<string>() }); }
+
+            var entry = config?.Endpoints?.FirstOrDefault(e =>
+                string.Equals(e.Id, id, StringComparison.OrdinalIgnoreCase));
+
+            return Ok(new { hiddenServices = entry?.HiddenServices ?? new System.Collections.Generic.List<string>() });
         }
     }
 

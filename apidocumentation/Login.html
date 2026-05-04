@@ -302,6 +302,7 @@
             })
             .then(function(data) {
                 sessionStorage.setItem('cl_session', JSON.stringify({
+                    endpointId:     data.id,
                     endpoint:       data.baseUrl,
                     endpointName:   data.name,
                     username:       username,

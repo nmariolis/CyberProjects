@@ -5,56 +5,70 @@
       "KeyHash": "cO0Zk/3Ubssu97tdKCQkIg==:wrjgPaTEgPpSK6Id0/nKHVc0jf9ypf7jEk5HjChuKHE=",
       "EncodedKey": "cKTmiZ8ddAU3uT8VPw8Eg/GektCxj9t1UqqIHowEKcM=",
       "Name": "AVRA Hub",
-      "BaseUrl": "https://avra-hub.cyberlogic.cloud"
+      "BaseUrl": "https://avra-hub.cyberlogic.cloud",
+      "HiddenServices": [
+        "package-search",
+        "package-list",
+        "package-categories",
+        "package-destinations",
+        "package-room-prices"
+      ]
     },
     {
       "Id": "b2c3d4e5f6a74b2c9d3e4f5a6b7c8d9e",
       "KeyHash": "MSFD7XhuQ/4xZJ98mLNzwg==:pQBenPCcOI/I547EmIbFDgseus7If3e1LfIGA4OiW9Q=",
       "EncodedKey": "bTtloRSUJX4MJVF/valxSeRW2Z1/OVLsWDhVZfEusWw=",
       "Name": "Delta-W Hub",
-      "BaseUrl": "https://deltaw-hub.cyberlogic.cloud"
+      "BaseUrl": "https://deltaw-hub.cyberlogic.cloud",
+      "HiddenServices": []
     },
     {
       "Id": "c3d4e5f6a7b84c3da4e5f6a7b8c9d0e1",
       "KeyHash": "BdbwppRBGl9vm/Y9rcYXWw==:+eJ0ewmtp6aRykpFT4FwgUbB+csdlXZBEaYrsafihls=",
       "EncodedKey": "2C42tP7MGWasit7SsqvZxEy7X9g66hU+4JJ4wWB6Uds=",
       "Name": "Ovest Hub",
-      "BaseUrl": "https://ovest-hub.cyberlogic.cloud"
+      "BaseUrl": "https://ovest-hub.cyberlogic.cloud",
+      "HiddenServices": []
     },
     {
       "Id": "d4e5f6a7b8c95d4eb5f6a7b8c9d0e1f2",
       "KeyHash": "9okEhoVPwlPvhqJHjyoI4A==:ZVtDDTbrmovOesjkD9P7HZB1NMsquMutIkg5Z8XmujI=",
       "EncodedKey": "o6roOoZIUWk6uH+pOg9FXIOC8Iw7rKxUvHQZVXXpRFQ=",
       "Name": "MGroup Hub",
-      "BaseUrl": "https://mgroup-hub.cyberlogic.cloud"
+      "BaseUrl": "https://mgroup-hub.cyberlogic.cloud",
+      "HiddenServices": []
     },
     {
       "Id": "e5f6a7b8c9d06e5fc6a7b8c9d0e1f2a3",
       "KeyHash": "act9nu7cSw4GEcSrCJbADQ==:Lw+jAappKlAJ78zz51ypCZmmZ4CfRERN5fAtpC1aNm8=",
       "EncodedKey": "+uhbV0ySMlog+rZumKTV93iCzEhFOoBKOUPPRaDN0e4=",
       "Name": "Trend Hub",
-      "BaseUrl": "https://trend-hub.cyberlogic.cloud"
+      "BaseUrl": "https://trend-hub.cyberlogic.cloud",
+      "HiddenServices": []
     },
     {
       "Id": "f6a7b8c9d0e17f6ad7b8c9d0e1f2a3b4",
       "KeyHash": "YunNDa0wYe/4XH56GJc9bQ==:TJr0EMwTH2kDMaxkxqKKpXPG6YevFMN0XhBMYENOLC0=",
       "EncodedKey": "TvX/HCPxqP3G7KR8ksqXsSvQ2Xn6jcxvvy/lK8axWqE=",
       "Name": "Legrand Hub",
-      "BaseUrl": "https://legrand-hub.cyberlogic.cloud"
+      "BaseUrl": "https://legrand-hub.cyberlogic.cloud",
+      "HiddenServices": []
     },
     {
       "Id": "a7b8c9d0e1f28a7be8c9d0e1f2a3b4c5",
       "KeyHash": "SUBxugKjHLvOs1VTFQ1xTg==:vrwEXm0C9Cu6+yP5biRu5cWY+0ln+Fv+tLCpzr8ZL98=",
       "EncodedKey": "Gf5BmWvpkH7Uf/MADPU6mRF53RTDOSbC8kBkG4WqWWg=",
       "Name": "Kalamaki Hub",
-      "BaseUrl": "https://kalamaki-hub.cyberlogic.cloud"
+      "BaseUrl": "https://kalamaki-hub.cyberlogic.cloud",
+      "HiddenServices": []
     },
     {
       "Id": "2fa40cd6050f43cbbddad4fbbaab409d",
       "KeyHash": "MiQ1ejRYHMc6+6LyYmjd0A==:9PYEcjs334rBsrW9gcG4D8Iel6AeN6FutC2cN/DTJOY=",
       "EncodedKey": "j22sFt2o+kfSn//oMbL43+0E0jPdYVLtXXtemXkI8yQuxzUhrOjJjtc8mj4EEAsB",
       "Name": "KCG Hub",
-      "BaseUrl": "https://kcg-hub.cyberlogic.cloud"
+      "BaseUrl": "https://kcg-hub.cyberlogic.cloud",
+      "HiddenServices": []
     }
   ]
 }
