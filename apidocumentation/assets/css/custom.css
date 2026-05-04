@@ -130,23 +130,31 @@ a:hover { color: #EB8008; text-decoration: underline; }
 
 .field-cell {
     flex: 0 0 50%;
-    display: flex;
-    align-items: center;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
     padding: 4px 10px;
     min-height: 38px;
+    box-sizing: border-box;
 }
 
 .field-cell label {
+    display: flex !important;
+    align-items: center !important;
+    align-self: center !important;
     min-width: 120px;
+    max-width: 160px;
     text-align: right;
+    justify-content: flex-end;
     padding-right: 10px;
     font-size: 13px;
     font-weight: 600;
     color: #1C4084;
-    margin-bottom: 0;
+    margin: 0 !important;
     white-space: nowrap;
+    height: 30px;
     line-height: 30px;
-    align-self: center;
+    flex-shrink: 0;
 }
 
 .req-star {
@@ -154,11 +162,13 @@ a:hover { color: #EB8008; text-decoration: underline; }
     font-weight: 700;
     margin-left: 2px;
     font-size: 13px;
+    line-height: 1;
 }
 
 .field-cell .form-control {
-    flex: 1;
-    height: 30px;
+    flex: 1 1 0;
+    min-width: 0;
+    height: 30px !important;
     padding: 4px 8px;
     font-size: 13px;
     border-radius: 4px;
@@ -166,7 +176,9 @@ a:hover { color: #EB8008; text-decoration: underline; }
     background: #ffffff;
     color: #333;
     transition: border-color 0.2s, box-shadow 0.2s;
-    align-self: center;
+    align-self: center !important;
+    box-sizing: border-box;
+    display: block;
 }
 
 .field-cell .form-control:focus {
@@ -175,7 +187,7 @@ a:hover { color: #EB8008; text-decoration: underline; }
     box-shadow: 0 0 0 2px rgba(28, 64, 132, 0.18);
 }
 
-.field-cell select.form-control { height: 30px; }
+.field-cell select.form-control { height: 30px !important; }
 
 /* ─── Complex field groups (Rooms etc.) ───────────────────── */
 .complex-fieldset {
@@ -467,11 +479,29 @@ html code {
 
 /* ─── Try-it row: form + code panel aligned at top ────────── */
 .try-it-row {
-    display: flex;
-    align-items: flex-start;
+    display: flex !important;
+    align-items: flex-start !important;
     flex-wrap: wrap;
 }
-.try-it-row > [class*="col-"] { float: none; }
+/* Suppress Bootstrap clearfix pseudo-elements from acting as flex items */
+.try-it-row::before,
+.try-it-row::after { display: none !important; }
+/* Cancel Bootstrap float on columns — float is ignored on flex items anyway */
+.try-it-row > [class*="col-"] { float: none !important; }
+
+/* Normalise top/bottom padding so both panels start at the same height */
+.try-it-row > .leftSection {
+    padding-top: 24px !important;
+    padding-bottom: 24px !important;
+}
+.try-it-row > .right-panel {
+    padding-top: 24px;
+}
+/* Remove extra top margin from both section headings inside the try-it row */
+.try-it-row .promo.small-icon.left,
+.try-it-row .right-panel .rp-promo {
+    margin-top: 0 !important;
+}
 
 /* ─── Collapsible schema accordion ───────────────────────── */
 .schema-accordion {
