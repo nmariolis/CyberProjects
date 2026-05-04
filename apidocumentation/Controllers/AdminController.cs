@@ -196,8 +196,12 @@ namespace Documentation.Controllers
             var data = LoadUsers() ?? new UsersData();
             return Ok(data.Users.Select(u => new
             {
-                u.Id, u.Email, u.Status, u.MustChangePassword,
-                u.CreatedAt, u.ApprovedAt
+                id                = u.Id,
+                email             = u.Email,
+                status            = u.Status,
+                mustChangePassword = u.MustChangePassword,
+                createdAt         = u.CreatedAt,
+                approvedAt        = u.ApprovedAt
             }));
         }
 
@@ -217,7 +221,7 @@ namespace Documentation.Controllers
             user.MustChangePassword = true;
             user.ApprovedAt         = DateTime.UtcNow;
             SaveUsers(data);
-            return Ok(new { user.Email, tempPassword });
+            return Ok(new { email = user.Email, tempPassword });
         }
 
         [HttpDelete]
