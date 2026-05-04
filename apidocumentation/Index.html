@@ -80,6 +80,60 @@
     tt, code, kbd, samp {
         font-family: monospace;
     }
+
+    /* ── Field lookup browse button ── */
+    .btn-lookup {
+        display: inline-block; background: none; border: 1px solid #c8d4e8; border-radius: 3px;
+        padding: 1px 5px; cursor: pointer; color: #1C4084; font-size: 10px; vertical-align: middle;
+        margin-left: 4px; line-height: 14px;
+    }
+    .btn-lookup:hover { background: #eef3fa; border-color: #1C4084; }
+    .btn-lookup .fa { font-size: 10px; }
+
+    /* ── Lookup modal overlay ── */
+    #lookup-overlay {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,.45); z-index: 9999;
+        display: none; align-items: center; justify-content: center;
+    }
+    #lookup-overlay.is-open { display: flex; }
+    #lookup-modal {
+        background: #fff; border-radius: 8px; width: 540px; max-width: 94vw;
+        max-height: 82vh; display: flex; flex-direction: column;
+        box-shadow: 0 12px 48px rgba(0,0,0,.28);
+    }
+    #lookup-modal-header {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 13px 18px; border-bottom: 1px solid #e4e8f0; flex-shrink: 0;
+    }
+    #lookup-modal-title { margin: 0; font-size: 13px; font-weight: 700; color: #1C4084; }
+    #lookup-modal-close {
+        background: none; border: none; cursor: pointer; color: #999; font-size: 20px;
+        line-height: 1; padding: 0 4px;
+    }
+    #lookup-modal-close:hover { color: #333; }
+    #lookup-modal-extras { padding: 10px 18px 4px; border-bottom: 1px solid #f0f3f8; flex-shrink: 0; }
+    #lookup-modal-body { overflow-y: auto; padding: 12px 18px; flex: 1; }
+    #lookup-loading { color: #888; font-size: 13px; padding: 16px 0; text-align: center; }
+    #lookup-error { color: #c0392b; font-size: 12px; padding: 8px 0; }
+    #lookup-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    #lookup-table th { text-align: left; padding: 5px 8px; color: #1C4084; font-size: 11px; text-transform: uppercase; letter-spacing: .4px; border-bottom: 2px solid #dde4f0; }
+    #lookup-table td { padding: 5px 8px; border-bottom: 1px solid #f2f4f8; }
+    #lookup-table tr:last-child td { border-bottom: none; }
+    #lookup-table tr:hover td { background: #f7f9fc; }
+    .btn-lookup-use {
+        background: #1C4084; color: #fff; border: none; border-radius: 3px;
+        padding: 3px 10px; cursor: pointer; font-size: 11px; white-space: nowrap;
+    }
+    .btn-lookup-use:hover { background: #2a5298; }
+    .lookup-extra-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .lookup-extra-row label { font-size: 12px; font-weight: 600; white-space: nowrap; color: #444; }
+    .lookup-extra-row input { height: 28px; padding: 2px 8px; font-size: 12px; border: 1px solid #c8d4e8; border-radius: 4px; width: 120px; }
+    .lookup-extra-row .btn-lookup-load {
+        background: #EB8008; color: #fff; border: none; border-radius: 4px;
+        padding: 4px 14px; cursor: pointer; font-size: 12px;
+    }
+    .lookup-extra-row .btn-lookup-load:hover { background: #d4720a; }
 </style>
 
 <html lang="en">
@@ -114,13 +168,7 @@
         <a class="sidebar-brand" href="index.html"><img src="customAssets/img/CyberlogicLogo.png" alt="Cyberlogic" style="max-width:160px;padding:8px 0;filter:brightness(0) invert(1);" /></a>
 
         <ul class="nav sidenav dropable" id="sidebar-menu">
-            <li>
-                <a href="#introduction">Getting Started</a>
-                <ul>
-                    <li><a href="#introduction">Introduction</a></li>
-                    <li><a href="#using-webservice">Using the Web Service </a></li>
-                </ul>
-            </li>
+            <li id="sidebar-getting-started"></li>
         </ul>
     </aside>
     <!-- END Sidebar -->
@@ -165,79 +213,7 @@
                 <p id="welcome"><img src="assets/img/00_preview.jpg" alt="preview" /></p>
                 <p>Thank you very much for purchasing my template. We've put a lot of hard work into it, and we hope you love it as much as we do. As far as the documentation is concerned, we have tried to cover as much as possible to help you get your new template up and running and to help you customise it.</p>
             </header>-->
-            <section>
-                <div class="row">
-                    <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12 leftSection">
-                        <h2 id="introduction">Introduction</h2>
-                        <p>The purpose of this document is to give agents, and specifically their IT Technical departments, an insight into how Cyberlogic e-Tourism Platform set of XML web services works and what steps need to be completed in order to develop the interface with the platform.  </p>
-                        <p>This document includes a simple guide to implementing each XML web service, with code examples in C#, as well as some snap shots of its use in an XML posting application. </p>
-                        <p>After that we will look into each service in detail, describing the function of the service, a link to the service and a listing of all the variables used in the request functions along with descriptions. </p>
-                        <p>Finally, there are references to example XMLs, and XSD requests and responses, which are included along with this document. Please bear in mind that these are only guidelines designed to support your implementation and, due to the dynamic nature of the system’s development, may differ and change over time.  </p>
-                    </div>
-                                                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 right-panel">
-                                <pre class="codeBlock-intro">
-                                <code data-language="xml" class="xml">
-        <SearchTransfers>
-            <Username>demouser</Username>
-            <Password>resuomed</Password>
-            <PickupDate>2019-06-01</PickupDate>
-            <ReturnPickupDate>2019-08-08</ReturnPickupDate>
-            <RoutePointFrom>1725</RoutePointFrom>
-            <RoutePointTo>1357</RoutePointTo>
-            <StationID>1</StationID>
-            <Adults>2</Adults>
-            <RoundTrip>true</RoundTrip>
-         </SearchTransfers>
-    ]]>
-                                </code>
-                                </pre>
-                            </div>
-                </div>
-            </section>
-            <section>
-                <div class="row">
-					<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12 leftSection">
-						<h2 id="using-webservice">Using the Web Service</h2>
-						<p>A certain procedure is required to take place in order to be able to use any of the web services. </p>
-						<p>
-							Firstly, a user account is required to access any of the functions contained within the web service. These details are normally acquired through the web service distributer - system administrator.
-						</p>
-						<p>A list of all of the functions on the web service can be typically found at the following web address: http://www.link-url.com/services/webservice.asmx </p>
-						<p>In the analysis below, links are included to the XSDs for each function, which should be used to produce appropriately formatted XML. The service will also return informed error messages that should accurately identify any problems occurred with the format of the XML or with system failures & errors. </p>
-						<p>There are many ways to the connect to the web service, and most methods are supported including simple HTTP GET, HTTP POST, REST, and SOAP versions 1.1 and 1.2 (some helpful instructions can be found on the links that have been included with each function analysis below). </p>
-						<p>For reference purposes, the following code illustrates how to connect to the web service using a simple http request (POST) in C#:</p>
-						<pre>
-						<code data-language="c#">
-                                string strWebServiceUrl = "http://www.link_url.com/services/webservice.asmx/HotelInfo";
-                                string strXmlRequest = "xml=<?xml version='1.0' encoding='utf8' ?><HotelInfoRequest><Username>username</Username><Password>password</Password><HotelID>123</HotelID></HotelInfoRequest>";
-                                string strXmlResponse = GetXmlData(strWebServiceUrl,strXmlRequest); 
-                                public string GetXmlData(string strWebServiceUrl, string strXmlRequest)
-                                {
-                                    HttpWebRequest httpReq = (HttpWebRequest)WebRequest.Create(strWebServiceUrl);
-                                    httpReq.Method = "POST";
-                                    httpReq.ContentType = "application/x-www-form-urlencoded";
-                                    byte[] xmlbytes = Encoding.UTF8.GetBytes(strXmlRequest);
-                                    httpReq.ContentLength = xmlbytes.Length;
-                                    StreamWriter myWriter = null;
-                                    myWriter = new StreamWriter(httpReq.GetRequestStream());
-                                    myWriter.Write(strXmlRequest);
-                                    myWriter.Close();
-                                    HttpWebResponse httpResp = (HttpWebResponse)httpReq.GetResponse();
-                                    Stream retStream = httpResp.GetResponseStream();
-                                    StreamReader reader = new StreamReader(retStream);
-                                    responseFromServer = reader.ReadToEnd();
-                                    reader.Close();
-                                    retStream.Close();
-                                    httpResp.Close();
-                                    return responseFromServer;
-                                }
-                            </code>
-                        </pre>
-						<p>Regarding the booking process, it is important to study the Reservation function and to understand all of the requirements that are necessary for each service. All of the Accommodation IDs, Place IDs and available dates can be found using the appropriate functions. Also, studying the responses from the XML examples included will provide a complete picture of the booking process. </p>
-						<p>It is also recommended to make the use of caching where it is appropriate. There are many queries that will not change very regularly and so it would makes sense to save their responses and use the data locally to improve the performance of an application, and use less resources to perform simple tasks</p>
-					</div>
-                </div>
-            </section>
+            <div id="static-sections"></div>
         </article>
         <!-- END Main content -->
     </main>
@@ -265,283 +241,75 @@
         }
 
         var schemaCache = {};
+        var svcLinkByHref = {};
+        var FIELD_DESC = {};
 
-        /* ── Field description dictionary ─────────────────────────────────
-           Covers all element/attribute names across all 75 XSD schemas.
-           Used as fallback when xs:annotation/xs:documentation is absent. */
-        var FIELD_DESC = {
-            /* ── Authentication ──────────────────────────────────────────── */
-            'Username':               'Your API account username provided by Cyberlogic.',
-            'Password':               'Your API account password provided by Cyberlogic.',
-
-            /* ── Common date / stay ──────────────────────────────────────── */
-            'DateFrom':               'Start date of the stay or service period (YYYY-MM-DD).',
-            'DateTo':                 'End date of the stay or service period (YYYY-MM-DD).',
-            'ArrivalDate':            'Guest check-in / arrival date (YYYY-MM-DD).',
-            'DepartureDate':          'Guest check-out / departure date (YYYY-MM-DD).',
-            'BookDate':               'Date on which the booking is to be made (YYYY-MM-DD).',
-
-            /* ── Occupancy ───────────────────────────────────────────────── */
-            'Rooms':                  'Room configuration block. Add one Room element per room required (max 4). Each Room specifies Adults, Children, and ChildrenAges attributes.',
-            'Adults':                 'Number of adult guests (aged 12+) occupying the room.',
-            'Children':               'Number of child guests. Provide each child\'s age in ChildrenAges.',
-            'ChildrenAges':           'Comma-separated ages of the children in years (e.g. "5,8"). Must match the Children count exactly.',
-            'Infants':                'Number of infants (typically under 2 years). Infants generally travel free and do not occupy a seat.',
-
-            /* ── Hotel search filters ────────────────────────────────────── */
-            'HotelID':                'Numeric identifier of a specific hotel. Omit to search across all available properties.',
-            'HotelName':              'Partial hotel name filter. Returns properties whose name contains this string (case-insensitive).',
-            'RoomName':               'Partial room name filter. Restricts results to rooms matching this string.',
-            'Hoteltype':              'Property category: H = Hotel, A = Apartment, V = Villa, U = Unknown.',
-            'Location':               'Location category identifier. Retrieve valid IDs from the LocationCategories service.',
-            'Rating':                 'Star-rating filter (1–5). Only hotels with this exact rating are returned.',
-            'Country':                'Country code filter (e.g. GR = Greece, CY = Cyprus, ES = Spain).',
-            'Province':               'Province / state identifier. Retrieve valid IDs from the Places service.',
-            'Prefecture':             'Prefecture identifier. Retrieve valid IDs from the Places service.',
-            'City':                   'City identifier. Retrieve valid IDs from the Places service.',
-            'Board':                  'Meal-plan filter — RR: Room Rate, BB: Bed & Breakfast, HB: Half Board, FB: Full Board, AI: All Inclusive, UI: Ultra Inclusive.',
-            'Language':               'BCP-47 language code for response content (en, de, fr, el, ru, it, es, nl). Defaults to en.',
-            'Residency':              'ISO 3166-1 alpha-2 country code of the client\'s country of residency. May affect rates and tax calculations.',
-
-            /* ── Hotel search options ────────────────────────────────────── */
-            'OnRequest':              'Include on-request (not instantly confirmable) hotels in results. Default false.',
-            'ShowVarious':            'Include miscellaneous / various accommodation types in results.',
-            'ShowCancellationFees':   'Include cancellation-fee schedule detail in the response.',
-            'NoCache':                'Bypass the availability cache and fetch live data directly from suppliers. Slower but always current.',
-            'Extranet':               'Apply extranet (B2B) pricing rules. For authorised partner accounts only.',
-            'IgnoreTariff':           'Ignore tariff-based pricing restrictions and return all available rates.',
-            'GroupRoomBoards':        'Group pricing results by room and board type in the response structure.',
-            'UseTariff':              'Apply tariff-based pricing to the search results.',
-            'IsOptimized':            'Return optimised / summarised results (one record per hotel) instead of full per-room detail.',
-            'ShowFeatured':           'Return only featured or promoted items.',
-
-            /* ── Transfers ───────────────────────────────────────────────── */
-            'PickupDate':             'Outbound transfer pickup date (YYYY-MM-DD).',
-            'ReturnPickupDate':       'Return transfer pickup date (YYYY-MM-DD). Required when RoundTrip is true.',
-            'RoundTrip':              'Set to true to include a return transfer leg in the same request.',
-            'StationID':              'Station / operating-branch identifier for the service provider.',
-            'RoutePointFrom':         'Departure route point ID. Retrieve valid IDs from the Transfer Route Points service.',
-            'RoutePointTo':           'Arrival route point ID. Retrieve valid IDs from the Transfer Route Points service.',
-            'RouteTypeID':            'Route type identifier (e.g. airport-to-hotel, port-to-hotel).',
-            'ArrivalRouteID':         'Inbound route identifier (arrival leg).',
-            'DepartureRouteID':       'Outbound route identifier (departure leg).',
-            'FlightArrival':          'Arrival flight number (e.g. A3 123). Used for transfer timing coordination.',
-            'FlightDeparture':        'Departure flight number (e.g. FR 456). Used for transfer timing coordination.',
-            'VehicleID':              'Specific vehicle type identifier. Omit to return all available vehicle options.',
-            'Vehicles':               'Number of vehicles required.',
-            'PickupDropOffPoint':     'Specific pickup or drop-off location name or identifier.',
-
-            /* ── Car rentals ─────────────────────────────────────────────── */
-            'GroupID':                'Vehicle group / category identifier (e.g. economy, compact, SUV).',
-            'SupplierID':             'Car rental supplier identifier.',
-            'AccommodationID':        'Accommodation identifier used as delivery or collection location.',
-            'ModelName':              'Specific car model name filter.',
-            'Delivery':               'Delivery location (address or station) for the vehicle.',
-            'Collection':             'Collection / return location for the vehicle.',
-            'RentalDays':             'Total number of rental days.',
-            'PricePerDay':            'Base price per rental day.',
-
-            /* ── Excursions ──────────────────────────────────────────────── */
-            'ExcursionID':            'Unique identifier of the excursion. Obtain from the Excursion List service.',
-            'PriceZoneID':            'Pricing zone identifier. Different zones may carry different rates for the same excursion.',
-            'NoHTML':                 'Set to true to strip HTML markup from description fields in the response.',
-            'ZoneID':                 'Geographic pricing zone identifier.',
-            'ScheduleLanguageID':     'Schedule language identifier for multilingual excursion descriptions.',
-            'LanguageID':             'Language identifier for content localisation.',
-
-            /* ── Packages ────────────────────────────────────────────────── */
-            'PackageID':              'Unique package product identifier.',
-            'Month':                  'Travel month (1–12).',
-            'Year':                   'Travel year (e.g. 2025).',
-            'DurationFrom':           'Minimum package duration in nights.',
-            'DurationTo':             'Maximum package duration in nights.',
-            'Destination':            'Package destination identifier.',
-            'BoardID':                'Board / meal-plan identifier for package pricing.',
-            'Quantity':               'Number of units (rooms, seats, vehicles) to request.',
-
-            /* ── Reservation ─────────────────────────────────────────────── */
-            'ReservationID':          'Unique identifier of an existing reservation. Required for confirmation, cancellation, and list queries.',
-            'DetailID':               'Identifier of a specific service line within a reservation.',
-            'BookingType':            'Category of the booking (e.g. hotel, transfer, excursion, package).',
-            'BookingStatus':          'Current status of the reservation (e.g. confirmed, on-request, cancelled).',
-            'UseHotelTariff':         'Apply hotel-contracted tariff rates to this reservation.',
-            'Reference':              'Your internal reference number for tracking this request or booking.',
-            'Remarks':                'Free-text special requests or notes to include with the booking.',
-            'PaymentReference':       'External payment gateway reference number.',
-            'ClientTransferArrivalType':   'Transfer type for client arrival (e.g. flight, ferry, own transport).',
-            'ClientTransferDepartureType': 'Transfer type for client departure.',
-
-            /* ── Guest / passenger details ───────────────────────────────── */
-            'Title':                  'Guest title (Mr, Mrs, Ms, Dr, etc.).',
-            'Name':                   'Guest first / given name.',
-            'Surname':                'Guest family / last name.',
-            'Birthday':               'Guest date of birth (YYYY-MM-DD). Required for some services and destinations.',
-            'Passport':               'Guest passport number. Required for certain markets and booking types.',
-            'Email':                  'Guest email address for booking confirmation and communications.',
-            'Telephone':              'Guest contact telephone number including country code.',
-            'Mobile':                 'Guest mobile / cell phone number including country code.',
-            'Address':                'Guest postal address.',
-
-            /* ── Payment ─────────────────────────────────────────────────── */
-            'CardType':               'Credit / debit card type (e.g. Visa, Mastercard, Amex).',
-            'CardHolder':             'Full name of the card holder exactly as printed on the card.',
-            'CardNumber':             'Card primary account number (PAN). Transmit only over secure (HTTPS) connections.',
-            'ExpirationMonth':        'Card expiry month (01–12).',
-            'ExpirationYear':         'Card expiry year (4-digit, e.g. 2027).',
-            'cvv2':                   'Card security code — CVV2 (Visa), CVC2 (Mastercard), or CID (Amex). 3 or 4 digits.',
-
-            /* ── Room / contract references ──────────────────────────────── */
-            'ContractID':             'Contract identifier returned in search results. Pass this back unchanged when making a booking.',
-            'RoomID':                 'Specific room type identifier.',
-            'RoomQuantity':           'Number of rooms of this type to book.',
-            'HotelAddress':           'Physical address of the hotel (returned in responses).',
-
-            /* ── Places ──────────────────────────────────────────────────── */
-            'PlaceType':              'Type of geographic entity to retrieve (City, Prefecture, Province, Country, Station).',
-            'ProvinceID':             'Province / state identifier.',
-            'CityID':                 'City identifier.',
-
-            /* ── Offers / contracts ──────────────────────────────────────── */
-            'OfferID':                'Unique promotion / offer identifier.',
-            'ShowRates':              'Include detailed rate information in the offer list response.',
-            'ContractFormat':         'Output format for contract data.',
-            'OfferType':              'Category of the promotion (e.g. early-bird, last-minute, stay-pay).',
-            'SalesDescription':       'Human-readable description of the promotion.',
-            'EntryFromDate':          'Start of the travel-date window eligible for this offer (YYYY-MM-DD).',
-            'EntryToDate':            'End of the travel-date window eligible for this offer (YYYY-MM-DD).',
-            'RsvFromDate':            'Earliest booking date for this offer (YYYY-MM-DD).',
-            'RsvToDate':              'Latest booking date for this offer (YYYY-MM-DD).',
-            'ApplyToSupplements':     'Apply the offer discount to supplement charges as well as the base rate.',
-            'IsPercent':              'If true, the discount value is a percentage; otherwise it is an absolute amount.',
-            'StayPay':                'Stay-pay promotion definition (e.g. stay 7 nights, pay 5).',
-
-            /* ── Ferry ───────────────────────────────────────────────────── */
-            'DepartureDate':          'Ferry departure date (YYYY-MM-DD).',
-            'DepartureTime':          'Scheduled departure time (HH:MM).',
-            'DeparturePortCode':      'Departure port code (IATA or local operator code).',
-            'ArrivalPortCode':        'Arrival port code (IATA or local operator code).',
-            'CompanyCode':            'Ferry operating company / carrier code.',
-            'VesselID':               'Specific vessel identifier.',
-
-            /* ── Response / common output fields ─────────────────────────── */
-            'Response':               'Root element of the service response. Contains the result data or error list.',
-            'ErrorList':              'Container for any errors or warnings returned by the service.',
-            'Errors':                 'List of error messages. A non-empty list means the request could not be fulfilled.',
-            'Warnings':               'List of warning messages. The response may still contain partial data.',
-            'Error':                  'Individual error message describing what went wrong.',
-            'Warning':                'Individual warning message indicating a non-fatal issue.',
-            'Message':                'Human-readable message text.',
-
-            /* ── Hotel response fields ───────────────────────────────────── */
-            'ImageThumbURL':          'URL of the hotel thumbnail image.',
-            'Longitude':              'Geographic longitude of the property (WGS-84 decimal degrees).',
-            'Latitude':               'Geographic latitude of the property (WGS-84 decimal degrees).',
-            'TypeDescription':        'Human-readable property type name (e.g. Hotel, Apartment, Villa).',
-            'LocationDescription':    'Human-readable location category name.',
-            'OfficialRating':         'Official star classification as assigned by the national tourism authority.',
-            'Description':            'Full descriptive text for the property or service.',
-            'LowRate':                'Lowest available rate across all room types for the search period.',
-            'LowestPrice':            'Lowest total price across all available options.',
-            'SpecialOffer':           'Indicates whether a promotional offer is available for this property.',
-            'TravelAdvisor':          'TripAdvisor review rating (0–5).',
-            'Availability':           'Number of available units (rooms, vehicles, seats) matching the search criteria.',
-            'NonRefundable':          'Indicates this rate is non-refundable; cancellation will incur a full charge.',
-            'StopSales':              'Indicates this option is currently closed for new bookings.',
-            'MinLOSError':            'Indicates the selected stay is shorter than the minimum length-of-stay required for this room.',
-            'ReleaseError':           'Indicates the booking date is within the release/stop-sales period for this room.',
-            'RecordCount':            'Total number of records matching the search criteria.',
-            'Overnights':             'Number of nights calculated from DateFrom to DateTo.',
-            'NumberOfRooms':          'Total number of rooms requested across all room configurations.',
-            'CheckInTime':            'Standard check-in time for the property (HH:MM).',
-            'CheckOutTime':           'Standard check-out time for the property (HH:MM).',
-            'OpenAllYear':            'Indicates whether the property operates year-round.',
-
-            /* ── Amenity / facility flags ─────────────────────────────────── */
-            'HasAllInclusive':        'Property offers all-inclusive board.',
-            'HasContinentalBreakfast':'Property offers continental breakfast.',
-            'HasIndoorPool':          'Property has an indoor swimming pool.',
-            'HasOutdoorPool':         'Property has an outdoor swimming pool.',
-            'HasSPAWellnessCentre':   'Property has a spa and wellness centre.',
-            'HasFitnessFacility':     'Property has a gym / fitness facility.',
-            'HasPetsAllowed':         'Property accepts pets.',
-            'HasParkingGarage':       'Property has on-site parking.',
-            'HasDataPorts':           'Property offers data ports / wired internet in rooms.',
-            'HasAirConditioning':     'Rooms are air-conditioned.',
-            'HasRoomService':         'Property offers room service.',
-            'HasHairDryer':           'Rooms include a hair dryer.',
-            'HasKitchen':             'Rooms include a kitchen or kitchenette.',
-            'HasFamilyRooms':         'Property has rooms suitable for families.',
-            'HasTennisCourt':         'Property has a tennis court.',
-            'HasGolfCourse':          'Property has or is adjacent to a golf course.',
-            'HasInHouseDining':       'Property has an on-site restaurant.',
-            'HasInHouseBar':          'Property has an on-site bar.',
-            'HasSauna':               'Property has a sauna.',
-            'HasWhirlpool':           'Property has a whirlpool / jacuzzi.',
-            'HasBusinessCenter':      'Property has a business centre.',
-            'HasHandicapAccessible':  'Property has facilities for guests with disabilities.',
-            'HasSafe':                'Rooms include an in-room safe.',
-            'HasTVInRoom':            'Rooms have a television.',
-
-            /* ── Pricing / board breakdown ───────────────────────────────── */
-            'RR':    'Room Rate — room only, no meals included.',
-            'BB':    'Bed & Breakfast — overnight stay with breakfast.',
-            'HB':    'Half Board — breakfast and dinner included.',
-            'FB':    'Full Board — breakfast, lunch, and dinner included.',
-            'AI':    'All Inclusive — all meals, snacks, and selected beverages included.',
-            'UI':    'Ultra Inclusive — all inclusive plus premium beverages and additional services.',
-            'Discount': 'Discount amount applied to this rate (absolute or percentage depending on context).',
-
-            /* ── Occupancy codes ─────────────────────────────────────────── */
-            'Code':   'Occupancy configuration code: R1 = single, R2 = double/twin, R3 = triple, R4 = quadruple.',
-
-            /* ── Hotel Search (Cache) — request flags ────────────────────── */
-            'BookDate':             'Date the booking is made. Used to apply early-booking discounts or advance-purchase rates (YYYY-MM-DD).',
-            'OnRequest':            'When true, includes on-request hotels and rooms that are available on request only.',
-            'ShowVarious':          'When true, returns all available room and board combinations per hotel, not just the cheapest option.',
-            'ShowCancellationFees': 'When true, includes cancellation policy fee details in the response.',
-            'NoCache':              'When true, bypasses the cache and fetches live availability directly from the system. Use sparingly — slower response.',
-            'Extranet':             'When true, switches to extranet pricing mode.',
-            'IgnoreTariff':         'When true, ignores your assigned tariff and returns rates from all available contracts.',
-            'GroupRoomBoards':      'When true, groups response results by room-and-board-type combinations instead of listing each separately.',
-            'IsOptimized':          'When true, returns a faster, less detailed response optimised for search listings. Set false for full room details.',
-            'Residency':            '2-character ISO 3166-1 alpha-2 country code of the traveller\'s country of residence (e.g. GB, DE, GR). Applies residency-specific rates where available.',
-
-            /* ── Hotel Cache response fields ─────────────────────────────── */
-            'RatesFilter':          'Identifier of the rates filter applied to this result set.',
-            'StopWatch':            'Internal performance timing data for the service call.',
-            'Split':                'Individual timing segment label from the stop-watch performance trace.',
-            'StateProvinceName':    'Name of the state or province where the property is located.',
-            'OfficialRating_ID':    'Numeric identifier of the hotel\'s official star-rating classification.',
-            'Property_Class_ID':    'Numeric identifier of the property class or accommodation type.',
-            'SalesID':              'Sales contract identifier associated with this occupancy rate.',
-            'IsOpaque':             'When true, the hotel identity is hidden until after the booking is confirmed (opaque rate).',
-            'SelfCatering':         'When true, this unit is a self-catering property (kitchen facilities provided).',
-            'giata_id':             'GIATA (Global Accommodation Information and Technology Association) unique property identifier.',
-            'Records':              'Total number of hotel records returned in this response.',
-            'NumberOfRooms':        'Total number of rooms across all requested room configurations.',
-            'Overnights':           'Number of nights derived from DateFrom to DateTo.'
-        };
-
+        /* Load field descriptions, then service catalog (ensures FIELD_DESC is ready before schemas render) */
         $.ajax({
-            url: 'models/webServicesUpdated.json',
-            datatype: 'json',
-            type: 'get',
-            cache: false,
+            url: 'models/fieldDescriptions.json',
+            datatype: 'json', type: 'get', cache: false,
+            success: function(data) { FIELD_DESC = data || {}; },
+            complete: function() { loadServiceCatalog(); }
+        });
+
+        /* Load and render dynamic content sections (Introduction, Using Web Service, etc.) */
+        $.ajax({
+            url: 'models/content.json',
+            datatype: 'json', type: 'get', cache: false,
             success: function(data) {
-                var sidebarMenu = '';
-                var mainContent = '';
-                $(data.serviceCategory).each(function(i, cat) {
-                    sidebarMenu += menuItemTemplate(cat);
-                    mainContent += mainContentTemplate(cat.services);
+                if (!data || !data.sections || !data.sections.length) return;
+                var sidebarItems = '';
+                var mainHtml = '';
+                $(data.sections).each(function(i, sec) {
+                    sidebarItems += '<li><a href="#' + escapeAttr(sec.id) + '">' + escapeXml(sec.title) + '</a></li>';
+                    mainHtml += renderContentSection(sec);
                 });
-                $('#sidebar-menu').append(sidebarMenu);
-                $('#main-content').append(mainContent);
-                loadAllSchemas(data);
-                /* Show active environment in navbar */
-                $('#nav-env-name').text(CL_SESSION.endpointName || CL_SESSION.endpoint || '');
-                $('#nav-env-item').show();
+                $('#sidebar-getting-started').html(
+                    '<a href="#' + escapeAttr(data.sections[0].id) + '" class="has-child">Getting Started</a><ul>' + sidebarItems + '</ul>'
+                );
+                $('#static-sections').html(mainHtml);
             }
         });
+
+        function renderContentSection(sec) {
+            var html = '<section><div class="row"><div class="col-lg-7 col-md-12 col-sm-12 col-xs-12 leftSection">';
+            html += '<h2 id="' + escapeAttr(sec.id) + '">' + escapeXml(sec.title) + '</h2>';
+            $.each(sec.items || [], function(i, item) {
+                if (item.type === 'code') {
+                    html += '<pre><code data-language="' + escapeAttr(item.language || 'text') + '">' + escapeXml(item.text || '') + '</code></pre>';
+                } else {
+                    html += '<p>' + escapeXml(item.text || '') + '</p>';
+                }
+            });
+            html += '</div></div></section>';
+            return html;
+        }
+
+
+
+        function loadServiceCatalog() {
+            $.ajax({
+                url: 'models/webServicesUpdated.json',
+                datatype: 'json',
+                type: 'get',
+                cache: false,
+                success: function(data) {
+                    var sidebarMenu = '';
+                    var mainContent = '';
+                    $(data.serviceCategory).each(function(i, cat) {
+                        sidebarMenu += menuItemTemplate(cat);
+                        mainContent += mainContentTemplate(cat.services);
+                        $(cat.services).each(function(j, svc) { svcLinkByHref[svc.href] = svc.link; });
+                    });
+                    $('#sidebar-menu').append(sidebarMenu);
+                    $('#main-content').append(mainContent);
+                    loadAllSchemas(data);
+                    /* Show active environment in navbar */
+                    $('#nav-env-name').text(CL_SESSION.endpointName || CL_SESSION.endpoint || '');
+                    $('#nav-env-item').show();
+                }
+            });
+        }
 
         function menuItemTemplate(cat) {
             return '<li>' +
@@ -808,22 +576,45 @@
                 return;
             }
 
+            /* Split: optional boolean flags go into a collapsible 3-col group */
+            var mainFields = [];
+            var optBoolFields = [];
+            fields.forEach(function(f) {
+                var type = (f.Type || '').toLowerCase().replace(/^xs:/, '');
+                if (!f.Required && !f.IsComplex && type === 'boolean') {
+                    optBoolFields.push(f);
+                } else {
+                    mainFields.push(f);
+                }
+            });
+
             var html = '';
             var i = 0;
-            while (i < fields.length) {
-                var field = fields[i];
+            while (i < mainFields.length) {
+                var field = mainFields[i];
                 if (field.IsComplex) {
                     html += '<div class="field-row">' + renderComplexField(field, href, allChildObjects) + '</div>';
                     i++;
                 } else {
                     var rowHtml = '<div class="field-row">' + renderSimpleField(field, href);
                     i++;
-                    if (i < fields.length && !fields[i].IsComplex) {
-                        rowHtml += renderSimpleField(fields[i], href);
+                    if (i < mainFields.length && !mainFields[i].IsComplex) {
+                        rowHtml += renderSimpleField(mainFields[i], href);
                         i++;
                     }
                     html += rowHtml + '</div>';
                 }
+            }
+
+            /* Optional boolean flags collapsible block */
+            if (optBoolFields.length > 0) {
+                var boolHtml = '';
+                optBoolFields.forEach(function(f) { boolHtml += renderSimpleField(f, href); });
+                html += '<div class="field-row" style="width:100%;display:block;padding:0 8px">' +
+                    '<button type="button" class="optional-group-toggle" onclick="var b=this.nextElementSibling;b.classList.toggle(\'is-open\');this.classList.toggle(\'is-open\')">' +
+                    '<i class="fa fa-caret-right"></i> Optional Flags</button>' +
+                    '<div class="optional-group-body"><div class="bool-flags-grid">' + boolHtml + '</div></div>' +
+                    '</div>';
             }
 
             html += '<div class="generate-row"><button type="button" class="btn btn-primary btn-generate" onclick="generateAndSend(\'' + href + '\')">Generate &amp; Send</button></div>';
@@ -833,8 +624,11 @@
         function renderSimpleField(field, href) {
             var fid = 'f-' + href + '-' + safeId(field.Name);
             var label = field.Name + (field.Required ? ' *' : '') + ':';
+            var lookupBtn = FIELD_LOOKUPS[field.Name]
+                ? ' <button type="button" class="btn-lookup" onclick="openLookupModal(\'' + escapeAttr(fid) + '\',\'' + escapeAttr(field.Name) + '\')" title="Browse available values"><i class="fa fa-search"></i></button>'
+                : '';
             return '<div class="field-cell">' +
-                '<label for="' + fid + '">' + label + '</label>' +
+                '<label for="' + fid + '">' + label + lookupBtn + '</label>' +
                 buildInput(field, fid) +
                 '</div>';
         }
@@ -863,13 +657,19 @@
                     var sf = subFields[j];
                     var sfId = 'f-' + href + '-' + safeId(field.Name) + '-' + safeId(sf.Name);
                     var sfLabel = sf.Name + (sf.Required ? ' *' : '') + ':';
-                    innerHtml += '<div class="field-row"><div class="field-cell"><label for="' + sfId + '">' + sfLabel + '</label>' + buildInput(sf, sfId) + '</div>';
+                    var sfLookupBtn = FIELD_LOOKUPS[sf.Name]
+                        ? ' <button type="button" class="btn-lookup" onclick="openLookupModal(\'' + escapeAttr(sfId) + '\',\'' + escapeAttr(sf.Name) + '\')" title="Browse available values"><i class="fa fa-search"></i></button>'
+                        : '';
+                    innerHtml += '<div class="field-row"><div class="field-cell"><label for="' + sfId + '">' + sfLabel + sfLookupBtn + '</label>' + buildInput(sf, sfId) + '</div>';
                     j++;
                     if (j < subFields.length) {
                         var sf2 = subFields[j];
                         var sf2Id = 'f-' + href + '-' + safeId(field.Name) + '-' + safeId(sf2.Name);
                         var sf2Label = sf2.Name + (sf2.Required ? ' *' : '') + ':';
-                        innerHtml += '<div class="field-cell"><label for="' + sf2Id + '">' + sf2Label + '</label>' + buildInput(sf2, sf2Id) + '</div>';
+                        var sf2LookupBtn = FIELD_LOOKUPS[sf2.Name]
+                            ? ' <button type="button" class="btn-lookup" onclick="openLookupModal(\'' + escapeAttr(sf2Id) + '\',\'' + escapeAttr(sf2.Name) + '\')" title="Browse available values"><i class="fa fa-search"></i></button>'
+                            : '';
+                        innerHtml += '<div class="field-cell"><label for="' + sf2Id + '">' + sf2Label + sf2LookupBtn + '</label>' + buildInput(sf2, sf2Id) + '</div>';
                         j++;
                     }
                     innerHtml += '</div>';
@@ -1062,6 +862,270 @@
             return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         }
 
+        /* ══════════════════════════════════════════════════════════════════════
+           FIELD LOOKUP POPUP
+        ══════════════════════════════════════════════════════════════════════ */
+
+        function credXml(u, p) {
+            return '<Username>' + escapeXml(u) + '</Username><Password>' + escapeXml(p) + '</Password>';
+        }
+
+        var FIELD_LOOKUPS = {
+            Province: {
+                title: 'Province  —  values from Place Search',
+                sourceHref: 'place-search',
+                buildXml: function(u, p) {
+                    return '<PlaceSearchRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '<PlaceType>Provinces</PlaceType><Language>en</Language></PlaceSearchRequest>';
+                },
+                parseRows: function(doc) {
+                    var rows = [];
+                    $(doc).find('Province').each(function() { rows.push({ id: $(this).attr('id'), label: $(this).find('ProvinceName').text() }); });
+                    return rows;
+                }
+            },
+            HotelID: {
+                title: 'Hotel ID  —  values from Hotel List',
+                sourceHref: 'hotel-list',
+                buildXml: function(u, p) {
+                    return '<HotelListRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '<Language>en</Language></HotelListRequest>';
+                },
+                parseRows: function(doc) {
+                    var rows = [];
+                    $(doc).find('Hotel').each(function() { rows.push({ id: $(this).attr('ID'), label: $(this).find('Name').first().text() }); });
+                    return rows;
+                }
+            },
+            RoomID: {
+                title: 'Room ID  —  values from Hotel Room List',
+                sourceHref: 'hotel-room-list',
+                requiresInput: { name: 'HotelID', label: 'Hotel ID', type: 'number' },
+                buildXml: function(u, p, extra) {
+                    return '<HotelRoomListRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '<HotelID>' + escapeXml(extra.HotelID || '') + '</HotelID></HotelRoomListRequest>';
+                },
+                parseRows: function(doc) {
+                    var rows = [];
+                    $(doc).find('Room').each(function() { rows.push({ id: $(this).attr('ID'), label: $(this).attr('Name') }); });
+                    return rows;
+                }
+            },
+            PriceZoneID: {
+                title: 'Price Zone ID  —  values from Excursion Price Zones',
+                sourceHref: 'excursion-price-zones',
+                buildXml: function(u, p) {
+                    return '<SearchPriceZones xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '</SearchPriceZones>';
+                },
+                parseRows: function(doc) {
+                    var rows = [];
+                    $(doc).find('Zone').each(function() { rows.push({ id: $(this).attr('ID'), label: $(this).attr('Name') + ' (Stn ' + $(this).attr('StationID') + ')' }); });
+                    return rows;
+                }
+            },
+            PriceZone: {
+                title: 'Price Zone  —  values from Excursion Price Zones',
+                sourceHref: 'excursion-price-zones',
+                buildXml: function(u, p) {
+                    return '<SearchPriceZones xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '</SearchPriceZones>';
+                },
+                parseRows: function(doc) {
+                    var rows = [];
+                    $(doc).find('Zone').each(function() { rows.push({ id: $(this).attr('ID'), label: $(this).attr('Name') + ' (Stn ' + $(this).attr('StationID') + ')' }); });
+                    return rows;
+                }
+            },
+            ZoneID: {
+                title: 'Zone ID  —  values from Excursion Price Zones',
+                sourceHref: 'excursion-price-zones',
+                buildXml: function(u, p) {
+                    return '<SearchPriceZones xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '</SearchPriceZones>';
+                },
+                parseRows: function(doc) {
+                    var rows = [];
+                    $(doc).find('Zone').each(function() { rows.push({ id: $(this).attr('ID'), label: $(this).attr('Name') + ' (Stn ' + $(this).attr('StationID') + ')' }); });
+                    return rows;
+                }
+            },
+            ExcursionID: {
+                title: 'Excursion ID  —  values from Excursion List',
+                sourceHref: 'excursion-list',
+                buildXml: function(u, p) {
+                    return '<ExcursionListRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '</ExcursionListRequest>';
+                },
+                parseRows: function(doc) {
+                    var rows = [];
+                    $(doc).find('Excursion').each(function() { rows.push({ id: $(this).attr('ID'), label: $(this).find('ExcursionName').text() || 'Excursion ' + $(this).attr('ID') }); });
+                    return rows;
+                }
+            },
+            SupplierID: {
+                title: 'Supplier ID  —  values from Rental Suppliers',
+                sourceHref: 'rental-suppliers',
+                buildXml: function(u, p) {
+                    return '<SearchRentalSuppliers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '</SearchRentalSuppliers>';
+                },
+                parseRows: function(doc) {
+                    var rows = [];
+                    $(doc).find('Supplier').each(function() { rows.push({ id: $(this).attr('ID'), label: $(this).attr('Name') }); });
+                    return rows;
+                }
+            },
+            StationID: {
+                title: 'Station ID  —  values from Place Search (Stations)',
+                sourceHref: 'place-search',
+                buildXml: function(u, p) {
+                    return '<PlaceSearchRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '<PlaceType>Stations</PlaceType><Language>en</Language></PlaceSearchRequest>';
+                },
+                parseRows: function(doc) {
+                    var rows = [];
+                    $(doc).find('Station').each(function() { rows.push({ id: $(this).attr('ID'), label: $(this).attr('Name') }); });
+                    return rows;
+                }
+            },
+            RoutePointID: {
+                title: 'Route Point ID  —  values from Transfer Route Points',
+                sourceHref: 'transfer-route-points',
+                buildXml: function(u, p) {
+                    return '<SearchTransferRoutePoints xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '</SearchTransferRoutePoints>';
+                },
+                parseRows: function(doc) {
+                    var rows = [];
+                    $(doc).find('Point').each(function() {
+                        var id = $(this).attr('RoutePointID');
+                        var lbl = $(this).attr('value') || '';
+                        var type = $(this).attr('Type') || '';
+                        rows.push({ id: id, label: (lbl || 'Point ' + id) + (type ? ' [' + type + ']' : '') });
+                    });
+                    return rows;
+                }
+            },
+            ReservationID: {
+                title: 'Reservation ID  —  values from Reservation List',
+                sourceHref: 'reservation-list',
+                buildXml: function(u, p) {
+                    return '<ReservationList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '</ReservationList>';
+                },
+                parseRows: function(doc) {
+                    var rows = [];
+                    $(doc).find('Reservation').each(function() {
+                        var id = $(this).attr('FileNumber');
+                        var ref = $(this).attr('Reference') || '';
+                        rows.push({ id: id, label: 'File #' + id + (ref ? '  (' + ref + ')' : '') });
+                    });
+                    return rows;
+                }
+            }
+        };
+
+        var _lookupFid = null;
+        var _lookupFieldName = null;
+
+        function openLookupModal(fid, fieldName) {
+            var cfg = FIELD_LOOKUPS[fieldName];
+            if (!cfg) return;
+            _lookupFid = fid;
+            _lookupFieldName = fieldName;
+
+            document.getElementById('lookup-modal-title').textContent = cfg.title;
+            document.getElementById('lookup-loading').style.display = 'none';
+            document.getElementById('lookup-error').style.display = 'none';
+            document.getElementById('lookup-table').style.display = 'none';
+            document.getElementById('lookup-tbody').innerHTML = '';
+
+            var extrasDiv = document.getElementById('lookup-modal-extras');
+            if (cfg.requiresInput) {
+                extrasDiv.style.display = '';
+                extrasDiv.innerHTML = '<div class="lookup-extra-row">' +
+                    '<label>' + escapeAttr(cfg.requiresInput.label) + ':</label>' +
+                    '<input type="' + cfg.requiresInput.type + '" id="lookup-extra-input" placeholder="Enter ' + escapeAttr(cfg.requiresInput.label) + '" />' +
+                    '<button class="btn-lookup-load" onclick="execLookup()"><i class="fa fa-search"></i> Load</button>' +
+                    '</div>';
+            } else {
+                extrasDiv.style.display = 'none';
+                extrasDiv.innerHTML = '';
+            }
+
+            document.getElementById('lookup-overlay').classList.add('is-open');
+            if (!cfg.requiresInput) execLookup();
+        }
+
+        function closeLookupModal() {
+            document.getElementById('lookup-overlay').classList.remove('is-open');
+            _lookupFid = null;
+            _lookupFieldName = null;
+        }
+
+        function execLookup() {
+            var cfg = FIELD_LOOKUPS[_lookupFieldName];
+            if (!cfg) return;
+
+            var u = CL_SESSION.username || '';
+            var p = CL_SESSION.password || '';
+            var extra = {};
+            if (cfg.requiresInput) {
+                extra[cfg.requiresInput.name] = (document.getElementById('lookup-extra-input') || {}).value || '';
+                if (!extra[cfg.requiresInput.name]) {
+                    document.getElementById('lookup-error').textContent = cfg.requiresInput.label + ' is required.';
+                    document.getElementById('lookup-error').style.display = '';
+                    return;
+                }
+            }
+
+            var rawUrl = svcLinkByHref[cfg.sourceHref];
+            if (!rawUrl) {
+                document.getElementById('lookup-error').textContent = 'Source service not found: ' + cfg.sourceHref;
+                document.getElementById('lookup-error').style.display = '';
+                return;
+            }
+            var url = swapEndpoint(rawUrl);
+            var xml = cfg.buildXml(u, p, extra);
+
+            document.getElementById('lookup-loading').style.display = '';
+            document.getElementById('lookup-error').style.display = 'none';
+            document.getElementById('lookup-table').style.display = 'none';
+
+            $.ajax({
+                url: 'api/webservices/proxy',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ Url: url, Xml: xml }),
+                success: function(response) {
+                    document.getElementById('lookup-loading').style.display = 'none';
+                    var xmlText = typeof response === 'string' ? response : JSON.stringify(response);
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+                    if (xmlDoc.getElementsByTagName('parseerror').length > 0) {
+                        document.getElementById('lookup-error').textContent = 'Could not parse response XML.';
+                        document.getElementById('lookup-error').style.display = '';
+                        return;
+                    }
+                    var rows = cfg.parseRows(xmlDoc);
+                    if (!rows.length) {
+                        document.getElementById('lookup-error').textContent = 'No results returned from the service.';
+                        document.getElementById('lookup-error').style.display = '';
+                        return;
+                    }
+                    var tbody = document.getElementById('lookup-tbody');
+                    tbody.innerHTML = rows.map(function(r) {
+                        var id = escapeAttr(String(r.id || ''));
+                        var lbl = escapeAttr(String(r.label || ''));
+                        return '<tr><td style="font-family:monospace;font-weight:600;color:#1C4084">' + id + '</td>' +
+                            '<td>' + lbl + '</td>' +
+                            '<td><button class="btn-lookup-use" onclick="useLookupValue(\'' + id + '\')">Use</button></td></tr>';
+                    }).join('');
+                    document.getElementById('lookup-table').style.display = '';
+                },
+                error: function(xhr) {
+                    document.getElementById('lookup-loading').style.display = 'none';
+                    document.getElementById('lookup-error').textContent = 'Request failed: ' + (xhr.responseText || xhr.statusText || 'Unknown error').substring(0, 120);
+                    document.getElementById('lookup-error').style.display = '';
+                }
+            });
+        }
+
+        function useLookupValue(id) {
+            if (_lookupFid) $('#' + _lookupFid).val(id);
+            closeLookupModal();
+        }
+
     </script>
 
     <script src="assets/js/theDocs.all.min.js">
@@ -1080,6 +1144,29 @@
     </script>
     <script src="assets/vendors/rainbow/js/language/javascript.js">
     </script>
+
+    <!-- Lookup Modal -->
+    <div id="lookup-overlay" onclick="if(event.target===this)closeLookupModal()">
+        <div id="lookup-modal">
+            <div id="lookup-modal-header">
+                <h4 id="lookup-modal-title"></h4>
+                <button id="lookup-modal-close" onclick="closeLookupModal()" title="Close">&#x2715;</button>
+            </div>
+            <div id="lookup-modal-extras" style="display:none"></div>
+            <div id="lookup-modal-body">
+                <div id="lookup-loading" style="display:none"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>
+                <div id="lookup-error" style="display:none"></div>
+                <table id="lookup-table" style="display:none">
+                    <thead><tr>
+                        <th style="width:70px">ID</th>
+                        <th>Name / Label</th>
+                        <th style="width:52px"></th>
+                    </tr></thead>
+                    <tbody id="lookup-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 </body>
 

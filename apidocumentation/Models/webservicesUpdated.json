@@ -367,19 +367,6 @@
           "xsdSchema": ""
         }
       ]
-    },
-    {
-      "name": "Ferry Services",
-      "services": [
-        {
-          "service": "Ferry Itinerary Prices",
-          "href": "ferry-itinerary-prices",
-          "description": "Send an XML request to retrieve pricing for ferry itineraries.",
-          "link": "https://avra-hub.cyberlogic.cloud/services/webservice.asmx/FerryItineraryPrices",
-          "xsdRequest": "Requests/FerryItineraryPricesRequest.xsd",
-          "xsdSchema": ""
-        }
-      ]
     }
   ]
 }

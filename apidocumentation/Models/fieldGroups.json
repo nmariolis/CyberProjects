@@ -1,0 +1,14 @@
+﻿{
+  "Common / Authentication": ["Username", "Password", "Language", "Residency", "Nationality", "Currency"],
+  "Hotel Services": ["DateFrom", "DateTo", "BookDate", "ArrivalDate", "DepartureDate", "Rooms", "Adults", "Children", "ChildrenAges", "Infants", "HotelID", "HotelIDs", "HotelName", "RoomName", "Hoteltype", "Location", "Rating", "Country", "Province", "Prefecture", "City", "Board", "OnRequest", "ShowVarious", "ShowCancellationFees", "NoCache", "Extranet", "IgnoreTariff", "GroupRoomBoards", "UseTariff", "IsOptimized", "ShowFeatured", "CheckInTime", "CheckOutTime", "OpenAllYear"],
+  "Transfer Services": ["PickupDate", "ReturnPickupDate", "RoundTrip", "StationID", "RoutePointFrom", "RoutePointTo", "RouteTypeID", "ArrivalRouteID", "DepartureRouteID", "FlightArrival", "FlightDeparture", "Vehicles", "VehicleID", "PickupDropOffPoint"],
+  "Car Rental": ["GroupID", "SupplierID", "AccommodationID", "ModelName", "Delivery", "Collection", "RentalDays", "PricePerDay"],
+  "Excursions": ["ExcursionID", "PriceZoneID", "ZoneID", "ScheduleLanguageID", "LanguageID", "NoHTML"],
+  "Package Tours": ["PackageID", "Month", "Year", "DurationFrom", "DurationTo", "Destination", "BoardID"],
+  "Reservation": ["ReservationID", "DetailID", "BookingType", "BookingStatus", "Quantity", "Reference", "Remarks", "PaymentReference", "UseHotelTariff", "ClientTransferArrivalType", "ClientTransferDepartureType", "ContractID", "RoomID", "RoomQuantity"],
+  "Guest Information": ["Title", "Name", "Surname", "Birthday", "Passport", "Email", "Telephone", "Mobile", "Address"],
+  "Payment": ["CardType", "CardHolder", "CardNumber", "ExpirationMonth", "ExpirationYear", "cvv2"],
+  "Contract / Offers": ["OfferID", "ShowRates", "ContractFormat", "OfferType", "SalesDescription", "EntryFromDate", "EntryToDate", "RsvFromDate", "RsvToDate", "ApplyToSupplements", "IsPercent", "StayPay", "SalesID"],
+  "Geographic": ["PlaceType", "ProvinceID", "CityID"],
+  "Response Fields": ["Response", "ErrorList", "Errors", "Warnings", "Error", "Warning", "Message", "RecordCount", "Overnights", "NumberOfRooms", "LowRate", "LowestPrice", "SpecialOffer", "TravelAdvisor", "Availability", "NonRefundable", "StopSales", "MinLOSError", "ReleaseError", "Discount", "Records", "StopWatch", "Split", "RatesFilter", "IsOpaque", "SelfCatering", "giata_id"]
+}

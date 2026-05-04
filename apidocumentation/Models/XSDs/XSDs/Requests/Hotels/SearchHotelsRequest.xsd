@@ -37,6 +37,13 @@
           </xs:simpleType>
         </xs:element>
         <xs:element name="HotelID" type="xs:int" minOccurs="0" maxOccurs="1" xmlns:doc="Show prices and availability for this hotel only. "/>
+        <xs:element name="HotelIDs" minOccurs="0" maxOccurs="1" xmlns:doc="Comma-separated list of hotel IDs to search (e.g. 101,202,303). Use instead of HotelID to search multiple specific hotels.">
+          <xs:simpleType>
+            <xs:restriction base="xs:token">
+              <xs:pattern value="[1-9][0-9]*(, ?[1-9][0-9]*)*"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
         <xs:element name="HotelName" type="xs:string" minOccurs="0" maxOccurs="1" xmlns:doc="Search for a hotel or any hotel names that contain a specific string. "/>
         <xs:element name="RoomName" type="xs:string" minOccurs="0" maxOccurs="1" xmlns:doc="Search for hotels that have a certain type of room "/>
         <xs:element name="Hoteltype" minOccurs="0" maxOccurs="1" xmlns:doc="H = Hotels only, A = Apartments only, V = Villas only, U = All Selfcatering accommodation. Returns all types when left null. ">
@@ -92,6 +99,20 @@
           <xs:simpleType>
             <xs:restriction base="xs:string">
               <xs:pattern value="[A-Z]{2}" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="Nationality" minOccurs="0" maxOccurs="1" xmlns:doc="2-character ISO 3166-1 alpha-2 nationality code of the traveller (e.g. GB, DE, GR). Used for nationality-specific pricing rules.">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="[A-Z]{2}" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="Currency" minOccurs="0" maxOccurs="1" xmlns:doc="ISO 4217 3-letter currency code for returned prices (e.g. EUR, GBP, USD). Defaults to the account's base currency.">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="[A-Z]{3}" />
             </xs:restriction>
           </xs:simpleType>
         </xs:element>

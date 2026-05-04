@@ -34,24 +34,39 @@
         }
         .btn-logout:hover { background: rgba(255,255,255,.18); }
 
+        /* ── Tabs ── */
+        .tab-nav {
+            background: #fff; border-bottom: 2px solid #eef1f7;
+            padding: 0 24px; display: flex; gap: 0;
+        }
+        .tab-btn {
+            background: none; border: none; border-bottom: 3px solid transparent;
+            color: #6c8cbf; padding: 14px 20px; font-size: 13px; font-weight: 700;
+            cursor: pointer; letter-spacing: .3px; margin-bottom: -2px;
+            transition: color .15s, border-color .15s; font-family: inherit;
+        }
+        .tab-btn:hover { color: #1C4084; }
+        .tab-btn.active { color: #1C4084; border-bottom-color: #EB8008; }
+
         /* ── Layout ── */
-        .container { max-width: 1000px; margin: 36px auto; padding: 0 20px 60px; }
+        .container { max-width: 1060px; margin: 28px auto; padding: 0 20px 60px; }
 
         /* ── Cards ── */
         .card {
             background: #fff; border-radius: 8px;
-            box-shadow: 0 2px 16px rgba(28,64,132,.09); margin-bottom: 28px;
+            box-shadow: 0 2px 16px rgba(28,64,132,.09); margin-bottom: 24px;
         }
         .card-head {
-            padding: 20px 28px 16px; border-bottom: 2px solid #eef1f7;
-            display: flex; align-items: center; justify-content: space-between;
+            padding: 18px 28px 14px; border-bottom: 2px solid #eef1f7;
+            display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
         }
         .card-head h2 {
-            margin: 0; font-size: 16px; font-weight: 700;
+            margin: 0; font-size: 15px; font-weight: 700;
             color: #1C4084; display: flex; align-items: center; gap: 8px;
         }
         .card-head h2 i { color: #EB8008; }
-        .card-body { padding: 24px 28px; }
+        .card-body { padding: 22px 28px; }
+        .card-body.no-pad { padding: 0; }
 
         /* ── Table ── */
         .ep-table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -60,18 +75,20 @@
             font-size: 10px; font-weight: 700; text-transform: uppercase;
             letter-spacing: .7px; color: #6c8cbf; border-bottom: 2px solid #eef1f7;
         }
-        .ep-table td { padding: 11px 12px; border-bottom: 1px solid #f0f3f8; vertical-align: middle; }
+        .ep-table td { padding: 10px 12px; border-bottom: 1px solid #f0f3f8; vertical-align: middle; }
         .ep-table tr:last-child td { border-bottom: none; }
         .ep-table tr:hover td { background: #f7f9fc; }
-
         .ep-name  { font-weight: 700; color: #1C4084; }
         .ep-url   { color: #555; font-size: 12px; }
         .ep-key   {
             font-family: 'Courier New', monospace; font-size: 11px;
             background: #f0f4fb; color: #2a4a8a; padding: 4px 8px;
-            border-radius: 4px; word-break: break-all; max-width: 260px; display: inline-block;
+            border-radius: 4px; word-break: break-all; max-width: 240px; display: inline-block;
         }
+        .empty-row td { text-align: center; color: #9db5d5; padding: 28px; font-style: italic; }
+        .loading { text-align: center; padding: 28px; color: #9db5d5; font-size: 13px; }
 
+        /* ── Buttons ── */
         .btn-copy {
             background: none; border: 1px solid #ccd6e8; color: #6c8cbf;
             padding: 4px 9px; border-radius: 4px; cursor: pointer; font-size: 12px;
@@ -79,65 +96,166 @@
         }
         .btn-copy:hover { border-color: #1C4084; color: #1C4084; }
         .btn-copy.copied { border-color: #28a745; color: #28a745; }
-
         .btn-del {
             background: none; border: 1px solid #e8c5c5; color: #c0392b;
             padding: 5px 11px; border-radius: 4px; cursor: pointer; font-size: 12px;
             transition: all .15s; font-weight: 600;
         }
         .btn-del:hover { background: #dc3545; border-color: #dc3545; color: #fff; }
-
-        .empty-row td { text-align: center; color: #9db5d5; padding: 28px; font-style: italic; }
-
-        /* ── Create form ── */
-        .form-row { display: flex; gap: 14px; flex-wrap: wrap; }
-        .form-group { flex: 1; min-width: 200px; }
-        .form-group label {
-            display: block; font-size: 11px; font-weight: 700;
-            color: #1C4084; text-transform: uppercase; letter-spacing: .7px; margin-bottom: 7px;
+        .btn-edit {
+            background: none; border: 1px solid #b8cce8; color: #1C4084;
+            padding: 5px 11px; border-radius: 4px; cursor: pointer; font-size: 12px;
+            transition: all .15s; font-weight: 600; margin-right: 4px;
         }
-        .form-group input {
-            width: 100%; padding: 10px 12px; border: 1px solid #ccd6e8; border-radius: 4px;
-            font-size: 14px; color: #333; background: #f7f9fc; outline: none; font-family: inherit;
-            transition: border-color .2s, box-shadow .2s;
-        }
-        .form-group input:focus { border-color: #1C4084; box-shadow: 0 0 0 3px rgba(28,64,132,.12); background: #fff; }
-        .form-group input::placeholder { color: #b0bfce; }
-
+        .btn-edit:hover { background: #1C4084; border-color: #1C4084; color: #fff; }
         .btn-create {
-            padding: 10px 24px; background: #EB8008; border: none; border-radius: 4px;
-            color: #fff; font-size: 13px; font-weight: 700; letter-spacing: .4px;
+            padding: 9px 20px; background: #EB8008; border: none; border-radius: 4px;
+            color: #fff; font-size: 12px; font-weight: 700; letter-spacing: .4px;
             text-transform: uppercase; cursor: pointer; transition: background .15s;
-            font-family: inherit; white-space: nowrap; align-self: flex-end;
+            font-family: inherit; white-space: nowrap;
         }
         .btn-create:hover:not(:disabled) { background: #c96d00; }
         .btn-create:disabled { opacity: .65; cursor: not-allowed; }
+        .btn-save {
+            padding: 8px 18px; background: #28a745; border: none; border-radius: 4px;
+            color: #fff; font-size: 12px; font-weight: 700; cursor: pointer;
+            font-family: inherit; transition: background .15s; margin-right: 6px;
+        }
+        .btn-save:hover { background: #1e7e34; }
+        .btn-cancel {
+            padding: 8px 14px; background: none; border: 1px solid #ccd6e8; border-radius: 4px;
+            color: #6c8cbf; font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit;
+        }
+        .btn-cancel:hover { background: #eef1f7; }
+        .btn-sm {
+            padding: 3px 9px; font-size: 11px; border-radius: 3px;
+        }
 
-        /* ── Result banner ── */
+        /* ── Forms ── */
+        .form-row { display: flex; gap: 14px; flex-wrap: wrap; }
+        .form-group { flex: 1; min-width: 180px; }
+        .form-group.full { flex: 100%; }
+        .form-group label {
+            display: block; font-size: 11px; font-weight: 700;
+            color: #1C4084; text-transform: uppercase; letter-spacing: .7px; margin-bottom: 6px;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 9px 12px; border: 1px solid #ccd6e8; border-radius: 4px;
+            font-size: 13px; color: #333; background: #f7f9fc; outline: none; font-family: inherit;
+            transition: border-color .2s, box-shadow .2s;
+        }
+        .form-group textarea { resize: vertical; min-height: 80px; font-family: 'Courier New', monospace; font-size: 12px; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #1C4084; box-shadow: 0 0 0 3px rgba(28,64,132,.1); background: #fff;
+        }
+        .form-group input::placeholder, .form-group textarea::placeholder { color: #b0bfce; }
+        .search-input {
+            padding: 7px 12px; border: 1px solid #ccd6e8; border-radius: 4px;
+            font-size: 13px; min-width: 220px; font-family: inherit; outline: none;
+            transition: border-color .2s;
+        }
+        .search-input:focus { border-color: #1C4084; }
+
+        /* ── Result / error boxes ── */
         .result-box {
-            display: none; margin-top: 20px; padding: 16px 20px;
+            display: none; margin-top: 18px; padding: 14px 18px;
             background: #f0fbf4; border: 1px solid #a8ddb8; border-left: 4px solid #28a745;
             border-radius: 4px;
         }
-        .result-box .result-label { font-size: 11px; font-weight: 700; color: #28a745; text-transform: uppercase; margin-bottom: 8px; }
-        .result-box .result-name  { font-size: 13px; font-weight: 700; color: #1C4084; margin-bottom: 4px; }
-        .result-box .result-url   { font-size: 12px; color: #555; margin-bottom: 10px; }
-        .result-box .result-key   {
+        .result-label { font-size: 11px; font-weight: 700; color: #28a745; text-transform: uppercase; margin-bottom: 6px; }
+        .result-key {
             font-family: 'Courier New', monospace; font-size: 12px;
-            background: #e8f5ec; color: #1a5c2e; padding: 8px 12px;
+            background: #e8f5ec; color: #1a5c2e; padding: 7px 10px;
             border-radius: 4px; word-break: break-all; margin-bottom: 8px;
         }
-        .result-box .result-note  { font-size: 11px; color: #6c8cbf; }
-
+        .result-note { font-size: 11px; color: #6c8cbf; }
         .err-box {
-            display: none; margin-top: 14px; padding: 10px 14px;
+            display: none; margin-top: 12px; padding: 9px 13px;
             background: rgba(220,53,69,.07); border: 1px solid rgba(220,53,69,.22);
             border-left: 3px solid #dc3545; border-radius: 4px;
             color: #b02a37; font-size: 13px;
         }
+        .info-box {
+            padding: 9px 13px; background: rgba(28,64,132,.06);
+            border-left: 3px solid #1C4084; border-radius: 4px;
+            color: #1C4084; font-size: 12px; margin-bottom: 14px;
+        }
 
-        /* ── Loader ── */
-        .loading { text-align: center; padding: 28px; color: #9db5d5; font-size: 13px; }
+        /* ── Field group headers ── */
+        .field-group-header { cursor: pointer; user-select: none; }
+        .field-group-header td { background: #eef3fa; color: #1C4084; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px; padding: 6px 12px; border-top: 2px solid #d4dff0; }
+        .field-group-header td .fa { margin-right: 6px; color: #EB8008; }
+        .field-group-header .fa-caret-right { transition: transform 0.15s; display: inline-block; }
+        .field-group-header.is-open .fa-caret-right { transform: rotate(90deg); }
+
+        /* ── Section editor ── */
+        .section-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 28px; border-bottom: 1px solid #f0f3f8;
+        }
+        .section-row:last-child { border-bottom: none; }
+        .section-row:hover { background: #f7f9fc; }
+        .section-title-text { font-weight: 700; color: #1C4084; font-size: 14px; }
+        .section-item-count { font-size: 12px; color: #9db5d5; margin-left: 8px; }
+        .editor-panel {
+            background: #f7f9fc; border: 1px solid #dde6f5;
+            border-radius: 6px; padding: 20px 24px; margin-bottom: 16px;
+        }
+        .editor-title { font-size: 13px; font-weight: 700; color: #1C4084; margin-bottom: 14px; }
+        .item-row {
+            display: flex; gap: 8px; align-items: flex-start;
+            background: #fff; border: 1px solid #dde6f5; border-radius: 5px;
+            padding: 10px 12px; margin-bottom: 8px;
+        }
+        .item-type-badge {
+            font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
+            padding: 2px 7px; border-radius: 3px; white-space: nowrap; margin-top: 4px;
+        }
+        .badge-para { background: #e8f0fb; color: #1C4084; }
+        .badge-code { background: #fff3e0; color: #c96d00; }
+        .item-text { flex: 1; }
+        .item-textarea {
+            width: 100%; padding: 6px 10px; border: 1px solid #ccd6e8; border-radius: 4px;
+            font-size: 12px; font-family: inherit; resize: vertical; min-height: 52px;
+            background: #f7f9fc; outline: none;
+        }
+        .item-textarea.code-ta { font-family: 'Courier New', monospace; min-height: 90px; }
+        .item-textarea:focus { border-color: #1C4084; background: #fff; }
+        .item-actions { display: flex; flex-direction: column; gap: 4px; }
+        .btn-icon {
+            background: none; border: 1px solid #ccd6e8; color: #6c8cbf;
+            width: 28px; height: 28px; border-radius: 4px; cursor: pointer;
+            font-size: 12px; display: flex; align-items: center; justify-content: center;
+            transition: all .15s;
+        }
+        .btn-icon:hover { border-color: #1C4084; color: #1C4084; }
+        .btn-icon.danger:hover { border-color: #dc3545; color: #dc3545; }
+        .add-item-row { display: flex; gap: 8px; margin-top: 10px; }
+
+        /* ── Field descriptions ── */
+        .field-row-edit td { background: #f0f6ff; }
+        .field-desc-text { color: #444; font-size: 12px; max-width: 480px; }
+        .field-name-mono { font-family: 'Courier New', monospace; font-weight: 700; color: #2a4a8a; font-size: 12px; }
+
+        /* ── Services ── */
+        .cat-header {
+            font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px;
+            color: #EB8008; padding: 10px 28px 6px; border-bottom: 1px solid #f0f3f8;
+            cursor: pointer; user-select: none; display: flex; align-items: center; gap: 6px;
+        }
+        .cat-header:hover { background: #fffaf4; }
+        .cat-caret { display: inline-block; transition: transform 0.15s; color: #EB8008; font-size: 11px; }
+        .cat-header.is-open .cat-caret { transform: rotate(90deg); }
+        .svc-cat-count { font-weight: 400; color: #c9a87a; font-size: 10px; }
+        .svc-cat-body { border-bottom: 2px solid #f0f3f8; }
+        .svc-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 9px 28px; border-bottom: 1px solid #f5f7fb;
+        }
+        .svc-row:last-child { border-bottom: none; }
+        .svc-row:hover { background: #f7f9fc; }
+        .svc-name { font-weight: 600; color: #1C4084; font-size: 13px; }
+        .svc-href { font-size: 11px; color: #9db5d5; font-family: 'Courier New', monospace; margin-left: 8px; }
 
         .page-foot {
             background: #1C4084; color: rgba(255,255,255,.4);
@@ -157,69 +275,215 @@
     </button>
 </nav>
 
+<div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('endpoints',this)"><i class="fa fa-server"></i>&nbsp; Endpoints</button>
+    <button class="tab-btn" onclick="switchTab('content',this)"><i class="fa fa-file-text-o"></i>&nbsp; Content Sections</button>
+    <button class="tab-btn" onclick="switchTab('fields',this)"><i class="fa fa-list-alt"></i>&nbsp; Field Descriptions</button>
+    <button class="tab-btn" onclick="switchTab('services',this)"><i class="fa fa-cogs"></i>&nbsp; Services</button>
+</div>
+
 <div class="container">
 
-    <!-- Endpoints table -->
-    <div class="card">
-        <div class="card-head">
-            <h2><i class="fa fa-server"></i> Active Endpoints</h2>
-            <span id="ep-count" style="font-size:12px;color:#9db5d5;"></span>
-        </div>
-        <div class="card-body" style="padding:0;">
-            <div class="loading" id="tbl-loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>
-            <table class="ep-table" id="ep-table" style="display:none;">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Base URL</th>
-                        <th>Encoded API Key</th>
-                        <th style="width:60px;"></th>
-                    </tr>
-                </thead>
-                <tbody id="ep-tbody"></tbody>
-            </table>
-        </div>
-    </div>
+    <!-- ── ENDPOINTS TAB ─────────────────────────────────────────────────── -->
+    <div id="tab-endpoints" class="tab-pane">
 
-    <!-- Create endpoint -->
-    <div class="card">
-        <div class="card-head">
-            <h2><i class="fa fa-plus-circle"></i> Create New Endpoint</h2>
-        </div>
-        <div class="card-body">
-            <div class="form-row" id="create-form">
-                <div class="form-group">
-                    <label>Endpoint Name</label>
-                    <input type="text" id="f-name" placeholder="e.g. Beach Hotel Hub" />
-                </div>
-                <div class="form-group">
-                    <label>Base URL</label>
-                    <input type="text" id="f-url" placeholder="https://newclient-hub.cyberlogic.cloud" />
-                </div>
-                <button class="btn-create" id="btn-create" onclick="createEndpoint()">
-                    <i class="fa fa-key"></i>&nbsp; Generate Key
-                </button>
+        <div class="card">
+            <div class="card-head">
+                <h2><i class="fa fa-server"></i> Active Endpoints</h2>
+                <span id="ep-count" style="font-size:12px;color:#9db5d5;"></span>
             </div>
-            <div class="err-box" id="create-err"></div>
-            <div class="result-box" id="create-result">
-                <div class="result-label"><i class="fa fa-check-circle"></i>&nbsp; API Key Generated</div>
-                <div class="result-name" id="res-name"></div>
-                <div class="result-url"  id="res-url"></div>
-                <div class="result-key"  id="res-key"></div>
-                <div style="display:flex;gap:8px;margin-bottom:8px;">
-                    <button class="btn-copy" id="res-copy" onclick="copyResult()">
-                        <i class="fa fa-copy"></i>&nbsp; Copy Key
+            <div class="card-body no-pad">
+                <div class="loading" id="tbl-loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>
+                <table class="ep-table" id="ep-table" style="display:none">
+                    <thead><tr><th>Name</th><th>Base URL</th><th>Encoded API Key</th><th style="width:60px"></th></tr></thead>
+                    <tbody id="ep-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-head"><h2><i class="fa fa-plus-circle"></i> Create New Endpoint</h2></div>
+            <div class="card-body">
+                <div class="form-row" id="create-ep-form">
+                    <div class="form-group">
+                        <label>Endpoint Name</label>
+                        <input type="text" id="f-ep-name" placeholder="e.g. Beach Hotel Hub" />
+                    </div>
+                    <div class="form-group">
+                        <label>Base URL</label>
+                        <input type="text" id="f-ep-url" placeholder="https://newclient-hub.cyberlogic.cloud" />
+                    </div>
+                    <button class="btn-create" id="btn-create-ep" onclick="createEndpoint()" style="align-self:flex-end">
+                        <i class="fa fa-key"></i>&nbsp; Generate Key
                     </button>
                 </div>
-                <div class="result-note">
-                    <i class="fa fa-info-circle"></i>&nbsp;
-                    This key is shown once. Copy it now and distribute it to the client.
+                <div class="err-box" id="ep-err"></div>
+                <div class="result-box" id="ep-result">
+                    <div class="result-label"><i class="fa fa-check-circle"></i>&nbsp; API Key Generated</div>
+                    <div style="font-weight:700;color:#1C4084;margin-bottom:3px" id="res-ep-name"></div>
+                    <div style="font-size:12px;color:#555;margin-bottom:10px" id="res-ep-url"></div>
+                    <div class="result-key" id="res-ep-key"></div>
+                    <div style="display:flex;gap:8px;margin-bottom:8px">
+                        <button class="btn-copy" id="res-copy-ep" onclick="copyResult()"><i class="fa fa-copy"></i>&nbsp; Copy Key</button>
+                    </div>
+                    <div class="result-note"><i class="fa fa-info-circle"></i>&nbsp; This key is shown once. Copy it now and distribute it to the client.</div>
                 </div>
             </div>
         </div>
-    </div>
 
-</div>
+    </div><!-- /tab-endpoints -->
+
+    <!-- ── CONTENT SECTIONS TAB ──────────────────────────────────────────── -->
+    <div id="tab-content" class="tab-pane" style="display:none">
+
+        <div class="card" id="section-editor-card" style="display:none">
+            <div class="card-head">
+                <h2 id="sec-editor-title"><i class="fa fa-pencil"></i> Edit Section</h2>
+                <div>
+                    <button class="btn-save" onclick="saveSection()"><i class="fa fa-check"></i> Save</button>
+                    <button class="btn-cancel" onclick="closeSectionEditor()">Cancel</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <input type="hidden" id="edit-sec-id" />
+                <div class="form-row" style="margin-bottom:16px">
+                    <div class="form-group full">
+                        <label>Section Title</label>
+                        <input type="text" id="edit-sec-title" placeholder="e.g. Authentication" />
+                    </div>
+                </div>
+                <div class="editor-title">Content Items</div>
+                <div id="item-list"></div>
+                <div class="add-item-row">
+                    <button class="btn-edit btn-sm" onclick="addItem('paragraph')"><i class="fa fa-paragraph"></i> Add Paragraph</button>
+                    <button class="btn-edit btn-sm" onclick="addItem('code')"><i class="fa fa-code"></i> Add Code Block</button>
+                </div>
+                <div class="err-box" id="sec-err"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-head">
+                <h2><i class="fa fa-file-text-o"></i> Content Sections</h2>
+                <button class="btn-create" onclick="openNewSection()"><i class="fa fa-plus"></i> New Section</button>
+            </div>
+            <div id="sections-list">
+                <div class="loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>
+            </div>
+        </div>
+
+    </div><!-- /tab-content -->
+
+    <!-- ── FIELD DESCRIPTIONS TAB ────────────────────────────────────────── -->
+    <div id="tab-fields" class="tab-pane" style="display:none">
+
+        <div class="card" id="add-field-card" style="display:none">
+            <div class="card-head"><h2><i class="fa fa-plus-circle"></i> Add Field Description</h2></div>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Field Name</label>
+                        <input type="text" id="new-field-name" placeholder="e.g. MyCustomField" />
+                    </div>
+                    <div class="form-group" style="flex:2">
+                        <label>Description</label>
+                        <input type="text" id="new-field-desc" placeholder="Human-readable description of the field." />
+                    </div>
+                    <div style="align-self:flex-end">
+                        <button class="btn-save" onclick="saveNewField()"><i class="fa fa-check"></i> Add</button>
+                        <button class="btn-cancel" onclick="toggleAddField(false)">Cancel</button>
+                    </div>
+                </div>
+                <div class="err-box" id="field-err"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-head">
+                <h2><i class="fa fa-list-alt"></i> Field Descriptions</h2>
+                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                    <input class="search-input" id="field-search" placeholder="Search fields..." oninput="filterFields()" />
+                    <button class="btn-create" onclick="toggleAddField(true)"><i class="fa fa-plus"></i> Add Field</button>
+                </div>
+            </div>
+            <div class="card-body no-pad">
+                <div class="loading" id="fields-loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>
+                <table class="ep-table" id="fields-table" style="display:none">
+                    <thead><tr><th>Field Name</th><th>Description</th><th style="width:110px"></th></tr></thead>
+                    <tbody id="fields-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div><!-- /tab-fields -->
+
+    <!-- ── SERVICES TAB ──────────────────────────────────────────────────── -->
+    <div id="tab-services" class="tab-pane" style="display:none">
+
+        <div class="card">
+            <div class="card-head"><h2><i class="fa fa-plus-circle"></i> Add New Service</h2></div>
+            <div class="card-body">
+                <div class="info-box"><i class="fa fa-info-circle"></i>&nbsp; Paste the XSD content below (optional). The service will appear in the documentation immediately after saving.</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Category Name</label>
+                        <input type="text" id="svc-category" placeholder="e.g. Hotel Services" list="cat-list" />
+                        <datalist id="cat-list"></datalist>
+                    </div>
+                    <div class="form-group">
+                        <label>Service Name</label>
+                        <input type="text" id="svc-name" placeholder="e.g. My Custom Search" />
+                    </div>
+                    <div class="form-group">
+                        <label>Href / Anchor</label>
+                        <input type="text" id="svc-href" placeholder="e.g. my-custom-search" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group full">
+                        <label>Description</label>
+                        <input type="text" id="svc-desc" placeholder="Brief description of what this service does." />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group full">
+                        <label>Endpoint URL</label>
+                        <input type="text" id="svc-link" placeholder="https://avra-hub.cyberlogic.cloud/services/webservice.asmx/MyMethod" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group full">
+                        <label>Request XSD Content <span style="font-weight:400;text-transform:none;letter-spacing:0">(paste XML, optional)</span></label>
+                        <textarea id="svc-xsd-req" placeholder="<?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?>&#10;<xs:schema ...>..."></textarea>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group full">
+                        <label>Response XSD Content <span style="font-weight:400;text-transform:none;letter-spacing:0">(paste XML, optional)</span></label>
+                        <textarea id="svc-xsd-res" placeholder="<?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?>&#10;<xs:schema ...>..."></textarea>
+                    </div>
+                </div>
+                <div style="margin-top:12px;display:flex;gap:10px;align-items:center">
+                    <button class="btn-create" id="btn-add-svc" onclick="createService()"><i class="fa fa-plus"></i>&nbsp; Add Service</button>
+                    <span id="svc-success" style="color:#28a745;font-size:13px;font-weight:700;display:none"><i class="fa fa-check-circle"></i> Service added!</span>
+                </div>
+                <div class="err-box" id="svc-err"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-head">
+                <h2><i class="fa fa-cogs"></i> Service Catalog</h2>
+                <span id="svc-count" style="font-size:12px;color:#9db5d5"></span>
+            </div>
+            <div id="services-list">
+                <div class="loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>
+            </div>
+        </div>
+
+    </div><!-- /tab-services -->
+
+</div><!-- /container -->
 
 <div class="page-foot">&copy; Cyberlogic e-Tourism Platform &mdash; Admin</div>
 
@@ -234,22 +498,42 @@
         return { 'Content-Type': 'application/json', 'X-Admin-Token': ADMIN_TOKEN };
     }
 
-    // ── Load endpoints ──────────────────────────────────────────────────────────
-    function loadEndpoints() {
-        fetch('api/admin/endpoints', { headers: authHeaders() })
-        .then(function (r) {
-            if (r.status === 401) { sessionStorage.removeItem('cl_admin'); window.location.replace('AdminLogin.html'); }
-            return r.json();
-        })
-        .then(function (data) {
-            document.getElementById('tbl-loading').style.display = 'none';
-            document.getElementById('ep-table').style.display = 'table';
-            renderTable(data);
-        })
-        .catch(function () { document.getElementById('tbl-loading').textContent = 'Failed to load endpoints.'; });
+    function handleUnauth(r) {
+        if (r.status === 401) { sessionStorage.removeItem('cl_admin'); window.location.replace('AdminLogin.html'); return true; }
+        return false;
     }
 
-    function renderTable(list) {
+    /* ── TAB SWITCHING ──────────────────────────────────────────────────────── */
+    var tabLoaded = {};
+    function switchTab(name, btn) {
+        document.querySelectorAll('.tab-pane').forEach(function(p) { p.style.display = 'none'; });
+        document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+        document.getElementById('tab-' + name).style.display = '';
+        btn.classList.add('active');
+        if (!tabLoaded[name]) {
+            tabLoaded[name] = true;
+            if (name === 'content') loadSections();
+            if (name === 'fields')  loadFields();
+            if (name === 'services') loadServices();
+        }
+    }
+
+    /* ══════════════════════════════════════════════════════════════════════════
+       ENDPOINTS TAB
+    ══════════════════════════════════════════════════════════════════════════ */
+    function loadEndpoints() {
+        fetch('api/admin/endpoints', { headers: authHeaders() })
+        .then(function(r) { if (handleUnauth(r)) return null; return r.json(); })
+        .then(function(data) {
+            if (!data) return;
+            document.getElementById('tbl-loading').style.display = 'none';
+            document.getElementById('ep-table').style.display = 'table';
+            renderEndpointTable(data);
+        })
+        .catch(function() { document.getElementById('tbl-loading').textContent = 'Failed to load endpoints.'; });
+    }
+
+    function renderEndpointTable(list) {
         var tbody = document.getElementById('ep-tbody');
         var count = document.getElementById('ep-count');
         count.textContent = list.length + ' endpoint' + (list.length !== 1 ? 's' : '');
@@ -257,130 +541,507 @@
             tbody.innerHTML = '<tr class="empty-row"><td colspan="4">No endpoints configured.</td></tr>';
             return;
         }
-        tbody.innerHTML = list.map(function (e) {
-            var id  = e.Id  || e.id;
-            var nm  = e.Name     || e.name     || '';
-            var url = e.BaseUrl  || e.baseUrl  || '';
-            var key = e.EncodedKey || e.encodedKey || '';
+        tbody.innerHTML = list.map(function(e) {
+            var id = e.Id || e.id, nm = e.Name || e.name || '', url = e.BaseUrl || e.baseUrl || '', key = e.EncodedKey || e.encodedKey || '';
             return '<tr data-id="' + esc(id) + '">' +
                 '<td><span class="ep-name">' + esc(nm) + '</span></td>' +
                 '<td><span class="ep-url">' + esc(url) + '</span></td>' +
-                '<td>' +
-                    '<span class="ep-key" id="key-' + esc(id) + '">' + esc(key) + '</span>' +
-                    '<button class="btn-copy" onclick="copyKey(this,\'' + esc(id) + '\')" title="Copy key">' +
-                        '<i class="fa fa-copy"></i>' +
-                    '</button>' +
-                '</td>' +
-                '<td>' +
-                    '<button class="btn-del" onclick="deleteEndpoint(\'' + esc(id) + '\',this)" title="Delete">' +
-                        '<i class="fa fa-trash"></i>' +
-                    '</button>' +
-                '</td>' +
+                '<td><span class="ep-key" id="key-' + esc(id) + '">' + esc(key) + '</span>' +
+                    '<button class="btn-copy" onclick="copyKey(this,\'' + esc(id) + '\')" title="Copy"><i class="fa fa-copy"></i></button></td>' +
+                '<td><button class="btn-del" onclick="deleteEndpoint(\'' + esc(id) + '\',this)" title="Delete"><i class="fa fa-trash"></i></button></td>' +
             '</tr>';
         }).join('');
     }
 
-    // ── Copy ─────────────────────────────────────────────────────────────────
     function copyKey(btn, id) {
-        var key = document.getElementById('key-' + id).textContent;
-        navigator.clipboard.writeText(key).then(function () {
-            btn.classList.add('copied');
-            btn.innerHTML = '<i class="fa fa-check"></i>';
-            setTimeout(function () { btn.classList.remove('copied'); btn.innerHTML = '<i class="fa fa-copy"></i>'; }, 2000);
+        navigator.clipboard.writeText(document.getElementById('key-' + id).textContent).then(function() {
+            btn.classList.add('copied'); btn.innerHTML = '<i class="fa fa-check"></i>';
+            setTimeout(function() { btn.classList.remove('copied'); btn.innerHTML = '<i class="fa fa-copy"></i>'; }, 2000);
         });
     }
 
     function copyResult() {
-        var key = document.getElementById('res-key').textContent;
-        var btn = document.getElementById('res-copy');
-        navigator.clipboard.writeText(key).then(function () {
-            btn.classList.add('copied');
-            btn.innerHTML = '<i class="fa fa-check"></i>&nbsp; Copied!';
-            setTimeout(function () { btn.classList.remove('copied'); btn.innerHTML = '<i class="fa fa-copy"></i>&nbsp; Copy Key'; }, 2500);
+        var btn = document.getElementById('res-copy-ep');
+        navigator.clipboard.writeText(document.getElementById('res-ep-key').textContent).then(function() {
+            btn.classList.add('copied'); btn.innerHTML = '<i class="fa fa-check"></i>&nbsp; Copied!';
+            setTimeout(function() { btn.classList.remove('copied'); btn.innerHTML = '<i class="fa fa-copy"></i>&nbsp; Copy Key'; }, 2500);
         });
     }
 
-    // ── Delete ───────────────────────────────────────────────────────────────
     function deleteEndpoint(id, btn) {
         if (!confirm('Delete this endpoint? The existing API key will stop working immediately.')) return;
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
-        fetch('api/admin/endpoints/' + encodeURIComponent(id), {
-            method: 'DELETE', headers: authHeaders()
-        })
-        .then(function (r) {
+        btn.disabled = true; btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+        fetch('api/admin/endpoints/' + encodeURIComponent(id), { method: 'DELETE', headers: authHeaders() })
+        .then(function(r) {
             if (!r.ok) throw new Error();
             var row = document.querySelector('tr[data-id="' + id + '"]');
             if (row) row.remove();
-            var tbody = document.getElementById('ep-tbody');
-            var count = document.getElementById('ep-count');
-            var rows  = tbody.querySelectorAll('tr[data-id]');
-            count.textContent = rows.length + ' endpoint' + (rows.length !== 1 ? 's' : '');
-            if (rows.length === 0)
-                tbody.innerHTML = '<tr class="empty-row"><td colspan="4">No endpoints configured.</td></tr>';
+            var rows = document.getElementById('ep-tbody').querySelectorAll('tr[data-id]');
+            document.getElementById('ep-count').textContent = rows.length + ' endpoint' + (rows.length !== 1 ? 's' : '');
+            if (rows.length === 0) document.getElementById('ep-tbody').innerHTML = '<tr class="empty-row"><td colspan="4">No endpoints configured.</td></tr>';
         })
-        .catch(function () { btn.disabled = false; btn.innerHTML = '<i class="fa fa-trash"></i>'; alert('Delete failed.'); });
+        .catch(function() { btn.disabled = false; btn.innerHTML = '<i class="fa fa-trash"></i>'; alert('Delete failed.'); });
     }
 
-    // ── Create ───────────────────────────────────────────────────────────────
     function createEndpoint() {
-        var name = document.getElementById('f-name').value.trim();
-        var url  = document.getElementById('f-url').value.trim();
-        var btn  = document.getElementById('btn-create');
-        var errEl = document.getElementById('create-err');
-
+        var name = document.getElementById('f-ep-name').value.trim();
+        var url  = document.getElementById('f-ep-url').value.trim();
+        var btn  = document.getElementById('btn-create-ep');
+        var errEl = document.getElementById('ep-err');
         errEl.style.display = 'none';
-        document.getElementById('create-result').style.display = 'none';
-
-        if (!name) { showCreateErr('Endpoint name is required.'); return; }
-        if (!url)  { showCreateErr('Base URL is required.'); return; }
-        if (!/^https?:\/\//i.test(url)) { showCreateErr('Base URL must start with http:// or https://.'); return; }
-
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>&nbsp; Generating&hellip;';
-
-        fetch('api/admin/endpoints', {
-            method: 'POST',
-            headers: authHeaders(),
-            body: JSON.stringify({ name: name, baseUrl: url })
-        })
-        .then(function (r) {
-            if (!r.ok) return r.text().then(function (t) { throw new Error(t || 'Server error'); });
-            return r.json();
-        })
-        .then(function (data) {
-            document.getElementById('res-name').textContent = data.Name  || data.name;
-            document.getElementById('res-url').textContent  = data.BaseUrl  || data.baseUrl;
-            document.getElementById('res-key').textContent  = data.EncodedKey || data.encodedKey;
-            document.getElementById('create-result').style.display = 'block';
-            document.getElementById('f-name').value = '';
-            document.getElementById('f-url').value  = '';
+        document.getElementById('ep-result').style.display = 'none';
+        if (!name) { showErr(errEl, 'Endpoint name is required.'); return; }
+        if (!url)  { showErr(errEl, 'Base URL is required.'); return; }
+        if (!/^https?:\/\//i.test(url)) { showErr(errEl, 'Base URL must start with http:// or https://.'); return; }
+        btn.disabled = true; btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>&nbsp; Generating&hellip;';
+        fetch('api/admin/endpoints', { method: 'POST', headers: authHeaders(), body: JSON.stringify({ name: name, baseUrl: url }) })
+        .then(function(r) { if (!r.ok) return r.text().then(function(t) { throw new Error(t || 'Server error'); }); return r.json(); })
+        .then(function(data) {
+            document.getElementById('res-ep-name').textContent = data.Name || data.name;
+            document.getElementById('res-ep-url').textContent  = data.BaseUrl || data.baseUrl;
+            document.getElementById('res-ep-key').textContent  = data.EncodedKey || data.encodedKey;
+            document.getElementById('ep-result').style.display = 'block';
+            document.getElementById('f-ep-name').value = '';
+            document.getElementById('f-ep-url').value  = '';
             loadEndpoints();
         })
-        .catch(function (err) { showCreateErr(err.message || 'Failed to create endpoint.'); })
-        .finally(function () {
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fa fa-key"></i>&nbsp; Generate Key';
+        .catch(function(err) { showErr(errEl, err.message || 'Failed to create endpoint.'); })
+        .finally(function() { btn.disabled = false; btn.innerHTML = '<i class="fa fa-key"></i>&nbsp; Generate Key'; });
+    }
+
+    /* ══════════════════════════════════════════════════════════════════════════
+       CONTENT SECTIONS TAB
+    ══════════════════════════════════════════════════════════════════════════ */
+    var editingItems = [];
+
+    function loadSections() {
+        fetch('api/admin/content/sections', { headers: authHeaders() })
+        .then(function(r) {
+            if (handleUnauth(r)) return null;
+            if (!r.ok) return r.text().then(function(t) { throw new Error('HTTP ' + r.status + ': ' + t.substring(0, 200)); });
+            return r.json();
+        })
+        .then(function(data) {
+            if (!data) return;
+            renderSectionsList(data);
+        })
+        .catch(function(err) { document.getElementById('sections-list').innerHTML = '<div class="loading" style="color:#c0392b">Failed to load sections: ' + (err.message || err) + '</div>'; });
+    }
+
+    function renderSectionsList(sections) {
+        var el = document.getElementById('sections-list');
+        if (!sections.length) {
+            el.innerHTML = '<div class="loading">No sections yet. Click <strong>New Section</strong> to create one.</div>';
+            return;
+        }
+        el.innerHTML = sections.map(function(sec) {
+            var count = (sec.items || []).length;
+            return '<div class="section-row">' +
+                '<span><span class="section-title-text">' + esc(sec.title) + '</span>' +
+                '<span class="section-item-count">' + count + ' item' + (count !== 1 ? 's' : '') + '</span></span>' +
+                '<span>' +
+                    '<button class="btn-edit btn-sm" onclick="openEditSection(' + JSON.stringify(sec).replace(/"/g,'&quot;') + ')"><i class="fa fa-pencil"></i> Edit</button>' +
+                    '<button class="btn-del btn-sm" onclick="deleteSection(\'' + esc(sec.id) + '\')"><i class="fa fa-trash"></i></button>' +
+                '</span>' +
+            '</div>';
+        }).join('');
+    }
+
+    function openNewSection() {
+        document.getElementById('edit-sec-id').value = '';
+        document.getElementById('edit-sec-title').value = '';
+        document.getElementById('sec-editor-title').innerHTML = '<i class="fa fa-plus"></i> New Section';
+        editingItems = [];
+        renderItemList();
+        document.getElementById('section-editor-card').style.display = '';
+        document.getElementById('section-editor-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function openEditSection(sec) {
+        document.getElementById('edit-sec-id').value = sec.id;
+        document.getElementById('edit-sec-title').value = sec.title;
+        document.getElementById('sec-editor-title').innerHTML = '<i class="fa fa-pencil"></i> Edit: ' + esc(sec.title);
+        editingItems = JSON.parse(JSON.stringify(sec.items || []));
+        renderItemList();
+        document.getElementById('section-editor-card').style.display = '';
+        document.getElementById('section-editor-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function closeSectionEditor() {
+        document.getElementById('section-editor-card').style.display = 'none';
+        document.getElementById('sec-err').style.display = 'none';
+    }
+
+    function renderItemList() {
+        var el = document.getElementById('item-list');
+        if (!editingItems.length) {
+            el.innerHTML = '<div style="color:#9db5d5;font-size:13px;padding:8px 0">No items yet. Add a paragraph or code block below.</div>';
+            return;
+        }
+        el.innerHTML = editingItems.map(function(item, idx) {
+            var isCode = item.type === 'code';
+            var badge = isCode ? '<span class="item-type-badge badge-code">code</span>' : '<span class="item-type-badge badge-para">para</span>';
+            var langSel = isCode
+                ? '<select id="item-lang-' + idx + '" style="font-size:11px;padding:3px 6px;border:1px solid #ccd6e8;border-radius:3px;margin-bottom:4px;font-family:inherit">' +
+                    ['csharp','xml','javascript','php','python','java','text'].map(function(l) {
+                        return '<option value="' + l + '"' + (item.language === l ? ' selected' : '') + '>' + l + '</option>';
+                    }).join('') + '</select><br>'
+                : '';
+            return '<div class="item-row" id="item-row-' + idx + '">' +
+                badge +
+                '<div class="item-text">' + langSel +
+                    '<textarea class="item-textarea' + (isCode ? ' code-ta' : '') + '" id="item-text-' + idx + '">' + esc(item.text || '') + '</textarea>' +
+                '</div>' +
+                '<div class="item-actions">' +
+                    (idx > 0 ? '<button class="btn-icon" onclick="moveItem(' + idx + ',-1)" title="Move up"><i class="fa fa-arrow-up"></i></button>' : '<button class="btn-icon" style="visibility:hidden"></button>') +
+                    (idx < editingItems.length - 1 ? '<button class="btn-icon" onclick="moveItem(' + idx + ',1)" title="Move down"><i class="fa fa-arrow-down"></i></button>' : '<button class="btn-icon" style="visibility:hidden"></button>') +
+                    '<button class="btn-icon danger" onclick="removeItem(' + idx + ')" title="Delete"><i class="fa fa-trash"></i></button>' +
+                '</div>' +
+            '</div>';
+        }).join('');
+    }
+
+    function syncItemsFromDOM() {
+        editingItems.forEach(function(item, idx) {
+            var textEl = document.getElementById('item-text-' + idx);
+            if (textEl) item.text = textEl.value;
+            if (item.type === 'code') {
+                var langEl = document.getElementById('item-lang-' + idx);
+                if (langEl) item.language = langEl.value;
+            }
         });
     }
 
-    function showCreateErr(msg) {
-        var el = document.getElementById('create-err');
-        el.textContent = msg; el.style.display = 'block';
+    function addItem(type) {
+        syncItemsFromDOM();
+        editingItems.push({ type: type, text: '', language: type === 'code' ? 'csharp' : undefined });
+        renderItemList();
+        var newIdx = editingItems.length - 1;
+        var ta = document.getElementById('item-text-' + newIdx);
+        if (ta) ta.focus();
     }
 
-    // ── Logout ───────────────────────────────────────────────────────────────
+    function removeItem(idx) {
+        syncItemsFromDOM();
+        editingItems.splice(idx, 1);
+        renderItemList();
+    }
+
+    function moveItem(idx, dir) {
+        syncItemsFromDOM();
+        var target = idx + dir;
+        if (target < 0 || target >= editingItems.length) return;
+        var tmp = editingItems[idx]; editingItems[idx] = editingItems[target]; editingItems[target] = tmp;
+        renderItemList();
+    }
+
+    function saveSection() {
+        syncItemsFromDOM();
+        var id    = document.getElementById('edit-sec-id').value.trim();
+        var title = document.getElementById('edit-sec-title').value.trim();
+        var errEl = document.getElementById('sec-err');
+        errEl.style.display = 'none';
+        if (!title) { showErr(errEl, 'Title is required.'); return; }
+        var cleanItems = editingItems.map(function(item) {
+            var o = { type: item.type, text: item.text };
+            if (item.type === 'code' && item.language) o.language = item.language;
+            return o;
+        });
+        var payload = { title: title, items: cleanItems };
+        var method = id ? 'PUT' : 'POST';
+        var url    = id ? 'api/admin/content/sections/' + encodeURIComponent(id) : 'api/admin/content/sections';
+        fetch(url, { method: method, headers: authHeaders(), body: JSON.stringify(payload) })
+        .then(function(r) { if (!r.ok) return r.text().then(function(t) { throw new Error(t); }); return r.json(); })
+        .then(function() { closeSectionEditor(); loadSections(); })
+        .catch(function(err) { showErr(errEl, err.message || 'Save failed.'); });
+    }
+
+    function deleteSection(id) {
+        if (!confirm('Delete this section? This cannot be undone.')) return;
+        fetch('api/admin/content/sections/' + encodeURIComponent(id), { method: 'DELETE', headers: authHeaders() })
+        .then(function(r) { if (!r.ok) throw new Error(); loadSections(); })
+        .catch(function() { alert('Delete failed.'); });
+    }
+
+    /* ══════════════════════════════════════════════════════════════════════════
+       FIELD DESCRIPTIONS TAB
+    ══════════════════════════════════════════════════════════════════════════ */
+    var allFields = {};
+    var fieldGroupDefs = {};
+
+    function loadFields() {
+        Promise.all([
+            fetch('api/admin/content/fields', { headers: authHeaders() }).then(function(r) { if (handleUnauth(r)) return null; if (!r.ok) return r.text().then(function(t){throw new Error('HTTP '+r.status+': '+t.substring(0,200));}); return r.json(); }),
+            fetch('models/fieldGroups.json').then(function(r) { return r.ok ? r.json() : {}; })
+        ]).then(function(results) {
+            if (!results[0]) return;
+            allFields = results[0];
+            fieldGroupDefs = results[1] || {};
+            renderFieldsTable(allFields);
+        }).catch(function(err) { document.getElementById('fields-loading').textContent = 'Failed to load: ' + (err.message || err); });
+    }
+
+    function renderFieldsTable(fields) {
+        document.getElementById('fields-loading').style.display = 'none';
+        document.getElementById('fields-table').style.display = 'table';
+        var tbody = document.getElementById('fields-tbody');
+
+        /* Build reverse map: fieldName → groupName */
+        var fieldToGroup = {};
+        Object.keys(fieldGroupDefs).forEach(function(grp) {
+            (fieldGroupDefs[grp] || []).forEach(function(fn) { fieldToGroup[fn] = grp; });
+        });
+
+        /* Sort fields by group, then alphabetically */
+        var sorted = Object.keys(fields).sort(function(a, b) {
+            var ga = fieldToGroup[a] || 'zzz', gb = fieldToGroup[b] || 'zzz';
+            if (ga !== gb) return ga.localeCompare(gb);
+            return a.localeCompare(b);
+        });
+
+        /* Pre-count fields per group for the header badge */
+        var groupCounts = {};
+        sorted.forEach(function(name) {
+            var grp = fieldToGroup[name] || 'Ungrouped';
+            groupCounts[grp] = (groupCounts[grp] || 0) + 1;
+        });
+
+        var html = '';
+        var lastGroup = null;
+        sorted.forEach(function(name) {
+            var grp = fieldToGroup[name] || 'Ungrouped';
+            if (grp !== lastGroup) {
+                var safeGrp = grp.replace(/'/g, "\\'");
+                html += '<tr class="field-group-header" data-group="' + esc(grp) + '" onclick="toggleFieldGroup(this)">' +
+                    '<td colspan="3"><i class="fa fa-caret-right"></i><i class="fa fa-folder-o"></i> ' + esc(grp) +
+                    ' <span style="font-weight:400;color:#9db5d5;margin-left:6px">(' + groupCounts[grp] + ')</span></td></tr>';
+                lastGroup = grp;
+            }
+            html += '<tr id="frow-' + esc(name) + '" data-group="' + esc(grp) + '" style="display:none">' +
+                '<td><code>' + esc(name) + '</code></td>' +
+                '<td id="fdesc-' + esc(name) + '">' + esc(fields[name]) + '</td>' +
+                '<td style="white-space:nowrap">' +
+                    '<button class="btn-edit btn-sm" onclick="editField(\'' + esc(name) + '\')"><i class="fa fa-pencil"></i></button>' +
+                    ' <button class="btn-del btn-sm" onclick="deleteField(\'' + esc(name) + '\')"><i class="fa fa-trash"></i></button>' +
+                '</td></tr>';
+        });
+        tbody.innerHTML = html;
+
+        /* Search filter wiring */
+        var searchEl = document.getElementById('field-search');
+        if (searchEl) {
+            searchEl.oninput = function() {
+                var q = this.value.toLowerCase().trim();
+                if (!q) {
+                    /* Restore collapsed state */
+                    document.querySelectorAll('#fields-tbody tr:not(.field-group-header)').forEach(function(tr) { tr.style.display = 'none'; });
+                    document.querySelectorAll('#fields-tbody .field-group-header').forEach(function(hdr) { hdr.classList.remove('is-open'); });
+                    return;
+                }
+                var visibleGroups = {};
+                document.querySelectorAll('#fields-tbody tr:not(.field-group-header)').forEach(function(tr) {
+                    var match = tr.textContent.toLowerCase().indexOf(q) >= 0;
+                    tr.style.display = match ? '' : 'none';
+                    if (match) visibleGroups[tr.getAttribute('data-group')] = true;
+                });
+                document.querySelectorAll('#fields-tbody .field-group-header').forEach(function(hdr) {
+                    var grp = hdr.getAttribute('data-group');
+                    if (visibleGroups[grp]) { hdr.classList.add('is-open'); } else { hdr.classList.remove('is-open'); }
+                });
+            };
+        }
+    }
+
+    function toggleFieldGroup(headerRow) {
+        var grp = headerRow.getAttribute('data-group');
+        var open = headerRow.classList.toggle('is-open');
+        var tbody = document.getElementById('fields-tbody');
+        var rows = tbody.querySelectorAll('tr[data-group="' + grp.replace(/"/g, '\\"') + '"]:not(.field-group-header)');
+        rows.forEach(function(tr) { tr.style.display = open ? '' : 'none'; });
+    }
+
+    function filterFields() {
+        var q = document.getElementById('field-search').value.toLowerCase();
+        var rows = document.getElementById('fields-tbody').querySelectorAll('tr[id^="frow-"]');
+        rows.forEach(function(row) {
+            var name = row.querySelector('.field-name-mono');
+            var desc = row.querySelector('.field-desc-text');
+            var text = (name ? name.textContent : '') + ' ' + (desc ? desc.textContent : '');
+            row.style.display = text.toLowerCase().indexOf(q) >= 0 ? '' : 'none';
+        });
+    }
+
+    function toggleAddField(show) {
+        document.getElementById('add-field-card').style.display = show ? '' : 'none';
+        document.getElementById('field-err').style.display = 'none';
+        if (show) { document.getElementById('new-field-name').value = ''; document.getElementById('new-field-desc').value = ''; document.getElementById('new-field-name').focus(); }
+    }
+
+    function saveNewField() {
+        var name = document.getElementById('new-field-name').value.trim();
+        var desc = document.getElementById('new-field-desc').value.trim();
+        var errEl = document.getElementById('field-err');
+        errEl.style.display = 'none';
+        if (!name) { showErr(errEl, 'Field name is required.'); return; }
+        fetch('api/admin/content/fields', { method: 'POST', headers: authHeaders(), body: JSON.stringify({ name: name, description: desc }) })
+        .then(function(r) { if (!r.ok) return r.text().then(function(t) { throw new Error(t); }); })
+        .then(function() { toggleAddField(false); loadFields(); })
+        .catch(function(err) { showErr(errEl, err.message || 'Save failed.'); });
+    }
+
+    function startEditField(name) {
+        var row = document.getElementById('frow-' + name);
+        if (!row) return;
+        var desc = allFields[name] || '';
+        row.innerHTML = '<td><span class="field-name-mono">' + esc(name) + '</span></td>' +
+            '<td><input type="text" class="search-input" style="width:100%" id="fedit-' + esc(name) + '" value="' + esc(desc) + '" /></td>' +
+            '<td>' +
+                '<button class="btn-save btn-sm" onclick="saveEditField(\'' + esc(name) + '\')"><i class="fa fa-check"></i> Save</button> ' +
+                '<button class="btn-cancel btn-sm" onclick="loadFields()">Cancel</button>' +
+            '</td>';
+        row.classList.add('field-row-edit');
+        document.getElementById('fedit-' + name).focus();
+    }
+
+    function editField(name) {
+        var desc = allFields[name] || '';
+        var row = document.getElementById('frow-' + name);
+        if (!row) return;
+        document.getElementById('fdesc-' + name).innerHTML =
+            '<input type="text" id="fedit-' + esc(name) + '" class="form-control" style="width:100%;font-size:12px;height:28px;padding:2px 6px" value="' + esc(desc).replace(/"/g,'&quot;') + '">' +
+            '<span style="white-space:nowrap;margin-top:4px;display:inline-block">' +
+            '<button class="btn-edit btn-sm" onclick="saveEditField(\'' + esc(name) + '\')"><i class="fa fa-check"></i> Save</button>' +
+            ' <button class="btn-del btn-sm" onclick="renderFieldsTable(allFields)" style="background:#8a8a8a"><i class="fa fa-times"></i></button>' +
+            '</span>';
+    }
+
+    function saveEditField(name) {
+        var desc = (document.getElementById('fedit-' + name) || {}).value || '';
+        fetch('api/admin/content/fields/' + encodeURIComponent(name), { method: 'PUT', headers: authHeaders(), body: JSON.stringify({ description: desc }) })
+        .then(function(r) { if (!r.ok) throw new Error(); allFields[name] = desc; loadFields(); })
+        .catch(function() { alert('Save failed.'); });
+    }
+
+    function deleteField(name) {
+        if (!confirm('Delete field description for "' + name + '"?')) return;
+        fetch('api/admin/content/fields/' + encodeURIComponent(name), { method: 'DELETE', headers: authHeaders() })
+        .then(function(r) { if (!r.ok) throw new Error(); delete allFields[name]; loadFields(); })
+        .catch(function() { alert('Delete failed.'); });
+    }
+
+    /* ══════════════════════════════════════════════════════════════════════════
+       SERVICES TAB
+    ══════════════════════════════════════════════════════════════════════════ */
+    function loadServices() {
+        fetch('api/admin/services', { headers: authHeaders() })
+        .then(function(r) { if (handleUnauth(r)) return null; return r.json(); })
+        .then(function(data) {
+            if (!data) return;
+            renderServicesCatalog(data);
+            populateCategoryList(data);
+        })
+        .catch(function() { document.getElementById('services-list').innerHTML = '<div class="loading">Failed to load services.</div>'; });
+    }
+
+    function populateCategoryList(cats) {
+        var dl = document.getElementById('cat-list');
+        dl.innerHTML = (cats || []).map(function(c) { return '<option value="' + esc(c.name) + '">'; }).join('');
+    }
+
+    function renderServicesCatalog(cats) {
+        var el = document.getElementById('services-list');
+        var total = 0;
+        if (!cats || !cats.length) {
+            el.innerHTML = '<div class="loading">No services defined.</div>';
+            document.getElementById('svc-count').textContent = '';
+            return;
+        }
+        el.innerHTML = cats.map(function(cat, idx) {
+            var count = (cat.services || []).length;
+            total += count;
+            var catId = 'svc-cat-' + idx;
+            var rows = (cat.services || []).map(function(svc) {
+                return '<div class="svc-row">' +
+                    '<span><span class="svc-name">' + esc(svc.service) + '</span><span class="svc-href">#' + esc(svc.href) + '</span></span>' +
+                    '<button class="btn-del btn-sm" onclick="deleteService(\'' + esc(svc.href) + '\')"><i class="fa fa-trash"></i></button>' +
+                '</div>';
+            }).join('');
+            return '<div class="cat-header" onclick="toggleSvcCat(this)" data-target="' + catId + '">' +
+                '<i class="fa fa-caret-right cat-caret"></i>' +
+                '<i class="fa fa-folder-o"></i> ' + esc(cat.name) +
+                ' <span class="svc-cat-count">(' + count + ')</span>' +
+                '</div>' +
+                '<div class="svc-cat-body" id="' + catId + '" style="display:none">' + rows + '</div>';
+        }).join('');
+        document.getElementById('svc-count').textContent = total + ' service' + (total !== 1 ? 's' : '');
+    }
+
+    function toggleSvcCat(header) {
+        var targetId = header.getAttribute('data-target');
+        var body = document.getElementById(targetId);
+        var opening = body.style.display === 'none';
+        body.style.display = opening ? '' : 'none';
+        header.classList.toggle('is-open', opening);
+    }
+
+    function createService() {
+        var cat   = document.getElementById('svc-category').value.trim();
+        var name  = document.getElementById('svc-name').value.trim();
+        var href  = document.getElementById('svc-href').value.trim();
+        var desc  = document.getElementById('svc-desc').value.trim();
+        var link  = document.getElementById('svc-link').value.trim();
+        var xsdReq = document.getElementById('svc-xsd-req').value.trim();
+        var xsdRes = document.getElementById('svc-xsd-res').value.trim();
+        var btn  = document.getElementById('btn-add-svc');
+        var errEl = document.getElementById('svc-err');
+        errEl.style.display = 'none';
+        document.getElementById('svc-success').style.display = 'none';
+        if (!cat)  { showErr(errEl, 'Category name is required.'); return; }
+        if (!name) { showErr(errEl, 'Service name is required.'); return; }
+        if (!href) { showErr(errEl, 'Href / anchor is required.'); return; }
+        btn.disabled = true; btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>&nbsp; Saving&hellip;';
+        var payload = { categoryName: cat, serviceName: name, href: href, description: desc, link: link };
+        if (xsdReq) payload.xsdRequestContent = xsdReq;
+        if (xsdRes) payload.xsdSchemaContent  = xsdRes;
+        fetch('api/admin/services', { method: 'POST', headers: authHeaders(), body: JSON.stringify(payload) })
+        .then(function(r) { if (!r.ok) return r.text().then(function(t) { throw new Error(t); }); return r.json(); })
+        .then(function() {
+            document.getElementById('svc-success').style.display = 'inline';
+            document.getElementById('svc-category').value = '';
+            document.getElementById('svc-name').value     = '';
+            document.getElementById('svc-href').value     = '';
+            document.getElementById('svc-desc').value     = '';
+            document.getElementById('svc-link').value     = '';
+            document.getElementById('svc-xsd-req').value  = '';
+            document.getElementById('svc-xsd-res').value  = '';
+            loadServices();
+        })
+        .catch(function(err) { showErr(errEl, err.message || 'Save failed.'); })
+        .finally(function() { btn.disabled = false; btn.innerHTML = '<i class="fa fa-plus"></i>&nbsp; Add Service'; });
+    }
+
+    function deleteService(href) {
+        if (!confirm('Delete service "' + href + '"? This cannot be undone.')) return;
+        fetch('api/admin/services/' + encodeURIComponent(href), { method: 'DELETE', headers: authHeaders() })
+        .then(function(r) { if (!r.ok) throw new Error(); loadServices(); })
+        .catch(function() { alert('Delete failed.'); });
+    }
+
+    /* ── Shared helpers ─────────────────────────────────────────────────────── */
+    function esc(s) {
+        return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
+    function showErr(el, msg) { el.textContent = msg; el.style.display = 'block'; }
+
     function doLogout() {
-        fetch('api/admin/logout', { method: 'POST', headers: authHeaders() }).finally(function () {
+        fetch('api/admin/logout', { method: 'POST', headers: authHeaders() }).finally(function() {
             sessionStorage.removeItem('cl_admin');
             window.location.replace('AdminLogin.html');
         });
     }
 
-    function esc(s) {
-        return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    }
-
+    /* Boot */
+    tabLoaded['endpoints'] = true;
     loadEndpoints();
 </script>
 </body>

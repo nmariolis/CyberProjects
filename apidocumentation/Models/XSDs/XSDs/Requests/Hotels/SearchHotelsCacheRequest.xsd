@@ -102,6 +102,20 @@
             </xs:restriction>
           </xs:simpleType>
         </xs:element>
+        <xs:element name="Nationality" minOccurs="0" maxOccurs="1" xmlns:doc="2-character ISO 3166-1 alpha-2 nationality code of the traveller (e.g. GB, DE, GR). Used for nationality-specific pricing rules.">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="[A-Z]{2}" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="Currency" minOccurs="0" maxOccurs="1" xmlns:doc="ISO 4217 3-letter currency code for returned prices (e.g. EUR, GBP, USD). Defaults to the account's base currency.">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="[A-Z]{3}" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
       </xs:sequence>
     </xs:complexType>
   </xs:element>

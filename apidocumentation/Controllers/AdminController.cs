@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Http;
 
@@ -207,8 +208,311 @@ namespace Documentation.Controllers
             var path = HttpContext.Current.Server.MapPath(EndpointsFile);
             File.WriteAllText(path, JsonConvert.SerializeObject(config, Formatting.Indented));
         }
+
+        // ── Content Sections ─────────────────────────────────────────────────────
+
+        private static readonly string ContentFile   = "~/Models/content.json";
+        private static readonly string FieldDescFile = "~/Models/fieldDescriptions.json";
+        private static readonly string ServicesFile  = "~/Models/webservicesUpdated.json";
+        private static readonly string XsdBase       = "~/Models/XSDs/XSDs/";
+
+        [HttpGet]
+        [Route("api/admin/content/sections")]
+        public IHttpActionResult GetSections()
+        {
+            if (!IsAuthenticated()) return Unauthorized();
+            var data = LoadContent();
+            return Ok(data?.Sections ?? new List<ContentSection>());
+        }
+
+        [HttpPost]
+        [Route("api/admin/content/sections")]
+        public IHttpActionResult CreateSection([FromBody] ContentSection section)
+        {
+            if (!IsAuthenticated()) return Unauthorized();
+            if (section == null || string.IsNullOrWhiteSpace(section.Title))
+                return BadRequest("title is required.");
+            if (string.IsNullOrWhiteSpace(section.Id))
+                section.Id = Regex.Replace(section.Title.ToLowerInvariant(), @"[^a-z0-9]+", "-").Trim('-');
+            var data = LoadContent() ?? new ContentData();
+            if (data.Sections.Any(s => string.Equals(s.Id, section.Id, StringComparison.OrdinalIgnoreCase)))
+                section.Id += "-" + Guid.NewGuid().ToString("N").Substring(0, 4);
+            data.Sections.Add(section);
+            SaveContent(data);
+            return Ok(section);
+        }
+
+        [HttpPut]
+        [Route("api/admin/content/sections/{id}")]
+        public IHttpActionResult UpdateSection(string id, [FromBody] ContentSection update)
+        {
+            if (!IsAuthenticated()) return Unauthorized();
+            if (update == null) return BadRequest("body is required.");
+            var data = LoadContent();
+            if (data == null) return NotFound();
+            var sec = data.Sections.FirstOrDefault(s => string.Equals(s.Id, id, StringComparison.OrdinalIgnoreCase));
+            if (sec == null) return NotFound();
+            if (!string.IsNullOrWhiteSpace(update.Title)) sec.Title = update.Title;
+            if (update.Items != null) sec.Items = update.Items;
+            SaveContent(data);
+            return Ok(sec);
+        }
+
+        [HttpDelete]
+        [Route("api/admin/content/sections/{id}")]
+        public IHttpActionResult DeleteSection(string id)
+        {
+            if (!IsAuthenticated()) return Unauthorized();
+            var data = LoadContent();
+            if (data == null) return NotFound();
+            var removed = data.Sections.RemoveAll(s => string.Equals(s.Id, id, StringComparison.OrdinalIgnoreCase));
+            if (removed == 0) return NotFound();
+            SaveContent(data);
+            return Ok();
+        }
+
+        // ── Field Descriptions ────────────────────────────────────────────────────
+
+        [HttpGet]
+        [Route("api/admin/content/fields")]
+        public IHttpActionResult GetFields()
+        {
+            if (!IsAuthenticated()) return Unauthorized();
+            return Ok(LoadFields() ?? new Dictionary<string, string>());
+        }
+
+        [HttpPost]
+        [Route("api/admin/content/fields")]
+        public IHttpActionResult CreateField([FromBody] FieldEntry req)
+        {
+            if (!IsAuthenticated()) return Unauthorized();
+            if (req == null || string.IsNullOrWhiteSpace(req.Name))
+                return BadRequest("name is required.");
+            var fields = LoadFields() ?? new Dictionary<string, string>();
+            fields[req.Name.Trim()] = req.Description ?? string.Empty;
+            SaveFields(fields);
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("api/admin/content/fields/{name}")]
+        public IHttpActionResult UpdateField(string name, [FromBody] FieldEntry req)
+        {
+            if (!IsAuthenticated()) return Unauthorized();
+            var fields = LoadFields();
+            if (fields == null || !fields.ContainsKey(name)) return NotFound();
+            fields[name] = req?.Description ?? string.Empty;
+            SaveFields(fields);
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("api/admin/content/fields/{name}")]
+        public IHttpActionResult DeleteField(string name)
+        {
+            if (!IsAuthenticated()) return Unauthorized();
+            var fields = LoadFields();
+            if (fields == null || !fields.ContainsKey(name)) return NotFound();
+            fields.Remove(name);
+            SaveFields(fields);
+            return Ok();
+        }
+
+        // ── Services ──────────────────────────────────────────────────────────────
+
+        [HttpGet]
+        [Route("api/admin/services")]
+        public IHttpActionResult GetAllServices()
+        {
+            if (!IsAuthenticated()) return Unauthorized();
+            var catalog = LoadServiceCatalog();
+            return Ok(catalog?.ServiceCategory ?? new List<ServiceCategoryModel>());
+        }
+
+        [HttpPost]
+        [Route("api/admin/services")]
+        public IHttpActionResult CreateService([FromBody] CreateServiceRequest req)
+        {
+            if (!IsAuthenticated()) return Unauthorized();
+            if (req == null || string.IsNullOrWhiteSpace(req.ServiceName) ||
+                string.IsNullOrWhiteSpace(req.CategoryName) || string.IsNullOrWhiteSpace(req.Href))
+                return BadRequest("serviceName, categoryName, and href are required.");
+
+            string xsdRequestPath = null, xsdSchemaPath = null;
+
+            if (!string.IsNullOrWhiteSpace(req.XsdRequestContent))
+            {
+                var fname = SanitizeFilename(req.Href) + "Request.xsd";
+                var relPath = "Requests/Custom/" + fname;
+                var fullPath = Path.Combine(HttpContext.Current.Server.MapPath(XsdBase), "Requests\\Custom\\" + fname);
+                Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+                File.WriteAllText(fullPath, req.XsdRequestContent, Encoding.UTF8);
+                xsdRequestPath = relPath;
+            }
+
+            if (!string.IsNullOrWhiteSpace(req.XsdSchemaContent))
+            {
+                var fname = SanitizeFilename(req.Href) + "Response.xsd";
+                var relPath = "Responses/Custom/" + fname;
+                var fullPath = Path.Combine(HttpContext.Current.Server.MapPath(XsdBase), "Responses\\Custom\\" + fname);
+                Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+                File.WriteAllText(fullPath, req.XsdSchemaContent, Encoding.UTF8);
+                xsdSchemaPath = relPath;
+            }
+
+            var newService = new ServiceEntryModel
+            {
+                Service     = req.ServiceName.Trim(),
+                Href        = req.Href.Trim(),
+                Description = req.Description ?? string.Empty,
+                Link        = req.Link ?? string.Empty,
+                XsdRequest  = xsdRequestPath ?? string.Empty,
+                XsdSchema   = xsdSchemaPath  ?? string.Empty
+            };
+
+            var catalog = LoadServiceCatalog() ?? new ServiceCatalogModel { ServiceCategory = new List<ServiceCategoryModel>() };
+            var category = catalog.ServiceCategory.FirstOrDefault(c =>
+                string.Equals(c.Name, req.CategoryName.Trim(), StringComparison.OrdinalIgnoreCase));
+            if (category == null)
+            {
+                category = new ServiceCategoryModel { Name = req.CategoryName.Trim(), Services = new List<ServiceEntryModel>() };
+                catalog.ServiceCategory.Add(category);
+            }
+            category.Services.Add(newService);
+            SaveServiceCatalog(catalog);
+            return Ok(newService);
+        }
+
+        [HttpDelete]
+        [Route("api/admin/services/{href}")]
+        public IHttpActionResult DeleteService(string href)
+        {
+            if (!IsAuthenticated()) return Unauthorized();
+            var catalog = LoadServiceCatalog();
+            if (catalog == null) return NotFound();
+            bool found = false;
+            foreach (var cat in catalog.ServiceCategory.ToList())
+            {
+                var rem = cat.Services.RemoveAll(s => string.Equals(s.Href, href, StringComparison.OrdinalIgnoreCase));
+                if (rem > 0) found = true;
+                if (cat.Services.Count == 0) catalog.ServiceCategory.Remove(cat);
+            }
+            if (!found) return NotFound();
+            SaveServiceCatalog(catalog);
+            return Ok();
+        }
+
+        // ── Content helpers ───────────────────────────────────────────────────────
+
+        private ContentData LoadContent()
+        {
+            var path = HttpContext.Current.Server.MapPath(ContentFile);
+            if (!File.Exists(path)) return null;
+            try { return JsonConvert.DeserializeObject<ContentData>(File.ReadAllText(path)); }
+            catch { return null; }
+        }
+
+        private void SaveContent(ContentData data)
+        {
+            var path = HttpContext.Current.Server.MapPath(ContentFile);
+            File.WriteAllText(path, JsonConvert.SerializeObject(data, Formatting.Indented));
+        }
+
+        private Dictionary<string, string> LoadFields()
+        {
+            var path = HttpContext.Current.Server.MapPath(FieldDescFile);
+            if (!File.Exists(path)) return null;
+            try { return JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(path)); }
+            catch { return null; }
+        }
+
+        private void SaveFields(Dictionary<string, string> fields)
+        {
+            var path = HttpContext.Current.Server.MapPath(FieldDescFile);
+            File.WriteAllText(path, JsonConvert.SerializeObject(fields, Formatting.Indented));
+        }
+
+        private ServiceCatalogModel LoadServiceCatalog()
+        {
+            var path = HttpContext.Current.Server.MapPath(ServicesFile);
+            if (!File.Exists(path)) return null;
+            try { return JsonConvert.DeserializeObject<ServiceCatalogModel>(File.ReadAllText(path)); }
+            catch { return null; }
+        }
+
+        private void SaveServiceCatalog(ServiceCatalogModel catalog)
+        {
+            var path = HttpContext.Current.Server.MapPath(ServicesFile);
+            File.WriteAllText(path, JsonConvert.SerializeObject(catalog, Formatting.Indented));
+        }
+
+        private static string SanitizeFilename(string name)
+        {
+            return Regex.Replace(name, @"[^a-zA-Z0-9_-]", "_");
+        }
     }
 
-    public class AdminLoginRequest    { public string Username { get; set; } public string Password { get; set; } }
-    public class CreateEndpointRequest { public string Name { get; set; } public string BaseUrl { get; set; } }
+    // ── Request / response models ─────────────────────────────────────────────────
+
+    public class AdminLoginRequest     { public string Username { get; set; } public string Password { get; set; } }
+    public class CreateEndpointRequest { public string Name    { get; set; } public string BaseUrl  { get; set; } }
+
+    public class ContentData
+    {
+        [JsonProperty("sections")]
+        public List<ContentSection> Sections { get; set; } = new List<ContentSection>();
+    }
+
+    public class ContentSection
+    {
+        [JsonProperty("id")]    public string Id    { get; set; }
+        [JsonProperty("title")] public string Title { get; set; }
+        [JsonProperty("items")] public List<ContentItem> Items { get; set; } = new List<ContentItem>();
+    }
+
+    public class ContentItem
+    {
+        [JsonProperty("type")]     public string Type     { get; set; }
+        [JsonProperty("text")]     public string Text     { get; set; }
+        [JsonProperty("language")] public string Language { get; set; }
+    }
+
+    public class FieldEntry
+    {
+        public string Name        { get; set; }
+        public string Description { get; set; }
+    }
+
+    public class ServiceCatalogModel
+    {
+        [JsonProperty("serviceCategory")]
+        public List<ServiceCategoryModel> ServiceCategory { get; set; } = new List<ServiceCategoryModel>();
+    }
+
+    public class ServiceCategoryModel
+    {
+        [JsonProperty("name")]     public string Name { get; set; }
+        [JsonProperty("services")] public List<ServiceEntryModel> Services { get; set; } = new List<ServiceEntryModel>();
+    }
+
+    public class ServiceEntryModel
+    {
+        [JsonProperty("service")]     public string Service     { get; set; }
+        [JsonProperty("href")]        public string Href        { get; set; }
+        [JsonProperty("description")] public string Description { get; set; }
+        [JsonProperty("link")]        public string Link        { get; set; }
+        [JsonProperty("xsdRequest")]  public string XsdRequest  { get; set; }
+        [JsonProperty("xsdSchema")]   public string XsdSchema   { get; set; }
+    }
+
+    public class CreateServiceRequest
+    {
+        public string CategoryName     { get; set; }
+        public string ServiceName      { get; set; }
+        public string Href             { get; set; }
+        public string Description      { get; set; }
+        public string Link             { get; set; }
+        public string XsdRequestContent { get; set; }
+        public string XsdSchemaContent  { get; set; }
+    }
 }

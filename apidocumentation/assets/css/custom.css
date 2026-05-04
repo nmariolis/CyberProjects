@@ -22,7 +22,7 @@ html .clipboard-copy:hover { opacity: 0.85; }
 
 /* ─── Body & layout ───────────────────────────────────────── */
 body {
-    background: #eef1f7 !important;
+    background: #f0f4f9 !important;
     padding-bottom: 0 !important;
 }
 
@@ -527,3 +527,28 @@ html code {
     .schema-table thead th,
     .schema-table tbody td { padding: 6px 8px; }
 }
+
+/* ─── Professional refinements ──────────────────────────────── */
+.site-header { box-shadow: 0 2px 8px rgba(0,0,0,0.18); position: sticky; top: 0; z-index: 1000; }
+.navbar-default { margin-bottom: 0; border-radius: 0; border: none; }
+.navbar-default .navbar-nav > li > a { color: rgba(255,255,255,0.85); font-size: 13px; font-weight: 500; letter-spacing: 0.3px; padding: 14px 18px; transition: color 0.15s, background 0.15s; }
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li.active > a { color: #fff; background: rgba(255,255,255,0.1); }
+.sidebar-dark .sidebar-brand { display: flex; align-items: center; min-height: 56px; }
+.sidebar-brand img { height: 36px; width: auto; max-width: 150px; object-fit: contain; }
+h2 { font-size: 22px; letter-spacing: -0.2px; }
+.schema-table thead th { font-size: 10.5px; letter-spacing: 0.8px; }
+.form-panel { box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+.btn-generate { letter-spacing: 0.8px; box-shadow: 0 2px 4px rgba(235,128,8,0.25); transition: all 0.15s; }
+.btn-generate:hover { box-shadow: 0 4px 8px rgba(235,128,8,0.35); transform: translateY(-1px); }
+.resp-wrap { box-shadow: 0 -1px 0 #e0e7f2; }
+section { transition: none; }
+
+/* ─── Boolean flags row (3-col inside optional group) ──────── */
+.bool-flags-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px 0; margin: 0; }
+.bool-flags-grid .field-cell { flex: unset; padding: 3px 8px; }
+.bool-flags-grid .field-cell label { min-width: 100px; font-size: 12px; }
+.optional-group-toggle { background: none; border: none; color: #1C4084; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; padding: 8px 0 4px 0; cursor: pointer; display: flex; align-items: center; gap: 6px; width: 100%; text-align: left; }
+.optional-group-toggle .fa { color: #EB8008; font-size: 11px; transition: transform 0.2s; }
+.optional-group-toggle.is-open .fa { transform: rotate(90deg); }
+.optional-group-body { display: none; }
+.optional-group-body.is-open { display: block; }
