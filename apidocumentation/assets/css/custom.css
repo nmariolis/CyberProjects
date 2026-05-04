@@ -133,6 +133,7 @@ a:hover { color: #EB8008; text-decoration: underline; }
     display: flex;
     align-items: center;
     padding: 4px 10px;
+    min-height: 38px;
 }
 
 .field-cell label {
@@ -144,6 +145,15 @@ a:hover { color: #EB8008; text-decoration: underline; }
     color: #1C4084;
     margin-bottom: 0;
     white-space: nowrap;
+    line-height: 30px;
+    align-self: center;
+}
+
+.req-star {
+    color: #d32f2f;
+    font-weight: 700;
+    margin-left: 2px;
+    font-size: 13px;
 }
 
 .field-cell .form-control {
@@ -156,6 +166,7 @@ a:hover { color: #EB8008; text-decoration: underline; }
     background: #ffffff;
     color: #333;
     transition: border-color 0.2s, box-shadow 0.2s;
+    align-self: center;
 }
 
 .field-cell .form-control:focus {
@@ -453,6 +464,14 @@ html code {
     overflow: auto;
     padding: 15px;
 }
+
+/* ─── Try-it row: form + code panel aligned at top ────────── */
+.try-it-row {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.try-it-row > [class*="col-"] { float: none; }
 
 /* ─── Collapsible schema accordion ───────────────────────── */
 .schema-accordion {

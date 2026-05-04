@@ -345,7 +345,7 @@
                     '<div id="schema-req-' + svc.href + '"><em class="loading-msg">Loading schema…</em></div>' +
                     '</div></div>' +
 
-                    '<div class="row">' +
+                    '<div class="row try-it-row">' +
                     '<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12 leftSection">' +
                     '<div class="promo small-icon left"><i class="fa fa-pencil-square-o"></i><h3>Try It</h3></div>' +
                     '<div id="form-container-' + svc.href + '" class="form-panel"><em>Loading…</em></div>' +
@@ -621,14 +621,17 @@
             $('#form-container-' + href).html(html);
         }
 
+        function reqStar(required) {
+            return required ? '<span class="req-star">*</span>' : '';
+        }
+
         function renderSimpleField(field, href) {
             var fid = 'f-' + href + '-' + safeId(field.Name);
-            var label = field.Name + (field.Required ? ' *' : '') + ':';
             var lookupBtn = FIELD_LOOKUPS[field.Name]
                 ? ' <button type="button" class="btn-lookup" onclick="openLookupModal(\'' + escapeAttr(fid) + '\',\'' + escapeAttr(field.Name) + '\')" title="Browse available values"><i class="fa fa-search"></i></button>'
                 : '';
             return '<div class="field-cell">' +
-                '<label for="' + fid + '">' + label + lookupBtn + '</label>' +
+                '<label for="' + fid + '">' + escapeAttr(field.Name) + reqStar(field.Required) + ':' + lookupBtn + '</label>' +
                 buildInput(field, fid) +
                 '</div>';
         }
@@ -656,20 +659,18 @@
                 while (j < subFields.length) {
                     var sf = subFields[j];
                     var sfId = 'f-' + href + '-' + safeId(field.Name) + '-' + safeId(sf.Name);
-                    var sfLabel = sf.Name + (sf.Required ? ' *' : '') + ':';
                     var sfLookupBtn = FIELD_LOOKUPS[sf.Name]
                         ? ' <button type="button" class="btn-lookup" onclick="openLookupModal(\'' + escapeAttr(sfId) + '\',\'' + escapeAttr(sf.Name) + '\')" title="Browse available values"><i class="fa fa-search"></i></button>'
                         : '';
-                    innerHtml += '<div class="field-row"><div class="field-cell"><label for="' + sfId + '">' + sfLabel + sfLookupBtn + '</label>' + buildInput(sf, sfId) + '</div>';
+                    innerHtml += '<div class="field-row"><div class="field-cell"><label for="' + sfId + '">' + escapeAttr(sf.Name) + reqStar(sf.Required) + ':' + sfLookupBtn + '</label>' + buildInput(sf, sfId) + '</div>';
                     j++;
                     if (j < subFields.length) {
                         var sf2 = subFields[j];
                         var sf2Id = 'f-' + href + '-' + safeId(field.Name) + '-' + safeId(sf2.Name);
-                        var sf2Label = sf2.Name + (sf2.Required ? ' *' : '') + ':';
                         var sf2LookupBtn = FIELD_LOOKUPS[sf2.Name]
                             ? ' <button type="button" class="btn-lookup" onclick="openLookupModal(\'' + escapeAttr(sf2Id) + '\',\'' + escapeAttr(sf2.Name) + '\')" title="Browse available values"><i class="fa fa-search"></i></button>'
                             : '';
-                        innerHtml += '<div class="field-cell"><label for="' + sf2Id + '">' + sf2Label + sf2LookupBtn + '</label>' + buildInput(sf2, sf2Id) + '</div>';
+                        innerHtml += '<div class="field-cell"><label for="' + sf2Id + '">' + escapeAttr(sf2.Name) + reqStar(sf2.Required) + ':' + sf2LookupBtn + '</label>' + buildInput(sf2, sf2Id) + '</div>';
                         j++;
                     }
                     innerHtml += '</div>';
@@ -1009,6 +1010,131 @@
                         var id = $(this).attr('FileNumber');
                         var ref = $(this).attr('Reference') || '';
                         rows.push({ id: id, label: 'File #' + id + (ref ? '  (' + ref + ')' : '') });
+                    });
+                    return rows;
+                }
+            },
+            Prefecture: {
+                title: 'Prefecture  —  values from Place Search',
+                sourceHref: 'place-search',
+                buildXml: function(u, p) {
+                    return '<PlaceSearchRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '<PlaceType>Prefectures</PlaceType><Language>en</Language></PlaceSearchRequest>';
+                },
+                parseRows: function(doc) {
+                    var rows = [];
+                    $(doc).find('Prefecture').each(function() {
+                        rows.push({ id: $(this).attr('id'), label: $(this).find('PrefectureName').text() });
+                    });
+                    return rows;
+                }
+            },
+            City: {
+                title: 'City  —  values from Place Search',
+                sourceHref: 'place-search',
+                buildXml: function(u, p) {
+                    return '<PlaceSearchRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '<PlaceType>Cities</PlaceType><Language>en</Language></PlaceSearchRequest>';
+                },
+                parseRows: function(doc) {
+                    var rows = [];
+                    $(doc).find('City').each(function() {
+                        rows.push({ id: $(this).attr('city_id'), label: $(this).find('CityName').text() });
+                    });
+                    return rows;
+                }
+            },
+            VehicleID: {
+                title: 'Vehicle ID  —  values from Transfer Vehicles',
+                sourceHref: 'transfer-vehicles',
+                buildXml: function(u, p) {
+                    return '<SearchTransferVehicles xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '</SearchTransferVehicles>';
+                },
+                parseRows: function(doc) {
+                    var rows = [];
+                    $(doc).find('Vehicle').each(function() {
+                        var id = $(this).attr('ID') || $(this).attr('id');
+                        var lbl = $(this).attr('Name') || $(this).attr('Type') || $(this).text().trim() || ('Vehicle ' + id);
+                        rows.push({ id: id, label: lbl });
+                    });
+                    return rows;
+                }
+            },
+            PackageCategoryID: {
+                title: 'Package Category ID  —  values from Package Categories',
+                sourceHref: 'package-categories',
+                buildXml: function(u, p) {
+                    return '<PackageCategoriesRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '</PackageCategoriesRequest>';
+                },
+                parseRows: function(doc) {
+                    var rows = [];
+                    $(doc).find('Category').each(function() {
+                        var id = $(this).attr('ID') || $(this).attr('id');
+                        var lbl = $(this).attr('Name') || $(this).find('Name').first().text() || $(this).text().trim() || ('Category ' + id);
+                        rows.push({ id: id, label: lbl });
+                    });
+                    return rows;
+                }
+            },
+            PackageID: {
+                title: 'Package ID  —  values from Package List',
+                sourceHref: 'package-list',
+                buildXml: function(u, p) {
+                    return '<PackageListRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '<Language>en</Language></PackageListRequest>';
+                },
+                parseRows: function(doc) {
+                    var rows = [];
+                    $(doc).find('Package').each(function() {
+                        var id = $(this).attr('ID') || $(this).attr('id');
+                        var lbl = $(this).attr('Name') || $(this).find('PackageName,Name').first().text() || $(this).text().substring(0, 60) || ('Package ' + id);
+                        rows.push({ id: id, label: lbl });
+                    });
+                    return rows;
+                }
+            },
+            ContractID: {
+                title: 'Contract ID  —  values from My Contracts',
+                sourceHref: 'my-contracts',
+                buildXml: function(u, p) {
+                    return '<SearchContracts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '</SearchContracts>';
+                },
+                parseRows: function(doc) {
+                    var rows = [];
+                    $(doc).find('Contract').each(function() {
+                        var id = $(this).attr('ID') || $(this).attr('id') || $(this).attr('ContractID');
+                        var lbl = $(this).attr('Name') || $(this).attr('HotelName') || $(this).find('Name,HotelName').first().text() || ('Contract ' + id);
+                        rows.push({ id: id, label: lbl });
+                    });
+                    return rows;
+                }
+            },
+            GroupID: {
+                title: 'Group ID  —  values from Rental Models',
+                sourceHref: 'rental-models',
+                buildXml: function(u, p) {
+                    return '<SearchRentalModels xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '</SearchRentalModels>';
+                },
+                parseRows: function(doc) {
+                    var rows = [];
+                    $(doc).find('Group').each(function() {
+                        var id = $(this).attr('ID');
+                        var type = $(this).attr('Type') || ('Group ' + id);
+                        rows.push({ id: id, label: type });
+                    });
+                    return rows;
+                }
+            },
+            AccommodationID: {
+                title: 'Accommodation ID  —  values from Rental Accommodation',
+                sourceHref: 'rental-accommodation',
+                buildXml: function(u, p) {
+                    return '<SearchRentalAccommodation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '</SearchRentalAccommodation>';
+                },
+                parseRows: function(doc) {
+                    var rows = [];
+                    $(doc).find('Accommodation').each(function() {
+                        var id = $(this).attr('ID');
+                        var lbl = $(this).attr('Name') || ('Accommodation ' + id);
+                        var city = $(this).attr('City') || '';
+                        rows.push({ id: id, label: lbl + (city ? '  — ' + city : '') });
                     });
                     return rows;
                 }

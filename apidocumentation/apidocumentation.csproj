@@ -190,8 +190,6 @@
     <Content Include="assets\vendors\videojs\video-js.swf" />
     <Content Include="assets\vendors\videojs\video.js" />
     <Content Include="assets\vendors\videojs\video.min.js" />
-    <Content Include="customAssets\img\AvraLogo.png" />
-    <Content Include="customAssets\img\AVRA_logo.jpg" />
     <Content Include="Global.asax" />
     <Content Include="Index.html" />
     <Content Include="Login.html" />
