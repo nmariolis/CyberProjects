@@ -141,17 +141,44 @@ a:hover { color: #EB8008; text-decoration: underline; }
 .field-cell label {
     flex: 0 0 auto;
     width: 140px;
-    text-align: right;
-    padding-right: 10px;
+    height: 30px;           /* match input height exactly */
+    display: flex;
+    align-items: center;    /* vertically center text + button within the 30px */
+    justify-content: flex-end;
+    padding-right: 8px;
     margin: 0 !important;
     font-size: 13px;
     font-weight: 600;
     color: #1C4084;
     white-space: nowrap;
+    box-sizing: border-box;
     overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: 1.4;
     cursor: default;
+}
+
+/* Lookup icon button inside the label */
+.btn-lookup {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    margin-left: 4px;
+    padding: 0;
+    border: 1px solid #b0bfce;
+    border-radius: 3px;
+    background: #e8eef7;
+    color: #1C4084;
+    cursor: pointer;
+    font-size: 10px;
+    line-height: 1;
+    transition: background 0.15s, color 0.15s;
+}
+.btn-lookup:hover {
+    background: #1C4084;
+    color: #ffffff;
+    border-color: #1C4084;
 }
 
 .req-star {
@@ -475,28 +502,30 @@ html code {
 /* ─── Try-it section: pure flexbox, no Bootstrap cols ──────── */
 .try-it-section {
     display: flex;
-    align-items: flex-start;
+    align-items: stretch;
     width: 100%;
+    padding-top: 20px;  /* shared top space — both columns start at identical Y */
+    box-sizing: border-box;
 }
 
 .try-it-form-col {
     flex: 0 0 58.333%;
     min-width: 0;
     background: #ffffff;
-    padding: 28px 60px;
+    padding: 0 60px 28px;  /* no individual top padding */
     border-right: 1px solid #e0e7f2;
     box-sizing: border-box;
 }
-.try-it-form-col .promo.small-icon.left { margin-top: 0; }
+.try-it-form-col .promo.small-icon.left { margin-top: 0 !important; }
 
 .try-it-code-col {
     flex: 0 0 41.667%;
     min-width: 0;
     background: #272822;
-    padding: 28px 20px;
+    padding: 0 20px 28px;  /* no individual top padding */
     box-sizing: border-box;
 }
-.try-it-code-col .promo.small-icon.left { margin-top: 0; }
+.try-it-code-col .promo.small-icon.left { margin-top: 0 !important; }
 .try-it-code-col h3 { color: #a8b8cc !important; }
 .try-it-code-col .fa { color: #EB8008 !important; }
 .try-it-code-col pre.codeBlock-inline.rp-pre {
@@ -563,7 +592,7 @@ html code {
 /* ─── Responsive breakpoints ──────────────────────────────── */
 @media (max-width: 1199px) {
     .leftSection        { padding: 36px 44px !important; }
-    .try-it-form-col    { padding: 24px 44px; }
+    .try-it-form-col    { padding: 0 44px 24px; }
     .resp-wrap          { padding: 20px 44px; }
 }
 
@@ -574,19 +603,21 @@ html code {
     .right-panel        { padding: 0 16px 20px 16px; }
     .constraints-cell   { max-width: none; }
 
-    /* Stack try-it section vertically */
-    .try-it-section     { flex-direction: column; }
-    .try-it-form-col    { flex: 0 0 100%; padding: 24px 24px; border-right: none; border-bottom: 1px solid #3d3d2f; }
-    .try-it-code-col    { flex: 0 0 100%; padding: 24px 16px; }
+    /* Stack try-it section vertically on tablet */
+    .try-it-section     { flex-direction: column; padding-top: 16px; }
+    .try-it-form-col    { flex: 0 0 100%; padding: 0 24px 24px; border-right: none; border-bottom: 1px solid #3d3d2f; }
+    .try-it-code-col    { flex: 0 0 100%; padding: 0 16px 24px; }
 }
 
 @media (max-width: 767px) {
     .leftSection        { padding: 16px 14px !important; }
     .resp-wrap          { padding: 14px 14px; }
-    .try-it-form-col    { padding: 16px 14px; }
-    .try-it-code-col    { padding: 16px 12px; }
+    .try-it-section     { padding-top: 12px; }
+    .try-it-form-col    { padding: 0 14px 16px; }
+    .try-it-code-col    { padding: 0 12px 16px; }
     /* Each field takes full row width on narrow screens */
     .field-cell         { flex: 0 0 100%; }
+    .field-cell label   { width: 120px; }
     .right-panel        { padding: 0 12px 16px 12px; }
     .schema-table thead th,
     .schema-table tbody td { padding: 6px 8px; }
