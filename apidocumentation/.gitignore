@@ -1,0 +1,15 @@
+# Build output
+bin/
+obj/
+
+# Visual Studio / user-specific files
+.vs/
+*.user
+*.suo
+
+# Runtime state owned by the deployed server (not source)
+Logs/
+Models/*.migrated
+
+# Local publish output / archives
+*.zip
