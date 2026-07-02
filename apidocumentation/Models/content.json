@@ -4,26 +4,82 @@
       "id": "introduction",
       "title": "Introduction",
       "items": [
-        {"type": "paragraph", "text": "The purpose of this document is to give agents, and specifically their IT Technical departments, an insight into how Cyberlogic e-Tourism Platform set of XML web services works and what steps need to be completed in order to develop the interface with the platform."},
-        {"type": "paragraph", "text": "This document includes a simple guide to implementing each XML web service, with code examples in C#, as well as some snap shots of its use in an XML posting application."},
-        {"type": "paragraph", "text": "After that we will look into each service in detail, describing the function of the service, a link to the service and a listing of all the variables used in the request functions along with descriptions."},
-        {"type": "paragraph", "text": "Finally, there are references to example XMLs, and XSD requests and responses, which are included along with this document. Please bear in mind that these are only guidelines designed to support your implementation and, due to the dynamic nature of the system's development, may differ and change over time."}
-      ]
+        {
+          "type": "paragraph",
+          "text": "The purpose of this document is to give agents, and specifically their IT Technical departments, an insight into how Cyberlogic e-Tourism Platform set of XML web services works and what steps need to be completed in order to develop the interface with the platform.",
+          "language": null
+        },
+        {
+          "type": "paragraph",
+          "text": "This document includes a simple guide to implementing each XML web service, with code examples in C#, as well as some snap shots of its use in an XML posting application.",
+          "language": null
+        },
+        {
+          "type": "paragraph",
+          "text": "After that we will look into each service in detail, describing the function of the service, a link to the service and a listing of all the variables used in the request functions along with descriptions.",
+          "language": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Finally, there are references to example XMLs, and XSD requests and responses, which are included along with this document. Please bear in mind that these are only guidelines designed to support your implementation and, due to the dynamic nature of the system's development, may differ and change over time.",
+          "language": null
+        }
+      ],
+      "status": "approved",
+      "placement": null
     },
     {
       "id": "using-webservice",
       "title": "Using the Web Service",
       "items": [
-        {"type": "paragraph", "text": "A certain procedure is required to take place in order to be able to use any of the web services."},
-        {"type": "paragraph", "text": "Firstly, a user account is required to access any of the functions contained within the web service. These details are normally acquired through the web service distributer - system administrator."},
-        {"type": "paragraph", "text": "A list of all of the functions on the web service can be typically found at the following web address: http://www.link-url.com/services/webservice.asmx"},
-        {"type": "paragraph", "text": "In the analysis below, links are included to the XSDs for each function, which should be used to produce appropriately formatted XML. The service will also return informed error messages that should accurately identify any problems occurred with the format of the XML or with system failures & errors."},
-        {"type": "paragraph", "text": "There are many ways to the connect to the web service, and most methods are supported including simple HTTP GET, HTTP POST, REST, and SOAP versions 1.1 and 1.2 (some helpful instructions can be found on the links that have been included with each function analysis below)."},
-        {"type": "paragraph", "text": "For reference purposes, the following code illustrates how to connect to the web service using a simple http request (POST) in C#:"},
-        {"type": "code", "language": "csharp", "text": "string strWebServiceUrl = \"http://www.link_url.com/services/webservice.asmx/HotelInfo\";\nstring strXmlRequest = \"xml=<?xml version='1.0' encoding='utf8' ?><HotelInfoRequest><Username>username</Username><Password>password</Password><HotelID>123</HotelID></HotelInfoRequest>\";\nstring strXmlResponse = GetXmlData(strWebServiceUrl,strXmlRequest);\npublic string GetXmlData(string strWebServiceUrl, string strXmlRequest)\n{\n    HttpWebRequest httpReq = (HttpWebRequest)WebRequest.Create(strWebServiceUrl);\n    httpReq.Method = \"POST\";\n    httpReq.ContentType = \"application/x-www-form-urlencoded\";\n    byte[] xmlbytes = Encoding.UTF8.GetBytes(strXmlRequest);\n    httpReq.ContentLength = xmlbytes.Length;\n    StreamWriter myWriter = null;\n    myWriter = new StreamWriter(httpReq.GetRequestStream());\n    myWriter.Write(strXmlRequest);\n    myWriter.Close();\n    HttpWebResponse httpResp = (HttpWebResponse)httpReq.GetResponse();\n    Stream retStream = httpResp.GetResponseStream();\n    StreamReader reader = new StreamReader(retStream);\n    responseFromServer = reader.ReadToEnd();\n    reader.Close();\n    retStream.Close();\n    httpResp.Close();\n    return responseFromServer;\n}"},
-        {"type": "paragraph", "text": "Regarding the booking process, it is important to study the Reservation function and to understand all of the requirements that are necessary for each service. All of the Accommodation IDs, Place IDs and available dates can be found using the appropriate functions. Also, studying the responses from the XML examples included will provide a complete picture of the booking process."},
-        {"type": "paragraph", "text": "It is also recommended to make the use of caching where it is appropriate. There are many queries that will not change very regularly and so it would makes sense to save their responses and use the data locally to improve the performance of an application, and use less resources to perform simple tasks."}
-      ]
+        {
+          "type": "paragraph",
+          "text": "A certain procedure is required to take place in order to be able to use any of the web services.",
+          "language": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Firstly, a user account is required to access any of the functions contained within the web service. These details are normally acquired through the web service distributer - system administrator.",
+          "language": null
+        },
+        {
+          "type": "paragraph",
+          "text": "A list of all of the functions on the web service can be typically found at the following web address: http://www.link-url.com/services/webservice.asmx",
+          "language": null
+        },
+        {
+          "type": "paragraph",
+          "text": "In the analysis below, links are included to the XSDs for each function, which should be used to produce appropriately formatted XML. The service will also return informed error messages that should accurately identify any problems occurred with the format of the XML or with system failures & errors.",
+          "language": null
+        },
+        {
+          "type": "paragraph",
+          "text": "There are many ways to the connect to the web service, and most methods are supported including simple HTTP GET, HTTP POST, REST, and SOAP versions 1.1 and 1.2 (some helpful instructions can be found on the links that have been included with each function analysis below).",
+          "language": null
+        },
+        {
+          "type": "paragraph",
+          "text": "For reference purposes, the following code illustrates how to connect to the web service using a simple http request (POST) in C#:",
+          "language": null
+        },
+        {
+          "type": "code",
+          "text": "string strWebServiceUrl = \"http://www.link_url.com/services/webservice.asmx/HotelInfo\";\nstring strXmlRequest = \"xml=<?xml version='1.0' encoding='utf8' ?><HotelInfoRequest><Username>username</Username><Password>password</Password><HotelID>123</HotelID></HotelInfoRequest>\";\nstring strXmlResponse = GetXmlData(strWebServiceUrl,strXmlRequest);\npublic string GetXmlData(string strWebServiceUrl, string strXmlRequest)\n{\n    HttpWebRequest httpReq = (HttpWebRequest)WebRequest.Create(strWebServiceUrl);\n    httpReq.Method = \"POST\";\n    httpReq.ContentType = \"application/x-www-form-urlencoded\";\n    byte[] xmlbytes = Encoding.UTF8.GetBytes(strXmlRequest);\n    httpReq.ContentLength = xmlbytes.Length;\n    StreamWriter myWriter = null;\n    myWriter = new StreamWriter(httpReq.GetRequestStream());\n    myWriter.Write(strXmlRequest);\n    myWriter.Close();\n    HttpWebResponse httpResp = (HttpWebResponse)httpReq.GetResponse();\n    Stream retStream = httpResp.GetResponseStream();\n    StreamReader reader = new StreamReader(retStream);\n    responseFromServer = reader.ReadToEnd();\n    reader.Close();\n    retStream.Close();\n    httpResp.Close();\n    return responseFromServer;\n}",
+          "language": "csharp"
+        },
+        {
+          "type": "paragraph",
+          "text": "Regarding the booking process, it is important to study the Reservation function and to understand all of the requirements that are necessary for each service. All of the Accommodation IDs, Place IDs and available dates can be found using the appropriate functions. Also, studying the responses from the XML examples included will provide a complete picture of the booking process.",
+          "language": null
+        },
+        {
+          "type": "paragraph",
+          "text": "It is also recommended to make the use of caching where it is appropriate. There are many queries that will not change very regularly and so it would makes sense to save their responses and use the data locally to improve the performance of an application, and use less resources to perform simple tasks.",
+          "language": null
+        }
+      ],
+      "status": "approved",
+      "placement": null
     }
   ]
 }

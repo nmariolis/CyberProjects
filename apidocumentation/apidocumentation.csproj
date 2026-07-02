@@ -199,6 +199,10 @@
     <Content Include="Models\users.json" />
     <Content Include="Register.html" />
     <Content Include="Web.config" />
+    <!-- Logs/ is created/written at runtime; ship the empty scaffold so
+         deployments don't have to fix permissions later. -->
+    <Content Include="Logs\internal\.gitkeep" />
+    <Content Include="Logs\documentation\.gitkeep" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -207,8 +211,10 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WebservicesController.cs" />
     <Compile Include="Models\EndpointModels.cs" />
+    <Compile Include="Models\LogModels.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Models\XSDs\Service.cs" />
+    <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\IWebApiDocService.cs" />
     <Compile Include="Services\WebApiDocService.cs" />
     <Compile Include="Models\XSDs\HelperModels\SimpleTypeElement.cs" />
@@ -285,6 +291,12 @@
     <Content Include="assets\vendors\videojs\video.js.map" />
     <Content Include="assets\vendors\videojs\video.min.js.map" />
     <Content Include="Models\webservicesUpdated.json" />
+    <Content Include="Models\content.json" />
+    <Content Include="Models\fieldDescriptions.json" />
+    <Content Include="Models\fieldGroups.json" />
+    <Content Include="Models\XSDs\XSDs\**\*.*" />
+    <Content Include="customAssets\img\CyberlogicIcon.svg" />
+    <Content Include="customAssets\img\CyberlogicLogo.png" />
     <None Include="Models\XSDs\Requests\SearchHotels.xsd">
       <SubType>Designer</SubType>
     </None>

@@ -305,6 +305,36 @@
             padding: 9px 13px; font-size: 12px; color: #7a4800; margin-bottom: 18px;
         }
 
+        /* ── Assign field-to-service modal ── */
+        .assign-preview {
+            font-family: 'Courier New', monospace; font-size: 12.5px; line-height: 1.5;
+            background: #0f2038; color: #d7e6ff; padding: 12px 14px; border-radius: 6px;
+            margin: 4px 0 14px; white-space: pre-wrap; word-break: break-word; min-height: 40px;
+        }
+        .assign-preview .apk { color: #7fb0ff; }   /* element/attr names */
+        .assign-preview .apv { color: #ffd27f; }   /* values */
+        .attr-row { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; }
+        .attr-row input { flex: 2; }
+        .attr-row select { flex: 1; }
+        .attr-row .btn-del { flex: 0 0 auto; }
+        #assign-attrs:empty { display: none; }
+        .assign-existing-list { border-top: 1px solid #e6ecf5; padding-top: 10px; margin-top: 4px; }
+        .assign-existing-list .aitem {
+            display: flex; align-items: center; justify-content: space-between; gap: 8px;
+            padding: 6px 0; font-size: 12px; border-bottom: 1px solid #f2f5fa;
+        }
+        .assign-existing-list .aitem:last-child { border-bottom: none; }
+        .assign-existing-list code { font-family: 'Courier New', monospace; color: #1C4084; }
+        .btn-assign {
+            background: #eef3fb; color: #1C4084; border: 1px solid #d5e0f0;
+        }
+        .btn-assign:hover { background: #e0e9f8; }
+        .svc-assign-badge {
+            display: inline-block; font-size: 10px; font-weight: 700; color: #1C4084;
+            background: #e8f0fd; border: 1px solid #cfe0f7; border-radius: 10px;
+            padding: 1px 8px; margin-left: 6px;
+        }
+
         /* ── Services ── */
         .cat-header {
             font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px;
@@ -329,6 +359,153 @@
             background: #1C4084; color: rgba(255,255,255,.4);
             text-align: center; font-size: 11px; padding: 10px;
         }
+
+        /* ── Role badges ── */
+        .badge-role {
+            font-size: 10px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: .5px; padding: 2px 8px; border-radius: 3px; margin-left: 8px;
+        }
+        .role-executive    { background: #fde8d3; color: #9a4500; border: 1px solid #f4b07a; }
+        .role-projectmanager { background: #e8f0fb; color: #1C4084; border: 1px solid #bcd0f0; }
+        .role-developer    { background: #e8f5ec; color: #1a5c2e; border: 1px solid #94d4a0; }
+        .role-superadmin   { background: #f0e8fb; color: #5a1e8c; border: 1px solid #c0a0e8; }
+
+        /* ── Endpoint Project-Manager sub-row ── */
+        .ep-pm-row td {
+            padding: 4px 14px 10px !important;
+            border-top: none !important;
+            background: #f7f9fc;
+        }
+        .pm-label {
+            font-weight: 700; color: #1C4084; text-transform: uppercase;
+            letter-spacing: .5px; font-size: 10px; margin-right: 6px;
+        }
+        .pm-tag {
+            display: inline-block; background: #e8f0fb; color: #1C4084;
+            border: 1px solid #bcd0f0; border-radius: 12px;
+            padding: 2px 10px; margin: 0 4px 2px 0;
+            font-size: 11px; font-weight: 600;
+        }
+        .pm-tag .fa { color: #6c8cbf; margin-right: 3px; }
+        .pm-tag-empty {
+            color: #9db5d5; font-style: italic; font-size: 11px;
+        }
+        .pm-toggle-wrap { margin-left: 12px; display: inline-block; }
+        .pm-toggle-btn {
+            font-family: inherit; font-size: 11px; font-weight: 600;
+            border-radius: 4px; padding: 3px 12px; cursor: pointer;
+            transition: all .15s;
+        }
+        .pm-claim   { background: none; border: 1px solid #a8ddb8; color: #1a5c2e; }
+        .pm-claim:hover   { background: #28a745; border-color: #28a745; color: #fff; }
+        .pm-release { background: none; border: 1px solid #f0c9c9; color: #c0392b; }
+        .pm-release:hover { background: #dc3545; border-color: #dc3545; color: #fff; }
+        .pm-toggle-btn:disabled { opacity: .55; cursor: wait; }
+
+        /* ── Role dropdown (super-admin user management) ── */
+        .role-select {
+            font-size: 10px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: .5px; padding: 3px 22px 3px 8px; border-radius: 3px;
+            margin-left: 8px; cursor: pointer; font-family: inherit;
+            -webkit-appearance: none; -moz-appearance: none; appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='6' viewBox='0 0 8 6'><path fill='%23666' d='M0 0l4 6 4-6z'/></svg>");
+            background-repeat: no-repeat; background-position: right 6px center;
+        }
+        .role-select:focus { outline: 2px solid #1C4084; outline-offset: 1px; }
+        .role-select:disabled { opacity: .55; cursor: wait; }
+
+        /* ── Status badges ── */
+        .badge-status-pending  { background: #fff3e0; color: #c96d00; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 8px; border-radius: 3px; margin-left: 6px; }
+        .badge-status-approved { background: #e8f5ec; color: #1a5c2e; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 8px; border-radius: 3px; margin-left: 6px; }
+
+        /* ── Assignment picker (super-admin, on unassigned endpoints) ── */
+        .pm-assign-wrap { display: inline-block; margin-left: 12px; }
+        .pm-assign-select {
+            font-family: inherit; font-size: 11px; font-weight: 600;
+            padding: 3px 22px 3px 8px; border-radius: 4px;
+            border: 1px solid #bcd0f0; color: #1C4084; background: #fff;
+            margin-right: 6px;
+        }
+        .pm-assign-btn {
+            font-family: inherit; font-size: 11px; font-weight: 600;
+            background: none; border: 1px solid #f4b07a; color: #9a4500;
+            padding: 3px 12px; border-radius: 4px; cursor: pointer; transition: all .15s;
+        }
+        .pm-assign-btn:hover    { background: #EB8008; border-color: #EB8008; color: #fff; }
+        .pm-assign-btn:disabled { opacity: .55; cursor: wait; }
+
+        /* ── Log tables ── */
+        .log-table {
+            width: 100%; border-collapse: collapse; font-size: 12px;
+        }
+        .log-table thead th {
+            background: #f0f4fb; color: #1C4084;
+            font-size: 11px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: .5px; padding: 9px 14px; text-align: left;
+            border-bottom: 1px solid #d8e2f1;
+        }
+        .log-table tbody td {
+            padding: 8px 14px; border-bottom: 1px solid #f0f3f8;
+            color: #2a3a55; vertical-align: top;
+        }
+        .log-table tbody tr:hover { background: #f7f9fc; }
+        .log-table .log-time     { color: #6c8cbf; font-family: 'Courier New', monospace; font-size: 11px; white-space: nowrap; }
+        .log-table .log-details  { color: #6c8cbf; font-size: 11px; }
+        .log-action {
+            display: inline-block; font-size: 10px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: .5px;
+            padding: 2px 8px; border-radius: 3px;
+        }
+        .log-action-create   { background: #e8f5ec; color: #1a5c2e; border: 1px solid #94d4a0; }
+        .log-action-update,
+        .log-action-changerole,
+        .log-action-togglemanager,
+        .log-action-togglevisibility { background: #e8f0fb; color: #1C4084; border: 1px solid #bcd0f0; }
+        .log-action-delete   { background: #fde8e8; color: #8c1f1f; border: 1px solid #f4a3a3; }
+        .log-action-approve,
+        .log-action-assignmanager   { background: #fde8d3; color: #9a4500; border: 1px solid #f4b07a; }
+        .log-action-register { background: #f0e8fb; color: #5a1e8c; border: 1px solid #c0a0e8; }
+        .log-toolbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 9px 14px; gap: 10px;
+        }
+        .log-search {
+            flex: 1; padding: 6px 10px; border: 1px solid #d8e2f1; border-radius: 4px;
+            font-family: inherit; font-size: 12px; color: #1C4084;
+        }
+        .log-search:focus { outline: 2px solid #1C4084; outline-offset: 1px; }
+        .log-date-label {
+            font-size: 11px; font-weight: 700; color: #1C4084;
+            text-transform: uppercase; letter-spacing: .5px;
+        }
+        .log-date-select {
+            font-family: inherit; font-size: 12px; font-weight: 600; color: #1C4084;
+            background: #fff; border: 1px solid #d8e2f1; border-radius: 4px;
+            padding: 6px 24px 6px 10px; cursor: pointer;
+        }
+        .log-date-select:focus { outline: 2px solid #1C4084; outline-offset: 1px; }
+        .btn-export-csv {
+            background: none; border: 1px solid #a8ddb8; color: #1a5c2e;
+            font-family: inherit; font-size: 12px; font-weight: 600;
+            padding: 6px 14px; border-radius: 4px; cursor: pointer; transition: all .15s;
+            white-space: nowrap;
+        }
+        .btn-export-csv:hover { background: #28a745; border-color: #28a745; color: #fff; }
+
+        /* ── Approve button ── */
+        .btn-approve-item {
+            background: none; border: 1px solid #a8ddb8; color: #1a5c2e;
+            padding: 5px 13px; border-radius: 4px; cursor: pointer; font-size: 12px;
+            transition: all .15s; font-weight: 600; margin-right: 4px; font-family: inherit;
+        }
+        .btn-approve-item:hover { background: #28a745; border-color: #28a745; color: #fff; }
+
+        /* ── Placement badge ── */
+        .placement-badge {
+            display: inline-block; font-size: 10px; color: #EB8008;
+            background: rgba(235,128,8,.1); border: 1px solid rgba(235,128,8,.3);
+            border-radius: 3px; padding: 1px 6px; margin-left: 8px; font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -352,6 +529,8 @@
     <button class="tab-btn" onclick="switchTab('fields',this)"><i class="fa fa-list-alt"></i>&nbsp; Field Descriptions</button>
     <button class="tab-btn" onclick="switchTab('services',this)"><i class="fa fa-cogs"></i>&nbsp; Services</button>
     <button class="tab-btn" id="tab-btn-users" onclick="switchTab('users',this)" style="display:none"><i class="fa fa-users"></i>&nbsp; Users</button>
+    <button class="tab-btn" id="tab-btn-internal-log" onclick="switchTab('internal-log',this)" style="display:none"><i class="fa fa-shield"></i>&nbsp; Internal Log</button>
+    <button class="tab-btn" id="tab-btn-doc-log" onclick="switchTab('doc-log',this)"><i class="fa fa-book"></i>&nbsp; Doc Log</button>
 </div>
 
 <div class="container">
@@ -425,6 +604,17 @@
     <!-- ── CONTENT SECTIONS TAB ──────────────────────────────────────────── -->
     <div id="tab-content" class="tab-pane" style="display:none">
 
+        <!-- Pending approval (visible only to Executives) -->
+        <div class="card" id="pending-sections-card" style="display:none">
+            <div class="card-head">
+                <h2><i class="fa fa-clock-o" style="color:#EB8008"></i>&nbsp; Pending Section Approvals</h2>
+                <span id="pending-sec-count" style="font-size:12px;color:#9db5d5"></span>
+            </div>
+            <div id="pending-sections-body" class="card-body no-pad">
+                <div class="loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>
+            </div>
+        </div>
+
         <div class="card" id="section-editor-card" style="display:none">
             <div class="card-head">
                 <h2 id="sec-editor-title"><i class="fa fa-pencil"></i> Edit Section</h2>
@@ -436,9 +626,45 @@
             <div class="card-body">
                 <input type="hidden" id="edit-sec-id" />
                 <div class="form-row" style="margin-bottom:16px">
-                    <div class="form-group full">
+                    <div class="form-group" style="flex:2">
                         <label>Section Title</label>
-                        <input type="text" id="edit-sec-title" placeholder="e.g. Authentication" />
+                        <input type="text" id="edit-sec-title" placeholder="e.g. Best Practices for Hotel Services" />
+                    </div>
+                    <div class="form-group">
+                        <label>For endpoint</label>
+                        <select id="edit-sec-endpoint">
+                            <option value="">Shared (all endpoints)</option>
+                            <!-- populated from /api/admin/endpoints -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Placement</label>
+                        <select id="edit-sec-placement" onchange="updatePlacementUI()">
+                            <option value="">Top — Getting Started</option>
+                            <option value="before">Before a service section</option>
+                            <option value="after">After a service section</option>
+                            <option value="before-params">Before Request Parameters (inside service)</option>
+                            <option value="after-params">After Request Parameters (inside service)</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="placement-service-row" style="display:none;margin-bottom:16px">
+                    <div class="form-group full">
+                        <label>Service</label>
+                        <select id="edit-sec-service">
+                            <option value="">— select service —</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row" style="margin-bottom:16px">
+                    <div class="form-group full">
+                        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:600">
+                            <input type="checkbox" id="edit-sec-headless" style="width:16px;height:16px;accent-color:#1C4084;cursor:pointer" />
+                            <span>Headless — render items inline (no heading, no collapse)</span>
+                        </label>
+                        <div style="font-size:11px;color:#9db5d5;margin-top:4px;padding-left:24px">
+                            Use this for a single paragraph or code block placed before/after Request Parameters.
+                        </div>
                     </div>
                 </div>
                 <div class="editor-title">Content Items</div>
@@ -454,7 +680,15 @@
         <div class="card">
             <div class="card-head">
                 <h2><i class="fa fa-file-text-o"></i> Content Sections</h2>
-                <button class="btn-create" onclick="openNewSection()"><i class="fa fa-plus"></i> New Section</button>
+                <span style="display:flex;align-items:center;gap:10px">
+                    <label for="content-endpoint-filter" style="font-size:12px;font-weight:600;color:#9db5d5">Endpoint:</label>
+                    <select id="content-endpoint-filter" onchange="onContentEndpointFilterChange()" style="height:30px;font-size:12px;border:1px solid #c8d4e8;border-radius:4px;padding:2px 8px">
+                        <option value="__all__">All endpoints</option>
+                        <option value="">Shared only</option>
+                        <!-- populated dynamically -->
+                    </select>
+                    <button class="btn-create" onclick="openNewSection()"><i class="fa fa-plus"></i> New Section</button>
+                </span>
             </div>
             <div id="sections-list">
                 <div class="loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>
@@ -498,7 +732,7 @@
             <div class="card-body no-pad">
                 <div class="loading" id="fields-loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>
                 <table class="ep-table" id="fields-table" style="display:none">
-                    <thead><tr><th>Field Name</th><th>Description</th><th style="width:110px"></th></tr></thead>
+                    <thead><tr><th>Field Name</th><th>Description</th><th style="width:150px"></th></tr></thead>
                     <tbody id="fields-tbody"></tbody>
                 </table>
             </div>
@@ -508,6 +742,17 @@
 
     <!-- ── SERVICES TAB ──────────────────────────────────────────────────── -->
     <div id="tab-services" class="tab-pane" style="display:none">
+
+        <!-- Pending service approvals (visible to Executives and Developers) -->
+        <div class="card" id="pending-services-card" style="display:none">
+            <div class="card-head">
+                <h2><i class="fa fa-clock-o" style="color:#EB8008"></i>&nbsp; Pending Service Approvals</h2>
+                <span id="pending-svc-count" style="font-size:12px;color:#9db5d5"></span>
+            </div>
+            <div id="pending-services-body" class="card-body no-pad">
+                <div class="loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>
+            </div>
+        </div>
 
         <div class="card">
             <div class="card-head"><h2><i class="fa fa-plus-circle"></i> Add New Service</h2></div>
@@ -572,8 +817,43 @@
 
     </div><!-- /tab-services -->
 
+    <!-- ── FIELDS PENDING APPROVALS (shown inside Fields tab) - handled in JS ── -->
+
     <!-- ── USERS TAB ───────────────────────────────────────────────────── -->
     <div id="tab-users" class="tab-pane" style="display:none">
+
+        <!-- SuperAdmin-only: provision a user directly without going through the
+             public Register.html flow. Hidden for everyone else by JS. -->
+        <div class="card" id="new-user-card" style="display:none">
+            <div class="card-head">
+                <h2><i class="fa fa-user-plus"></i> Create User</h2>
+            </div>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="form-group" style="flex:2">
+                        <label>Email (must end with @cyberlogic.gr)</label>
+                        <input type="email" id="new-user-email" placeholder="firstname.lastname@cyberlogic.gr" />
+                    </div>
+                    <div class="form-group">
+                        <label>Role</label>
+                        <select id="new-user-role">
+                            <option value="ProjectManager">Project Manager</option>
+                            <option value="Executive">Executive</option>
+                            <option value="Developer">Developer</option>
+                        </select>
+                    </div>
+                    <div style="align-self:flex-end">
+                        <button class="btn-save" onclick="saveNewAdminUser()"><i class="fa fa-check"></i>&nbsp; Create &amp; Email</button>
+                    </div>
+                </div>
+                <div style="font-size:11px;color:#9db5d5;margin-top:6px">
+                    A temporary password is generated and emailed to the user (when SMTP is configured in <code>web.config</code>).
+                    The user is forced to change it on first login. If email is disabled or fails, the password is shown in a
+                    modal so you can hand it over manually.
+                </div>
+                <div class="err-box" id="new-user-err"></div>
+            </div>
+        </div>
 
         <div class="card">
             <div class="card-head">
@@ -597,6 +877,48 @@
 
     </div><!-- /tab-users -->
 
+    <!-- ── INTERNAL LOG TAB (super-admin only) ───────────────────────────── -->
+    <div id="tab-internal-log" class="tab-pane" style="display:none">
+        <div class="card">
+            <div class="card-head">
+                <h2><i class="fa fa-shield"></i> Internal Activity Log</h2>
+                <span id="ilog-count" style="font-size:12px;color:#9db5d5;"></span>
+            </div>
+            <div class="card-body no-pad">
+                <div class="log-toolbar">
+                    <label class="log-date-label" for="ilog-date"><i class="fa fa-calendar"></i>&nbsp; Day</label>
+                    <select class="log-date-select" id="ilog-date" onchange="loadInternalLog()"></select>
+                    <input type="text" class="log-search" id="ilog-search" placeholder="Filter by user, action, category, target&hellip;" oninput="renderInternalLog()" />
+                    <button class="btn-export-csv" onclick="exportInternalLogCsv()"><i class="fa fa-download"></i>&nbsp; Export CSV</button>
+                </div>
+                <div id="ilog-body">
+                    <div class="loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /tab-internal-log -->
+
+    <!-- ── DOCUMENTATION LOG TAB (all registered users) ──────────────────── -->
+    <div id="tab-doc-log" class="tab-pane" style="display:none">
+        <div class="card">
+            <div class="card-head">
+                <h2><i class="fa fa-book"></i> Documentation Access Log</h2>
+                <span id="dlog-count" style="font-size:12px;color:#9db5d5;"></span>
+            </div>
+            <div class="card-body no-pad">
+                <div class="log-toolbar">
+                    <label class="log-date-label" for="dlog-date"><i class="fa fa-calendar"></i>&nbsp; Day</label>
+                    <select class="log-date-select" id="dlog-date" onchange="loadDocumentationLog()"></select>
+                    <input type="text" class="log-search" id="dlog-search" placeholder="Filter by endpoint, user, service&hellip;" oninput="renderDocumentationLog()" />
+                    <button class="btn-export-csv" onclick="exportDocumentationLogCsv()"><i class="fa fa-download"></i>&nbsp; Export CSV</button>
+                </div>
+                <div id="dlog-body">
+                    <div class="loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /tab-doc-log -->
+
 </div><!-- /container -->
 
 <!-- ── Password reveal modal ── -->
@@ -604,11 +926,67 @@
     <div class="pw-modal-box">
         <h3><i class="fa fa-key" style="color:#EB8008"></i>&nbsp; Temporary Password</h3>
         <p class="sub" id="pw-modal-sub">Generated for <strong id="pw-modal-email"></strong></p>
-        <div class="pw-warn"><i class="fa fa-exclamation-triangle"></i>&nbsp; This password is shown <strong>once only</strong>. Copy it and share it securely with the user.</div>
+        <!-- Filled in by showCredentialModal() — green when email succeeded, amber otherwise. -->
+        <div id="pw-modal-emailstatus" style="font-size:12px;text-align:center;margin:0 0 12px;padding:8px;border-radius:4px;display:none"></div>
+        <div class="pw-warn" id="pw-modal-warn"><i class="fa fa-exclamation-triangle"></i>&nbsp; This password is shown <strong>once only</strong>. Copy it and share it securely with the user.</div>
         <div class="pw-display" id="pw-modal-value"></div>
         <div style="display:flex;gap:10px;justify-content:center">
             <button class="btn-create" onclick="copyPwModal()"><i class="fa fa-copy"></i>&nbsp; Copy Password</button>
             <button class="btn-cancel" onclick="closePwModal()">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- ── Assign field-to-service modal ── -->
+<div class="pw-modal-overlay" id="assign-modal">
+    <div class="pw-modal-box" style="max-width:560px;text-align:left">
+        <h3><i class="fa fa-plug" style="color:#EB8008"></i>&nbsp; Assign Field to a Service</h3>
+        <p class="sub">Places <strong id="assign-field-name"></strong> onto a service's request form &amp; XSD.</p>
+        <div class="err-box" id="assign-err" style="display:none;margin-bottom:12px"></div>
+
+        <div class="form-group" style="margin-bottom:10px">
+            <label>Service</label>
+            <select id="assign-service" class="form-control" onchange="onAssignServiceChange()"></select>
+        </div>
+        <div class="form-row" style="gap:10px;align-items:flex-end">
+            <div class="form-group" style="flex:2">
+                <label>XML element name</label>
+                <input type="text" id="assign-element" class="form-control" placeholder="e.g. CheckIn" oninput="updateAssignPreview()" />
+            </div>
+            <div class="form-group" style="flex:1">
+                <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
+                    <input type="checkbox" id="assign-required" onchange="updateAssignPreview()" style="width:auto" /> Required
+                </label>
+            </div>
+        </div>
+
+        <!-- Attributes list. Empty ⇒ plain element with the value type below. -->
+        <div class="form-group" style="margin-bottom:8px">
+            <label style="display:flex;justify-content:space-between;align-items:center">
+                <span>Attributes <span style="color:#9db5d5;font-weight:400">(leave empty for a plain element)</span></span>
+                <button type="button" class="btn-assign btn-sm" onclick="addAttrRow()"><i class="fa fa-plus"></i> Add attribute</button>
+            </label>
+            <div id="assign-attrs"></div>
+        </div>
+        <div class="form-group" id="assign-simple-type-wrap" style="margin-bottom:10px">
+            <label>Value type <span style="color:#9db5d5;font-weight:400">(plain element)</span></label>
+            <select id="assign-type" class="form-control" onchange="updateAssignPreview()">
+                <option value="string">string</option>
+                <option value="date">date</option>
+                <option value="int">int</option>
+                <option value="decimal">decimal</option>
+                <option value="boolean">boolean</option>
+            </select>
+        </div>
+
+        <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#EB8008">Example request (live)</label>
+        <pre id="assign-preview" class="assign-preview"></pre>
+
+        <div id="assign-existing"></div>
+
+        <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px">
+            <button class="btn-save" onclick="saveAssignment()"><i class="fa fa-check"></i>&nbsp; Save Assignment</button>
+            <button class="btn-cancel" onclick="closeAssignModal()">Close</button>
         </div>
     </div>
 </div>
@@ -622,16 +1000,34 @@
         return t;
     })();
 
-    var IS_SUPER = sessionStorage.getItem('cl_admin_super') === '1';
+    var IS_SUPER   = sessionStorage.getItem('cl_admin_super') === '1';
     var USER_EMAIL = sessionStorage.getItem('cl_admin_email') || '';
+    var USER_ROLE  = sessionStorage.getItem('cl_admin_role')  || 'ProjectManager';
+
+    // Derived role flags
+    var IS_EXECUTIVE       = IS_SUPER || USER_ROLE === 'Executive';
+    var IS_DEVELOPER       = USER_ROLE === 'Developer';
+    var IS_PROJECTMANAGER  = USER_ROLE === 'ProjectManager';
+    var CAN_APPROVE_SECTION  = IS_EXECUTIVE;
+    var CAN_APPROVE_SERVICE  = IS_EXECUTIVE || IS_DEVELOPER;
+
+    var ROLE_LABELS = {
+        SuperAdmin:     'Super Admin',
+        Executive:      'Executive',
+        ProjectManager: 'Project Manager',
+        Developer:      'Developer'
+    };
 
     (function initNav() {
         if (USER_EMAIL) {
             document.getElementById('nav-user-email').textContent = USER_EMAIL;
             document.getElementById('nav-user-display').style.display = '';
         }
-        if (IS_SUPER) {
+        if (IS_EXECUTIVE) {
             document.getElementById('tab-btn-users').style.display = '';
+            // Internal log uses the same gate the server uses (IsSuperAdmin),
+            // which is true for the cyberhub super-admin or Executive role.
+            document.getElementById('tab-btn-internal-log').style.display = '';
         }
     })();
 
@@ -653,18 +1049,38 @@
         btn.classList.add('active');
         if (!tabLoaded[name]) {
             tabLoaded[name] = true;
-            if (name === 'content')  loadSections();
-            if (name === 'fields')   loadFields();
-            if (name === 'services') loadServices();
-            if (name === 'users')    loadAdminUsers();
+            if (name === 'content')      loadSections();
+            if (name === 'fields')       loadFields();
+            if (name === 'services')     loadServices();
+            if (name === 'users')        loadAdminUsers();
+            if (name === 'internal-log') loadInternalLog();
+            if (name === 'doc-log')      loadDocumentationLog();
         }
     }
+
+    /* Shared services list for placement selector */
+    var _allServicesList = [];
 
     /* ══════════════════════════════════════════════════════════════════════════
        ENDPOINTS TAB
     ══════════════════════════════════════════════════════════════════════════ */
+    var _pmCandidates = []; // active Project Managers, populated for IS_SUPER only
+
     function loadEndpoints() {
-        fetch('api/admin/endpoints', { headers: authHeaders() })
+        var pmsPromise = IS_SUPER
+            ? fetch('api/admin/users', { headers: authHeaders() })
+                .then(function(r) { return r.ok ? r.json() : []; })
+                .then(function(arr) {
+                    _pmCandidates = (arr || [])
+                        .filter(function(u) { return u.status === 'active' && u.role === 'ProjectManager'; })
+                        .map(function(u) { return { id: u.id, email: u.email }; });
+                })
+                .catch(function() { _pmCandidates = []; })
+            : Promise.resolve();
+
+        pmsPromise.then(function() {
+            return fetch('api/admin/endpoints', { headers: authHeaders() });
+        })
         .then(function(r) { if (handleUnauth(r)) return null; return r.json(); })
         .then(function(data) {
             if (!data) return;
@@ -683,10 +1099,44 @@
             tbody.innerHTML = '<tr class="empty-row"><td colspan="4">No endpoints configured.</td></tr>';
             return;
         }
+        var myEmail = (USER_EMAIL || '').toLowerCase();
         tbody.innerHTML = list.map(function(e) {
             var id = e.Id || e.id, nm = e.Name || e.name || '', url = e.BaseUrl || e.baseUrl || '', key = e.EncodedKey || e.encodedKey || '';
             var hidden = JSON.stringify(e.hiddenServices || e.HiddenServices || []);
-            return '<tr data-id="' + esc(id) + '">' +
+            var managers = e.projectManagers || e.ProjectManagers || [];
+            var amResponsible = managers.some(function(m) {
+                return ((m.email || m.Email || '') + '').toLowerCase() === myEmail;
+            });
+
+            var managersHtml = managers.length
+                ? managers.map(function(m) {
+                    var em = esc(m.email || m.Email || '');
+                    return '<span class="pm-tag"><i class="fa fa-user-circle-o"></i>' + em + '</span>';
+                  }).join('')
+                : '<span class="pm-tag-empty">No project manager assigned yet.</span>';
+
+            var toggleHtml = '';
+            if (IS_PROJECTMANAGER && myEmail) {
+                toggleHtml = amResponsible
+                    ? '<button class="pm-toggle-btn pm-release" onclick="toggleEndpointManager(\'' + esc(id) + '\',this)"><i class="fa fa-times"></i>&nbsp; Release</button>'
+                    : '<button class="pm-toggle-btn pm-claim"   onclick="toggleEndpointManager(\'' + esc(id) + '\',this)"><i class="fa fa-hand-paper-o"></i>&nbsp; I\'m responsible</button>';
+            }
+
+            // Super-admin picker — only when nobody is assigned yet.
+            var assignHtml = '';
+            if (IS_SUPER && managers.length === 0 && _pmCandidates.length > 0) {
+                var opts = '<option value="">— select project manager —</option>' +
+                    _pmCandidates.map(function(p) {
+                        return '<option value="' + esc(p.id) + '">' + esc(p.email) + '</option>';
+                    }).join('');
+                assignHtml =
+                    '<span class="pm-assign-wrap">' +
+                        '<select class="pm-assign-select" id="pm-assign-sel-' + esc(id) + '">' + opts + '</select>' +
+                        '<button class="pm-assign-btn" onclick="assignEndpointManager(\'' + esc(id) + '\',this)"><i class="fa fa-link"></i>&nbsp; Assign</button>' +
+                    '</span>';
+            }
+
+            var mainRow = '<tr data-id="' + esc(id) + '">' +
                 '<td><span class="ep-name">' + esc(nm) + '</span></td>' +
                 '<td><span class="ep-url">' + esc(url) + '</span></td>' +
                 '<td><span class="ep-key" id="key-' + esc(id) + '">' + esc(key) + '</span>' +
@@ -699,7 +1149,80 @@
                     '<button class="btn-del" onclick="deleteEndpoint(\'' + esc(id) + '\',this)" title="Delete"><i class="fa fa-trash"></i></button>' +
                 '</td>' +
             '</tr>';
+
+            var pmRow = '<tr class="ep-pm-row" data-pm-for="' + esc(id) + '">' +
+                '<td colspan="4">' +
+                    '<span class="pm-label"><i class="fa fa-id-badge"></i>&nbsp; Project Manager' + (managers.length === 1 ? '' : 's') + ':</span>' +
+                    managersHtml +
+                    (toggleHtml ? '<span class="pm-toggle-wrap">' + toggleHtml + '</span>' : '') +
+                    assignHtml +
+                '</td>' +
+            '</tr>';
+
+            return mainRow + pmRow;
         }).join('');
+    }
+
+    function assignEndpointManager(id, btn) {
+        var sel = document.getElementById('pm-assign-sel-' + id);
+        if (!sel) return;
+        var userId = sel.value;
+        if (!userId) { alert('Pick a project manager first.'); return; }
+        btn.disabled = true; sel.disabled = true;
+        var prevHtml = btn.innerHTML;
+        btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+        fetch('api/admin/endpoints/' + encodeURIComponent(id) + '/assign-manager', {
+            method:  'POST',
+            headers: authHeaders(),
+            body:    JSON.stringify({ userId: userId })
+        })
+        .then(function(r) {
+            if (handleUnauth(r)) return null;
+            if (!r.ok) {
+                return r.text().then(function(t) {
+                    var msg = 'HTTP ' + r.status + (r.statusText ? ' ' + r.statusText : '');
+                    if (t) msg += '\n' + t.slice(0, 500);
+                    throw new Error(msg);
+                });
+            }
+            return r.json();
+        })
+        .then(function(data) { if (data) loadEndpoints(); })
+        .catch(function(err) {
+            btn.disabled = false; sel.disabled = false; btn.innerHTML = prevHtml;
+            alert('Failed to assign manager.\n\n' + (err && err.message ? err.message : 'Network error.'));
+        });
+    }
+
+    function toggleEndpointManager(id, btn) {
+        var prevHtml = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+        fetch('api/admin/endpoints/' + encodeURIComponent(id) + '/toggle-manager', {
+            method:  'POST',
+            headers: authHeaders()
+        })
+        .then(function(r) {
+            if (handleUnauth(r)) return null;
+            if (!r.ok) {
+                return r.text().then(function(t) {
+                    var msg = 'HTTP ' + r.status + (r.statusText ? ' ' + r.statusText : '');
+                    if (t) msg += '\n' + t.slice(0, 500);
+                    throw new Error(msg);
+                });
+            }
+            return r.json();
+        })
+        .then(function(data) {
+            if (!data) return;
+            // Reload to get the canonical resolved manager list
+            loadEndpoints();
+        })
+        .catch(function(err) {
+            btn.disabled = false;
+            btn.innerHTML = prevHtml;
+            alert('Failed to update responsibility.\n\n' + (err && err.message ? err.message : 'Network error.'));
+        });
     }
 
     function copyKey(btn, id) {
@@ -723,8 +1246,10 @@
         fetch('api/admin/endpoints/' + encodeURIComponent(id), { method: 'DELETE', headers: authHeaders() })
         .then(function(r) {
             if (!r.ok) throw new Error();
-            var row = document.querySelector('tr[data-id="' + id + '"]');
-            if (row) row.remove();
+            var row   = document.querySelector('tr[data-id="' + id + '"]');
+            var pmRow = document.querySelector('tr[data-pm-for="' + id + '"]');
+            if (row)   row.remove();
+            if (pmRow) pmRow.remove();
             var rows = document.getElementById('ep-tbody').querySelectorAll('tr[data-id]');
             document.getElementById('ep-count').textContent = rows.length + ' endpoint' + (rows.length !== 1 ? 's' : '');
             if (rows.length === 0) document.getElementById('ep-tbody').innerHTML = '<tr class="empty-row"><td colspan="4">No endpoints configured.</td></tr>';
@@ -763,32 +1288,217 @@
     ══════════════════════════════════════════════════════════════════════════ */
     var editingItems = [];
 
+    var _sectionsCache = []; /* most recent sections list, used by moveSection() */
+    var _contentEndpoints = []; /* [{id, name}, ...] populated from /api/admin/endpoints */
+    /* Filter sentinel:
+         "__all__" → show every section regardless of endpointId
+         ""        → show only shared sections (endpointId is null/empty)
+         "<id>"    → show that endpoint's sections + shared
+       Persisted in sessionStorage so the admin's selection survives tab switches. */
+    function getContentFilter() { return sessionStorage.getItem('cl_content_filter') || '__all__'; }
+    function setContentFilter(v) { sessionStorage.setItem('cl_content_filter', v); }
+
     function loadSections() {
-        fetch('api/admin/content/sections', { headers: authHeaders() })
-        .then(function(r) {
-            if (handleUnauth(r)) return null;
-            if (!r.ok) return r.text().then(function(t) { throw new Error('HTTP ' + r.status + ': ' + t.substring(0, 200)); });
-            return r.json();
-        })
-        .then(function(data) {
+        /* Fetch endpoints in parallel so the filter selector + editor dropdown
+           are ready by the time sections render. Falls back to an empty list
+           if the call fails — sections still render, just without endpoint
+           labels (and "Shared" stays the only valid value in the editor). */
+        var endpointsPromise = fetch('api/admin/endpoints', { headers: authHeaders() })
+            .then(function(r) { return r.ok ? r.json() : []; })
+            .then(function(arr) {
+                _contentEndpoints = (arr || []).map(function(e) {
+                    return { id: e.id || e.Id, name: e.name || e.Name };
+                });
+                populateContentEndpointSelectors();
+            })
+            .catch(function() { _contentEndpoints = []; populateContentEndpointSelectors(); });
+
+        var sectionsPromise = fetch('api/admin/content/sections', { headers: authHeaders() })
+            .then(function(r) {
+                if (handleUnauth(r)) return null;
+                if (!r.ok) return r.text().then(function(t) { throw new Error('HTTP ' + r.status + ': ' + t.substring(0, 200)); });
+                return r.json();
+            });
+
+        Promise.all([sectionsPromise, endpointsPromise])
+        .then(function(results) {
+            var data = results[0];
             if (!data) return;
-            renderSectionsList(data);
+            _sectionsCache = data;
+            /* A section is pending review if it is brand-new (status=pending) OR
+               it has a parked edit-on-an-approved-section (pendingChanges != null). */
+            if (CAN_APPROVE_SECTION) {
+                var pending = applyEndpointFilter(data.filter(function(s) { return s.status === 'pending' || s.pendingChanges; }));
+                var card = document.getElementById('pending-sections-card');
+                card.style.display = pending.length ? '' : 'none';
+                document.getElementById('pending-sec-count').textContent = pending.length + ' pending';
+                renderPendingSections(pending);
+            }
+            renderSectionsList(applyEndpointFilter(data));
         })
         .catch(function(err) { document.getElementById('sections-list').innerHTML = '<div class="loading" style="color:#c0392b">Failed to load sections: ' + (err.message || err) + '</div>'; });
     }
 
+    /* Builds the same option set into both selectors:
+         - filter (top-of-list)   gets the "All endpoints" / "Shared only" extras
+         - editor (per-section)   has only "Shared" + endpoints
+       Kept in sync so the admin's mental model is consistent. */
+    function populateContentEndpointSelectors() {
+        var filterSel = document.getElementById('content-endpoint-filter');
+        var editorSel = document.getElementById('edit-sec-endpoint');
+        if (filterSel) {
+            var current = getContentFilter();
+            filterSel.innerHTML =
+                '<option value="__all__">All endpoints</option>' +
+                '<option value="">Shared only</option>' +
+                _contentEndpoints.map(function(e) {
+                    return '<option value="' + esc(e.id) + '">' + esc(e.name || e.id) + '</option>';
+                }).join('');
+            // Restore selection (fall back to "All" if the saved id no longer exists)
+            var hasOpt = Array.prototype.some.call(filterSel.options, function(o) { return o.value === current; });
+            filterSel.value = hasOpt ? current : '__all__';
+            if (!hasOpt) setContentFilter('__all__');
+        }
+        if (editorSel) {
+            var keep = editorSel.value;
+            editorSel.innerHTML =
+                '<option value="">Shared (all endpoints)</option>' +
+                _contentEndpoints.map(function(e) {
+                    return '<option value="' + esc(e.id) + '">' + esc(e.name || e.id) + '</option>';
+                }).join('');
+            editorSel.value = keep || '';
+        }
+    }
+
+    /* Applies the top-of-list filter selection to a sections array. Centralised
+       so the same rule drives the main list, the pending card, AND the docs-page
+       filter on Index.html (which uses an equivalent expression client-side). */
+    function applyEndpointFilter(sections) {
+        var f = getContentFilter();
+        if (f === '__all__') return sections;
+        if (f === '')        return sections.filter(function(s) { return !s.endpointId; });
+        return sections.filter(function(s) { return !s.endpointId || s.endpointId === f; });
+    }
+
+    function onContentEndpointFilterChange() {
+        var sel = document.getElementById('content-endpoint-filter');
+        setContentFilter(sel.value || '__all__');
+        // Re-render from cache; no fetch needed.
+        if (CAN_APPROVE_SECTION) {
+            var pending = applyEndpointFilter(_sectionsCache.filter(function(s) { return s.status === 'pending' || s.pendingChanges; }));
+            var card = document.getElementById('pending-sections-card');
+            card.style.display = pending.length ? '' : 'none';
+            document.getElementById('pending-sec-count').textContent = pending.length + ' pending';
+            renderPendingSections(pending);
+        }
+        renderSectionsList(applyEndpointFilter(_sectionsCache));
+    }
+
+    /* Friendly endpoint label for badges/list rows. Returns "Shared" for null. */
+    function endpointLabel(epId) {
+        if (!epId) return 'Shared';
+        for (var i = 0; i < _contentEndpoints.length; i++)
+            if (_contentEndpoints[i].id === epId) return _contentEndpoints[i].name || epId;
+        return epId;
+    }
+
+    /* Pending review cards differentiate "new section" vs "edit of an approved
+       section" so the executive understands what Reject will do (delete vs revert). */
+    function renderPendingSections(sections) {
+        var el = document.getElementById('pending-sections-body');
+        if (!sections.length) { el.innerHTML = '<div class="loading" style="color:#9db5d5">No pending sections.</div>'; return; }
+        el.innerHTML = sections.map(function(sec) {
+            var isEdit = !!sec.pendingChanges;
+            var p = sec.pendingChanges || {};
+            var displayTitle = isEdit ? (p.title || sec.title) : sec.title;
+            var displayItems = isEdit ? (p.items || []) : (sec.items || []);
+            var displayPlacement = isEdit ? p.placement : sec.placement;
+            // For an edit, prefer the proposed endpointId (may be a re-scope);
+            // for a new pending section, fall back to whatever was set on create.
+            var displayEndpointId = isEdit
+                ? (p.endpointId !== undefined ? p.endpointId : sec.endpointId)
+                : sec.endpointId;
+            var count = displayItems.length;
+            var placeLbl = displayPlacement ? ' <span class="placement-badge"><i class="fa fa-map-marker"></i> ' + esc(displayPlacement) + '</span>' : '';
+            var endpointLbl = displayEndpointId
+                ? ' <span class="badge-pending" style="background:#fff7ec;color:#c96d00"><i class="fa fa-cube"></i> ' + esc(endpointLabel(displayEndpointId)) + '</span>'
+                : ' <span class="badge-pending" style="background:#eef3fa;color:#2a4a8a"><i class="fa fa-globe"></i> Shared</span>';
+            var kindLbl = isEdit
+                ? '<span class="badge-pending" style="background:#e8f0fb;color:#1C4084">edit of approved</span>'
+                : '<span class="badge-pending">new</span>';
+            var rejectTip = isEdit ? 'Discard the proposed edit and keep the approved version.'
+                                   : 'Delete this never-approved section.';
+            var editorLine = isEdit && p.editedBy
+                ? '<div style="font-size:11px;color:#9db5d5;margin-top:2px">edited by ' + esc(p.editedBy) + '</div>'
+                : '';
+            return '<div class="section-row">' +
+                '<span><span class="section-title-text">' + esc(displayTitle) + '</span>' +
+                ' ' + kindLbl + endpointLbl + placeLbl +
+                '<span class="section-item-count">' + count + ' item' + (count !== 1 ? 's' : '') + '</span>' +
+                editorLine +
+                '</span>' +
+                '<span>' +
+                    '<button class="btn-edit btn-sm" onclick="openEditSection(' + JSON.stringify(sec).replace(/"/g,'&quot;') + ')" title="Open in editor to review"><i class="fa fa-eye"></i> Review</button>' +
+                    '<button class="btn-approve-item btn-sm" onclick="approveSection(\'' + esc(sec.id) + '\',this)"><i class="fa fa-check"></i>&nbsp; Approve</button>' +
+                    '<button class="btn-del btn-sm" onclick="rejectSection(\'' + esc(sec.id) + '\')" title="' + esc(rejectTip) + '"><i class="fa fa-times"></i>&nbsp; Reject</button>' +
+                '</span>' +
+            '</div>';
+        }).join('');
+    }
+
+    function approveSection(id, btn) {
+        btn.disabled = true; btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+        fetch('api/admin/content/sections/' + encodeURIComponent(id) + '/approve', { method: 'POST', headers: authHeaders() })
+        .then(function(r) { if (!r.ok) throw new Error(); tabLoaded['content'] = false; loadSections(); })
+        .catch(function() { btn.disabled = false; btn.innerHTML = '<i class="fa fa-check"></i>&nbsp; Approve'; alert('Approve failed.'); });
+    }
+
+    /* Replaces the old "Reject = DELETE the whole section" behaviour. The server
+       decides: revert (drop pendingChanges, keep approved fields) for an edit,
+       or delete for a brand-new pending section. */
+    function rejectSection(id) {
+        var sec = (_sectionsCache || []).filter(function(s) { return s.id === id; })[0];
+        var prompt = sec && sec.pendingChanges
+            ? 'Discard the proposed edit and keep the currently approved version of this section?'
+            : 'Reject and delete this pending section? This cannot be undone.';
+        if (!confirm(prompt)) return;
+        fetch('api/admin/content/sections/' + encodeURIComponent(id) + '/reject',
+              { method: 'POST', headers: authHeaders() })
+        .then(function(r) { if (!r.ok) return r.text().then(function(t) { throw new Error(t || 'Reject failed.'); }); tabLoaded['content'] = false; loadSections(); })
+        .catch(function(err) { alert(err.message || 'Reject failed.'); });
+    }
+
     function renderSectionsList(sections) {
         var el = document.getElementById('sections-list');
+        /* The main list is the "live order" — every section is shown so the user
+           can reorder it, regardless of approval state. The pending card above
+           handles approve/reject; this list handles edit/delete/reorder. */
         if (!sections.length) {
-            el.innerHTML = '<div class="loading">No sections yet. Click <strong>New Section</strong> to create one.</div>';
+            el.innerHTML = '<div class="loading">No sections for this filter. Click <strong>New Section</strong> to create one.</div>';
             return;
         }
-        el.innerHTML = sections.map(function(sec) {
+        el.innerHTML = sections.map(function(sec, idx) {
             var count = (sec.items || []).length;
+            var placeLbl = sec.placement ? ' <span class="placement-badge"><i class="fa fa-map-marker"></i> ' + esc(sec.placement) + '</span>' : '';
+            var headlessLbl = sec.headless ? ' <span class="badge-pending" style="background:#eef3fa;color:#2a4a8a">headless</span>' : '';
+            var statusLbl =
+                sec.status === 'pending'   ? ' <span class="badge-pending">pending</span>' :
+                sec.pendingChanges         ? ' <span class="badge-pending" style="background:#e8f0fb;color:#1C4084">edit pending</span>' : '';
+            /* Endpoint badge: distinct colour for shared vs scoped so the admin
+               can scan the list and see at a glance which sections leak across
+               every tenant. */
+            var endpointLbl = sec.endpointId
+                ? ' <span class="badge-pending" style="background:#fff7ec;color:#c96d00"><i class="fa fa-cube"></i> ' + esc(endpointLabel(sec.endpointId)) + '</span>'
+                : ' <span class="badge-pending" style="background:#eef3fa;color:#2a4a8a"><i class="fa fa-globe"></i> Shared</span>';
+            var upDisabled   = idx === 0                  ? ' disabled style="opacity:.35;cursor:not-allowed"' : '';
+            var downDisabled = idx === sections.length - 1 ? ' disabled style="opacity:.35;cursor:not-allowed"' : '';
             return '<div class="section-row">' +
                 '<span><span class="section-title-text">' + esc(sec.title) + '</span>' +
+                statusLbl + headlessLbl + endpointLbl + placeLbl +
                 '<span class="section-item-count">' + count + ' item' + (count !== 1 ? 's' : '') + '</span></span>' +
                 '<span>' +
+                    '<button class="btn-icon" onclick="moveSection(\'' + esc(sec.id) + '\',-1)" title="Move up"' + upDisabled + '><i class="fa fa-arrow-up"></i></button>' +
+                    '<button class="btn-icon" onclick="moveSection(\'' + esc(sec.id) + '\',1)" title="Move down"' + downDisabled + '><i class="fa fa-arrow-down"></i></button>' +
                     '<button class="btn-edit btn-sm" onclick="openEditSection(' + JSON.stringify(sec).replace(/"/g,'&quot;') + ')"><i class="fa fa-pencil"></i> Edit</button>' +
                     '<button class="btn-del btn-sm" onclick="deleteSection(\'' + esc(sec.id) + '\')"><i class="fa fa-trash"></i></button>' +
                 '</span>' +
@@ -796,9 +1506,88 @@
         }).join('');
     }
 
+    /* When an endpoint filter is active, "move up/down" must swap with the
+       next/previous section that shares the same filter group — otherwise
+       the user clicks down and nothing visible changes (the swap happened
+       with a section the filter is hiding). The server still receives the
+       full global ordered list. */
+    function moveSection(id, dir) {
+        var globalIdx = -1;
+        for (var i = 0; i < _sectionsCache.length; i++) if (_sectionsCache[i].id === id) { globalIdx = i; break; }
+        if (globalIdx < 0) return;
+
+        var f = getContentFilter();
+        var step = dir > 0 ? 1 : -1;
+        var targetIdx = -1;
+        for (var j = globalIdx + step; j >= 0 && j < _sectionsCache.length; j += step) {
+            var cand = _sectionsCache[j];
+            var inFilter =
+                f === '__all__' ? true :
+                f === ''        ? !cand.endpointId :
+                                  (!cand.endpointId || cand.endpointId === f);
+            if (inFilter) { targetIdx = j; break; }
+        }
+        if (targetIdx < 0) return; // nothing to swap with in this filter group
+
+        var tmp = _sectionsCache[globalIdx]; _sectionsCache[globalIdx] = _sectionsCache[targetIdx]; _sectionsCache[targetIdx] = tmp;
+        renderSectionsList(applyEndpointFilter(_sectionsCache));
+        var orderedIds = _sectionsCache.map(function(s) { return s.id; });
+        fetch('api/admin/content/sections/reorder', {
+            method: 'POST', headers: authHeaders(),
+            body: JSON.stringify({ orderedIds: orderedIds })
+        })
+        .then(function(r) { if (!r.ok) throw new Error('Reorder failed.'); })
+        .catch(function() { alert('Reorder failed — reloading.'); tabLoaded['content'] = false; loadSections(); });
+    }
+
+    function updatePlacementUI() {
+        var v = document.getElementById('edit-sec-placement').value;
+        var row = document.getElementById('placement-service-row');
+        var needsService = (v === 'before' || v === 'after' ||
+                            v === 'before-params' || v === 'after-params');
+        row.style.display = needsService ? '' : 'none';
+        if (needsService) populatePlacementServices();
+    }
+
+    function populatePlacementServices() {
+        var sel = document.getElementById('edit-sec-service');
+        if (!sel) return;
+        if (_allServicesList.length === 0) {
+            fetch('api/admin/services', { headers: authHeaders() })
+            .then(function(r) { return r.ok ? r.json() : []; })
+            .then(function(cats) {
+                _allServicesList = [];
+                (cats || []).forEach(function(cat) {
+                    (cat.services || []).forEach(function(svc) { _allServicesList.push(svc); });
+                });
+                fillServiceSelect(sel);
+            });
+        } else {
+            fillServiceSelect(sel);
+        }
+    }
+
+    function fillServiceSelect(sel) {
+        var current = sel.value;
+        sel.innerHTML = '<option value="">— select service —</option>' +
+            _allServicesList.map(function(s) {
+                return '<option value="' + esc(s.href) + '"' + (s.href === current ? ' selected' : '') + '>' + esc(s.service) + '</option>';
+            }).join('');
+    }
+
     function openNewSection() {
         document.getElementById('edit-sec-id').value = '';
         document.getElementById('edit-sec-title').value = '';
+        document.getElementById('edit-sec-placement').value = '';
+        document.getElementById('placement-service-row').style.display = 'none';
+        document.getElementById('edit-sec-headless').checked = false;
+        /* Pre-select the endpoint the user is currently filtered to. "All" and
+           "Shared only" both translate to the empty (Shared) value in the editor,
+           which the user can still change. */
+        var f = getContentFilter();
+        var defaultEp = (f === '__all__' || f === '') ? '' : f;
+        var epSel = document.getElementById('edit-sec-endpoint');
+        if (epSel) epSel.value = defaultEp;
         document.getElementById('sec-editor-title').innerHTML = '<i class="fa fa-plus"></i> New Section';
         editingItems = [];
         renderItemList();
@@ -807,10 +1596,53 @@
     }
 
     function openEditSection(sec) {
+        /* If a parked edit exists, the editor opens on THAT version — both so the
+           PM can keep iterating on their draft and so an Executive can review what
+           was actually proposed before approving. The approved fields are shown
+           only when there is no parked edit. */
+        var src   = sec.pendingChanges || sec;
+        var title = src.title != null ? src.title : sec.title;
+        var items = src.items != null ? src.items : (sec.items || []);
+        var placement = src.placement != null ? src.placement : (sec.placement || '');
+        var headless  = !!src.headless;
+        // endpointId may legitimately be undefined on a parked edit that didn't
+        // re-scope the section — in that case we fall back to the live value so
+        // the editor doesn't silently reset the binding to "Shared".
+        var endpointId = (src.endpointId !== undefined ? src.endpointId : sec.endpointId) || '';
+
         document.getElementById('edit-sec-id').value = sec.id;
-        document.getElementById('edit-sec-title').value = sec.title;
-        document.getElementById('sec-editor-title').innerHTML = '<i class="fa fa-pencil"></i> Edit: ' + esc(sec.title);
-        editingItems = JSON.parse(JSON.stringify(sec.items || []));
+        document.getElementById('edit-sec-title').value = title || '';
+        document.getElementById('edit-sec-headless').checked = headless;
+        var epSel = document.getElementById('edit-sec-endpoint');
+        if (epSel) epSel.value = endpointId;
+        var heading = sec.pendingChanges
+            ? '<i class="fa fa-eye"></i> Reviewing pending edit: ' + esc(title || sec.title)
+            : '<i class="fa fa-pencil"></i> Edit: ' + esc(title || sec.title);
+        document.getElementById('sec-editor-title').innerHTML = heading;
+
+        var placeSel = document.getElementById('edit-sec-placement');
+        var svcRow = document.getElementById('placement-service-row');
+        var serviceHref = null, placeKind = '';
+        /* Order matters: longer prefixes first so "before-params:" doesn't match
+           the legacy "before:" prefix. */
+        if (placement.indexOf('before-params:') === 0)      { placeKind = 'before-params'; serviceHref = placement.substring(14); }
+        else if (placement.indexOf('after-params:')  === 0) { placeKind = 'after-params';  serviceHref = placement.substring(13); }
+        else if (placement.indexOf('before:')        === 0) { placeKind = 'before';        serviceHref = placement.substring(7);  }
+        else if (placement.indexOf('after:')         === 0) { placeKind = 'after';         serviceHref = placement.substring(6);  }
+
+        placeSel.value = placeKind;
+        if (placeKind) {
+            svcRow.style.display = '';
+            populatePlacementServices();
+            setTimeout(function() {
+                var svcSel = document.getElementById('edit-sec-service');
+                if (svcSel && serviceHref) svcSel.value = serviceHref;
+            }, 300);
+        } else {
+            svcRow.style.display = 'none';
+        }
+
+        editingItems = JSON.parse(JSON.stringify(items));
         renderItemList();
         document.getElementById('section-editor-card').style.display = '';
         document.getElementById('section-editor-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -886,22 +1718,44 @@
 
     function saveSection() {
         syncItemsFromDOM();
-        var id    = document.getElementById('edit-sec-id').value.trim();
-        var title = document.getElementById('edit-sec-title').value.trim();
+        var id       = document.getElementById('edit-sec-id').value.trim();
+        var title    = document.getElementById('edit-sec-title').value.trim();
+        var headless = document.getElementById('edit-sec-headless').checked;
         var errEl = document.getElementById('sec-err');
         errEl.style.display = 'none';
         if (!title) { showErr(errEl, 'Title is required.'); return; }
+
+        var placementType = document.getElementById('edit-sec-placement').value;
+        var placement = null;
+        if (placementType === 'before' || placementType === 'after' ||
+            placementType === 'before-params' || placementType === 'after-params') {
+            var svcHref = (document.getElementById('edit-sec-service') || {}).value || '';
+            if (!svcHref) { showErr(errEl, 'Please select a service for placement.'); return; }
+            placement = placementType + ':' + svcHref;
+        }
+
         var cleanItems = editingItems.map(function(item) {
             var o = { type: item.type, text: item.text };
             if (item.type === 'code' && item.language) o.language = item.language;
             return o;
         });
-        var payload = { title: title, items: cleanItems };
+        var endpointId = (document.getElementById('edit-sec-endpoint') || {}).value || '';
+        var payload = { title: title, items: cleanItems, placement: placement, headless: headless, endpointId: endpointId };
         var method = id ? 'PUT' : 'POST';
         var url    = id ? 'api/admin/content/sections/' + encodeURIComponent(id) : 'api/admin/content/sections';
         fetch(url, { method: method, headers: authHeaders(), body: JSON.stringify(payload) })
         .then(function(r) { if (!r.ok) return r.text().then(function(t) { throw new Error(t); }); return r.json(); })
-        .then(function() { closeSectionEditor(); loadSections(); })
+        .then(function(saved) {
+            closeSectionEditor();
+            tabLoaded['content'] = false;
+            loadSections();
+            /* Two reasons the save may need executive approval:
+               • brand-new section saved by a non-approver  → status === "pending"
+               • edit of a live approved section by a non-approver → pendingChanges set */
+            if (saved && (saved.status === 'pending' || saved.pendingChanges)) {
+                alert('Saved. Submitted for approval by an Executive — the live version is unchanged until approved.');
+            }
+        })
         .catch(function(err) { showErr(errEl, err.message || 'Save failed.'); });
     }
 
@@ -918,16 +1772,88 @@
     var allFields = {};
     var fieldGroupDefs = {};
 
+    var _pendingFields = {};
+    /* Service field-assignments: { "<href>": [ {field, element, attr, type, required}, ... ] } */
+    var _fieldAssignments = {};
+    /* Flat service list for the assign dropdown: [ {href, service, category, hasXsd} ] */
+    var _assignServices = [];
+
     function loadFields() {
         Promise.all([
             fetch('api/admin/content/fields', { headers: authHeaders() }).then(function(r) { if (handleUnauth(r)) return null; if (!r.ok) return r.text().then(function(t){throw new Error('HTTP '+r.status+': '+t.substring(0,200));}); return r.json(); }),
-            fetch('models/fieldGroups.json').then(function(r) { return r.ok ? r.json() : {}; })
+            fetch('models/fieldGroups.json').then(function(r) { return r.ok ? r.json() : {}; }),
+            fetch('api/admin/field-assignments', { headers: authHeaders() }).then(function(r) { return r.ok ? r.json() : {}; }),
+            fetch('api/admin/services', { headers: authHeaders() }).then(function(r) { return r.ok ? r.json() : []; })
         ]).then(function(results) {
             if (!results[0]) return;
-            allFields = results[0];
+            /* New response format: { approved: {...}, pending: {...} } */
+            if (results[0].approved !== undefined) {
+                allFields = results[0].approved || {};
+                _pendingFields = results[0].pending || {};
+            } else {
+                allFields = results[0];
+                _pendingFields = {};
+            }
             fieldGroupDefs = results[1] || {};
+            _fieldAssignments = results[2] || {};
+            _assignServices = [];
+            (results[3] || []).forEach(function(cat) {
+                (cat.services || []).forEach(function(s) {
+                    _assignServices.push({ href: s.href, service: s.service, category: cat.name, hasXsd: !!s.xsdRequest });
+                });
+            });
             renderFieldsTable(allFields);
+            if (CAN_APPROVE_SECTION && Object.keys(_pendingFields).length > 0) renderPendingFieldsCard();
         }).catch(function(err) { document.getElementById('fields-loading').textContent = 'Failed to load: ' + (err.message || err); });
+    }
+
+    /* Every service href a given field is currently assigned to. */
+    function assignmentsForField(name) {
+        var out = [];
+        Object.keys(_fieldAssignments || {}).forEach(function(href) {
+            (_fieldAssignments[href] || []).forEach(function(a) {
+                if (a.field === name) out.push({ href: href, element: a.element, attr: a.attr, type: a.type, required: a.required });
+            });
+        });
+        return out;
+    }
+
+    function serviceName(href) {
+        var s = _assignServices.filter(function(x) { return x.href === href; })[0];
+        return s ? s.service : href;
+    }
+
+    function renderPendingFieldsCard() {
+        var names = Object.keys(_pendingFields);
+        if (!names.length) return;
+        var tab = document.getElementById('tab-fields');
+        var existing = document.getElementById('pending-fields-card');
+        if (!existing) {
+            var card = document.createElement('div');
+            card.className = 'card';
+            card.id = 'pending-fields-card';
+            card.innerHTML = '<div class="card-head"><h2><i class="fa fa-clock-o" style="color:#EB8008"></i>&nbsp; Pending Field Approvals</h2><span id="pending-fields-count" style="font-size:12px;color:#9db5d5"></span></div><div id="pending-fields-body" class="card-body no-pad"></div>';
+            tab.insertBefore(card, tab.firstChild);
+        }
+        document.getElementById('pending-fields-count').textContent = names.length + ' pending';
+        var body = document.getElementById('pending-fields-body');
+        body.innerHTML = names.map(function(name) {
+            return '<div class="section-row">' +
+                '<span><code style="font-family:Courier New;font-weight:700;color:#2a4a8a">' + esc(name) + '</code>' +
+                '<span class="section-item-count" style="margin-left:12px">' + esc(_pendingFields[name]) + '</span></span>' +
+                '<span>' +
+                    '<button class="btn-approve-item btn-sm" onclick="approveField(\'' + esc(name) + '\',this)"><i class="fa fa-check"></i>&nbsp; Approve</button>' +
+                    '<button class="btn-del btn-sm" onclick="deleteField(\'' + esc(name) + '\')"><i class="fa fa-times"></i>&nbsp; Reject</button>' +
+                '</span>' +
+            '</div>';
+        }).join('');
+    }
+
+    function approveField(name, btn) {
+        btn.disabled = true; btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+        fetch('api/admin/content/fields/' + encodeURIComponent(name) + '/approve', { method: 'POST', headers: authHeaders() })
+        .then(function(r) { if (!r.ok) throw new Error(); tabLoaded['fields'] = false; loadFields(); })
+        .catch(function() { btn.disabled = false; btn.innerHTML = '<i class="fa fa-check"></i>&nbsp; Approve'; alert('Approve failed.'); });
     }
 
     function renderFieldsTable(fields) {
@@ -966,11 +1892,18 @@
                     ' <span style="font-weight:400;color:#9db5d5;margin-left:6px">(' + groupCounts[grp] + ')</span></td></tr>';
                 lastGroup = grp;
             }
+            var asgHrefs = Object.keys(_fieldAssignments || {}).filter(function(h) {
+                return (_fieldAssignments[h] || []).some(function(a) { return a.field === name; });
+            });
+            var badge = asgHrefs.length
+                ? '<span class="svc-assign-badge" title="Assigned to: ' + esc(asgHrefs.map(serviceName).join(', ')) + '"><i class="fa fa-plug"></i> ' + asgHrefs.length + '</span>'
+                : '';
             html += '<tr id="frow-' + esc(name) + '" data-group="' + esc(grp) + '" style="display:none">' +
-                '<td><code>' + esc(name) + '</code></td>' +
+                '<td><code>' + esc(name) + '</code>' + badge + '</td>' +
                 '<td id="fdesc-' + esc(name) + '">' + esc(fields[name]) + '</td>' +
                 '<td style="white-space:nowrap">' +
-                    '<button class="btn-edit btn-sm" onclick="editField(\'' + esc(name) + '\')"><i class="fa fa-pencil"></i></button>' +
+                    '<button class="btn-assign btn-sm" title="Assign to a service" onclick="openAssignModal(\'' + esc(name) + '\')"><i class="fa fa-plug"></i></button>' +
+                    ' <button class="btn-edit btn-sm" onclick="editField(\'' + esc(name) + '\')"><i class="fa fa-pencil"></i></button>' +
                     ' <button class="btn-del btn-sm" onclick="deleteField(\'' + esc(name) + '\')"><i class="fa fa-trash"></i></button>' +
                 '</td></tr>';
         });
@@ -1033,8 +1966,13 @@
         errEl.style.display = 'none';
         if (!name) { showErr(errEl, 'Field name is required.'); return; }
         fetch('api/admin/content/fields', { method: 'POST', headers: authHeaders(), body: JSON.stringify({ name: name, description: desc }) })
-        .then(function(r) { if (!r.ok) return r.text().then(function(t) { throw new Error(t); }); })
-        .then(function() { toggleAddField(false); loadFields(); })
+        .then(function(r) { if (!r.ok) return r.text().then(function(t) { throw new Error(t); }); return r.json(); })
+        .then(function(res) {
+            toggleAddField(false);
+            tabLoaded['fields'] = false;
+            loadFields();
+            if (res && res.status === 'pending') alert('Field submitted for approval by an Executive.');
+        })
         .catch(function(err) { showErr(errEl, err.message || 'Save failed.'); });
     }
 
@@ -1067,7 +2005,13 @@
     function saveEditField(name) {
         var desc = (document.getElementById('fedit-' + name) || {}).value || '';
         fetch('api/admin/content/fields/' + encodeURIComponent(name), { method: 'PUT', headers: authHeaders(), body: JSON.stringify({ description: desc }) })
-        .then(function(r) { if (!r.ok) throw new Error(); allFields[name] = desc; loadFields(); })
+        .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
+        .then(function(res) {
+            allFields[name] = desc;
+            tabLoaded['fields'] = false;
+            loadFields();
+            if (res && res.status === 'pending') alert('Field update submitted for approval by an Executive.');
+        })
         .catch(function() { alert('Save failed.'); });
     }
 
@@ -1078,6 +2022,212 @@
         .catch(function() { alert('Delete failed.'); });
     }
 
+    /* ── Assign field-to-service ───────────────────────────────────────────── */
+    /* One glossary field owns one element per service. That element is either a
+       plain element (<El>value</El>) or carries N attributes (<El A="" B="" />).
+       Storage keeps one row per attribute; the UI groups a field's rows back
+       into { element, required, attrs:[{name,type}], simpleType }. */
+    var _assignField = null;
+
+    function xmlNameOk(s) { return /^[A-Za-z_][A-Za-z0-9_-]*$/.test(s); }
+    function sanitizeXmlName(s) {
+        var n = (s || '').replace(/[^A-Za-z0-9_-]/g, '');
+        if (n && !/^[A-Za-z_]/.test(n)) n = '_' + n;
+        return n;
+    }
+    function exampleValue(type) {
+        switch (type) {
+            case 'date':    return '2026-06-16';
+            case 'int':     return '12';
+            case 'decimal': return '9.99';
+            case 'boolean': return 'true';
+            default:        return 'value';
+        }
+    }
+
+    /* Collapse a field's per-attribute rows on one service into a single mapping. */
+    function mappingForFieldOnService(field, href) {
+        var rows = (_fieldAssignments[href] || []).filter(function(a) { return a.field === field; });
+        if (!rows.length) return null;
+        var withAttr = rows.filter(function(a) { return a.attr; });
+        return {
+            element:  rows[0].element,
+            required: !!rows[0].required,
+            attrs:    withAttr.map(function(a) { return { name: a.attr, type: a.type }; }),
+            simpleType: withAttr.length ? 'string' : (rows[0].type || 'string')
+        };
+    }
+
+    /* Attribute-row editor helpers ------------------------------------------- */
+    function attrTypeOptions(sel) {
+        return ['string','date','int','decimal','boolean'].map(function(t) {
+            return '<option value="' + t + '"' + (t === sel ? ' selected' : '') + '>' + t + '</option>';
+        }).join('');
+    }
+    function addAttrRow(name, type) {
+        var wrap = document.getElementById('assign-attrs');
+        var row = document.createElement('div');
+        row.className = 'attr-row';
+        row.innerHTML =
+            '<input type="text" class="form-control attr-name" placeholder="attribute name e.g. From" value="' + esc(name || '') + '" oninput="onAttrChange()" />' +
+            '<select class="form-control attr-type" onchange="updateAssignPreview()">' + attrTypeOptions(type || 'date') + '</select>' +
+            '<button type="button" class="btn-del btn-sm" onclick="this.parentNode.remove();onAttrChange()"><i class="fa fa-trash"></i></button>';
+        wrap.appendChild(row);
+        onAttrChange();
+    }
+    function readAttrRows() {
+        return Array.prototype.map.call(document.querySelectorAll('#assign-attrs .attr-row'), function(r) {
+            return { name: r.querySelector('.attr-name').value.trim(), type: r.querySelector('.attr-type').value };
+        }).filter(function(a) { return a.name; });
+    }
+    /* Toggle the plain-element value-type selector based on whether attrs exist. */
+    function onAttrChange() {
+        var hasAttrs = document.querySelectorAll('#assign-attrs .attr-row').length > 0;
+        document.getElementById('assign-simple-type-wrap').style.display = hasAttrs ? 'none' : '';
+        updateAssignPreview();
+    }
+
+    function openAssignModal(name) {
+        _assignField = name;
+        document.getElementById('assign-field-name').textContent = name;
+        document.getElementById('assign-err').style.display = 'none';
+
+        var sel = document.getElementById('assign-service');
+        var byCat = {};
+        _assignServices.forEach(function(s) { (byCat[s.category] = byCat[s.category] || []).push(s); });
+        var opts = '<option value="">— Select a service —</option>';
+        Object.keys(byCat).forEach(function(cat) {
+            opts += '<optgroup label="' + esc(cat) + '">';
+            byCat[cat].forEach(function(s) {
+                opts += '<option value="' + esc(s.href) + '"' + (s.hasXsd ? '' : ' disabled') + '>' +
+                    esc(s.service) + (s.hasXsd ? '' : ' (no request XSD)') + '</option>';
+            });
+            opts += '</optgroup>';
+        });
+        sel.innerHTML = opts;
+        sel.value = '';
+
+        document.getElementById('assign-element').value = sanitizeXmlName(name);
+        document.getElementById('assign-type').value = 'string';
+        document.getElementById('assign-required').checked = false;
+        document.getElementById('assign-attrs').innerHTML = '';
+        onAttrChange();
+
+        renderAssignExisting();
+        updateAssignPreview();
+        document.getElementById('assign-modal').classList.add('is-open');
+    }
+
+    function closeAssignModal() {
+        document.getElementById('assign-modal').classList.remove('is-open');
+        _assignField = null;
+        renderFieldsTable(allFields);   /* refresh row badges */
+    }
+
+    /* When the service changes, prefill from an existing mapping on that service. */
+    function onAssignServiceChange() {
+        var href = document.getElementById('assign-service').value;
+        var m = href ? mappingForFieldOnService(_assignField, href) : null;
+        document.getElementById('assign-attrs').innerHTML = '';
+        if (m) {
+            document.getElementById('assign-element').value = m.element || '';
+            document.getElementById('assign-required').checked = m.required;
+            document.getElementById('assign-type').value = m.simpleType;
+            m.attrs.forEach(function(a) { addAttrRow(a.name, a.type); });
+        }
+        onAttrChange();
+    }
+
+    /* Live XML preview from the current form state. */
+    function updateAssignPreview() {
+        var href    = document.getElementById('assign-service').value;
+        var element = document.getElementById('assign-element').value.trim();
+        var required= document.getElementById('assign-required').checked;
+        var attrs   = readAttrRows();
+        var pre = document.getElementById('assign-preview');
+
+        if (!element) { pre.textContent = 'Enter an XML element name to preview the request.'; return; }
+
+        var snippet;
+        if (attrs.length) {
+            var attrStr = attrs.map(function(a) { return a.name + '="' + exampleValue(a.type) + '"'; }).join(' ');
+            snippet = '<' + element + ' ' + attrStr + ' />';
+        } else {
+            var type = document.getElementById('assign-type').value;
+            snippet = '<' + element + '>' + exampleValue(type) + '</' + element + '>';
+        }
+
+        var svc = href ? serviceName(href) : 'the service';
+        pre.textContent =
+            '<!-- added to ' + svc + ' request' + (required ? ' (required)' : ' (optional)') + ' -->\n' + snippet;
+    }
+
+    /* Show this field's mapping on every service it's assigned to. */
+    function renderAssignExisting() {
+        var box = document.getElementById('assign-existing');
+        var hrefs = Object.keys(_fieldAssignments || {}).filter(function(h) {
+            return (_fieldAssignments[h] || []).some(function(a) { return a.field === _assignField; });
+        });
+        if (!hrefs.length) { box.innerHTML = ''; return; }
+        var rows = hrefs.map(function(href) {
+            var m = mappingForFieldOnService(_assignField, href);
+            var snip = m.attrs.length
+                ? ('<' + m.element + ' ' + m.attrs.map(function(a){return a.name+'="…"';}).join(' ') + ' />')
+                : ('<' + m.element + '>…</' + m.element + '>');
+            return '<div class="aitem">' +
+                '<span><strong>' + esc(serviceName(href)) + '</strong> &nbsp; <code>' + esc(snip) + '</code>' +
+                (m.required ? ' <span style="color:#c0392b" title="required">*</span>' : '') + '</span>' +
+                '<button class="btn-del btn-sm" onclick="removeAssignment(\'' + esc(href) + '\')"><i class="fa fa-trash"></i></button>' +
+                '</div>';
+        }).join('');
+        box.innerHTML = '<div class="assign-existing-list">' +
+            '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#6c8cbf;margin-bottom:4px">Current assignments</div>' +
+            rows + '</div>';
+    }
+
+    function saveAssignment() {
+        var err = document.getElementById('assign-err');
+        err.style.display = 'none';
+        var href    = document.getElementById('assign-service').value;
+        var element = document.getElementById('assign-element').value.trim();
+        var required= document.getElementById('assign-required').checked;
+        var type    = document.getElementById('assign-type').value;
+        var attrs   = readAttrRows();
+
+        if (!href)               { showErr(err, 'Select a service.'); return; }
+        if (!xmlNameOk(element))  { showErr(err, 'Element name must be a valid XML name (no spaces).'); return; }
+        for (var i = 0; i < attrs.length; i++) {
+            if (!xmlNameOk(attrs[i].name)) { showErr(err, 'Attribute "' + attrs[i].name + '" is not a valid XML name.'); return; }
+        }
+
+        fetch('api/admin/field-assignments', {
+            method: 'POST', headers: authHeaders(),
+            body: JSON.stringify({ field: _assignField, href: href, element: element, type: type, required: required, attributes: attrs })
+        })
+        .then(function(r) { if (!r.ok) return r.text().then(function(t){ throw new Error(t); }); return r.json(); })
+        .then(function(res) {
+            _fieldAssignments[href] = res.assignments || [];
+            renderAssignExisting();
+            updateAssignPreview();
+        })
+        .catch(function(e) { showErr(err, e.message || 'Save failed.'); });
+    }
+
+    function removeAssignment(href) {
+        if (!confirm('Remove this field from ' + serviceName(href) + '?')) return;
+        fetch('api/admin/field-assignments?href=' + encodeURIComponent(href) + '&field=' + encodeURIComponent(_assignField), {
+            method: 'DELETE', headers: authHeaders()
+        })
+        .then(function(r) { if (!r.ok) return r.text().then(function(t){ throw new Error(t); }); return r.json(); })
+        .then(function(res) {
+            _fieldAssignments[href] = res.assignments || [];
+            if (!_fieldAssignments[href].length) delete _fieldAssignments[href];
+            renderAssignExisting();
+            updateAssignPreview();
+        })
+        .catch(function(e) { alert(e.message || 'Remove failed.'); });
+    }
+
     /* ══════════════════════════════════════════════════════════════════════════
        SERVICES TAB
     ══════════════════════════════════════════════════════════════════════════ */
@@ -1086,10 +2236,45 @@
         .then(function(r) { if (handleUnauth(r)) return null; return r.json(); })
         .then(function(data) {
             if (!data) return;
+            /* Store for placement selector */
+            _allServicesList = [];
+            data.forEach(function(cat) { (cat.services || []).forEach(function(s) { _allServicesList.push(s); }); });
             renderServicesCatalog(data);
             populateCategoryList(data);
+            /* Show pending card if any pending services */
+            if (CAN_APPROVE_SERVICE) {
+                var pending = [];
+                data.forEach(function(cat) {
+                    (cat.services || []).forEach(function(s) { if (s.status === 'pending') pending.push(s); });
+                });
+                var card = document.getElementById('pending-services-card');
+                card.style.display = pending.length ? '' : 'none';
+                document.getElementById('pending-svc-count').textContent = pending.length + ' pending';
+                renderPendingServices(pending);
+            }
         })
         .catch(function() { document.getElementById('services-list').innerHTML = '<div class="loading">Failed to load services.</div>'; });
+    }
+
+    function renderPendingServices(services) {
+        var el = document.getElementById('pending-services-body');
+        if (!services.length) { el.innerHTML = '<div class="loading" style="color:#9db5d5">No pending services.</div>'; return; }
+        el.innerHTML = services.map(function(svc) {
+            return '<div class="svc-row">' +
+                '<span><span class="svc-name">' + esc(svc.service) + '</span><span class="svc-href">#' + esc(svc.href) + '</span></span>' +
+                '<span>' +
+                    '<button class="btn-approve-item btn-sm" onclick="approveService(\'' + esc(svc.href) + '\',this)"><i class="fa fa-check"></i>&nbsp; Approve</button>' +
+                    '<button class="btn-del btn-sm" onclick="deleteService(\'' + esc(svc.href) + '\')"><i class="fa fa-times"></i>&nbsp; Reject</button>' +
+                '</span>' +
+            '</div>';
+        }).join('');
+    }
+
+    function approveService(href, btn) {
+        btn.disabled = true; btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+        fetch('api/admin/services/' + encodeURIComponent(href) + '/approve', { method: 'POST', headers: authHeaders() })
+        .then(function(r) { if (!r.ok) throw new Error(); tabLoaded['services'] = false; loadServices(); })
+        .catch(function() { btn.disabled = false; btn.innerHTML = '<i class="fa fa-check"></i>&nbsp; Approve'; alert('Approve failed.'); });
     }
 
     function populateCategoryList(cats) {
@@ -1114,8 +2299,9 @@
                 var eyeClass    = svc.hidden ? ' is-hidden' : '';
                 var eyeIcon     = svc.hidden ? 'fa-eye-slash' : 'fa-eye';
                 var eyeTitle    = svc.hidden ? 'Service hidden — click to show' : 'Service visible — click to hide';
+                var statusBadge = svc.status === 'pending' ? '<span class="badge-status-pending">Pending</span>' : '';
                 return '<div class="svc-row">' +
-                    '<span><span class="svc-name' + hiddenClass + '">' + esc(svc.service) + '</span><span class="svc-href">#' + esc(svc.href) + '</span></span>' +
+                    '<span><span class="svc-name' + hiddenClass + '">' + esc(svc.service) + '</span><span class="svc-href">#' + esc(svc.href) + '</span>' + statusBadge + '</span>' +
                     '<span>' +
                         '<button class="btn-eye btn-sm' + eyeClass + '" title="' + eyeTitle + '" onclick="toggleServiceVisibility(\'' + esc(svc.href) + '\',this)"><i class="fa ' + eyeIcon + '"></i></button>' +
                         '<button class="btn-del btn-sm" onclick="deleteService(\'' + esc(svc.href) + '\')"><i class="fa fa-trash"></i></button>' +
@@ -1161,7 +2347,7 @@
         if (xsdRes) payload.xsdSchemaContent  = xsdRes;
         fetch('api/admin/services', { method: 'POST', headers: authHeaders(), body: JSON.stringify(payload) })
         .then(function(r) { if (!r.ok) return r.text().then(function(t) { throw new Error(t); }); return r.json(); })
-        .then(function() {
+        .then(function(saved) {
             document.getElementById('svc-success').style.display = 'inline';
             document.getElementById('svc-category').value = '';
             document.getElementById('svc-name').value     = '';
@@ -1170,7 +2356,9 @@
             document.getElementById('svc-link').value     = '';
             document.getElementById('svc-xsd-req').value  = '';
             document.getElementById('svc-xsd-res').value  = '';
+            tabLoaded['services'] = false;
             loadServices();
+            if (saved && saved.status === 'pending') alert('Service submitted for approval by an Executive or Developer.');
         })
         .catch(function(err) { showErr(errEl, err.message || 'Save failed.'); })
         .finally(function() { btn.disabled = false; btn.innerHTML = '<i class="fa fa-plus"></i>&nbsp; Add Service'; });
@@ -1285,11 +2473,78 @@
     /* ══════════════════════════════════════════════════════════════════════════
        USERS TAB (super-admin only)
     ══════════════════════════════════════════════════════════════════════════ */
+    var ASSIGNABLE_ROLES = ['Executive', 'ProjectManager', 'Developer'];
+
+    function roleControlHtml(u) {
+        var role = u.role || 'ProjectManager';
+        var roleCls = 'role-' + role.toLowerCase();
+        // System rows (e.g. the synthetic cyberhub super-admin) are not editable —
+        // the role lives in web.config, not users.json, so it can't be PUT.
+        if (u.system) {
+            var sysLabel = ROLE_LABELS[role] || role;
+            return '<span class="badge-role ' + roleCls + '" title="Configured in web.config — not editable here">' + esc(sysLabel) + '</span>';
+        }
+        // Only the actual super-admin (cyberhub) can reassign roles.
+        // Executives see the same read-only badge as before.
+        if (!IS_SUPER) {
+            var roleLabel = ROLE_LABELS[role] || role;
+            return '<span class="badge-role ' + roleCls + '">' + esc(roleLabel) + '</span>';
+        }
+        var opts = ASSIGNABLE_ROLES.map(function(r) {
+            var sel = (r === role) ? ' selected' : '';
+            return '<option value="' + r + '"' + sel + '>' + esc(ROLE_LABELS[r] || r) + '</option>';
+        }).join('');
+        return '<select class="role-select badge-role ' + roleCls + '" ' +
+               'data-user-id="' + esc(u.id) + '" data-current="' + esc(role) + '" ' +
+               'onchange="changeUserRole(this)" title="Change role">' + opts + '</select>';
+    }
+
+    function changeUserRole(sel) {
+        var id   = sel.getAttribute('data-user-id');
+        var prev = sel.getAttribute('data-current');
+        var next = sel.value;
+        if (next === prev) return;
+        sel.disabled = true;
+        fetch('api/admin/users/' + encodeURIComponent(id) + '/role', {
+            method:  'PUT',
+            headers: authHeaders(),
+            body:    JSON.stringify({ role: next })
+        })
+        .then(function(r) {
+            if (handleUnauth(r)) return null;
+            if (!r.ok) {
+                return r.text().then(function(t) {
+                    var msg = 'HTTP ' + r.status + (r.statusText ? ' ' + r.statusText : '');
+                    if (t) msg += '\n' + t.slice(0, 500);
+                    throw new Error(msg);
+                });
+            }
+            return r.json();
+        })
+        .then(function(data) {
+            if (!data) return;
+            sel.setAttribute('data-current', data.role);
+            // Update badge color to match new role
+            ASSIGNABLE_ROLES.forEach(function(r) { sel.classList.remove('role-' + r.toLowerCase()); });
+            sel.classList.add('role-' + data.role.toLowerCase());
+            sel.disabled = false;
+        })
+        .catch(function(err) {
+            sel.value = prev;
+            sel.disabled = false;
+            alert('Failed to update role.\n\n' + (err && err.message ? err.message : 'Network error.'));
+        });
+    }
+
     function loadAdminUsers() {
         var pendingEl = document.getElementById('pending-users-body');
         var activeEl  = document.getElementById('active-users-body');
         pendingEl.innerHTML = '<div class="loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>';
         activeEl.innerHTML  = '<div class="loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>';
+        // The New User card is SuperAdmin-only — match the role rule used by the
+        // /api/admin/users POST endpoint on the server.
+        var newCard = document.getElementById('new-user-card');
+        if (newCard) newCard.style.display = IS_SUPER ? '' : 'none';
 
         fetch('api/admin/users', { headers: authHeaders() })
         .then(function(r) { if (handleUnauth(r)) return null; if (!r.ok) throw new Error(); return r.json(); })
@@ -1310,6 +2565,7 @@
                         '<span>' +
                             '<span class="user-email">' + esc(u.email) + '</span>' +
                             '<span class="badge-pending">Pending</span>' +
+                            roleControlHtml(u) +
                             '<div class="user-meta"><i class="fa fa-calendar-o"></i>&nbsp; Requested ' + d + '</div>' +
                         '</span>' +
                         '<span>' +
@@ -1321,18 +2577,42 @@
             }
 
             if (!active.length) {
+                /* Defensive — should not happen now that the synthetic cyberhub
+                   super-admin always populates this list, but keep the message. */
                 activeEl.innerHTML = '<div class="loading" style="color:#9db5d5">No active users yet.</div>';
             } else {
                 activeEl.innerHTML = active.map(function(u) {
-                    var d = u.approvedAt ? new Date(u.approvedAt).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }) : '—';
                     var mcp = u.mustChangePassword ? '<span style="font-size:10px;color:#c96d00;margin-left:6px"><i class="fa fa-exclamation-circle"></i> awaiting password change</span>' : '';
+                    /* System rows (cyberhub) live in web.config, not users.json:
+                       no approval timestamp, no Remove button, distinct meta line. */
+                    if (u.system) {
+                        return '<div class="user-row">' +
+                            '<span>' +
+                                '<span class="user-email">' + esc(u.email) + '</span>' +
+                                '<span class="badge-active">Active</span>' +
+                                roleControlHtml(u) +
+                                '<span class="badge-pending" style="background:#eef3fa;color:#2a4a8a;margin-left:6px">system</span>' +
+                                '<div class="user-meta"><i class="fa fa-shield"></i>&nbsp; Built-in administrator (configured in web.config)</div>' +
+                            '</span>' +
+                            '<span style="font-size:11px;color:#9db5d5;font-style:italic">Cannot be removed</span>' +
+                        '</div>';
+                    }
+                    var d = u.approvedAt ? new Date(u.approvedAt).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }) : '—';
+                    /* Reset Password is SuperAdmin-only on the server; hide for
+                       Executives so they don't see an action that 401s. */
+                    var resetBtn = IS_SUPER
+                        ? '<button class="btn-edit btn-sm" onclick="resetUserPassword(\'' + esc(u.id) + '\',this)" title="Generate a new temp password and email it"><i class="fa fa-key"></i>&nbsp; Reset password</button> '
+                        : '';
                     return '<div class="user-row">' +
                         '<span>' +
                             '<span class="user-email">' + esc(u.email) + '</span>' +
-                            '<span class="badge-active">Active</span>' + mcp +
+                            '<span class="badge-active">Active</span>' +
+                            roleControlHtml(u) + mcp +
                             '<div class="user-meta"><i class="fa fa-calendar-check-o"></i>&nbsp; Approved ' + d + '</div>' +
                         '</span>' +
-                        '<button class="btn-del btn-sm" onclick="deleteAdminUser(\'' + esc(u.id) + '\',this)"><i class="fa fa-trash"></i>&nbsp; Remove</button>' +
+                        '<span>' + resetBtn +
+                            '<button class="btn-del btn-sm" onclick="deleteAdminUser(\'' + esc(u.id) + '\',this)"><i class="fa fa-trash"></i>&nbsp; Remove</button>' +
+                        '</span>' +
                     '</div>';
                 }).join('');
             }
@@ -1348,13 +2628,88 @@
         fetch('api/admin/users/' + encodeURIComponent(id) + '/approve', { method: 'POST', headers: authHeaders() })
         .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
         .then(function(data) {
-            document.getElementById('pw-modal-email').textContent = data.email;
-            document.getElementById('pw-modal-value').textContent = data.tempPassword;
-            document.getElementById('pw-modal').classList.add('is-open');
+            showCredentialModal(data);
             tabLoaded['users'] = false;
             loadAdminUsers();
         })
         .catch(function() { btn.disabled = false; btn.innerHTML = '<i class="fa fa-check"></i>&nbsp; Approve'; alert('Approve failed.'); });
+    }
+
+    /* SuperAdmin direct user creation. Same modal as Approve so the operator
+       gets the temp password whether email worked or not. */
+    function saveNewAdminUser() {
+        var emailEl = document.getElementById('new-user-email');
+        var roleEl  = document.getElementById('new-user-role');
+        var errEl   = document.getElementById('new-user-err');
+        errEl.style.display = 'none';
+        var email = (emailEl.value || '').trim().toLowerCase();
+        var role  = roleEl.value;
+        if (!email)                           { showErr(errEl, 'Email is required.'); return; }
+        if (!/^[^@\s]+@cyberlogic\.gr$/.test(email)) { showErr(errEl, 'Email must end with @cyberlogic.gr.'); return; }
+
+        fetch('api/admin/users', {
+            method:  'POST',
+            headers: authHeaders(),
+            body:    JSON.stringify({ email: email, role: role })
+        })
+        .then(function(r) {
+            if (!r.ok) return r.text().then(function(t) { throw new Error(t || ('HTTP ' + r.status)); });
+            return r.json();
+        })
+        .then(function(data) {
+            emailEl.value = '';
+            roleEl.value  = 'ProjectManager';
+            showCredentialModal(data);
+            tabLoaded['users'] = false;
+            loadAdminUsers();
+        })
+        .catch(function(err) { showErr(errEl, err.message || 'Create failed.'); });
+    }
+
+    /* Generates a fresh temp password and (if SMTP is configured) emails it. */
+    function resetUserPassword(id, btn) {
+        if (!confirm('Generate a new temporary password for this user and email it to them?\n\nThe user will be forced to change it on next login.')) return;
+        btn.disabled = true; btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+        fetch('api/admin/users/' + encodeURIComponent(id) + '/reset-password', { method: 'POST', headers: authHeaders() })
+        .then(function(r) {
+            if (!r.ok) return r.text().then(function(t) { throw new Error(t || ('HTTP ' + r.status)); });
+            return r.json();
+        })
+        .then(function(data) {
+            showCredentialModal(data);
+            tabLoaded['users'] = false;
+            loadAdminUsers();
+        })
+        .catch(function(err) {
+            btn.disabled = false; btn.innerHTML = '<i class="fa fa-key"></i>&nbsp; Reset password';
+            alert('Password reset failed.\n\n' + (err && err.message ? err.message : ''));
+        });
+    }
+
+    /* Single source of truth for showing { email, tempPassword, emailSent, emailError }
+       coming back from approve / create / reset endpoints. */
+    function showCredentialModal(data) {
+        document.getElementById('pw-modal-email').textContent = data.email || '';
+        document.getElementById('pw-modal-value').textContent = data.tempPassword || '';
+        var status = document.getElementById('pw-modal-emailstatus');
+        var warn   = document.getElementById('pw-modal-warn');
+        if (data.emailSent) {
+            status.style.display = 'block';
+            status.style.background = '#e8f5ec';
+            status.style.color      = '#1a5c2e';
+            status.innerHTML = '<i class="fa fa-paper-plane"></i>&nbsp; Email sent to <strong>' + esc(data.email || '') + '</strong>';
+            warn.innerHTML = '<i class="fa fa-info-circle"></i>&nbsp; The user has been emailed the password. Keep this dialog open as a backup in case the email is filtered.';
+        } else if (data.emailError) {
+            status.style.display = 'block';
+            status.style.background = '#fff3e0';
+            status.style.color      = '#c96d00';
+            status.innerHTML = '<i class="fa fa-exclamation-triangle"></i>&nbsp; Email not sent (' + esc(data.emailError) + ') — copy the password below and hand it over manually.';
+            warn.innerHTML = '<i class="fa fa-exclamation-triangle"></i>&nbsp; This password is shown <strong>once only</strong>. Copy it and share it securely with the user.';
+        } else {
+            status.style.display = 'none';
+            warn.innerHTML = '<i class="fa fa-exclamation-triangle"></i>&nbsp; This password is shown <strong>once only</strong>. Copy it and share it securely with the user.';
+        }
+        document.getElementById('pw-modal').classList.add('is-open');
     }
 
     function rejectUser(id, btn) {
@@ -1398,6 +2753,217 @@
             sessionStorage.removeItem('cl_admin');
             window.location.replace('AdminLogin.html');
         });
+    }
+
+    /* ══════════════════════════════════════════════════════════════════════════
+       LOGS — Internal (super-admin) and Documentation (any registered user)
+       Logs are stored per-day in ~/Logs/<category>/YYYY-MM-DD.json on the
+       server, so files survive sessions, app-pool recycles and re-publishes.
+    ══════════════════════════════════════════════════════════════════════════ */
+    var _internalLog = [];
+    var _docLog      = [];
+    var _ilogDatesLoaded = false;
+    var _dlogDatesLoaded = false;
+
+    function fmtTs(iso) {
+        if (!iso) return '';
+        var d = new Date(iso);
+        if (isNaN(d.getTime())) return iso;
+        var pad = function(n) { return n < 10 ? '0' + n : '' + n; };
+        return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) +
+               ' '  + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
+    }
+
+    function todayUtcIso() {
+        var n = new Date();
+        var pad = function(x) { return x < 10 ? '0' + x : '' + x; };
+        return n.getUTCFullYear() + '-' + pad(n.getUTCMonth() + 1) + '-' + pad(n.getUTCDate());
+    }
+
+    function fmtDayLabel(iso) {
+        // "2026-05-06" → "Wed 6 May 2026" (today/yesterday rendered with prefix)
+        var t = todayUtcIso();
+        var prefix = (iso === t) ? 'Today — ' : '';
+        var d = new Date(iso + 'T00:00:00Z');
+        if (isNaN(d.getTime())) return iso;
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var days   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+        return prefix + days[d.getUTCDay()] + ' ' + d.getUTCDate() + ' ' + months[d.getUTCMonth()] + ' ' + d.getUTCFullYear();
+    }
+
+    function populateDateSelect(selectId, dates) {
+        var sel = document.getElementById(selectId);
+        if (!sel) return;
+        // Always offer today as the first option, even with no entries yet,
+        // so newly-recorded events show up immediately on a fresh day.
+        var t = todayUtcIso();
+        var ordered = dates.slice();
+        if (ordered.indexOf(t) === -1) ordered.unshift(t);
+        sel.innerHTML = ordered.map(function(d) {
+            return '<option value="' + esc(d) + '">' + esc(fmtDayLabel(d)) + '</option>';
+        }).join('');
+        // Selection: keep prior pick if still valid; otherwise newest.
+        if (!sel.value || ordered.indexOf(sel.value) === -1) sel.value = ordered[0];
+    }
+
+    function loadInternalLog() {
+        var body = document.getElementById('ilog-body');
+        body.innerHTML = '<div class="loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>';
+
+        var datesPromise = _ilogDatesLoaded
+            ? Promise.resolve()
+            : fetch('api/admin/logs/internal/dates', { headers: authHeaders() })
+                .then(function(r) {
+                    if (handleUnauth(r)) return [];
+                    if (!r.ok) throw new Error();
+                    return r.json();
+                })
+                .then(function(dates) {
+                    populateDateSelect('ilog-date', dates || []);
+                    _ilogDatesLoaded = true;
+                });
+
+        datesPromise.then(function() {
+            var d = document.getElementById('ilog-date').value || todayUtcIso();
+            return fetch('api/admin/logs/internal?date=' + encodeURIComponent(d), { headers: authHeaders() });
+        })
+        .then(function(r) { if (handleUnauth(r)) return null; if (!r.ok) throw new Error(); return r.json(); })
+        .then(function(payload) {
+            if (!payload) return;
+            _internalLog = payload.entries || [];
+            renderInternalLog();
+        })
+        .catch(function() { body.innerHTML = '<div class="loading" style="color:#c0392b">Failed to load internal log.</div>'; });
+    }
+
+    function renderInternalLog() {
+        var body = document.getElementById('ilog-body');
+        var q    = (document.getElementById('ilog-search').value || '').toLowerCase().trim();
+        var rows = _internalLog;
+        if (q) {
+            rows = rows.filter(function(e) {
+                return [e.userEmail, e.userRole, e.action, e.category, e.targetName, e.targetId, e.details]
+                    .some(function(v) { return v && String(v).toLowerCase().indexOf(q) !== -1; });
+            });
+        }
+        document.getElementById('ilog-count').textContent = rows.length + ' entr' + (rows.length === 1 ? 'y' : 'ies');
+        if (!rows.length) {
+            body.innerHTML = '<div class="loading" style="color:#9db5d5">No log entries match.</div>';
+            return;
+        }
+        var html = '<table class="log-table"><thead><tr>' +
+                       '<th>When</th><th>User</th><th>Action</th><th>Category</th><th>Target</th><th>Details</th>' +
+                   '</tr></thead><tbody>';
+        rows.forEach(function(e) {
+            var actCls = 'log-action log-action-' + (e.action || '').toLowerCase();
+            html += '<tr>' +
+                '<td class="log-time">' + esc(fmtTs(e.timestamp)) + '</td>' +
+                '<td>' + esc(e.userEmail || '') + '<div class="log-details">' + esc(e.userRole || '') + '</div></td>' +
+                '<td><span class="' + actCls + '">' + esc(e.action || '') + '</span></td>' +
+                '<td>' + esc(e.category || '') + '</td>' +
+                '<td>' + esc(e.targetName || '') +
+                    (e.targetId ? '<div class="log-details">' + esc(e.targetId) + '</div>' : '') +
+                '</td>' +
+                '<td class="log-details">' + esc(e.details || '') + '</td>' +
+            '</tr>';
+        });
+        html += '</tbody></table>';
+        body.innerHTML = html;
+    }
+
+    function exportInternalLogCsv() {
+        var d = document.getElementById('ilog-date').value || todayUtcIso();
+        downloadCsv('api/admin/logs/internal/csv?date=' + encodeURIComponent(d),
+                    'internal-log-' + d + '.csv');
+    }
+
+    function loadDocumentationLog() {
+        var body = document.getElementById('dlog-body');
+        body.innerHTML = '<div class="loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>';
+
+        var datesPromise = _dlogDatesLoaded
+            ? Promise.resolve()
+            : fetch('api/admin/logs/documentation/dates', { headers: authHeaders() })
+                .then(function(r) {
+                    if (handleUnauth(r)) return [];
+                    if (!r.ok) throw new Error();
+                    return r.json();
+                })
+                .then(function(dates) {
+                    populateDateSelect('dlog-date', dates || []);
+                    _dlogDatesLoaded = true;
+                });
+
+        datesPromise.then(function() {
+            var d = document.getElementById('dlog-date').value || todayUtcIso();
+            return fetch('api/admin/logs/documentation?date=' + encodeURIComponent(d), { headers: authHeaders() });
+        })
+        .then(function(r) { if (handleUnauth(r)) return null; if (!r.ok) throw new Error(); return r.json(); })
+        .then(function(payload) {
+            if (!payload) return;
+            _docLog = payload.entries || [];
+            renderDocumentationLog();
+        })
+        .catch(function() { body.innerHTML = '<div class="loading" style="color:#c0392b">Failed to load documentation log.</div>'; });
+    }
+
+    function renderDocumentationLog() {
+        var body = document.getElementById('dlog-body');
+        var q    = (document.getElementById('dlog-search').value || '').toLowerCase().trim();
+        var rows = _docLog;
+        if (q) {
+            rows = rows.filter(function(e) {
+                return [e.endpointName, e.userName, e.serviceHref, e.serviceName]
+                    .some(function(v) { return v && String(v).toLowerCase().indexOf(q) !== -1; });
+            });
+        }
+        document.getElementById('dlog-count').textContent = rows.length + ' entr' + (rows.length === 1 ? 'y' : 'ies');
+        if (!rows.length) {
+            body.innerHTML = '<div class="loading" style="color:#9db5d5">No log entries match.</div>';
+            return;
+        }
+        var html = '<table class="log-table"><thead><tr>' +
+                       '<th>When</th><th>Endpoint</th><th>User</th><th>Service</th>' +
+                   '</tr></thead><tbody>';
+        rows.forEach(function(e) {
+            html += '<tr>' +
+                '<td class="log-time">' + esc(fmtTs(e.timestamp)) + '</td>' +
+                '<td>' + esc(e.endpointName || '') + '</td>' +
+                '<td>' + esc(e.userName || '') + '</td>' +
+                '<td>' + esc(e.serviceName || e.serviceHref || '') +
+                    (e.serviceName && e.serviceHref && e.serviceName !== e.serviceHref
+                        ? '<div class="log-details">' + esc(e.serviceHref) + '</div>' : '') +
+                '</td>' +
+            '</tr>';
+        });
+        html += '</tbody></table>';
+        body.innerHTML = html;
+    }
+
+    function exportDocumentationLogCsv() {
+        var d = document.getElementById('dlog-date').value || todayUtcIso();
+        downloadCsv('api/admin/logs/documentation/csv?date=' + encodeURIComponent(d),
+                    'documentation-log-' + d + '.csv');
+    }
+
+    function downloadCsv(url, filename) {
+        // We can't use a plain <a download> here because the API requires the
+        // X-Admin-Token header. Fetch the blob, then trigger a save.
+        fetch(url, { headers: authHeaders() })
+        .then(function(r) {
+            if (handleUnauth(r)) return null;
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.blob();
+        })
+        .then(function(blob) {
+            if (!blob) return;
+            var a = document.createElement('a');
+            var u = URL.createObjectURL(blob);
+            a.href = u; a.download = filename;
+            document.body.appendChild(a); a.click();
+            setTimeout(function() { URL.revokeObjectURL(u); a.remove(); }, 0);
+        })
+        .catch(function(err) { alert('Export failed.\n\n' + (err && err.message ? err.message : '')); });
     }
 
     /* Boot */

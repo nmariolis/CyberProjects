@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SupplierAPI Interactive Documentation</title>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,600,700%7CLato:300,400,700" rel="stylesheet" type="text/css" />
+  <link href="./styles.css" rel="stylesheet" />
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand-wrap">
+      <img src="./CyberlogicLogo.png" alt="Cyberlogic" class="brand-logo" />
+      <h1>SupplierAPI</h1>
+      <p>Interactive Documentation</p>
+    </div>
+    <div class="sidebar-title">Endpoints</div>
+    <ul class="sidebar-nav" id="sidebar-nav"></ul>
+  </aside>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-title">
+        <h2>Cyberlogic API Documentation</h2>
+        <p>Custom interactive page aligned with ApiDocumentationPublish style</p>
+      </div>
+      <div class="topbar-controls">
+        <label>
+          Base URL
+          <input id="baseUrl" type="text" value="http://cybertravel-hub.cyberlogic.cloud" />
+        </label>
+        <label>
+          IntegrationApiKey
+          <input id="apiKey" type="text" placeholder="Optional for airport endpoints" />
+        </label>
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="intro" id="intro">
+        <h3>Overview</h3>
+        <p id="api-meta">Loading API metadata...</p>
+        <p class="note">For supplier endpoints, the page sends the IntegrationApiKey header automatically if provided above.</p>
+      </section>
+      <section id="endpoint-container"></section>
+    </main>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

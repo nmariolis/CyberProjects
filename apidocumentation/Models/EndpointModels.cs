@@ -9,11 +9,12 @@ namespace Documentation.Models
 
     public class EndpointEntry
     {
-        public string       Id             { get; set; }
-        public string       KeyHash        { get; set; }
-        public string       EncodedKey     { get; set; }
-        public string       Name           { get; set; }
-        public string       BaseUrl        { get; set; }
-        public List<string> HiddenServices { get; set; } = new List<string>();
+        public string       Id                { get; set; }
+        public string       KeyHash           { get; set; }
+        public string       EncodedKey        { get; set; }
+        public string       Name              { get; set; }
+        public string       BaseUrl            { get; set; }
+        public List<string> HiddenServices    { get; set; } = new List<string>();
+        public List<string> ProjectManagerIds { get; set; } = new List<string>();
     }
 }

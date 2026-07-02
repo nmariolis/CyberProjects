@@ -188,5 +188,6 @@
   "Records": "Total number of hotel records returned in this response.",
   "Nationality": "2-character ISO 3166-1 alpha-2 nationality code of the traveller (e.g. GB, DE, GR). Used for nationality-specific pricing rules.",
   "Currency": "ISO 4217 3-letter currency code for returned prices (e.g. EUR, GBP, USD). Defaults to the account's base currency.",
-  "HotelIDs": "Comma-separated list of hotel IDs to search (e.g. 101,202,303). Use instead of HotelID to search multiple specific hotels."
+  "HotelIDs": "Comma-separated list of hotel IDs to search (e.g. 101,202,303). Use instead of HotelID to search multiple specific hotels.",
+  "CheckIn": "CheckinElement(YYYY-MM-DD)"
 }

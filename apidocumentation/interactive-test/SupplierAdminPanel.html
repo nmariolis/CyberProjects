@@ -1,0 +1,435 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SupplierAPI — Admin Panel</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css' />
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { margin: 0; padding: 0; min-height: 100%; }
+        body { background: #eef1f7; font-family: Lato, 'Helvetica Neue', sans-serif; }
+
+        .navbar {
+            background: #1C4084; border-bottom: 3px solid #EB8008;
+            padding: 0 24px; display: flex; align-items: center;
+            justify-content: space-between; height: 58px;
+        }
+        .navbar-left { display: flex; align-items: center; gap: 14px; }
+        .navbar-left img { max-width: 130px; filter: brightness(0) invert(1); }
+        .admin-badge {
+            background: rgba(235,128,8,.18); color: #EB8008;
+            font-size: 11px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; padding: 3px 10px; border-radius: 20px;
+            border: 1px solid rgba(235,128,8,.35);
+        }
+        .navbar-right { display: flex; align-items: center; gap: 12px; }
+        .user-info { color: rgba(255,255,255,.7); font-size: 12px; }
+        .user-info strong { color: #fff; }
+        .btn-logout {
+            background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.25);
+            color: #fff; padding: 6px 14px; border-radius: 4px;
+            font-size: 12px; font-weight: 700; cursor: pointer; letter-spacing: .4px;
+            text-transform: uppercase; transition: background .15s;
+        }
+        .btn-logout:hover { background: rgba(255,255,255,.18); }
+
+        .tab-nav {
+            background: #fff; border-bottom: 2px solid #eef1f7;
+            padding: 0 24px; display: flex; gap: 0;
+        }
+        .tab-btn {
+            background: none; border: none; border-bottom: 3px solid transparent;
+            color: #6c8cbf; padding: 14px 20px; font-size: 13px; font-weight: 700;
+            cursor: pointer; letter-spacing: .3px; margin-bottom: -2px;
+            transition: color .15s, border-color .15s; font-family: inherit;
+        }
+        .tab-btn:hover { color: #1C4084; }
+        .tab-btn.active { color: #1C4084; border-bottom-color: #EB8008; }
+
+        .container { max-width: 1260px; margin: 28px auto; padding: 0 20px 60px; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .card {
+            background: #fff; border-radius: 8px;
+            box-shadow: 0 2px 16px rgba(28,64,132,.09); margin-bottom: 24px;
+        }
+        .card-head {
+            padding: 18px 28px 14px; border-bottom: 2px solid #eef1f7;
+            display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+        }
+        .card-head h2 {
+            margin: 0; font-size: 15px; font-weight: 700;
+            color: #1C4084; display: flex; align-items: center; gap: 8px;
+        }
+        .card-head h2 i { color: #EB8008; }
+        .card-body { padding: 22px 28px; }
+        .card-body.no-pad { padding: 0; }
+
+        .form-row { display: grid; grid-template-columns: 1fr 2fr 1.4fr auto; gap: 10px; }
+        .form-row input {
+            width: 100%; padding: 9px 12px; border: 1px solid #ccd6e8; border-radius: 4px;
+            font-size: 13px; color: #333; background: #f7f9fc; outline: none; font-family: inherit;
+            transition: border-color .2s, box-shadow .2s;
+        }
+        .form-row input:focus {
+            border-color: #1C4084; box-shadow: 0 0 0 3px rgba(28,64,132,.1); background: #fff;
+        }
+
+        .btn-create {
+            padding: 9px 20px; background: #EB8008; border: none; border-radius: 4px;
+            color: #fff; font-size: 12px; font-weight: 700; letter-spacing: .4px;
+            text-transform: uppercase; cursor: pointer; transition: background .15s;
+            font-family: inherit; white-space: nowrap;
+        }
+        .btn-create:hover { background: #c96d00; }
+
+        .ep-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .ep-table th {
+            text-align: left; padding: 9px 12px;
+            font-size: 10px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: .7px; color: #6c8cbf; border-bottom: 2px solid #eef1f7;
+        }
+        .ep-table td { padding: 10px 12px; border-bottom: 1px solid #f0f3f8; vertical-align: middle; }
+        .ep-table tr:last-child td { border-bottom: none; }
+        .ep-table tr:hover td { background: #f7f9fc; }
+        .empty-row td { text-align: center; color: #9db5d5; padding: 28px; font-style: italic; }
+
+        .row-input {
+            width: 100%; padding: 7px 9px; border: 1px solid #ccd6e8; border-radius: 4px;
+            font-size: 12px; color: #333; background: #fff; outline: none; font-family: inherit;
+        }
+        .row-input:focus { border-color: #1C4084; box-shadow: 0 0 0 2px rgba(28,64,132,.12); }
+
+        .btn-eye {
+            background: none; border: 1px solid #b8cce8; color: #6c8cbf;
+            padding: 5px 9px; border-radius: 4px; cursor: pointer; font-size: 12px;
+            transition: all .15s; font-weight: 600;
+        }
+        .btn-eye:hover { background: #1C4084; border-color: #1C4084; color: #fff; }
+        .btn-eye.is-hidden { border-color: #e8c5c5; color: #c0392b; }
+        .btn-eye.is-hidden:hover { background: #dc3545; border-color: #dc3545; color: #fff; }
+
+        .btn-del {
+            background: none; border: 1px solid #e8c5c5; color: #c0392b;
+            padding: 5px 11px; border-radius: 4px; cursor: pointer; font-size: 12px;
+            transition: all .15s; font-weight: 600;
+        }
+        .btn-del:hover { background: #dc3545; border-color: #dc3545; color: #fff; }
+
+        .hub-name.is-hidden { color: #9db5d5; text-decoration: line-through; }
+
+        .info-box {
+            background: rgba(28,64,132,.06); border-left: 3px solid #1C4084;
+            border-radius: 4px; padding: 10px 14px; font-size: 12px;
+            color: #1C4084; margin-bottom: 18px;
+        }
+        .err-box {
+            display: none; margin-top: 12px; padding: 9px 13px;
+            background: rgba(220,53,69,.07); border: 1px solid rgba(220,53,69,.22);
+            border-left: 3px solid #dc3545; border-radius: 4px;
+            color: #b02a37; font-size: 13px;
+        }
+
+        .cred-label {
+            font-weight: 700; color: #1C4084; font-size: 10px;
+            text-transform: uppercase; letter-spacing: .6px; margin-bottom: 6px;
+        }
+        .cred-value {
+            font-family: 'Courier New', monospace; color: #2a4a8a;
+            background: #fff; padding: 8px 10px; border-radius: 4px;
+            word-break: break-all; border: 1px solid #ccd6e8;
+        }
+
+        .page-foot {
+            background: #1C4084; color: rgba(255,255,255,.4);
+            text-align: center; font-size: 11px; padding: 10px;
+        }
+
+        @media (max-width: 1050px) {
+            .form-row { grid-template-columns: 1fr; }
+            .navbar { flex-direction: column; gap: 10px; height: auto; padding: 12px 24px; }
+            .navbar-right { width: 100%; justify-content: space-between; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="navbar-left">
+        <img src="./CyberlogicLogo.png" alt="Cyberlogic" />
+        <span class="admin-badge"><i class="fa fa-shield"></i>&nbsp; Admin Panel</span>
+    </div>
+    <div class="navbar-right">
+        <div class="user-info">User: <strong id="user-name">Admin</strong></div>
+        <button class="btn-logout" onclick="doLogout();"><i class="fa fa-sign-out"></i>&nbsp; Sign Out</button>
+    </div>
+</div>
+
+<div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab(0);"><i class="fa fa-list"></i>&nbsp; Endpoints</button>
+    <button class="tab-btn" onclick="switchTab(1);"><i class="fa fa-key"></i>&nbsp; Credentials</button>
+</div>
+
+<div class="container">
+    <div class="tab-content active" id="tab-endpoints">
+        <div class="card">
+            <div class="card-head">
+                <h2><i class="fa fa-sitemap"></i>&nbsp; Hub Endpoints</h2>
+                <span id="endpoint-count" style="font-size: 12px; color: #9db5d5;"></span>
+            </div>
+            <div class="card-body">
+                <div class="info-box"><i class="fa fa-info-circle"></i>&nbsp; Συμπληρώστε HubName, BaseURL και Encoded API KEY. Το Service Visibility ανοίγει σελίδα ρυθμίσεων endpoint Hidden/Visible για το συγκεκριμένο Hub.</div>
+                <div class="form-row">
+                    <input type="text" id="new-hub-name" placeholder="HubName" />
+                    <input type="text" id="new-base-url" placeholder="BaseURL (https://...)" />
+                    <input type="text" id="new-encoded-key" placeholder="Encoded API KEY" />
+                    <button class="btn-create" onclick="addHub();"><i class="fa fa-plus"></i>&nbsp; Add Hub</button>
+                </div>
+                <div class="err-box" id="hub-err"></div>
+            </div>
+            <div class="card-body no-pad">
+                <table class="ep-table">
+                    <thead>
+                        <tr>
+                            <th>HubName</th>
+                            <th>BaseURL</th>
+                            <th>Encoded API KEY</th>
+                            <th style="width: 170px;">Service Visibility</th>
+                            <th style="width: 90px;">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody id="hub-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="tab-credentials">
+        <div class="card">
+            <div class="card-head"><h2><i class="fa fa-key"></i>&nbsp; Account Information</h2></div>
+            <div class="card-body">
+                <div style="display: grid; gap: 18px;">
+                    <div>
+                        <div class="cred-label"><i class="fa fa-user"></i>&nbsp; Username</div>
+                        <div class="cred-value" id="cred-user">-</div>
+                    </div>
+                    <div>
+                        <div class="cred-label"><i class="fa fa-lock"></i>&nbsp; Role</div>
+                        <div class="cred-value">Full Access</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-foot">&copy; Cyberlogic e-Tourism Platform &mdash; SupplierAPI Admin</div>
+
+<script>
+    (function () {
+        if (!sessionStorage.getItem('supplier_admin_key')) {
+            window.location.replace('SupplierAdminLogin.html');
+            return;
+        }
+        init();
+    })();
+
+    var hubs = [];
+
+    function init() {
+        var username = sessionStorage.getItem('supplier_admin_user') || 'Admin';
+        document.getElementById('user-name').textContent = username;
+        document.getElementById('cred-user').textContent = username;
+        hubs = loadHubs();
+        renderHubs();
+    }
+
+    function loadHubs() {
+        try {
+            var raw = sessionStorage.getItem('supplier_admin_hubs');
+            if (!raw) {
+                raw = localStorage.getItem('supplier_admin_hubs');
+                if (raw) {
+                    sessionStorage.setItem('supplier_admin_hubs', raw);
+                }
+            }
+            if (!raw) return [];
+            var list = JSON.parse(raw);
+            if (!Array.isArray(list)) return [];
+            return list;
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function saveHubs() {
+        var serialized = JSON.stringify(hubs);
+        sessionStorage.setItem('supplier_admin_hubs', serialized);
+        localStorage.setItem('supplier_admin_hubs', serialized);
+    }
+
+    function ensureHubId(hub, index) {
+        if (!hub) return null;
+        if (!hub.id) {
+            hub.id = 'hub-legacy-' + Date.now() + '-' + index;
+            saveHubs();
+        }
+        return hub.id;
+    }
+
+    function showHubError(msg) {
+        var el = document.getElementById('hub-err');
+        el.textContent = msg;
+        el.style.display = 'block';
+    }
+
+    function clearHubError() {
+        document.getElementById('hub-err').style.display = 'none';
+    }
+
+    function addHub() {
+        var name = document.getElementById('new-hub-name').value.trim();
+        var baseUrl = document.getElementById('new-base-url').value.trim();
+        var encodedKey = document.getElementById('new-encoded-key').value.trim();
+
+        clearHubError();
+
+        if (!name) { showHubError('HubName is required.'); return; }
+        if (!baseUrl) { showHubError('BaseURL is required.'); return; }
+        if (!/^https?:\/\//i.test(baseUrl)) { showHubError('BaseURL must start with http:// or https://'); return; }
+        if (!encodedKey) { showHubError('Encoded API KEY is required.'); return; }
+
+        hubs.push({
+            id: 'hub-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
+            hubName: name,
+            baseUrl: baseUrl,
+            encodedApiKey: encodedKey
+        });
+
+        document.getElementById('new-hub-name').value = '';
+        document.getElementById('new-base-url').value = '';
+        document.getElementById('new-encoded-key').value = '';
+
+        saveHubs();
+        renderHubs();
+    }
+
+    function renderHubs() {
+        var tbody = document.getElementById('hub-tbody');
+        document.getElementById('endpoint-count').textContent = hubs.length + ' hub' + (hubs.length !== 1 ? 's' : '');
+
+        if (!hubs.length) {
+            tbody.innerHTML = '<tr class="empty-row"><td colspan="5">No hubs configured yet.</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = hubs.map(function(hub, index) {
+            var hubId = ensureHubId(hub, index);
+            var safeName = esc(hub.hubName || '');
+            var safeUrl = esc(hub.baseUrl || '');
+            var safeKey = esc(hub.encodedApiKey || '');
+            var hiddenCount = getHiddenCountForHub(hubId);
+            var eyeClass = hiddenCount > 0 ? 'btn-eye is-hidden' : 'btn-eye';
+            var eyeText = hiddenCount > 0 ? 'Hidden: ' + hiddenCount : 'All Visible';
+
+            return '' +
+                '<tr data-id="' + esc(hubId) + '">' +
+                    '<td><input class="row-input" value="' + safeName + '" onchange="updateHubField(' + index + ',\'hubName\', this.value)" /></td>' +
+                    '<td><input class="row-input" value="' + safeUrl + '" onchange="updateHubField(' + index + ',\'baseUrl\', this.value)" /></td>' +
+                    '<td><input class="row-input" value="' + safeKey + '" onchange="updateHubField(' + index + ',\'encodedApiKey\', this.value)" /></td>' +
+                    '<td><button type="button" class="' + eyeClass + '" onclick="openServiceVisibilityById(\'' + esc(hubId) + '\',' + index + ')"><i class="fa fa-sliders"></i>&nbsp; ' + eyeText + '</button></td>' +
+                    '<td><button class="btn-del" onclick="deleteHub(' + index + ')"><i class="fa fa-trash"></i></button></td>' +
+                '</tr>';
+        }).join('');
+    }
+
+    function updateHubField(index, field, value) {
+        if (!hubs[index]) return;
+        hubs[index][field] = (value || '').trim();
+        saveHubs();
+        renderHubs();
+    }
+
+    function visibilityStorageKey(hubId) {
+        return 'supplier_endpoint_visibility::' + String(hubId || 'default');
+    }
+
+    function getHiddenCountForHub(hubId) {
+        try {
+            var raw = localStorage.getItem(visibilityStorageKey(hubId));
+            if (!raw) return 0;
+            var map = JSON.parse(raw);
+            if (!map || typeof map !== 'object') return 0;
+            var count = 0;
+            Object.keys(map).forEach(function(k) {
+                if (map[k] === 'hidden') count++;
+            });
+            return count;
+        } catch (e) {
+            return 0;
+        }
+    }
+
+    function openServiceVisibilityById(hubId, fallbackIndex) {
+        var resolvedId = String(hubId || '').trim();
+
+        if (!resolvedId && typeof fallbackIndex === 'number' && hubs[fallbackIndex]) {
+            resolvedId = ensureHubId(hubs[fallbackIndex], fallbackIndex) || '';
+        }
+
+        if (!resolvedId && hubs.length) {
+            for (var i = 0; i < hubs.length; i++) {
+                resolvedId = ensureHubId(hubs[i], i) || '';
+                if (resolvedId) break;
+            }
+        }
+
+        if (!resolvedId) {
+            alert('Hub profile not found. Please refresh and try again.');
+            return;
+        }
+
+        localStorage.setItem('supplier_active_hub_id', resolvedId);
+        window.location.href = 'SupplierServiceVisibility.html?hubId=' + encodeURIComponent(resolvedId);
+    }
+
+    function deleteHub(index) {
+        if (!hubs[index]) return;
+        if (!confirm('Delete this hub?')) return;
+        hubs.splice(index, 1);
+        saveHubs();
+        renderHubs();
+    }
+
+    function switchTab(index) {
+        var tabs = document.querySelectorAll('.tab-content');
+        var btns = document.querySelectorAll('.tab-btn');
+        tabs.forEach(function(t, i) { t.classList.toggle('active', i === index); });
+        btns.forEach(function(b, i) { b.classList.toggle('active', i === index); });
+    }
+
+    function doLogout() {
+        if (confirm('Are you sure you want to sign out?')) {
+            sessionStorage.removeItem('supplier_admin_key');
+            sessionStorage.removeItem('supplier_admin_user');
+            window.location.replace('SupplierAdminLogin.html');
+        }
+    }
+
+    function esc(s) {
+        return String(s || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+</script>
+
+</body>
+</html>
+
+

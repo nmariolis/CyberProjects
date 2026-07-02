@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SupplierAPI - Service Visibility</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css' />
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { margin: 0; padding: 0; min-height: 100%; }
+        body { background: #eef1f7; font-family: Lato, 'Helvetica Neue', sans-serif; }
+
+        .navbar {
+            background: #1C4084; border-bottom: 3px solid #EB8008;
+            padding: 0 24px; display: flex; align-items: center;
+            justify-content: space-between; height: 58px;
+        }
+        .navbar-left { display: flex; align-items: center; gap: 14px; }
+        .navbar-left img { max-width: 130px; filter: brightness(0) invert(1); }
+        .admin-badge {
+            background: rgba(235,128,8,.18); color: #EB8008;
+            font-size: 11px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; padding: 3px 10px; border-radius: 20px;
+            border: 1px solid rgba(235,128,8,.35);
+        }
+        .btn-back {
+            background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.25);
+            color: #fff; padding: 6px 14px; border-radius: 4px;
+            font-size: 12px; font-weight: 700; cursor: pointer; letter-spacing: .4px;
+            text-transform: uppercase; transition: background .15s; text-decoration: none;
+        }
+        .btn-back:hover { background: rgba(255,255,255,.18); }
+
+        .container { max-width: 1260px; margin: 28px auto; padding: 0 20px 60px; }
+        .card {
+            background: #fff; border-radius: 8px;
+            box-shadow: 0 2px 16px rgba(28,64,132,.09); margin-bottom: 24px;
+        }
+        .card-head {
+            padding: 18px 28px 14px; border-bottom: 2px solid #eef1f7;
+            display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+        }
+        .card-head h2 {
+            margin: 0; font-size: 15px; font-weight: 700;
+            color: #1C4084; display: flex; align-items: center; gap: 8px;
+        }
+        .card-head h2 i { color: #EB8008; }
+        .card-body { padding: 22px 28px; }
+        .card-body.no-pad { padding: 0; }
+
+        .info-box {
+            background: rgba(28,64,132,.06); border-left: 3px solid #1C4084;
+            border-radius: 4px; padding: 10px 14px; font-size: 12px;
+            color: #1C4084; margin-bottom: 18px;
+        }
+
+        .ep-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .ep-table th {
+            text-align: left; padding: 9px 12px;
+            font-size: 10px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: .7px; color: #6c8cbf; border-bottom: 2px solid #eef1f7;
+        }
+        .ep-table td { padding: 10px 12px; border-bottom: 1px solid #f0f3f8; vertical-align: middle; }
+        .ep-table tr:last-child td { border-bottom: none; }
+        .ep-table tr:hover td { background: #f7f9fc; }
+
+        .endpoint-path { font-family: 'Courier New', monospace; color: #1C4084; }
+        .method-badge {
+            display: inline-block; font-size: 10px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: .4px; padding: 3px 8px; border-radius: 3px;
+        }
+        .m-get { background: #e8f5ec; color: #1a5c2e; }
+        .m-post { background: #fff3e0; color: #c96d00; }
+        .m-put { background: #f0e8fb; color: #5a1e8c; }
+        .m-delete { background: #ffe8e8; color: #c0392b; }
+        .m-patch { background: #e8f0fb; color: #1C4084; }
+
+        .status-badge {
+            display: inline-block; font-size: 10px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: .5px;
+            padding: 3px 8px; border-radius: 3px;
+        }
+        .status-visible { background: #e8f5ec; color: #1a5c2e; }
+        .status-hidden { background: #ffe8e8; color: #c0392b; }
+
+        .btn-eye {
+            background: none; border: 1px solid #b8cce8; color: #6c8cbf;
+            padding: 5px 9px; border-radius: 4px; cursor: pointer; font-size: 12px;
+            transition: all .15s; font-weight: 600;
+        }
+        .btn-eye:hover { background: #1C4084; border-color: #1C4084; color: #fff; }
+        .btn-eye.is-hidden { border-color: #e8c5c5; color: #c0392b; }
+        .btn-eye.is-hidden:hover { background: #dc3545; border-color: #dc3545; color: #fff; }
+
+        .empty-row td { text-align: center; color: #9db5d5; padding: 28px; font-style: italic; }
+        .page-foot {
+            background: #1C4084; color: rgba(255,255,255,.4);
+            text-align: center; font-size: 11px; padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="navbar-left">
+        <img src="./CyberlogicLogo.png" alt="Cyberlogic" />
+        <span class="admin-badge"><i class="fa fa-eye"></i>&nbsp; Service Visibility</span>
+    </div>
+    <a class="btn-back" href="./SupplierAdminPanel.html"><i class="fa fa-arrow-left"></i>&nbsp; Back</a>
+</div>
+
+<div class="container">
+    <div class="card">
+        <div class="card-head">
+            <h2><i class="fa fa-sitemap"></i>&nbsp; Endpoint Visibility Rules</h2>
+            <span id="rule-count" style="font-size: 12px; color: #9db5d5;"></span>
+        </div>
+        <div class="card-body">
+            <div class="info-box">
+                <i class="fa fa-info-circle"></i>&nbsp; Όσα endpoints είναι <strong>Hidden</strong> δεν εμφανίζονται στη σελίδα documentation για το συγκεκριμένο hub profile.
+            </div>
+            <div id="hub-info" style="font-size: 12px; color: #6c8cbf;"></div>
+        </div>
+        <div class="card-body no-pad">
+            <table class="ep-table">
+                <thead>
+                    <tr>
+                        <th style="width: 90px;">Method</th>
+                        <th>Endpoint</th>
+                        <th style="width: 120px;">Status</th>
+                        <th style="width: 170px;">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="visibility-tbody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="page-foot">&copy; Cyberlogic e-Tourism Platform &mdash; SupplierAPI Admin</div>
+
+<script>
+    var hubId = null;
+    var visibilityMap = {};
+    var endpoints = [];
+
+    (function init() {
+        if (!sessionStorage.getItem('supplier_admin_key')) {
+            window.location.replace('SupplierAdminLogin.html');
+            return;
+        }
+
+        var params = new URLSearchParams(window.location.search || '');
+        hubId = params.get('hubId') || localStorage.getItem('supplier_active_hub_id') || 'default';
+        localStorage.setItem('supplier_active_hub_id', hubId);
+
+        loadHubInfo();
+        loadVisibilityMap();
+        loadEndpoints();
+    })();
+
+    function visibilityStorageKey() {
+        return 'supplier_endpoint_visibility::' + String(hubId || 'default');
+    }
+
+    function loadHubInfo() {
+        var label = 'default';
+        try {
+            var raw = sessionStorage.getItem('supplier_admin_hubs');
+            var hubs = raw ? JSON.parse(raw) : [];
+            if (Array.isArray(hubs)) {
+                var match = hubs.find(function(h) { return h && h.id === hubId; });
+                if (match) {
+                    label = (match.hubName || 'Unnamed Hub') + ' (' + (match.baseUrl || '-') + ')';
+                }
+            }
+        } catch (e) {}
+        document.getElementById('hub-info').textContent = 'Hub Profile: ' + label;
+    }
+
+    function loadVisibilityMap() {
+        try {
+            var raw = localStorage.getItem(visibilityStorageKey());
+            if (!raw) {
+                visibilityMap = {};
+                return;
+            }
+            var parsed = JSON.parse(raw);
+            visibilityMap = parsed && typeof parsed === 'object' ? parsed : {};
+        } catch (e) {
+            visibilityMap = {};
+        }
+    }
+
+    function saveVisibilityMap() {
+        localStorage.setItem(visibilityStorageKey(), JSON.stringify(visibilityMap));
+    }
+
+    function endpointKey(method, path) {
+        return method.toUpperCase() + ' ' + path;
+    }
+
+    function isHidden(method, path) {
+        return visibilityMap[endpointKey(method, path)] === 'hidden';
+    }
+
+    function toggleEndpoint(method, path) {
+        var key = endpointKey(method, path);
+        if (visibilityMap[key] === 'hidden') {
+            delete visibilityMap[key];
+        } else {
+            visibilityMap[key] = 'hidden';
+        }
+        saveVisibilityMap();
+        render();
+    }
+
+    function loadEndpoints() {
+        fetch('../swagger.json', { cache: 'no-store' })
+            .then(function(r) {
+                if (!r.ok) throw new Error('Unable to load swagger.json');
+                return r.json();
+            })
+            .then(function(spec) {
+                endpoints = [];
+                Object.keys(spec.paths || {}).forEach(function(path) {
+                    var item = spec.paths[path] || {};
+                    ['get', 'post', 'put', 'delete', 'patch'].forEach(function(method) {
+                        if (item[method]) {
+                            endpoints.push({ method: method, path: path });
+                        }
+                    });
+                });
+                render();
+            })
+            .catch(function(err) {
+                document.getElementById('visibility-tbody').innerHTML =
+                    '<tr class="empty-row"><td colspan="4">' + esc(err.message || 'Failed to load endpoints') + '</td></tr>';
+            });
+    }
+
+    function render() {
+        var tbody = document.getElementById('visibility-tbody');
+        if (!endpoints.length) {
+            tbody.innerHTML = '<tr class="empty-row"><td colspan="4">No endpoints found.</td></tr>';
+            document.getElementById('rule-count').textContent = '0 endpoints';
+            return;
+        }
+
+        var hiddenCount = 0;
+        tbody.innerHTML = endpoints.map(function(ep) {
+            var hidden = isHidden(ep.method, ep.path);
+            if (hidden) hiddenCount++;
+            var statusCls = hidden ? 'status-badge status-hidden' : 'status-badge status-visible';
+            var statusText = hidden ? 'Hidden' : 'Visible';
+            var btnCls = hidden ? 'btn-eye is-hidden' : 'btn-eye';
+            var btnIcon = hidden ? 'fa-eye' : 'fa-eye-slash';
+            var btnText = hidden ? 'Set Visible' : 'Set Hidden';
+
+            return '' +
+                '<tr>' +
+                    '<td><span class="method-badge m-' + esc(ep.method) + '">' + esc(ep.method.toUpperCase()) + '</span></td>' +
+                    '<td><span class="endpoint-path">' + esc(ep.path) + '</span></td>' +
+                    '<td><span class="' + statusCls + '">' + statusText + '</span></td>' +
+                    '<td><button class="' + btnCls + '" onclick="toggleEndpoint(\'' + escJs(ep.method) + '\', \'' + escJs(ep.path) + '\')"><i class="fa ' + btnIcon + '"></i>&nbsp; ' + btnText + '</button></td>' +
+                '</tr>';
+        }).join('');
+
+        document.getElementById('rule-count').textContent = endpoints.length + ' endpoints | Hidden: ' + hiddenCount;
+    }
+
+    function esc(s) {
+        return String(s || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function escJs(s) {
+        return String(s || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    }
+</script>
+
+</body>
+</html>

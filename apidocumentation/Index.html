@@ -18,7 +18,7 @@
     </script>
 
     <!-- Fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Raleway:100,300,400,500%7CLato:300,400' rel='stylesheet' type='text/css' />
+    <link href='https://fonts.googleapis.com/css?family=Raleway:100,300,400,500%7CLato:300,400' rel='stylesheet' type='text/css' />
 
     <!-- Favicons -->
     <link rel="icon" href="customAssets/img/CyberlogicIcon.svg" />
@@ -68,6 +68,32 @@
             padding: 4px 14px; cursor: pointer; font-size: 12px;
         }
         .lookup-extra-row .btn-lookup-load:hover { background: #d4720a; }
+        #lookup-search-wrap {
+            padding: 8px 18px; border-bottom: 1px solid #e4e8f0; flex-shrink: 0;
+        }
+        #lookup-search {
+            width: 100%; height: 30px; padding: 4px 10px 4px 30px;
+            font-size: 12px; border: 1px solid #c8d4e8; border-radius: 4px;
+            box-sizing: border-box; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E") no-repeat 8px center;
+        }
+        #lookup-search:focus { outline: none; border-color: #1C4084; }
+        #lookup-search-count { font-size: 11px; color: #888; margin-top: 4px; }
+
+        /* ── Copy XML buttons ── */
+        .xml-code-header {
+            display: flex !important;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .xml-code-header div { display: flex; align-items: center; gap: 8px; }
+        .btn-copy-xml {
+            background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.3);
+            color: rgba(255,255,255,.85); padding: 3px 10px; border-radius: 4px;
+            cursor: pointer; font-size: 11px; font-weight: 600; font-family: inherit;
+            transition: all .15s; white-space: nowrap;
+        }
+        .btn-copy-xml:hover { background: rgba(255,255,255,.22); color: #fff; }
+        .btn-copy-xml.copied { border-color: #4caf50; color: #4caf50; }
     </style>
 </head>
 
@@ -152,6 +178,7 @@
         var schemaCache = {};
         var svcLinkByHref = {};
         var FIELD_DESC = {};
+        var _placedSections = {}; /* key: "before:{href}" or "after:{href}", value: array of sections */
 
         /* Load field descriptions, then service catalog (ensures FIELD_DESC is ready before schemas render) */
         $.ajax({
@@ -167,14 +194,40 @@
             datatype: 'json', type: 'get', cache: false,
             success: function(data) {
                 if (!data || !data.sections || !data.sections.length) return;
+                /* Filter:
+                     1) approved only (drop pending and edit-pending),
+                     2) endpoint scoping — a section is visible to this user iff
+                        its endpointId is null/empty (shared) OR matches the
+                        endpoint the user authenticated into. The admin panel
+                        stores per-endpoint sections so each tenant only sees
+                        the docs that apply to their own hub. */
+                var myEp = CL_SESSION.endpointId;
+                var approved = data.sections.filter(function(s) {
+                    if (s.status && s.status !== 'approved') return false;
+                    if (s.endpointId && s.endpointId !== myEp) return false;
+                    return true;
+                });
+                /* Partition: top-placed vs. before/after a service */
+                var topSections = [];
+                _placedSections = {};
+                approved.forEach(function(sec) {
+                    if (!sec.placement || sec.placement === 'top') {
+                        topSections.push(sec);
+                    } else {
+                        var key = sec.placement; /* e.g. "before:hotel-search" */
+                        if (!_placedSections[key]) _placedSections[key] = [];
+                        _placedSections[key].push(sec);
+                    }
+                });
+                if (!topSections.length) return;
                 var sidebarItems = '';
                 var mainHtml = '';
-                $(data.sections).each(function(i, sec) {
+                $(topSections).each(function(i, sec) {
                     sidebarItems += '<li><a href="#' + escapeAttr(sec.id) + '">' + escapeXml(sec.title) + '</a></li>';
                     mainHtml += renderContentSection(sec);
                 });
                 $('#sidebar-getting-started').html(
-                    '<a href="#' + escapeAttr(data.sections[0].id) + '" class="has-child">Getting Started</a><ul>' + sidebarItems + '</ul>'
+                    '<a href="#' + escapeAttr(topSections[0].id) + '" class="has-child">Getting Started</a><ul>' + sidebarItems + '</ul>'
                 );
                 $('#static-sections').html(mainHtml);
             }
@@ -234,12 +287,12 @@
                     var epHidden = CL_SESSION.hiddenServices || [];
                     var filteredCats = (data.serviceCategory || []).map(function(cat) {
                         return { name: cat.name, services: (cat.services || []).filter(function(s) {
-                            return !s.hidden && epHidden.indexOf(s.href) === -1;
+                            return !s.hidden && epHidden.indexOf(s.href) === -1 && (!s.status || s.status === 'approved');
                         })};
                     }).filter(function(cat) { return cat.services.length > 0; });
                     $(filteredCats).each(function(i, cat) {
                         sidebarMenu += menuItemTemplate(cat);
-                        mainContent += mainContentTemplate(cat.services);
+                        mainContent += mainContentTemplate(cat.services, _placedSections);
                         $(cat.services).each(function(j, svc) { svcLinkByHref[svc.href] = svc.link; });
                     });
                     $('#sidebar-menu').append(sidebarMenu);
@@ -278,9 +331,19 @@
             return html + '</ul>';
         }
 
-        function mainContentTemplate(services) {
+        function mainContentTemplate(services, placedSections) {
             var html = '';
             $(services).each(function(i, svc) {
+                /* "before:href" → outside the whole service block, above the heading. */
+                var beforeSecs = (placedSections && placedSections['before:' + svc.href]) || [];
+                beforeSecs.forEach(function(sec) { html += renderPlacedSection(sec); });
+
+                /* Pre-compute the inside-the-service-block placements so they can
+                   live in the right rows (between heading/description and the
+                   Request Parameters block, or between Request Parameters and Try It). */
+                var beforeParamsSecs = (placedSections && placedSections['before-params:' + svc.href]) || [];
+                var afterParamsSecs  = (placedSections && placedSections['after-params:'  + svc.href]) || [];
+
                 html +=
                     '<section>' +
 
@@ -289,12 +352,15 @@
                     '<h2 id="' + svc.href + '">' + svc.service + '</h2>' +
                     '<p>' + svc.description + '</p>' +
                     '<p class="svc-endpoint"><strong>Endpoint</strong>&nbsp; <a href="' + swapEndpoint(svc.link) + '" class="endpoint-url">' + swapEndpoint(svc.link) + '</a></p>' +
+                    /* Inline placements live INSIDE the leftSection so they share its column width. */
+                    beforeParamsSecs.map(renderPlacedSection).join('') +
                     '</div></div>' +
 
                     '<div class="row">' +
                     '<div class="col-xs-12 leftSection">' +
                     '<div class="promo small-icon left"><i class="fa fa-list"></i><h3>Request Parameters</h3></div>' +
                     '<div id="schema-req-' + svc.href + '"><em class="loading-msg">Loading schema…</em></div>' +
+                    afterParamsSecs.map(renderPlacedSection).join('') +
                     '</div></div>' +
 
                     '<div class="try-it-section">' +
@@ -303,14 +369,20 @@
                     '<div id="form-container-' + svc.href + '" class="form-panel"><em>Loading…</em></div>' +
                     '</div>' +
                     '<div class="try-it-code-col">' +
-                    '<div class="promo small-icon left"><i class="fa fa-code"></i><h3>Request XML</h3></div>' +
+                    '<div class="promo small-icon left xml-code-header">' +
+                        '<div><i class="fa fa-code"></i><h3 style="display:inline">Request XML</h3></div>' +
+                        '<button type="button" class="btn-copy-xml" id="copy-req-' + svc.href + '" onclick="copyXmlBlock(\'xml-req-code-' + svc.href + '\',this)" title="Copy Request XML"><i class="fa fa-copy"></i> Copy</button>' +
+                    '</div>' +
                     '<pre class="codeBlock-inline xml rp-pre" id="xml-req-' + svc.href + '"><code id="xml-req-code-' + svc.href + '">Fill the form and click Generate.</code></pre>' +
                     '</div>' +
                     '</div>' +
 
                     '<div class="row">' +
                     '<div class="col-xs-12 resp-wrap">' +
-                    '<div class="promo small-icon left"><i class="fa fa-reply"></i><h3>Response</h3></div>' +
+                    '<div class="promo small-icon left xml-code-header">' +
+                        '<div><i class="fa fa-reply"></i><h3 style="display:inline">Response</h3></div>' +
+                        '<button type="button" class="btn-copy-xml" id="copy-res-' + svc.href + '" onclick="copyXmlBlock(\'xml-res-code-' + svc.href + '\',this)" title="Copy Response XML"><i class="fa fa-copy"></i> Copy</button>' +
+                    '</div>' +
                     '<pre class="codeBlock-inline xml" id="xml-res-' + svc.href + '" style="min-height:160px;overflow:auto;padding:15px"><code id="xml-res-code-' + svc.href + '"></code></pre>' +
                     '</div></div>' +
 
@@ -322,7 +394,47 @@
                     '</div></div>' +
 
                     '</section>';
+
+                /* "after:href" → outside the whole service block, below the response schema. */
+                var afterSecs = (placedSections && placedSections['after:' + svc.href]) || [];
+                afterSecs.forEach(function(sec) { html += renderPlacedSection(sec); });
             });
+            return html;
+        }
+
+        /* Renders a placed section. Two modes:
+             - Default: collapsible <h2> + <items> (same as legacy before:/after: layout)
+             - headless=true: items only, no heading, no collapse — meant for a single
+               paragraph or code block placed before/after Request Parameters.
+        */
+        function renderPlacedSection(sec) {
+            if (sec && sec.headless) {
+                var inner = '';
+                $.each(sec.items || [], function(i, item) {
+                    if (item.type === 'code') {
+                        inner += '<pre><code data-language="' + escapeAttr(item.language || 'text') + '">' + escapeXml(item.text || '') + '</code></pre>';
+                    } else {
+                        inner += '<p>' + escapeXml(item.text || '') + '</p>';
+                    }
+                });
+                return '<div class="placed-content-section placed-headless" id="placed-' + escapeAttr(sec.id) + '">' + inner + '</div>';
+            }
+            var sid = escapeAttr(sec.id);
+            var cid = 'csc-' + sid;
+            var html = '<section class="placed-content-section">';
+            html += '<div class="row"><div class="col-xs-12 sec-heading-row">';
+            html += '<h2 id="placed-' + sid + '" class="sec-toggle collapsed" data-toggle="collapse" data-target="#' + cid + '" aria-expanded="false" aria-controls="' + cid + '">';
+            html += '<i class="fa fa-chevron-right sec-toggle-icon"></i>' + escapeXml(sec.title);
+            html += '</h2></div></div>';
+            html += '<div id="' + cid + '" class="collapse"><div class="row"><div class="col-xs-12 leftSection">';
+            $.each(sec.items || [], function(i, item) {
+                if (item.type === 'code') {
+                    html += '<pre><code data-language="' + escapeAttr(item.language || 'text') + '">' + escapeXml(item.text || '') + '</code></pre>';
+                } else {
+                    html += '<p>' + escapeXml(item.text || '') + '</p>';
+                }
+            });
+            html += '</div></div></div></section>';
             return html;
         }
 
@@ -529,6 +641,24 @@
                 return;
             }
 
+            /* Per-field UI overrides — applied independently of the XSD so
+               "logical" requirements can differ from schema cardinality.
+                 - UseTariff: business rule says it must always be sent, with
+                   the default semantics of "use my assigned tariff".
+            */
+            var FIELD_UI_OVERRIDES = {
+                'UseTariff': { required: true, defaultValue: 'true' }
+            };
+            fields.forEach(function(f) {
+                var ov = FIELD_UI_OVERRIDES[f.Name];
+                if (!ov) return;
+                if (ov.required) f.Required = true;
+                if (ov.defaultValue !== undefined &&
+                    (f.Value === undefined || f.Value === null || f.Value === '')) {
+                    f.Value = ov.defaultValue;
+                }
+            });
+
             /* Split: optional boolean flags go into a collapsible 3-col group */
             var mainFields = [];
             var optBoolFields = [];
@@ -540,6 +670,20 @@
                     mainFields.push(f);
                 }
             });
+
+            /* Ensure hierarchical fields appear in Province→Prefecture→City→HotelID order */
+            var HIER_ORDER = { 'Province': 1, 'Prefecture': 2, 'City': 3, 'HotelID': 4 };
+            var hierFound = mainFields.filter(function(f) { return HIER_ORDER[f.Name]; });
+            if (hierFound.length > 1) {
+                var firstHierIdx = -1;
+                for (var _hi = 0; _hi < mainFields.length; _hi++) {
+                    if (HIER_ORDER[mainFields[_hi].Name]) { firstHierIdx = _hi; break; }
+                }
+                if (firstHierIdx < 0) firstHierIdx = 0;
+                var nonHier = mainFields.filter(function(f) { return !HIER_ORDER[f.Name]; });
+                hierFound.sort(function(a, b) { return HIER_ORDER[a.Name] - HIER_ORDER[b.Name]; });
+                mainFields = nonHier.slice(0, firstHierIdx).concat(hierFound).concat(nonHier.slice(firstHierIdx));
+            }
 
             var html = '';
             var i = 0;
@@ -572,6 +716,22 @@
 
             html += '<div class="generate-row"><button type="button" class="btn btn-primary btn-generate" onclick="generateAndSend(\'' + href + '\')">Generate &amp; Send</button></div>';
             $('#form-container-' + href).html(html);
+            setupRoomIdActivation(href);
+        }
+
+        function setupRoomIdActivation(href) {
+            var roomBtnId = 'btn-lookup-f-' + href + '-RoomID';
+            var roomBtn = document.getElementById(roomBtnId);
+            if (!roomBtn) return;
+            var $hotel    = $('#f-' + href + '-HotelID');
+            var $contract = $('#f-' + href + '-ContractID');
+            function checkActive() {
+                var ok = ($hotel.val() || '').trim() !== '' && ($contract.val() || '').trim() !== '';
+                roomBtn.disabled = !ok;
+                $(roomBtn).toggleClass('btn-lookup-disabled', !ok);
+            }
+            checkActive();
+            $hotel.add($contract).on('input change', checkActive);
         }
 
         function reqStar(required) {
@@ -580,9 +740,13 @@
 
         function renderSimpleField(field, href) {
             var fid = 'f-' + href + '-' + safeId(field.Name);
-            var lookupBtn = FIELD_LOOKUPS[field.Name]
-                ? ' <button type="button" class="btn-lookup" onclick="openLookupModal(\'' + escapeAttr(fid) + '\',\'' + escapeAttr(field.Name) + '\')" title="Browse available values"><i class="fa fa-search"></i></button>'
-                : '';
+            var lookupBtn = '';
+            if (FIELD_LOOKUPS[field.Name]) {
+                var isRoomId = field.Name === 'RoomID';
+                lookupBtn = ' <button type="button" class="btn-lookup' + (isRoomId ? ' btn-lookup-disabled' : '') + '"' +
+                    (isRoomId ? ' id="btn-lookup-' + fid + '" disabled' : '') +
+                    ' onclick="openLookupModal(\'' + escapeAttr(fid) + '\',\'' + escapeAttr(field.Name) + '\')" title="Browse available values"><i class="fa fa-search"></i></button>';
+            }
             return '<div class="field-cell">' +
                 '<label for="' + fid + '">' + escapeAttr(field.Name) + reqStar(field.Required) + ':' + lookupBtn + '</label>' +
                 buildInput(field, fid) +
@@ -685,6 +849,30 @@
             return '<input type="text" class="form-control" id="' + fid + '" value="' + escapeAttr(val) + '" />';
         }
 
+        function copyXmlBlock(codeId, btn) {
+            var el = document.getElementById(codeId);
+            if (!el) return;
+            var text = el.textContent || el.innerText || '';
+            if (!text || text === 'Fill the form and click Generate.' || !text.trim()) return;
+            navigator.clipboard.writeText(text).then(function() {
+                var orig = btn.innerHTML;
+                btn.innerHTML = '<i class="fa fa-check"></i> Copied!';
+                btn.classList.add('copied');
+                setTimeout(function() { btn.innerHTML = orig; btn.classList.remove('copied'); }, 2000);
+            }).catch(function() {
+                /* Fallback: textarea trick */
+                var ta = document.createElement('textarea');
+                ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+                document.body.appendChild(ta); ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                var orig = btn.innerHTML;
+                btn.innerHTML = '<i class="fa fa-check"></i> Copied!';
+                btn.classList.add('copied');
+                setTimeout(function() { btn.innerHTML = orig; btn.classList.remove('copied'); }, 2000);
+            });
+        }
+
         function generateAndSend(href) {
             var cache = schemaCache[href];
             if (!cache || !cache.request) return;
@@ -694,6 +882,33 @@
 
             var link = cache.svc ? cache.svc.link : null;
             if (!link) return;
+
+            /* Documentation log — fires only when a user actually invokes
+               "Generate & Send" for a service. Logging never blocks the call,
+               but any server-side failure is surfaced to the console so it can
+               be diagnosed (typically: app-pool identity has no write
+               permission on the Logs/ folder). */
+            var serviceName = (cache.svc && cache.svc.service) ? cache.svc.service : href;
+            fetch('api/docs/log', {
+                method:  'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body:    JSON.stringify({
+                    endpointName: CL_SESSION.endpointName || '',
+                    userName:     CL_SESSION.username || '',
+                    serviceHref:  href,
+                    serviceName:  serviceName
+                })
+            })
+            .then(function(r) {
+                if (!r.ok) {
+                    return r.text().then(function(t) {
+                        console.warn('[doc-log] HTTP ' + r.status + ' ' + r.statusText + (t ? ' — ' + t.slice(0, 400) : ''));
+                    });
+                }
+            })
+            .catch(function(err) {
+                console.warn('[doc-log] network/JS error:', err && err.message ? err.message : err);
+            });
 
             $('#xml-res-code-' + href).text('Sending request...');
             $.ajax({
@@ -808,12 +1023,37 @@
             return name.replace(/[^a-zA-Z0-9_-]/g, '_');
         }
 
+        function getSiblingFieldValue(currentFid, fieldName) {
+            if (!currentFid) return '';
+            var lastDash = currentFid.lastIndexOf('-');
+            if (lastDash < 0) return '';
+            var prefix = currentFid.substring(0, lastDash + 1);
+            return (($('#' + prefix + safeId(fieldName)).val()) || '').trim();
+        }
+
+        function setSiblingFieldValue(currentFid, fieldName, value) {
+            if (!currentFid) return;
+            var lastDash = currentFid.lastIndexOf('-');
+            if (lastDash < 0) return;
+            var prefix = currentFid.substring(0, lastDash + 1);
+            $('#' + prefix + safeId(fieldName)).val(value);
+        }
+
         function escapeXml(str) {
             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         }
 
         function escapeAttr(str) {
             return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        /* Try multiple attribute-name variants on an XML element (case/style differences in API responses) */
+        function getAttrMulti(el, names) {
+            for (var i = 0; i < names.length; i++) {
+                var v = $(el).attr(names[i]);
+                if (v !== undefined && v !== null && v !== '') return String(v);
+            }
+            return '';
         }
 
         /* ══════════════════════════════════════════════════════════════════════
@@ -840,26 +1080,132 @@
             HotelID: {
                 title: 'Hotel ID  —  values from Hotel List',
                 sourceHref: 'hotel-list',
-                buildXml: function(u, p) {
+                getSourceHref: function(extra) {
+                    return (extra && extra.ContractID) ? 'my-contracts' : 'hotel-list';
+                },
+                buildXml: function(u, p, extra) {
+                    if (extra && extra.ContractID) {
+                        return '<SearchContracts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '</SearchContracts>';
+                    }
                     return '<HotelListRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '<Language>en</Language></HotelListRequest>';
                 },
-                parseRows: function(doc) {
+                parseRows: function(doc, extra) {
+                    if (extra && extra.ContractID) {
+                        /* When ContractID is set: resolve hotel from that contract */
+                        var rows = [];
+                        $(doc).find('Contract').each(function() {
+                            if ($(this).attr('ContractID') !== String(extra.ContractID)) return;
+                            var hotelId = $(this).attr('HotelID') || '';
+                            var hotelName = $(this).attr('HotelName') || ('Hotel ' + hotelId);
+                            if (hotelId) rows.push({ id: hotelId, label: hotelName });
+                        });
+                        return rows;
+                    }
+                    /* Default: Hotel List with Province/Prefecture/City filtering */
                     var rows = [];
-                    $(doc).find('Hotel').each(function() { rows.push({ id: $(this).attr('ID'), label: $(this).find('Name').first().text() }); });
+                    var cityFilter = extra && extra.City;
+                    var prefFilter = extra && extra.Prefecture;
+                    var provFilter = extra && extra.Province;
+                    $(doc).find('Hotel').each(function() {
+                        var hCity = $(this).children('City').text();
+                        var hPref = $(this).children('Prefecture').text();
+                        var hProv = $(this).children('State').text();
+                        if (cityFilter) {
+                            if (hCity !== String(cityFilter)) return;
+                        } else if (prefFilter) {
+                            if (hPref !== String(prefFilter)) return;
+                        } else if (provFilter) {
+                            if (hProv !== String(provFilter)) return;
+                        }
+                        rows.push({
+                            id: $(this).attr('ID'),
+                            label: $(this).find('Name').first().text(),
+                            _parents: { City: hCity, Prefecture: hPref, Province: hProv }
+                        });
+                    });
                     return rows;
                 }
             },
             RoomID: {
                 title: 'Room ID  —  values from Hotel Room List',
                 sourceHref: 'hotel-room-list',
-                requiresInput: { name: 'HotelID', label: 'Hotel ID', type: 'number' },
-                buildXml: function(u, p, extra) {
-                    return '<HotelRoomListRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '<HotelID>' + escapeXml(extra.HotelID || '') + '</HotelID></HotelRoomListRequest>';
-                },
-                parseRows: function(doc) {
-                    var rows = [];
-                    $(doc).find('Room').each(function() { rows.push({ id: $(this).attr('ID'), label: $(this).attr('Name') }); });
-                    return rows;
+                execute: function(u, p, extra, onRows, onError) {
+                    var hotelId    = (extra && extra.HotelID)    ? String(extra.HotelID)    : '';
+                    var contractId = (extra && extra.ContractID) ? String(extra.ContractID) : '';
+                    if (!hotelId)    { onError('HotelID is required.');    return; }
+                    if (!contractId) { onError('ContractID is required.'); return; }
+
+                    var roomsUrl     = svcLinkByHref['hotel-room-list'];
+                    var contractsUrl = svcLinkByHref['my-contracts'];
+                    if (!roomsUrl)     { onError('Service not found: hotel-room-list'); return; }
+                    if (!contractsUrl) { onError('Service not found: my-contracts');   return; }
+
+                    /* Run HotelRoomList and MyContracts in parallel */
+                    var roomsReq = $.ajax({
+                        url: 'api/webservices/proxy', type: 'POST', contentType: 'application/json',
+                        data: JSON.stringify({
+                            Url: swapEndpoint(roomsUrl),
+                            Xml: '<HotelRoomListRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u, p) + '<HotelID>' + escapeXml(hotelId) + '</HotelID></HotelRoomListRequest>'
+                        })
+                    });
+                    var contractsReq = $.ajax({
+                        url: 'api/webservices/proxy', type: 'POST', contentType: 'application/json',
+                        data: JSON.stringify({
+                            Url: swapEndpoint(contractsUrl),
+                            Xml: '<SearchContracts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u, p) + '<ContractID>' + escapeXml(contractId) + '</ContractID></SearchContracts>'
+                        })
+                    });
+
+                    $.when(roomsReq, contractsReq).then(
+                        function(roomsResult, contractsResult) {
+                            var parser = new DOMParser();
+
+                            /* Collect RoomIDs (and names if available) from MyContracts filtered by ContractID */
+                            var contractsRaw = typeof contractsResult[0] === 'string' ? contractsResult[0] : JSON.stringify(contractsResult[0]);
+                            var contractsDoc = parser.parseFromString(contractsRaw, 'text/xml');
+                            var allContracts = contractsDoc.getElementsByTagName('Contract');
+                            var allowedRoomIds = {};   /* rid -> label */
+                            for (var ci = 0; ci < allContracts.length; ci++) {
+                                var cEl = allContracts[ci];
+                                if (cEl.getAttribute('ContractID') !== contractId) continue;
+                                var roomEls = cEl.getElementsByTagName('Room');
+                                for (var ri = 0; ri < roomEls.length; ri++) {
+                                    var rid = String(roomEls[ri].getAttribute('RoomID') || '');
+                                    var rname = roomEls[ri].getAttribute('Name') || roomEls[ri].getAttribute('RoomName') || ('Room ' + rid);
+                                    if (rid) allowedRoomIds[rid] = rname;
+                                }
+                            }
+
+                            /* Filter HotelRoomList by the collected RoomIDs */
+                            var roomsRaw = typeof roomsResult[0] === 'string' ? roomsResult[0] : JSON.stringify(roomsResult[0]);
+                            var roomsDoc = parser.parseFromString(roomsRaw, 'text/xml');
+                            var allRoomEls = roomsDoc.getElementsByTagName('Room');
+                            var allowedKeys = Object.keys(allowedRoomIds);
+                            var hasFilter = allowedKeys.length > 0;
+                            var rows = [];
+                            for (var rri = 0; rri < allRoomEls.length; rri++) {
+                                var rEl = allRoomEls[rri];
+                                var id = String(rEl.getAttribute('ID') || '');
+                                if (hasFilter && !allowedRoomIds.hasOwnProperty(id)) continue;
+                                rows.push({ id: id, label: rEl.getAttribute('Name') || ('Room ' + id) });
+                            }
+
+                            /* HotelRoomList had no data — fall back to RoomIDs from MyContracts */
+                            if (rows.length === 0 && hasFilter) {
+                                for (var ki = 0; ki < allowedKeys.length; ki++) {
+                                    var kid = allowedKeys[ki];
+                                    rows.push({ id: kid, label: allowedRoomIds[kid] });
+                                }
+                            }
+
+                            if (rows.length === 0) {
+                                onError('No rooms found for HotelID ' + hotelId + ' / ContractID ' + contractId + '.');
+                                return;
+                            }
+                            onRows(rows);
+                        },
+                        function() { onError('One or more requests failed.'); }
+                    );
                 }
             },
             PriceZoneID: {
@@ -973,10 +1319,17 @@
                 buildXml: function(u, p) {
                     return '<PlaceSearchRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '<PlaceType>Prefectures</PlaceType><Language>en</Language></PlaceSearchRequest>';
                 },
-                parseRows: function(doc) {
+                parseRows: function(doc, extra) {
                     var rows = [];
+                    var provFilter = extra && extra.Province;
                     $(doc).find('Prefecture').each(function() {
-                        rows.push({ id: $(this).attr('id'), label: $(this).find('PrefectureName').text() });
+                        var provId = getAttrMulti(this, ['ProvinceID', 'province_id', 'State', 'Province']);
+                        if (provFilter && provId !== String(provFilter)) return;
+                        rows.push({
+                            id: $(this).attr('id'),
+                            label: $(this).find('PrefectureName').text(),
+                            _parents: { Province: provId }
+                        });
                     });
                     return rows;
                 }
@@ -987,10 +1340,23 @@
                 buildXml: function(u, p) {
                     return '<PlaceSearchRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '<PlaceType>Cities</PlaceType><Language>en</Language></PlaceSearchRequest>';
                 },
-                parseRows: function(doc) {
+                parseRows: function(doc, extra) {
                     var rows = [];
+                    var prefFilter = extra && extra.Prefecture;
+                    var provFilter = extra && extra.Province;
                     $(doc).find('City').each(function() {
-                        rows.push({ id: $(this).attr('city_id'), label: $(this).find('CityName').text() });
+                        var prefId = getAttrMulti(this, ['PrefectureID', 'prefecture_id', 'Prefecture']);
+                        var provId = getAttrMulti(this, ['ProvinceID', 'province_id', 'State', 'Province']);
+                        if (prefFilter) {
+                            if (prefId !== String(prefFilter)) return;
+                        } else if (provFilter) {
+                            if (provId !== String(provFilter)) return;
+                        }
+                        rows.push({
+                            id: $(this).attr('city_id'),
+                            label: $(this).find('CityName').text(),
+                            _parents: { Prefecture: prefId, Province: provId }
+                        });
                     });
                     return rows;
                 }
@@ -1033,9 +1399,22 @@
                 buildXml: function(u, p) {
                     return '<PackageListRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '<Language>en</Language></PackageListRequest>';
                 },
-                parseRows: function(doc) {
+                parseRows: function(doc, extra) {
                     var rows = [];
+                    var cityFilter = extra && extra.City;
+                    var prefFilter = extra && extra.Prefecture;
+                    var provFilter = extra && extra.Province;
                     $(doc).find('Package').each(function() {
+                        if (cityFilter) {
+                            var pkgCity = getAttrMulti(this, ['City', 'CityID', 'city_id']);
+                            if (pkgCity && pkgCity !== String(cityFilter)) return;
+                        } else if (prefFilter) {
+                            var pkgPref = getAttrMulti(this, ['Prefecture', 'PrefectureID', 'prefecture_id']);
+                            if (pkgPref && pkgPref !== String(prefFilter)) return;
+                        } else if (provFilter) {
+                            var pkgProv = getAttrMulti(this, ['State', 'ProvinceID', 'province_id', 'Province']);
+                            if (pkgProv && pkgProv !== String(provFilter)) return;
+                        }
                         var id = $(this).attr('ID') || $(this).attr('id');
                         var lbl = $(this).attr('Name') || $(this).find('PackageName,Name').first().text() || $(this).text().substring(0, 60) || ('Package ' + id);
                         rows.push({ id: id, label: lbl });
@@ -1046,17 +1425,36 @@
             ContractID: {
                 title: 'Contract ID  —  values from My Contracts',
                 sourceHref: 'my-contracts',
-                buildXml: function(u, p) {
-                    return '<SearchContracts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u,p) + '</SearchContracts>';
-                },
-                parseRows: function(doc) {
-                    var rows = [];
-                    $(doc).find('Contract').each(function() {
-                        var id = $(this).attr('ID') || $(this).attr('id') || $(this).attr('ContractID');
-                        var lbl = $(this).attr('Name') || $(this).attr('HotelName') || $(this).find('Name,HotelName').first().text() || ('Contract ' + id);
-                        rows.push({ id: id, label: lbl });
+                execute: function(u, p, extra, onRows, onError) {
+                    var hotelId = (extra && extra.HotelID) ? String(extra.HotelID) : '';
+                    var contractsUrl = svcLinkByHref['my-contracts'];
+                    if (!contractsUrl) { onError('Service not found: my-contracts'); return; }
+                    $.ajax({
+                        url: 'api/webservices/proxy', type: 'POST', contentType: 'application/json',
+                        data: JSON.stringify({
+                            Url: swapEndpoint(contractsUrl),
+                            Xml: '<SearchContracts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' + credXml(u, p) + '</SearchContracts>'
+                        }),
+                        success: function(resp) {
+                            var parser = new DOMParser();
+                            var doc = parser.parseFromString(typeof resp === 'string' ? resp : JSON.stringify(resp), 'text/xml');
+                            var rows = [];
+                            $(doc).find('Contract').each(function() {
+                                if (hotelId && $(this).attr('HotelID') !== hotelId) return;
+                                var cid   = $(this).attr('ContractID');
+                                if (!cid) return;
+                                var hn    = $(this).attr('HotelName') || '';
+                                var title = $(this).attr('Title') || '';
+                                rows.push({
+                                    id:    cid,
+                                    label: (hn || title) ? (hn || title) + '  (Contract ' + cid + ')' : 'Contract ' + cid
+                                });
+                            });
+                            if (!rows.length) { onError('No contracts found' + (hotelId ? ' for HotelID ' + hotelId : '')); return; }
+                            onRows(rows);
+                        },
+                        error: function(xhr) { onError((xhr.responseText || xhr.statusText || 'error').substring(0, 200)); }
                     });
-                    return rows;
                 }
             },
             GroupID: {
@@ -1096,6 +1494,8 @@
 
         var _lookupFid = null;
         var _lookupFieldName = null;
+        var _pendingRoomCallback = null;
+        var _lookupRows = [];
 
         function openLookupModal(fid, fieldName) {
             var cfg = FIELD_LOOKUPS[fieldName];
@@ -1103,11 +1503,25 @@
             _lookupFid = fid;
             _lookupFieldName = fieldName;
 
-            document.getElementById('lookup-modal-title').textContent = cfg.title;
+            var titleText = cfg.title;
+            if (fid) {
+                var _titleFilters = [];
+                ['Province', 'Prefecture', 'City', 'HotelID', 'ContractID'].forEach(function(fn) {
+                    if (fn !== fieldName) {
+                        var fv = getSiblingFieldValue(fid, fn);
+                        if (fv) _titleFilters.push(fn + ': ' + fv);
+                    }
+                });
+                if (_titleFilters.length) titleText += '  (filtered by ' + _titleFilters.join(', ') + ')';
+            }
+            document.getElementById('lookup-modal-title').textContent = titleText;
             document.getElementById('lookup-loading').style.display = 'none';
             document.getElementById('lookup-error').style.display = 'none';
             document.getElementById('lookup-table').style.display = 'none';
             document.getElementById('lookup-tbody').innerHTML = '';
+            document.getElementById('lookup-search').value = '';
+            document.getElementById('lookup-search-count').textContent = '';
+            document.getElementById('lookup-search-wrap').style.display = 'none';
 
             var extrasDiv = document.getElementById('lookup-modal-extras');
             if (cfg.requiresInput) {
@@ -1130,6 +1544,21 @@
             document.getElementById('lookup-overlay').classList.remove('is-open');
             _lookupFid = null;
             _lookupFieldName = null;
+            _pendingRoomCallback = null;
+            _lookupRows = [];
+        }
+
+        function filterLookupRows() {
+            var q = (document.getElementById('lookup-search').value || '').toLowerCase().trim();
+            var trs = document.getElementById('lookup-tbody').querySelectorAll('tr');
+            var visible = 0;
+            trs.forEach(function(tr) {
+                var match = !q || (tr.textContent || tr.innerText || '').toLowerCase().indexOf(q) >= 0;
+                tr.style.display = match ? '' : 'none';
+                if (match) visible++;
+            });
+            var countEl = document.getElementById('lookup-search-count');
+            countEl.textContent = q ? (visible + ' of ' + trs.length + ' results') : '';
         }
 
         function execLookup() {
@@ -1148,9 +1577,54 @@
                 }
             }
 
-            var rawUrl = svcLinkByHref[cfg.sourceHref];
+            /* Collect full hierarchy context for client-side filtering */
+            if (_lookupFid) {
+                var _hierFields = ['Province', 'Prefecture', 'City', 'HotelID', 'ContractID'];
+                for (var _hi = 0; _hi < _hierFields.length; _hi++) {
+                    var _hf = _hierFields[_hi];
+                    if (_hf !== _lookupFieldName) {
+                        var _hv = getSiblingFieldValue(_lookupFid, _hf);
+                        if (_hv) extra[_hf] = _hv;
+                    }
+                }
+            }
+
+            /* Multi-step lookup: cfg.execute handles its own AJAX calls */
+            if (cfg.execute) {
+                document.getElementById('lookup-loading').style.display = '';
+                document.getElementById('lookup-error').style.display = 'none';
+                document.getElementById('lookup-table').style.display = 'none';
+                cfg.execute(u, p, extra, function(rows) {
+                    document.getElementById('lookup-loading').style.display = 'none';
+                    if (!rows || !rows.length) {
+                        document.getElementById('lookup-error').textContent = 'No results returned from the service.';
+                        document.getElementById('lookup-error').style.display = '';
+                        return;
+                    }
+                    _lookupRows = rows;
+                    var tbody = document.getElementById('lookup-tbody');
+                    tbody.innerHTML = rows.map(function(r, idx) {
+                        var id = escapeAttr(String(r.id || ''));
+                        var lbl = escapeAttr(String(r.label || ''));
+                        return '<tr><td style="font-family:monospace;font-weight:600;color:#1C4084">' + id + '</td>' +
+                            '<td>' + lbl + '</td>' +
+                            '<td><button class="btn-lookup-use" onclick="useLookupValue(' + idx + ')">Use</button></td></tr>';
+                    }).join('');
+                    document.getElementById('lookup-table').style.display = '';
+                    document.getElementById('lookup-search-wrap').style.display = '';
+                    setTimeout(function() { document.getElementById('lookup-search').focus(); }, 50);
+                }, function(errMsg) {
+                    document.getElementById('lookup-loading').style.display = 'none';
+                    document.getElementById('lookup-error').textContent = 'Request failed: ' + String(errMsg).substring(0, 200);
+                    document.getElementById('lookup-error').style.display = '';
+                });
+                return;
+            }
+
+            var effectiveHref = cfg.getSourceHref ? cfg.getSourceHref(extra) : cfg.sourceHref;
+            var rawUrl = svcLinkByHref[effectiveHref];
             if (!rawUrl) {
-                document.getElementById('lookup-error').textContent = 'Source service not found: ' + cfg.sourceHref;
+                document.getElementById('lookup-error').textContent = 'Source service not found: ' + effectiveHref;
                 document.getElementById('lookup-error').style.display = '';
                 return;
             }
@@ -1176,21 +1650,24 @@
                         document.getElementById('lookup-error').style.display = '';
                         return;
                     }
-                    var rows = cfg.parseRows(xmlDoc);
+                    var rows = cfg.parseRows(xmlDoc, extra);
                     if (!rows.length) {
                         document.getElementById('lookup-error').textContent = 'No results returned from the service.';
                         document.getElementById('lookup-error').style.display = '';
                         return;
                     }
+                    _lookupRows = rows;
                     var tbody = document.getElementById('lookup-tbody');
-                    tbody.innerHTML = rows.map(function(r) {
+                    tbody.innerHTML = rows.map(function(r, idx) {
                         var id = escapeAttr(String(r.id || ''));
                         var lbl = escapeAttr(String(r.label || ''));
                         return '<tr><td style="font-family:monospace;font-weight:600;color:#1C4084">' + id + '</td>' +
                             '<td>' + lbl + '</td>' +
-                            '<td><button class="btn-lookup-use" onclick="useLookupValue(\'' + id + '\')">Use</button></td></tr>';
+                            '<td><button class="btn-lookup-use" onclick="useLookupValue(' + idx + ')">Use</button></td></tr>';
                     }).join('');
                     document.getElementById('lookup-table').style.display = '';
+                    document.getElementById('lookup-search-wrap').style.display = '';
+                    setTimeout(function() { document.getElementById('lookup-search').focus(); }, 50);
                 },
                 error: function(xhr) {
                     document.getElementById('lookup-loading').style.display = 'none';
@@ -1200,8 +1677,35 @@
             });
         }
 
-        function useLookupValue(id) {
-            if (_lookupFid) $('#' + _lookupFid).val(id);
+        function useLookupValue(idxOrId) {
+            /* Resolve the row and its plain id value */
+            var row, id;
+            if (typeof idxOrId === 'number') {
+                row = _lookupRows[idxOrId] || {};
+                id  = String(row.id || '');
+            } else {
+                row = {};
+                id  = String(idxOrId || '');
+            }
+
+            if (_pendingRoomCallback) {
+                var cb = _pendingRoomCallback;
+                _pendingRoomCallback = null;
+                cb(id);
+                return;
+            }
+
+            /* Reverse cascade: fill Province / Prefecture / City sibling fields
+               from the selected row's _parents when the user picked from a
+               lower level (City picked → fill Prefecture + Province, etc.)    */
+            if (row._parents && _lookupFid) {
+                ['Province', 'Prefecture', 'City'].forEach(function(fn) {
+                    var pval = row._parents[fn];
+                    if (pval) setSiblingFieldValue(_lookupFid, fn, pval);
+                });
+            }
+
+            if (_lookupFid) $('#' + _lookupFid).val(id).trigger('change');
             closeLookupModal();
         }
 
@@ -1283,6 +1787,10 @@
                 <button id="lookup-modal-close" onclick="closeLookupModal()" title="Close">&#x2715;</button>
             </div>
             <div id="lookup-modal-extras" style="display:none"></div>
+            <div id="lookup-search-wrap" style="display:none">
+                <input type="text" id="lookup-search" placeholder="Search by name or ID…" oninput="filterLookupRows()" autocomplete="off" />
+                <div id="lookup-search-count"></div>
+            </div>
             <div id="lookup-modal-body">
                 <div id="lookup-loading" style="display:none"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading&hellip;</div>
                 <div id="lookup-error" style="display:none"></div>

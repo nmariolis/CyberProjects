@@ -59,6 +59,21 @@
             font-size: 11px; color: #9db5d5; margin-top: 5px;
         }
         .domain-hint i { color: #EB8008; }
+        .field select {
+            width: 100%; padding: 10px 12px 10px 34px;
+            border: 1px solid #ccd6e8; border-radius: 4px;
+            font-size: 14px; color: #333; background: #f7f9fc;
+            transition: border-color .2s, box-shadow .2s; outline: none; font-family: inherit;
+            appearance: none; -webkit-appearance: none; cursor: pointer;
+        }
+        .field select:focus { border-color: #1C4084; box-shadow: 0 0 0 3px rgba(28,64,132,.12); background: #fff; }
+        .select-wrap { position: relative; }
+        .select-wrap .fi { pointer-events: none; }
+        .select-wrap::after {
+            content: '\f107'; font-family: FontAwesome;
+            position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+            color: #9db5d5; font-size: 13px; pointer-events: none;
+        }
         .alert {
             display: none; border-radius: 4px; font-size: 13px; padding: 10px 14px; margin-bottom: 18px;
         }
@@ -116,6 +131,19 @@
                 <div class="domain-hint"><i class="fa fa-info-circle"></i>&nbsp; Only <strong>@cyberlogic.gr</strong> addresses are accepted.</div>
             </div>
 
+            <div class="field">
+                <label><i class="fa fa-id-badge"></i>&nbsp; Role</label>
+                <div class="select-wrap">
+                    <i class="fa fa-id-badge fi"></i>
+                    <select id="f-role">
+                        <option value="Executive">Executive</option>
+                        <option value="ProjectManager" selected>Project Manager</option>
+                        <option value="Developer">Developer</option>
+                    </select>
+                </div>
+                <div class="domain-hint"><i class="fa fa-info-circle"></i>&nbsp; <strong>Executive</strong> = Super Admin &bull; <strong>Project Manager</strong> = Content &amp; Services (with approval) &bull; <strong>Developer</strong> = Services (approve-capable)</div>
+            </div>
+
             <button class="btn" id="btn-register">
                 <i class="fa fa-paper-plane"></i>&nbsp; Submit Request
             </button>
@@ -149,6 +177,7 @@
 
     function doRegister() {
         var email = document.getElementById('f-email').value.trim();
+        var role  = document.getElementById('f-role').value;
         var btn   = document.getElementById('btn-register');
 
         document.getElementById('err').style.display = 'none';
@@ -157,6 +186,7 @@
         if (!/^[^@\s]+@cyberlogic\.gr$/i.test(email)) {
             showErr('Only @cyberlogic.gr email addresses are allowed.'); return;
         }
+        if (!role) { showErr('Please select a role.'); return; }
 
         btn.disabled = true;
         btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>&nbsp; Submitting&hellip;';
@@ -164,7 +194,7 @@
         fetch('api/users/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: email })
+            body: JSON.stringify({ email: email, role: role })
         })
         .then(function(r) {
             if (!r.ok) return r.text().then(function(t) { throw new Error(t || 'Server error'); });

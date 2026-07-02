@@ -181,6 +181,7 @@
     var _pendingToken = null;
     var _pendingEmail = null;
     var _pendingSuper = false;
+    var _pendingRole  = 'ProjectManager';
 
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
@@ -223,6 +224,7 @@
                 _pendingToken = data.token;
                 _pendingEmail = data.email || null;
                 _pendingSuper = !!data.isSuperAdmin;
+                _pendingRole  = data.role || 'ProjectManager';
                 document.getElementById('chpw-overlay').classList.add('is-open');
                 document.getElementById('chpw-new').focus();
                 btn.disabled = false;
@@ -231,6 +233,7 @@
                 sessionStorage.setItem('cl_admin',       data.token);
                 sessionStorage.setItem('cl_admin_super', data.isSuperAdmin ? '1' : '');
                 sessionStorage.setItem('cl_admin_email', data.email || '');
+                sessionStorage.setItem('cl_admin_role',  data.role || 'ProjectManager');
                 window.location.replace('AdminPanel.html');
             }
         })
@@ -268,6 +271,7 @@
             sessionStorage.setItem('cl_admin',       _pendingToken);
             sessionStorage.setItem('cl_admin_super', _pendingSuper ? '1' : '');
             sessionStorage.setItem('cl_admin_email', _pendingEmail || '');
+            sessionStorage.setItem('cl_admin_role',  _pendingRole || 'ProjectManager');
             window.location.replace('AdminPanel.html');
         })
         .catch(function(err2) {

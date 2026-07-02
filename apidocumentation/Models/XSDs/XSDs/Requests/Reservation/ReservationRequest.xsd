@@ -70,7 +70,7 @@
         <xs:element name="FlightDeparture" type="Flight" minOccurs="0" maxOccurs="1" xmlns:doc="The departure flight details."/>
         <xs:element name="Remarks" type="xs:string" minOccurs="0" maxOccurs="1" xmlns:doc="Any general remarks related to the booking."/>
         <xs:element name="Services" type="Services" minOccurs="1" maxOccurs="1" xmlns:doc="The services that will be included in the reservation."/>
-        <!--<xs:element name="CreditCard" type="CreditCardSchema" minOccurs="0" maxOccurs="1" xmlns:doc=""/>-->
+        <xs:element name="Payment" type="PaymentSchema" minOccurs="0" maxOccurs="1" xmlns:doc="Credit/debit card payment details for the reservation."/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -387,9 +387,9 @@
     <xs:attribute name="Reference" type="xs:string" use="required" fixed="A1"/>
   </xs:complexType>
 
-  <!--<xs:complexType name="CreditCardSchema">
+  <xs:complexType name="PaymentSchema">
     <xs:sequence>
-      <xs:element name="CardType" minOccurs="1" maxOccurs="1">
+      <xs:element name="CardType" minOccurs="1" maxOccurs="1" default="1" xmlns:doc="Credit / debit card type. 1 = Visa, 2 = MasterCard, 5 = Diners.">
         <xs:simpleType>
           <xs:restriction base="xs:int">
             <xs:enumeration value="1" id="Visa" />
@@ -398,31 +398,31 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
-      <xs:element name="CardHolder" type="xs:string" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="CardNumber" type="xs:string" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="ExpirationMonth" minOccurs="1" maxOccurs="1">
+      <xs:element name="CardHolder" type="xs:string" minOccurs="1" maxOccurs="1" default="CARD HOLDER" xmlns:doc="Full name of the card holder exactly as printed on the card."/>
+      <xs:element name="CardNumber" type="xs:string" minOccurs="1" maxOccurs="1" default="4111111111111111" xmlns:doc="Card primary account number (PAN). Transmit only over secure (HTTPS) connections."/>
+      <xs:element name="ExpirationMonth" minOccurs="1" maxOccurs="1" default="01" xmlns:doc="Card expiry month (01-12).">
         <xs:simpleType>
           <xs:restriction base="xs:string">
             <xs:pattern value="01|02|03|04|05|06|07|08|09|10|11|12" />
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
-      <xs:element name="ExpirationYear" minOccurs="1" maxOccurs="1">
+      <xs:element name="ExpirationYear" minOccurs="1" maxOccurs="1" default="2027" xmlns:doc="Card expiry year (4-digit, e.g. 2027).">
         <xs:simpleType>
           <xs:restriction base="xs:integer">
-            <xs:minInclusive value="2012" />
-            <xs:maxInclusive value="2022" />
+            <xs:minInclusive value="2026" />
+            <xs:maxInclusive value="2040" />
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
-      <xs:element name="cvv2" minOccurs="1" maxOccurs="1">
+      <xs:element name="cvv2" minOccurs="1" maxOccurs="1" default="123" xmlns:doc="Card security code - CVV2 (Visa), CVC2 (Mastercard), or CID (Amex). 3 or 4 digits.">
         <xs:simpleType>
           <xs:restriction base="xs:integer">
             <xs:minInclusive value="100" />
-            <xs:maxInclusive value="999" />
+            <xs:maxInclusive value="9999" />
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
     </xs:sequence>
-  </xs:complexType>-->
+  </xs:complexType>
 </xs:schema>

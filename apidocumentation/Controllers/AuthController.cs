@@ -131,7 +131,50 @@ namespace Documentation.Controllers
 
             return Ok(new { hiddenServices = entry?.HiddenServices ?? new System.Collections.Generic.List<string>() });
         }
+
+        // Public endpoint — Index.html calls this when a service's "Generate &
+        // Send" button is pressed so we can append a Documentation Log entry.
+        // There is no admin token here; the caller is identified by the session
+        // it holds client-side. Any failure path is reported back via HTTP so
+        // the browser console can surface the real cause (typically: app-pool
+        // identity has no write permission on the Logs/ folder).
+        [HttpPost]
+        [Route("api/docs/log")]
+        public IHttpActionResult RecordDocAccess([FromBody] DocLogRequest req)
+        {
+            if (req == null) return BadRequest("body required.");
+            try
+            {
+                LogStore.AppendDocumentation(new DocumentationLogEntry
+                {
+                    Timestamp    = DateTime.UtcNow,
+                    EndpointName = string.IsNullOrWhiteSpace(req.EndpointName) ? "(unknown)" : req.EndpointName.Trim(),
+                    UserName     = string.IsNullOrWhiteSpace(req.UserName)     ? "(anonymous)" : req.UserName.Trim(),
+                    ServiceHref  = req.ServiceHref,
+                    ServiceName  = req.ServiceName
+                });
+                return Ok(new { ok = true });
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Content(System.Net.HttpStatusCode.InternalServerError,
+                    new { ok = false, error = "filesystem-denied", message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return Content(System.Net.HttpStatusCode.InternalServerError,
+                    new { ok = false, error = "write-failed", message = ex.Message });
+            }
+        }
     }
 
     public class ResolveRequest { public string ApiKey { get; set; } }
+
+    public class DocLogRequest
+    {
+        public string EndpointName { get; set; }
+        public string UserName     { get; set; }
+        public string ServiceHref  { get; set; }
+        public string ServiceName  { get; set; }
+    }
 }

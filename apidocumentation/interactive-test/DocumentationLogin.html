@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SupplierAPI Documentation Login</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css' />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; min-height: 100%; }
+    body {
+      background: #eef1f7;
+      font-family: Lato, 'Helvetica Neue', sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .topbar {
+      background: #1C4084;
+      border-bottom: 3px solid #EB8008;
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .topbar img { max-width: 140px; filter: brightness(0) invert(1); }
+    .topbar-badge {
+      background: rgba(235,128,8,.18);
+      color: #EB8008;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(235,128,8,.35);
+    }
+    .wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 16px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 32px rgba(28,64,132,.11);
+      padding: 42px 44px 34px;
+      width: 100%;
+      max-width: 470px;
+    }
+    .card h1 { font-size: 22px; color: #1C4084; margin: 0 0 6px; }
+    .card p { margin: 0; color: #6c8cbf; font-size: 13px; }
+    .divider {
+      height: 3px;
+      background: linear-gradient(to right, #EB8008, #1C4084);
+      border-radius: 2px;
+      margin: 20px 0;
+    }
+    .info-box {
+      background: rgba(28,64,132,.06);
+      border-left: 3px solid #1C4084;
+      border-radius: 4px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #1C4084;
+      margin-bottom: 16px;
+    }
+    .field { margin-bottom: 16px; }
+    .field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: #1C4084;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      margin-bottom: 7px;
+    }
+    .field-wrap { position: relative; }
+    .field-wrap .fi {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9db5d5;
+      font-size: 13px;
+      pointer-events: none;
+    }
+    .field input {
+      width: 100%;
+      padding: 10px 12px 10px 34px;
+      border: 1px solid #ccd6e8;
+      border-radius: 4px;
+      font-size: 14px;
+      color: #333;
+      background: #f7f9fc;
+      outline: none;
+      font-family: inherit;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .field input:focus {
+      border-color: #1C4084;
+      box-shadow: 0 0 0 3px rgba(28,64,132,.12);
+      background: #fff;
+    }
+    .error {
+      display: none;
+      background: rgba(220,53,69,.07);
+      border: 1px solid rgba(220,53,69,.22);
+      border-left: 3px solid #dc3545;
+      border-radius: 4px;
+      color: #b02a37;
+      font-size: 13px;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+    }
+    .btn {
+      width: 100%;
+      padding: 13px;
+      background: #1C4084;
+      border: none;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .15s;
+      font-family: inherit;
+    }
+    .btn:hover:not(:disabled) { background: #163366; }
+    .btn:disabled { opacity: .65; cursor: not-allowed; }
+    .foot {
+      text-align: center;
+      font-size: 12px;
+      color: #9db5d5;
+      margin-top: 16px;
+    }
+    .foot a { color: #1C4084; text-decoration: none; }
+    .foot a:hover { text-decoration: underline; }
+    .page-foot {
+      background: #1C4084;
+      color: rgba(255,255,255,.4);
+      text-align: center;
+      font-size: 11px;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <img src="./CyberlogicLogo.png" alt="Cyberlogic" />
+    <span class="topbar-badge"><i class="fa fa-book"></i>&nbsp; Documentation Login</span>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <h1>Interactive Documentation</h1>
+      <p>Sign in with the IntegrationApiKey (Encoded API KEY).</p>
+      <div class="divider"></div>
+
+      <div class="info-box">
+        Use the Encoded API KEY from the Admin Panel. The page will auto-set Base URL and IntegrationApiKey.
+      </div>
+
+      <div class="error" id="err"></div>
+
+      <div class="field">
+        <label><i class="fa fa-lock"></i>&nbsp; IntegrationApiKey</label>
+        <div class="field-wrap">
+          <i class="fa fa-lock fi"></i>
+          <input type="password" id="f-encoded-key" placeholder="Enter encoded API key" autocomplete="off" />
+        </div>
+      </div>
+
+      <button class="btn" id="btn-login"><i class="fa fa-sign-in"></i>&nbsp; Enter Documentation</button>
+
+      <div class="foot">
+        Need a key? Configure hubs in <a href="./SupplierAdminPanel.html">Admin Panel</a>.
+      </div>
+
+      <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid #f0f3f8;">
+        <button class="btn" id="btn-reset" style="background: #9db5d5;"><i class="fa fa-refresh"></i>&nbsp; Reset Session</button>
+        <p style="font-size: 11px; color: #9db5d5; text-align: center; margin: 8px 0 0;">Clear cached login and start fresh</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-foot">&copy; Cyberlogic e-Tourism Platform &mdash; SupplierAPI Documentation</div>
+
+  <script>
+    var DOCS_SESSION_KEY = 'supplier_docs_session';
+    var STORAGE_BASE = 'supplierapi_custom_base';
+    var STORAGE_KEY = 'supplierapi_custom_key';
+    var STORAGE_ACTIVE_HUB = 'supplier_active_hub_id';
+
+    (function autoEnterIfSessionExists() {
+      try {
+        var raw = sessionStorage.getItem(DOCS_SESSION_KEY);
+        if (!raw) return;
+        var s = JSON.parse(raw);
+        if (s && s.baseUrl && s.integrationApiKey) {
+          window.location.replace('./index.html');
+        }
+      } catch (e) {}
+    })();
+
+    document.getElementById('btn-login').addEventListener('click', doLogin);
+    document.getElementById('btn-reset').addEventListener('click', doReset);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') doLogin();
+    });
+
+    function doReset() {
+      if (!confirm('Clear cached login session and reset page?')) return;
+      sessionStorage.removeItem('supplier_docs_session');
+      localStorage.removeItem('supplierapi_custom_base');
+      localStorage.removeItem('supplierapi_custom_key');
+      localStorage.removeItem('supplier_active_hub_id');
+      document.getElementById('f-encoded-key').value = '';
+      window.location.reload();
+    }
+
+    function showErr(msg) {
+      var el = document.getElementById('err');
+      el.textContent = msg;
+      el.style.display = 'block';
+    }
+
+    function normalizeHubs(hubs) {
+      if (!Array.isArray(hubs)) return [];
+      var changed = false;
+      hubs.forEach(function (hub, idx) {
+        if (hub && !hub.id) {
+          hub.id = 'hub-legacy-' + Date.now() + '-' + idx;
+          changed = true;
+        }
+      });
+      if (changed) {
+        var serialized = JSON.stringify(hubs);
+        sessionStorage.setItem('supplier_admin_hubs', serialized);
+        localStorage.setItem('supplier_admin_hubs', serialized);
+      }
+      return hubs;
+    }
+
+    function doLogin() {
+      var btn = document.getElementById('btn-login');
+      var key = (document.getElementById('f-encoded-key').value || '').trim();
+      document.getElementById('err').style.display = 'none';
+
+      if (!key) {
+        showErr('IntegrationApiKey is required.');
+        return;
+      }
+
+      var hubsRaw = sessionStorage.getItem('supplier_admin_hubs') || localStorage.getItem('supplier_admin_hubs');
+      if (!hubsRaw) {
+        showErr('No hubs configured. Please add at least one hub from Admin Panel.');
+        return;
+      }
+
+      sessionStorage.setItem('supplier_admin_hubs', hubsRaw);
+
+      var hubs;
+      try {
+        hubs = normalizeHubs(JSON.parse(hubsRaw));
+      } catch (e) {
+        showErr('Hub configuration is invalid. Please re-save hubs from Admin Panel.');
+        return;
+      }
+
+      var matched = null;
+      for (var i = 0; i < hubs.length; i++) {
+        var hub = hubs[i] || {};
+        if ((hub.encodedApiKey || '').trim() === key) {
+          matched = hub;
+          break;
+        }
+      }
+
+      if (!matched) {
+        showErr('Invalid IntegrationApiKey.');
+        return;
+      }
+
+      if (!matched.baseUrl) {
+        showErr('Matched hub has empty BaseURL. Please update it in Admin Panel.');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>&nbsp; Signing in...';
+
+      var sessionData = {
+        hubId: String(matched.id || 'default'),
+        hubName: matched.hubName || '',
+        baseUrl: matched.baseUrl,
+        integrationApiKey: key,
+        loginAt: Date.now()
+      };
+
+      sessionStorage.setItem(DOCS_SESSION_KEY, JSON.stringify(sessionData));
+      localStorage.setItem(STORAGE_BASE, matched.baseUrl);
+      localStorage.setItem(STORAGE_KEY, key);
+      localStorage.setItem(STORAGE_ACTIVE_HUB, String(matched.id || 'default'));
+
+      window.location.replace('./index.html');
+    }
+  </script>
+</body>
+</html>

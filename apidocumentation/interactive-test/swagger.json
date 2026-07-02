@@ -1,0 +1,2164 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Integrations SupplierAPI",
+    "description": "Platform version: 26.6.18.0",
+    "version": "SupplierAPI"
+  },
+  "paths": {
+    "/api/airport": {
+      "get": {
+        "tags": [
+          "Airport"
+        ],
+        "description": "Browse all airports with pagination",
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/airport/{code}": {
+      "get": {
+        "tags": [
+          "Airport"
+        ],
+        "description": "Retrieve airport details by IATA code",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/airport/country/{country}": {
+      "get": {
+        "tags": [
+          "Airport"
+        ],
+        "description": "List all airports in a specific country",
+        "parameters": [
+          {
+            "name": "country",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/integrations/supplier-api/v1/get-boards": {
+      "get": {
+        "tags": [
+          "SupplierAPI"
+        ],
+        "description": "Retrieve available hotel rate boards for your supplier account",
+        "parameters": [
+          {
+            "name": "IntegrationApiKey",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBoardResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/integrations/supplier-api/v1/get-hotels": {
+      "get": {
+        "tags": [
+          "SupplierAPI"
+        ],
+        "description": "List all hotels contracted under your supplier account",
+        "parameters": [
+          {
+            "name": "IntegrationApiKey",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetHotelResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/integrations/supplier-api/v1/get-hotel/{hotelId}": {
+      "get": {
+        "tags": [
+          "SupplierAPI"
+        ],
+        "description": "Retrieve detailed information for a specific hotel",
+        "parameters": [
+          {
+            "name": "IntegrationApiKey",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hotelId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetHotelResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/integrations/supplier-api/v1/get-reservations": {
+      "post": {
+        "tags": [
+          "SupplierAPI"
+        ],
+        "description": "Query reservations by date range, status, and hotel filters",
+        "parameters": [
+          {
+            "name": "IntegrationApiKey",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetReservationsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetReservationsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetReservationsRequest"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/GetReservationsRequest"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/GetReservationsRequest"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/GetReservationsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetReservationsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/integrations/supplier-api/v1/set-hotel-contract": {
+      "post": {
+        "tags": [
+          "SupplierAPI"
+        ],
+        "description": "Create or update a hotel contract with rate boards and availability rules",
+        "parameters": [
+          {
+            "name": "IntegrationApiKey",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetHotelContractRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetHotelContractRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetHotelContractRequest"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/SetHotelContractRequest"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/SetHotelContractRequest"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/SetHotelContractRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SetHotelContractResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/integrations/supplier-api/v1/deactivate-contract/{contractId}": {
+      "post": {
+        "tags": [
+          "SupplierAPI"
+        ],
+        "description": "Deactivate a hotel contract to stop accepting reservations",
+        "parameters": [
+          {
+            "name": "IntegrationApiKey",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "contractId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SetHotelContractResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AdditionalRateRequest": {
+        "type": "object",
+        "properties": {
+          "roomId": {
+            "type": "string",
+            "nullable": true
+          },
+          "seasonName": {
+            "type": "string",
+            "nullable": true
+          },
+          "boardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "paxType": {
+            "type": "string",
+            "nullable": true
+          },
+          "paxOrder": {
+            "type": "string",
+            "nullable": true
+          },
+          "childRange": {
+            "type": "string",
+            "nullable": true
+          },
+          "chargeType": {
+            "type": "string",
+            "nullable": true
+          },
+          "weekDayList": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ArrivalDepartureRestrictionRequest": {
+        "type": "object",
+        "properties": {
+          "closedOnArrival": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "closedOnDeparture": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "weekDayList": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          },
+          "roomIds": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateFrom": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dateTo": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BaseService": {
+        "type": "object",
+        "properties": {
+          "serviceReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "serviceStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "arrivalDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "departureDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "adults": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "children": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "infants": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "childrenAges": {
+            "type": "string",
+            "nullable": true
+          },
+          "remarks": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "$ref": "#/components/schemas/Price"
+          },
+          "clientList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClientReference"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BoardRestrictionRequest": {
+        "type": "object",
+        "properties": {
+          "boardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "roomId": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateFrom": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dateTo": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CancellationPolicyRequest": {
+        "type": "object",
+        "properties": {
+          "contractId": {
+            "type": "string",
+            "nullable": true
+          },
+          "hotelId": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancellationType": {
+            "type": "string",
+            "nullable": true
+          },
+          "periodStartDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "periodEndDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "cancellationCriterion": {
+            "type": "string",
+            "nullable": true
+          },
+          "lengthOfStayFrom": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "lengthOfStayTo": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "roomId": {
+            "type": "string",
+            "nullable": true
+          },
+          "beforeArrivalFrom": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "beforeArrivalTo": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "amount": {
+            "type": "number",
+            "format": "double"
+          },
+          "cancellationAmountType": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChildRangeRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "ageFrom": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "ageTo": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClientReference": {
+        "type": "object",
+        "properties": {
+          "reference": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContractRoomRequest": {
+        "type": "object",
+        "properties": {
+          "roomId": {
+            "type": "string",
+            "nullable": true
+          },
+          "parentRoomId": {
+            "type": "string",
+            "nullable": true
+          },
+          "nonRefundable": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "selfCatering": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "salesCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "babyCotAllowed": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "pax": {
+            "$ref": "#/components/schemas/PaxRequest"
+          },
+          "paxMatrixRestrictionList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PaxMatrixRequest"
+            },
+            "nullable": true
+          },
+          "allocationRestrictionList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestrictionRequest"
+            },
+            "nullable": true
+          },
+          "releaseRestrictionList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestrictionRequest"
+            },
+            "nullable": true
+          },
+          "minimumStayRestrictionList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestrictionRequest"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DateRange": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "to": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetBoardResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetHotelResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "address1": {
+            "type": "string",
+            "nullable": true
+          },
+          "address2": {
+            "type": "string",
+            "nullable": true
+          },
+          "address3": {
+            "type": "string",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "nullable": true
+          },
+          "prefecture": {
+            "type": "string",
+            "nullable": true
+          },
+          "province": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "roomList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetHotelRoomResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetHotelRoomResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "minCapacity": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "maxCapacity": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetReservationsRequest": {
+        "type": "object",
+        "properties": {
+          "fileNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "reference": {
+            "type": "string",
+            "nullable": true
+          },
+          "arrivalDate": {
+            "$ref": "#/components/schemas/DateRange"
+          },
+          "departureDate": {
+            "$ref": "#/components/schemas/DateRange"
+          },
+          "bookingDate": {
+            "$ref": "#/components/schemas/DateRange"
+          },
+          "modifiedDate": {
+            "$ref": "#/components/schemas/DateRange"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetReservationsResponse": {
+        "type": "object",
+        "properties": {
+          "reservationList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Reservation"
+            },
+            "nullable": true
+          },
+          "errorList": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Hotel": {
+        "type": "object",
+        "properties": {
+          "serviceReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "serviceStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "arrivalDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "departureDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "adults": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "children": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "infants": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "childrenAges": {
+            "type": "string",
+            "nullable": true
+          },
+          "remarks": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "$ref": "#/components/schemas/Price"
+          },
+          "clientList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClientReference"
+            },
+            "nullable": true
+          },
+          "contractId": {
+            "type": "string",
+            "nullable": true
+          },
+          "hotelId": {
+            "type": "string",
+            "nullable": true
+          },
+          "roomId": {
+            "type": "string",
+            "nullable": true
+          },
+          "boarding": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HotelVarious": {
+        "type": "object",
+        "properties": {
+          "serviceReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "serviceStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "arrivalDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "departureDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "adults": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "children": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "infants": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "childrenAges": {
+            "type": "string",
+            "nullable": true
+          },
+          "remarks": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "$ref": "#/components/schemas/Price"
+          },
+          "clientList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClientReference"
+            },
+            "nullable": true
+          },
+          "subServiceCategory": {
+            "type": "string",
+            "nullable": true
+          },
+          "subService": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HotelVariousContractRateRequest": {
+        "type": "object",
+        "properties": {
+          "dateFrom": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dateTo": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "subService": {
+            "type": "string",
+            "nullable": true
+          },
+          "externalSubServiceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "subServiceCategory": {
+            "type": "string",
+            "nullable": true
+          },
+          "chargeBasis": {
+            "type": "string",
+            "nullable": true
+          },
+          "paxType": {
+            "type": "string",
+            "nullable": true
+          },
+          "ageFrom": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "ageTo": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "rate": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "isCompulsory": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "HotelVariousContractRequest": {
+        "type": "object",
+        "properties": {
+          "externalHotelVariousContractId": {
+            "type": "string",
+            "nullable": true
+          },
+          "bookingStartDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "bookingEndDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "currencyISOCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "contractName": {
+            "type": "string",
+            "nullable": true
+          },
+          "hotelId": {
+            "type": "string",
+            "nullable": true
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "hotelVariousContractRateList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HotelVariousContractRateRequest"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OfferBoardUpgradeRequest": {
+        "type": "object",
+        "properties": {
+          "upgradeFromBoardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "upgradeToBoardId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OfferDiscountRequest": {
+        "type": "object",
+        "properties": {
+          "boardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "discountPercent": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "offerApplyToType": {
+            "type": "string",
+            "nullable": true
+          },
+          "paxTypes": {
+            "type": "string",
+            "nullable": true
+          },
+          "childRanges": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OfferOccupancySpecialRateRequest": {
+        "type": "object",
+        "properties": {
+          "boardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "roomId": {
+            "type": "string",
+            "nullable": true
+          },
+          "paxTypes": {
+            "type": "string",
+            "nullable": true
+          },
+          "childRanges": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OfferPeriodRequest": {
+        "type": "object",
+        "properties": {
+          "offerPeriodId": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateFrom": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dateTo": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OfferRequest": {
+        "type": "object",
+        "properties": {
+          "externalOfferId": {
+            "type": "string",
+            "nullable": true
+          },
+          "offerType": {
+            "type": "string",
+            "nullable": true
+          },
+          "bookingStart": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "bookingEnd": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "minStay": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "maxStay": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "releaseFrom": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "releaseTo": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "offerRoomIds": {
+            "type": "string",
+            "nullable": true
+          },
+          "offerCriterionType": {
+            "type": "string",
+            "nullable": true
+          },
+          "salesCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "offerGroups": {
+            "type": "string",
+            "nullable": true
+          },
+          "offerRank": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "remarks": {
+            "type": "string",
+            "nullable": true
+          },
+          "earlyBookingPaymentDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "earlyBookingPaymentPercentage": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "periodList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OfferPeriodRequest"
+            },
+            "nullable": true
+          },
+          "earlyBookingDiscountList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OfferDiscountRequest"
+            },
+            "nullable": true
+          },
+          "specialOfferDiscountList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OfferDiscountRequest"
+            },
+            "nullable": true
+          },
+          "stayPayList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OfferStayPayRequest"
+            },
+            "nullable": true
+          },
+          "boardUpgradeList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OfferBoardUpgradeRequest"
+            },
+            "nullable": true
+          },
+          "roomUpgradeList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OfferRoomUpgradeRequest"
+            },
+            "nullable": true
+          },
+          "supplementRateList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OfferSupplementRateRequest"
+            },
+            "nullable": true
+          },
+          "roomDiscountList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OfferRoomDiscountRequest"
+            },
+            "nullable": true
+          },
+          "specialRateList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OfferSpecialRateRequest"
+            },
+            "nullable": true
+          },
+          "occupancySpecialRateList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OfferOccupancySpecialRateRequest"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OfferRoomDiscountRequest": {
+        "type": "object",
+        "properties": {
+          "offerPeriodId": {
+            "type": "string",
+            "nullable": true
+          },
+          "roomId": {
+            "type": "string",
+            "nullable": true
+          },
+          "percentageDiscount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OfferRoomUpgradeRequest": {
+        "type": "object",
+        "properties": {
+          "upgradeFromRoomId": {
+            "type": "string",
+            "nullable": true
+          },
+          "upgradeToRoomId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OfferSpecialRateRequest": {
+        "type": "object",
+        "properties": {
+          "boardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "roomId": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "paxTypes": {
+            "type": "string",
+            "nullable": true
+          },
+          "childRanges": {
+            "type": "string",
+            "nullable": true
+          },
+          "paxOrder": {
+            "type": "string",
+            "nullable": true
+          },
+          "chargeType": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OfferStayPayRequest": {
+        "type": "object",
+        "properties": {
+          "stay": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "pay": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "maxStay": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "offerStayPayType": {
+            "type": "string",
+            "nullable": true
+          },
+          "offerApplyToType": {
+            "type": "string",
+            "nullable": true
+          },
+          "offerChargeType": {
+            "type": "string",
+            "nullable": true
+          },
+          "boardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "paxTypes": {
+            "type": "string",
+            "nullable": true
+          },
+          "childRanges": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OfferSupplementRateRequest": {
+        "type": "object",
+        "properties": {
+          "boardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "paxTypes": {
+            "type": "string",
+            "nullable": true
+          },
+          "childRanges": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PaxMatrixRequest": {
+        "type": "object",
+        "properties": {
+          "adults": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "children": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "childRanges": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PaxRequest": {
+        "type": "object",
+        "properties": {
+          "chargeBasis": {
+            "type": "string",
+            "nullable": true
+          },
+          "basePax": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "minAdults": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "maxAdults": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "minChildren": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "maxChildren": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "minPax": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "maxPax": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "maxInfants": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "infantsCountInOccupancy": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PeriodRequest": {
+        "type": "object",
+        "properties": {
+          "seasonName": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateFrom": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dateTo": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Person": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "surname": {
+            "type": "string",
+            "nullable": true
+          },
+          "birthday": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "passport": {
+            "type": "string",
+            "nullable": true
+          },
+          "reference": {
+            "type": "string",
+            "nullable": true
+          },
+          "age": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "telephone": {
+            "type": "string",
+            "nullable": true
+          },
+          "mobile": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Price": {
+        "type": "object",
+        "properties": {
+          "currency": {
+            "type": "string",
+            "nullable": true
+          },
+          "amount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": { }
+      },
+      "RatePlanRequest": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "ratePlanDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "boardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "availableBoardIds": {
+            "type": "string",
+            "nullable": true
+          },
+          "currencyISOCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "isConsecutive": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "applyOneOfferGroupPerStay": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "useOfferRanks": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "periodList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PeriodRequest"
+            },
+            "nullable": true
+          },
+          "adultRateList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RateRequest"
+            },
+            "nullable": true
+          },
+          "additionalPaxRateList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdditionalRateRequest"
+            },
+            "nullable": true
+          },
+          "boardingRateList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SupplementRateRequest"
+            },
+            "nullable": true
+          },
+          "offerList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OfferRequest"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RateRequest": {
+        "type": "object",
+        "properties": {
+          "roomId": {
+            "type": "string",
+            "nullable": true
+          },
+          "seasonName": {
+            "type": "string",
+            "nullable": true
+          },
+          "boardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "chargeType": {
+            "type": "string",
+            "nullable": true
+          },
+          "weekDayList": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Reservation": {
+        "type": "object",
+        "properties": {
+          "fileNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "reference": {
+            "type": "string",
+            "nullable": true
+          },
+          "clientFullName": {
+            "type": "string",
+            "nullable": true
+          },
+          "reservationStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "createDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "bookingDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "arrivalDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "arrivalFlight": {
+            "type": "string",
+            "nullable": true
+          },
+          "departureDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "departureFlight": {
+            "type": "string",
+            "nullable": true
+          },
+          "arrivalFlightHour": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "arrivalFlightMinute": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "departureFlightHour": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "departureFlightMinute": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "adults": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "children": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "infants": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPax": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "childrenAges": {
+            "type": "string",
+            "nullable": true
+          },
+          "remarks": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalPrice": {
+            "$ref": "#/components/schemas/Price"
+          },
+          "clientList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Person"
+            },
+            "nullable": true
+          },
+          "services": {
+            "$ref": "#/components/schemas/ReservationServices"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReservationServices": {
+        "type": "object",
+        "properties": {
+          "hotels": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Hotel"
+            },
+            "nullable": true
+          },
+          "hotelVarious": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HotelVarious"
+            },
+            "nullable": true
+          },
+          "handlingFees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BaseService"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RestrictionRequest": {
+        "type": "object",
+        "properties": {
+          "dateFrom": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dateTo": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "value": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SetHotelContractRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "externalContractId": {
+            "type": "string",
+            "nullable": true
+          },
+          "contractTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "contractStartDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "contractEndDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "bookingStartDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "bookingEndDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "contractType": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "hotelId": {
+            "type": "string",
+            "nullable": true
+          },
+          "childRangeList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChildRangeRequest"
+            },
+            "nullable": true
+          },
+          "contractRoomList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContractRoomRequest"
+            },
+            "nullable": true
+          },
+          "ratePlanList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RatePlanRequest"
+            },
+            "nullable": true
+          },
+          "cancellationPolicyList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CancellationPolicyRequest"
+            },
+            "nullable": true
+          },
+          "boardRestrictionList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BoardRestrictionRequest"
+            },
+            "nullable": true
+          },
+          "arrivalDepartureRestrictionList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ArrivalDepartureRestrictionRequest"
+            },
+            "nullable": true
+          },
+          "stopSaleList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StopSaleRequest"
+            },
+            "nullable": true
+          },
+          "hotelVariousContractList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HotelVariousContractRequest"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SetHotelContractResponse": {
+        "type": "object",
+        "properties": {
+          "contractId": {
+            "type": "string",
+            "nullable": true
+          },
+          "errorList": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StopSaleRequest": {
+        "type": "object",
+        "properties": {
+          "hotelId": {
+            "type": "string",
+            "nullable": true
+          },
+          "roomId": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateFrom": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dateTo": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "remarks": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SupplementRateRequest": {
+        "type": "object",
+        "properties": {
+          "seasonName": {
+            "type": "string",
+            "nullable": true
+          },
+          "boardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "paxType": {
+            "type": "string",
+            "nullable": true
+          },
+          "paxOrder": {
+            "type": "string",
+            "nullable": true
+          },
+          "childRange": {
+            "type": "string",
+            "nullable": true
+          },
+          "chargeType": {
+            "type": "string",
+            "nullable": true
+          },
+          "weekDayList": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

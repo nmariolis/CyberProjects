@@ -12,7 +12,8 @@
         "package-categories",
         "package-destinations",
         "package-room-prices"
-      ]
+      ],
+      "ProjectManagerIds": []
     },
     {
       "Id": "b2c3d4e5f6a74b2c9d3e4f5a6b7c8d9e",
@@ -20,7 +21,8 @@
       "EncodedKey": "bTtloRSUJX4MJVF/valxSeRW2Z1/OVLsWDhVZfEusWw=",
       "Name": "Delta-W Hub",
       "BaseUrl": "https://deltaw-hub.cyberlogic.cloud",
-      "HiddenServices": []
+      "HiddenServices": [],
+      "ProjectManagerIds": []
     },
     {
       "Id": "c3d4e5f6a7b84c3da4e5f6a7b8c9d0e1",
@@ -28,7 +30,8 @@
       "EncodedKey": "2C42tP7MGWasit7SsqvZxEy7X9g66hU+4JJ4wWB6Uds=",
       "Name": "Ovest Hub",
       "BaseUrl": "https://ovest-hub.cyberlogic.cloud",
-      "HiddenServices": []
+      "HiddenServices": [],
+      "ProjectManagerIds": []
     },
     {
       "Id": "d4e5f6a7b8c95d4eb5f6a7b8c9d0e1f2",
@@ -36,7 +39,8 @@
       "EncodedKey": "o6roOoZIUWk6uH+pOg9FXIOC8Iw7rKxUvHQZVXXpRFQ=",
       "Name": "MGroup Hub",
       "BaseUrl": "https://mgroup-hub.cyberlogic.cloud",
-      "HiddenServices": []
+      "HiddenServices": [],
+      "ProjectManagerIds": []
     },
     {
       "Id": "e5f6a7b8c9d06e5fc6a7b8c9d0e1f2a3",
@@ -44,7 +48,8 @@
       "EncodedKey": "+uhbV0ySMlog+rZumKTV93iCzEhFOoBKOUPPRaDN0e4=",
       "Name": "Trend Hub",
       "BaseUrl": "https://trend-hub.cyberlogic.cloud",
-      "HiddenServices": []
+      "HiddenServices": [],
+      "ProjectManagerIds": []
     },
     {
       "Id": "f6a7b8c9d0e17f6ad7b8c9d0e1f2a3b4",
@@ -52,7 +57,8 @@
       "EncodedKey": "TvX/HCPxqP3G7KR8ksqXsSvQ2Xn6jcxvvy/lK8axWqE=",
       "Name": "Legrand Hub",
       "BaseUrl": "https://legrand-hub.cyberlogic.cloud",
-      "HiddenServices": []
+      "HiddenServices": [],
+      "ProjectManagerIds": []
     },
     {
       "Id": "a7b8c9d0e1f28a7be8c9d0e1f2a3b4c5",
@@ -60,7 +66,8 @@
       "EncodedKey": "Gf5BmWvpkH7Uf/MADPU6mRF53RTDOSbC8kBkG4WqWWg=",
       "Name": "Kalamaki Hub",
       "BaseUrl": "https://kalamaki-hub.cyberlogic.cloud",
-      "HiddenServices": []
+      "HiddenServices": [],
+      "ProjectManagerIds": []
     },
     {
       "Id": "2fa40cd6050f43cbbddad4fbbaab409d",
@@ -68,7 +75,8 @@
       "EncodedKey": "j22sFt2o+kfSn//oMbL43+0E0jPdYVLtXXtemXkI8yQuxzUhrOjJjtc8mj4EEAsB",
       "Name": "KCG Hub",
       "BaseUrl": "https://kcg-hub.cyberlogic.cloud",
-      "HiddenServices": []
+      "HiddenServices": [],
+      "ProjectManagerIds": []
     }
   ]
 }

@@ -24,19 +24,39 @@ namespace Documentation.Controllers
             if (!Regex.IsMatch(email, @"^[^@\s]+@cyberlogic\.gr$"))
                 return BadRequest("Only @cyberlogic.gr email addresses are allowed to register.");
 
+            var validRoles = new[] { "Executive", "ProjectManager", "Developer" };
+            var role = string.IsNullOrWhiteSpace(req.Role) ? "ProjectManager" : req.Role.Trim();
+            if (Array.IndexOf(validRoles, role) < 0)
+                return BadRequest("Invalid role. Must be Executive, ProjectManager, or Developer.");
+
             var data = LoadUsers();
             if (data.Users.Any(u => string.Equals(u.Email, email, StringComparison.OrdinalIgnoreCase)))
                 return BadRequest("A registration request for this email already exists.");
 
-            data.Users.Add(new UserEntry
+            var newUser = new UserEntry
             {
                 Id        = Guid.NewGuid().ToString("N"),
                 Email     = email,
+                Role      = role,
                 Status    = "pending",
                 MustChangePassword = false,
                 CreatedAt = DateTime.UtcNow
-            });
+            };
+            data.Users.Add(newUser);
             SaveUsers(data);
+
+            // Internal log — registration is a "Register" action attributed to the user themselves.
+            LogStore.AppendInternal(new InternalLogEntry
+            {
+                Timestamp  = DateTime.UtcNow,
+                UserEmail  = newUser.Email,
+                UserRole   = newUser.Role,
+                Action     = "Register",
+                Category   = "User",
+                TargetId   = newUser.Id,
+                TargetName = newUser.Email,
+                Details    = "status=pending"
+            });
             return Ok(new { message = "Registration submitted. Pending admin approval." });
         }
 
@@ -55,5 +75,5 @@ namespace Documentation.Controllers
         }
     }
 
-    public class RegisterRequest { public string Email { get; set; } }
+    public class RegisterRequest { public string Email { get; set; } public string Role { get; set; } }
 }
